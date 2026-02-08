@@ -2,7 +2,6 @@ services:
   - type: web
     name: price-pick
     runtime: node
-    nodeVersion: "20"
     buildCommand: npm ci
     startCommand: node app.js
     healthCheckPath: /

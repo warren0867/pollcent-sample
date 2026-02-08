@@ -69,7 +69,10 @@ function wrapDb(rawDb) {
 
 async function initDb() {
   if (db) return db;
-  SQL = await initSqlJs();
+  const wasmPath = path.join(path.dirname(require.resolve('sql.js')), 'sql-wasm.wasm');
+  SQL = await initSqlJs({
+    locateFile: () => wasmPath,
+  });
 
   let rawDb;
   if (fs.existsSync(DB_PATH)) {

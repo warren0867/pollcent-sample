@@ -1,24 +1,24 @@
 <%- include('layout', { body: `
-<div class="hero">
-  <h1>PricePick</h1>
-  <p>쿠팡에서 쇼핑하고 리워드를 받으세요!</p>
-  <div class="hero-features">
-    <div class="feature-card">
-      <h3>복권 티켓</h3>
-      <p>1만원 구매당 1장<br>최대 10,000원 당첨</p>
-    </div>
-    <div class="feature-card">
-      <h3>룰렛 티켓</h3>
-      <p>구매 건당 1장<br>100% 당첨</p>
-    </div>
-    <div class="feature-card">
-      <h3>지연 보상</h3>
-      <p>구매확정 후 캐시백<br>최대 3,000원/건</p>
-    </div>
+<div class="hotdeals-page">
+  <div class="page-header">
+    <h2>핫딜</h2>
+    <p>상품을 클릭하고 원하는 가격을 설정하세요</p>
   </div>
-  <div class="hero-actions">
-    <a href="/auth/register" class="btn btn-primary">시작하기</a>
-    <a href="/auth/login" class="btn btn-outline">로그인</a>
+
+  <div class="product-grid">
+    ${products.map(p => '<div class="product-card">' +
+      '<a href="/product/' + p.id + '">' +
+        '<div class="product-img"><img src="' + p.image + '" alt="' + p.name + '"></div>' +
+        '<div class="product-info">' +
+          '<p class="product-name">' + p.name + '</p>' +
+          '<div class="product-price-row">' +
+            '<span class="product-discount">' + p.discount + '%</span>' +
+            '<span class="product-price">' + Number(p.currentPrice).toLocaleString() + '원</span>' +
+          '</div>' +
+          '<p class="product-original">' + Number(p.originalPrice).toLocaleString() + '원</p>' +
+        '</div>' +
+      '</a>' +
+    '</div>').join('')}
   </div>
 </div>
 ` }) %>

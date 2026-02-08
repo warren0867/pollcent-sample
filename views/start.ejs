@@ -1,0 +1,19 @@
+<%- include('layout', { body: `
+<div class="auth-page">
+  <h2>PricePick 시작하기</h2>
+  <p style="text-align:center;color:#888;margin-bottom:20px">간편하게 시작하세요. 비밀번호 없이!</p>
+  ${error ? '<div class="alert alert-error">' + error + '</div>' : ''}
+  <form method="POST" action="/auth/start" class="auth-form">
+    <div class="form-group">
+      <label>닉네임</label>
+      <input type="text" name="nickname" required placeholder="닉네임 입력">
+    </div>
+    <div class="form-group">
+      <label>이메일</label>
+      <input type="email" name="email" required placeholder="이메일 입력">
+    </div>
+    <button type="submit" class="btn btn-primary btn-full">시작하기</button>
+  </form>
+  <p class="auth-link" style="margin-top:12px">이미 가입했다면 같은 이메일로 입력하세요</p>
+</div>
+` }) %>

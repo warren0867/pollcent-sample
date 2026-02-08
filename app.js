@@ -4,6 +4,7 @@ const session = require('express-session');
 const path = require('path');
 const { initDb, getDb } = require('./db/database');
 const { setLocals } = require('./middleware/auth');
+const { getHotdeals, getHotdealById } = require('./services/hotdeals');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,15 +28,23 @@ app.use('/auth', require('./routes/auth'));
 app.use('/purchase', require('./routes/purchase'));
 app.use('/tickets', require('./routes/ticket'));
 app.use('/rewards', require('./routes/reward'));
-app.use('/dashboard', require('./routes/dashboard'));
 app.use('/price', require('./routes/price'));
+app.use('/mypage', require('./routes/mypage'));
 
-// 메인 페이지
+// 메인 페이지 (핫딜)
 app.get('/', (req, res) => {
-  if (req.session.userId) {
-    return res.redirect('/dashboard');
+  if (!req.session.userId) {
+    return res.render('index', { products: getHotdeals() });
   }
-  res.render('index');
+  res.render('index', { products: getHotdeals() });
+});
+
+// 상품 상세
+app.get('/product/:id', (req, res) => {
+  const product = getHotdealById(parseInt(req.params.id, 10));
+  if (!product) return res.redirect('/');
+  if (!req.session.userId) return res.redirect('/auth/start');
+  res.render('product', { product });
 });
 
 // 글로벌 에러 핸들러
@@ -46,7 +55,6 @@ app.use((err, req, res, next) => {
 
 // DB 초기화 후 서버 시작
 initDb().then(() => {
-  // 지연 보상 상태 자동 업데이트
   function updateDelayedRewardStatus() {
     try {
       const db = getDb();

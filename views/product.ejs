@@ -1,0 +1,40 @@
+<%- include('layout', { body: `
+<div class="product-detail">
+  <div class="product-detail-img">
+    <img src="${product.image}" alt="${product.name}">
+  </div>
+  <div class="product-detail-info">
+    <h2>${product.name}</h2>
+    <div class="product-price-row">
+      <span class="product-discount">${product.discount}%</span>
+      <span class="product-price">${Number(product.currentPrice).toLocaleString()}원</span>
+    </div>
+    <p class="product-original">${Number(product.originalPrice).toLocaleString()}원</p>
+  </div>
+
+  <div class="section" style="margin-top:20px">
+    <h3>가격 알림 설정</h3>
+    <form method="POST" action="/price/add" class="price-form" style="flex-direction:column">
+      <input type="hidden" name="productName" value="${product.name}">
+      <input type="hidden" name="currentPrice" value="${product.currentPrice}">
+      <input type="hidden" name="productUrl" value="${product.url}">
+      <div class="form-group">
+        <label>목표 가격 (원)</label>
+        <input type="number" name="targetPrice" value="${Math.round(product.currentPrice * 0.85)}" required class="input" style="width:100%">
+      </div>
+      <button type="submit" class="btn btn-primary btn-full">관심상품 등록</button>
+    </form>
+  </div>
+
+  <div class="section" style="margin-top:12px">
+    <h3>쿠팡에서 구매하기</h3>
+    <p style="font-size:13px;color:#888;margin-bottom:12px">아래 링크로 구매하면 리워드를 받을 수 있어요!</p>
+    <a href="${product.url}" target="_blank" class="btn btn-coupang btn-full">쿠팡에서 보기</a>
+    <form method="POST" action="/purchase/simulate" style="margin-top:8px">
+      <input type="hidden" name="productName" value="${product.name}">
+      <input type="hidden" name="amount" value="${product.currentPrice}">
+      <button type="submit" class="btn btn-outline btn-full">구매 시뮬레이션 (테스트)</button>
+    </form>
+  </div>
+</div>
+` }) %>

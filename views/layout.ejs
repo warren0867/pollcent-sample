@@ -12,15 +12,13 @@
       <a href="/" class="nav-logo">PricePick</a>
       <div class="nav-links">
         <% if (user) { %>
-          <a href="/dashboard">대시보드</a>
+          <a href="/">핫딜</a>
+          <a href="/price">관심상품</a>
           <a href="/tickets">티켓</a>
           <a href="/rewards">교환소</a>
-          <a href="/price">가격추적</a>
-          <span class="nav-user"><%= user.nickname %>님</span>
-          <a href="/auth/logout" class="btn-sm">로그아웃</a>
+          <a href="/mypage">마이</a>
         <% } else { %>
-          <a href="/auth/login">로그인</a>
-          <a href="/auth/register">회원가입</a>
+          <a href="/auth/start">시작하기</a>
         <% } %>
       </div>
     </div>

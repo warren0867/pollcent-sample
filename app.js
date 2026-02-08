@@ -53,5 +53,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Pollcent 서버 실행: http://localhost:${PORT}`);
+  console.log(`PricePick 서버 실행: http://localhost:${PORT}`);
 });

@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>PricePick</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏷️</text></svg>">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--primary:#FF4757;--primary-dark:#E8384F;--bg:#F5F6FA;--card:#fff;--text:#2D3436;--text-sub:#A4A4A4;--text-light:#B2BEC3;--border:#EEEFF3;--success:#00B894;--gold:#FFD700;--silver:#C0C0C0;--bronze:#CD7F32;--tab-h:60px;--header-h:56px;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+body{display:flex;flex-direction:column}
+
+/* Header */
+.header{height:var(--header-h);padding-top:var(--safe-top);background:var(--card);display:flex;align-items:center;justify-content:space-between;padding-left:20px;padding-right:20px;box-shadow:0 1px 3px rgba(0,0,0,.06);z-index:100;flex-shrink:0}
+.header-logo{font-size:20px;font-weight:800;color:var(--primary);letter-spacing:-0.5px}
+.header-user{font-size:13px;color:var(--text-sub);display:flex;align-items:center;gap:6px}
+.header-user .avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#FF6B81);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+
+/* Content area */
+.content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--tab-h) + var(--safe-bottom) + 10px)}
+
+/* Pages */
+.page{display:none;padding:16px}
+.page.active{display:block}
+
+/* Tab bar */
+.tabbar{position:fixed;bottom:0;left:0;right:0;height:calc(var(--tab-h) + var(--safe-bottom));padding-bottom:var(--safe-bottom);background:var(--card);display:flex;box-shadow:0 -1px 10px rgba(0,0,0,.08);z-index:100}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;color:var(--text-light);text-decoration:none;transition:.2s}
+.tab.active{color:var(--primary)}
+.tab svg{width:22px;height:22px}
+.tab.active svg{transform:scale(1.1)}
+
+/* Cards */
+.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.card-title{font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.card-title .badge{font-size:11px;padding:3px 8px;border-radius:20px;font-weight:600}
+
+/* Product grid */
+.product-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.product-card{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.05);cursor:pointer;transition:transform .2s}
+.product-card:active{transform:scale(.97)}
+.product-img{width:100%;aspect-ratio:1;background:#f0f0f0;overflow:hidden;position:relative}
+.product-img img{width:100%;height:100%;object-fit:cover}
+.img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:40px;background:linear-gradient(135deg,#f0f0f0,#e0e0e0)}
+.product-badge{position:absolute;top:8px;left:8px;background:var(--primary);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px}
+.product-info{padding:10px}
+.product-name{font-size:13px;line-height:1.3;height:34px;overflow:hidden;color:var(--text);margin-bottom:6px}
+.product-price{font-size:17px;font-weight:800;color:var(--text)}
+.product-original{font-size:12px;color:var(--text-light);text-decoration:line-through;margin-left:4px}
+
+/* Section */
+.section-title{font-size:18px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-sub{font-size:13px;color:var(--text-sub);margin-bottom:16px}
+
+/* Banner */
+.banner{border-radius:16px;padding:20px;color:#fff;margin-bottom:16px;position:relative;overflow:hidden}
+.banner.gradient1{background:linear-gradient(135deg,#FF4757,#FF6B81)}
+.banner.gradient2{background:linear-gradient(135deg,#6C5CE7,#A29BFE)}
+.banner h3{font-size:18px;margin-bottom:4px}
+.banner p{font-size:13px;opacity:.85}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 20px;border-radius:12px;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:.2s}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-outline{background:transparent;border:1.5px solid var(--primary);color:var(--primary)}
+.btn-full{width:100%}
+.btn-sm{padding:8px 14px;font-size:12px;border-radius:10px}
+.btn-kakao{background:#FEE500;color:#3C1E1E}
+.btn-coupang{background:#00A0E4;color:#fff}
+.btn-disabled{background:#ddd;color:#999;pointer-events:none}
+
+/* Ticket cards */
+.ticket-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.ticket-card{text-align:center;padding:16px 8px;border-radius:14px;position:relative;overflow:hidden}
+.ticket-card.bronze{background:linear-gradient(135deg,#CD7F32,#DDA15E);color:#fff}
+.ticket-card.silver{background:linear-gradient(135deg,#A0A0A0,#D0D0D0);color:#fff}
+.ticket-card.gold{background:linear-gradient(135deg,#FFD700,#FFA500);color:#fff}
+.ticket-count{font-size:32px;font-weight:800}
+.ticket-label{font-size:11px;opacity:.9;margin-top:2px}
+.ticket-tier{font-size:12px;font-weight:700;text-transform:uppercase;margin-bottom:4px}
+
+/* Reward exchange */
+.reward-item{display:flex;align-items:center;gap:12px;padding:14px;background:var(--card);border-radius:14px;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.reward-icon{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.reward-info{flex:1}
+.reward-info h4{font-size:14px;margin-bottom:2px}
+.reward-info p{font-size:12px;color:var(--text-sub)}
+.reward-action .btn-sm{min-width:60px}
+
+/* Raffle */
+.raffle-card{background:var(--card);border-radius:16px;overflow:hidden;margin-bottom:10px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.raffle-rank{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.raffle-medal{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0}
+.raffle-medal.r1{background:linear-gradient(135deg,#FFD700,#FFA500)}
+.raffle-medal.r2{background:linear-gradient(135deg,#C0C0C0,#888)}
+.raffle-medal.r3{background:linear-gradient(135deg,#CD7F32,#A0652F)}
+.raffle-prize{flex:1}
+.raffle-prize h4{font-size:15px;margin-bottom:2px}
+.raffle-prize p{font-size:12px;color:var(--text-sub)}
+.raffle-entries{text-align:right;font-size:12px;color:var(--text-sub)}
+.raffle-entries span{display:block;font-size:18px;font-weight:800;color:var(--primary)}
+
+/* Raffle animation */
+.raffle-machine{background:linear-gradient(135deg,#6C5CE7,#A29BFE);border-radius:20px;padding:30px;text-align:center;margin-bottom:16px;color:#fff;position:relative;overflow:hidden}
+.raffle-machine h3{font-size:20px;margin-bottom:8px}
+.raffle-machine p{font-size:13px;opacity:.8;margin-bottom:16px}
+.raffle-ball{width:80px;height:80px;border-radius:50%;background:#fff;color:var(--primary);font-size:28px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 4px 20px rgba(0,0,0,.2);transition:.3s}
+.raffle-ball.spinning{animation:spin 0.1s linear infinite}
+@keyframes spin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(1.1)}100%{transform:rotate(360deg) scale(1)}}
+
+/* Price track */
+.track-item{display:flex;align-items:center;gap:12px;padding:14px;background:var(--card);border-radius:14px;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,.04);cursor:pointer}
+.track-thumb{width:50px;height:50px;border-radius:10px;background:#f0f0f0;overflow:hidden;flex-shrink:0}
+.track-thumb img{width:100%;height:100%;object-fit:cover}
+.track-info{flex:1;min-width:0}
+.track-info h4{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
+.track-info p{font-size:12px;color:var(--text-sub)}
+.track-price{text-align:right;flex-shrink:0}
+.track-price .current{font-size:15px;font-weight:700}
+.track-price .target{font-size:11px;color:var(--success)}
+
+/* Mypage */
+.profile-card{text-align:center;padding:30px 16px;background:var(--card);border-radius:16px;margin-bottom:16px}
+.profile-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#FF6B81);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;margin:0 auto 10px}
+.profile-name{font-size:18px;font-weight:700;margin-bottom:4px}
+.profile-email{font-size:13px;color:var(--text-sub)}
+.profile-badge{display:inline-block;margin-top:8px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600}
+.profile-badge.kakao{background:#FEE500;color:#3C1E1E}
+.profile-badge.normal{background:#EEEFF3;color:#636E72}
+
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.stat-item{text-align:center;padding:14px 8px;background:var(--card);border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.stat-value{font-size:20px;font-weight:800;color:var(--primary)}
+.stat-label{font-size:11px;color:var(--text-sub);margin-top:2px}
+
+/* Modal / Overlay */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--card);border-radius:20px;padding:24px;max-width:360px;width:100%;text-align:center;animation:modalIn .3s}
+@keyframes modalIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.modal h3{font-size:18px;margin-bottom:8px}
+.modal p{font-size:14px;color:var(--text-sub);margin-bottom:16px}
+.modal .prize-icon{font-size:48px;margin-bottom:8px}
+
+/* Product detail overlay */
+.detail-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:150;display:none;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.detail-overlay.show{display:block}
+.detail-header{display:flex;align-items:center;padding:12px 16px;background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.detail-back{width:36px;height:36px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;border:none}
+.detail-title{flex:1;text-align:center;font-size:15px;font-weight:700;margin-right:36px}
+.detail-img{width:100%;aspect-ratio:1;background:#f0f0f0}
+.detail-img img{width:100%;height:100%;object-fit:cover}
+.detail-body{padding:16px}
+.detail-body h2{font-size:16px;line-height:1.4;margin-bottom:10px}
+.detail-prices{display:flex;align-items:baseline;gap:8px;margin-bottom:16px}
+.detail-discount{font-size:22px;font-weight:800;color:var(--primary)}
+.detail-current{font-size:22px;font-weight:800}
+.detail-original{font-size:14px;color:var(--text-light);text-decoration:line-through}
+
+/* Deeplink section */
+.deeplink-box{background:#FFF8F0;border:1.5px dashed #FFB74D;border-radius:12px;padding:14px;margin:12px 0;font-size:12px;color:#E65100;word-break:break-all}
+.deeplink-box code{display:block;margin-top:6px;font-size:11px;color:#BF360C;background:#FFE0B2;padding:6px;border-radius:6px}
+
+/* Input */
+.input-group{margin-bottom:12px}
+.input-group label{display:block;font-size:13px;font-weight:600;color:var(--text-sub);margin-bottom:4px}
+.input-group input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:15px;outline:none;transition:.2s}
+.input-group input:focus{border-color:var(--primary)}
+
+/* Start page */
+.start-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;padding:20px;text-align:center}
+.start-logo{font-size:36px;font-weight:800;color:var(--primary);margin-bottom:8px}
+.start-sub{color:var(--text-sub);margin-bottom:32px}
+.start-form{width:100%;max-width:320px}
+
+/* Chart */
+.chart-wrap{background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 2px 12px rgba(0,0,0,.04);display:none}
+
+/* Empty */
+.empty-state{text-align:center;padding:40px 20px;color:var(--text-light)}
+.empty-state .icon{font-size:48px;margin-bottom:12px}
+.empty-state p{font-size:14px}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-logo">PricePick</div>
+  <div class="header-user" id="header-user" style="display:none">
+    <div class="avatar" id="header-avatar">P</div>
+    <span id="header-name"></span>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content" id="content">
+
+  <!-- Start Page -->
+  <div class="page active" id="page-start">
+    <div class="start-page">
+      <div class="start-logo">PricePick</div>
+      <p class="start-sub">쿠팡 핫딜 추적 & 리워드</p>
+      <div class="start-form">
+        <div class="input-group">
+          <label>닉네임</label>
+          <input type="text" id="start-nickname" placeholder="닉네임을 입력하세요">
+        </div>
+        <div class="input-group">
+          <label>이메일</label>
+          <input type="email" id="start-email" placeholder="이메일을 입력하세요">
+        </div>
+        <button class="btn btn-primary btn-full" onclick="doStart()" style="margin-top:8px">시작하기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Home (Hotdeals) -->
+  <div class="page" id="page-home">
+    <div class="banner gradient1">
+      <h3>오늘의 핫딜</h3>
+      <p>구매하면 티켓이 쌓여요!</p>
+    </div>
+    <div class="section-title">추천 상품</div>
+    <div class="product-grid" id="product-grid"></div>
+  </div>
+
+  <!-- Price Tracking -->
+  <div class="page" id="page-track">
+    <div class="section-title">관심상품</div>
+    <div class="section-sub">목표가에 도달하면 알려드려요</div>
+    <div id="track-list"></div>
+    <div class="chart-wrap" id="chart-wrap">
+      <canvas id="price-chart" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- Rewards -->
+  <div class="page" id="page-reward">
+    <div class="section-title">내 티켓</div>
+    <div class="ticket-grid">
+      <div class="ticket-card bronze"><div class="ticket-tier">Bronze</div><div class="ticket-count" id="tc-bronze">0</div><div class="ticket-label">장</div></div>
+      <div class="ticket-card silver"><div class="ticket-tier">Silver</div><div class="ticket-count" id="tc-silver">0</div><div class="ticket-label">장</div></div>
+      <div class="ticket-card gold"><div class="ticket-tier">Gold</div><div class="ticket-count" id="tc-gold">0</div><div class="ticket-label">장</div></div>
+    </div>
+    <div class="section-title">선택형 보상</div>
+    <div id="reward-list"></div>
+  </div>
+
+  <!-- Raffle -->
+  <div class="page" id="page-raffle">
+    <div class="raffle-machine">
+      <h3>이달의 추첨</h3>
+      <p>응모권으로 참여하세요</p>
+      <div class="raffle-ball" id="raffle-ball">?</div>
+      <div style="margin-bottom:8px;font-size:13px">내 응모권: <b id="raffle-entries">0</b>장</div>
+      <button class="btn" style="background:#fff;color:#6C5CE7;font-weight:700" onclick="doRaffle()">추첨하기</button>
+    </div>
+    <div class="section-title">경품 안내</div>
+    <div id="raffle-prizes"></div>
+  </div>
+
+  <!-- My Page -->
+  <div class="page" id="page-my">
+    <div class="profile-card">
+      <div class="profile-avatar" id="my-avatar">P</div>
+      <div class="profile-name" id="my-name">-</div>
+      <div class="profile-email" id="my-email">-</div>
+      <div id="my-badge-wrap"></div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-item"><div class="stat-value" id="my-bronze">0</div><div class="stat-label">Bronze</div></div>
+      <div class="stat-item"><div class="stat-value" id="my-silver">0</div><div class="stat-label">Silver</div></div>
+      <div class="stat-item"><div class="stat-value" id="my-gold">0</div><div class="stat-label">Gold</div></div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-item"><div class="stat-value" id="my-purchases">0</div><div class="stat-label">구매건수</div></div>
+      <div class="stat-item"><div class="stat-value" id="my-raffle">0</div><div class="stat-label">응모권</div></div>
+      <div class="stat-item"><div class="stat-value" id="my-exchanged">0</div><div class="stat-label">교환완료</div></div>
+    </div>
+    <div class="card" id="kakao-card">
+      <div class="card-title">카카오 연동</div>
+      <p style="font-size:13px;color:var(--text-sub);margin-bottom:10px">연동하면 보상 대기일이 30일→7일로 단축!</p>
+      <button class="btn btn-kakao btn-full btn-sm" onclick="linkKakao()">카카오계정 연동하기</button>
+    </div>
+    <div class="card">
+      <div class="card-title">최근 구매</div>
+      <div id="purchase-history"></div>
+    </div>
+    <div style="text-align:center;margin-top:16px">
+      <button class="btn btn-outline btn-sm" onclick="doLogout()">로그아웃</button>
+    </div>
+  </div>
+</div>
+
+<!-- Tab bar -->
+<div class="tabbar" id="tabbar" style="display:none">
+  <a class="tab active" data-tab="home" onclick="switchTab('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    핫딜
+  </a>
+  <a class="tab" data-tab="track" onclick="switchTab('track')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+    관심상품
+  </a>
+  <a class="tab" data-tab="reward" onclick="switchTab('reward')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
+    보상
+  </a>
+  <a class="tab" data-tab="raffle" onclick="switchTab('raffle')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16.2 7.8l-2 6.3-6.4 2.1 2-6.3z"/></svg>
+    추첨
+  </a>
+  <a class="tab" data-tab="my" onclick="switchTab('my')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    마이
+  </a>
+</div>
+
+<!-- Product Detail Overlay -->
+<div class="detail-overlay" id="detail-overlay">
+  <div class="detail-header">
+    <button class="detail-back" onclick="closeDetail()">←</button>
+    <div class="detail-title">상품 상세</div>
+  </div>
+  <div class="detail-img" id="detail-img-wrap"></div>
+  <div class="detail-body" id="detail-body"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<script>
+// ===== DATA =====
+var PRODUCTS=[
+  {id:1,name:'LG 스탠바이미 27인치 포터블 모니터',emoji:'🖥️',originalPrice:1190000,currentPrice:899000,discount:24,url:'https://www.coupang.com/vp/products/7335498014'},
+  {id:2,name:'애플 에어팟 프로 2세대 USB-C',emoji:'🎧',originalPrice:359000,currentPrice:289000,discount:19,url:'https://www.coupang.com/vp/products/7601553541'},
+  {id:3,name:'다이슨 V15 디텍트 무선청소기',emoji:'🧹',originalPrice:1290000,currentPrice:899000,discount:30,url:'https://www.coupang.com/vp/products/6497498498'},
+  {id:4,name:'삼성 갤럭시 버즈3 프로',emoji:'🎵',originalPrice:359900,currentPrice:279000,discount:22,url:'https://www.coupang.com/vp/products/8040177674'},
+  {id:5,name:'나이키 에어포스1 07 화이트',emoji:'👟',originalPrice:139000,currentPrice:99900,discount:28,url:'https://www.coupang.com/vp/products/6023436854'},
+  {id:6,name:'샤오미 로봇청소기 X20 Pro Plus',emoji:'🤖',originalPrice:899000,currentPrice:599000,discount:33,url:'https://www.coupang.com/vp/products/7812345678'},
+];
+
+var REWARDS=[
+  {id:1,tier:'bronze',count:8,prize:'아이스 아메리카노',icon:'☕',desc:'Bronze 티켓 8장'},
+  {id:2,tier:'silver',count:4,prize:'아이스 아메리카노',icon:'☕',desc:'Silver 티켓 4장'},
+  {id:3,tier:'gold',count:1,prize:'아이스 라떼',icon:'🥤',desc:'Gold 티켓 1장'},
+];
+
+var RAFFLE_PRIZES=[
+  {rank:1,prize:'도미노피자 라지 세트',icon:'🍕',desc:'페퍼로니 + 콜라 1.25L'},
+  {rank:2,prize:'맥도날드 빅맥 세트',icon:'🍔',desc:'빅맥 + 감자튀김 + 콜라'},
+  {rank:3,prize:'스타벅스 아메리카노',icon:'☕',desc:'Tall 사이즈'},
+];
+
+// ===== STORAGE =====
+function save(k,v){localStorage.setItem('pp_'+k,JSON.stringify(v))}
+function load(k){try{return JSON.parse(localStorage.getItem('pp_'+k))}catch(e){return null}}
+
+function getUser(){return load('user')}
+function getTickets(){return load('tickets')||{bronze:0,silver:0,gold:0}}
+function setTickets(t){save('tickets',t)}
+function getTracks(){return load('tracks')||[]}
+function setTracks(t){save('tracks',t)}
+function getPurchases(){return load('purchases')||[]}
+function getRaffle(){return load('raffle')||0}
+function setRaffle(n){save('raffle',n)}
+function getExchanged(){return load('exchanged')||0}
+function setExchanged(n){save('exchanged',n)}
+
+// ===== AUTH =====
+function doStart(){
+  var nick=document.getElementById('start-nickname').value.trim();
+  var email=document.getElementById('start-email').value.trim();
+  if(!nick||!email)return alert('닉네임과 이메일을 입력하세요');
+  save('user',{nickname:nick,email:email,kakao:false,joined:new Date().toISOString().slice(0,10)});
+  initApp();
+}
+function doLogout(){
+  if(confirm('로그아웃 하시겠습니까?')){localStorage.clear();location.reload()}
+}
+function linkKakao(){
+  var u=getUser();if(!u)return;
+  u.kakao=true;save('user',u);
+  showModal('🎉','카카오 연동 완료!','보상 대기일이 7일로 단축됩니다');
+  renderMypage();
+}
+
+// ===== TABS =====
+function switchTab(name){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelector('.tab[data-tab="'+name+'"]').classList.add('active');
+  if(name==='reward')renderRewards();
+  if(name==='raffle')renderRaffle();
+  if(name==='my')renderMypage();
+  if(name==='track')renderTracks();
+  document.getElementById('content').scrollTop=0;
+}
+
+// ===== INIT =====
+function initApp(){
+  var u=getUser();
+  if(!u){
+    document.getElementById('page-start').classList.add('active');
+    document.getElementById('tabbar').style.display='none';
+    document.getElementById('header-user').style.display='none';
+    return;
+  }
+  document.getElementById('page-start').classList.remove('active');
+  document.getElementById('tabbar').style.display='flex';
+  document.getElementById('header-user').style.display='flex';
+  document.getElementById('header-avatar').textContent=u.nickname[0];
+  document.getElementById('header-name').textContent=u.nickname+'님';
+  renderProducts();
+  switchTab('home');
+}
+
+// ===== PRODUCTS =====
+function renderProducts(){
+  var html='';
+  PRODUCTS.forEach(function(p){
+    html+='<div class="product-card" onclick="openDetail('+p.id+')">';
+    html+='<div class="product-img"><div class="img-placeholder">'+p.emoji+'</div><div class="product-badge">'+p.discount+'%</div></div>';
+    html+='<div class="product-info"><p class="product-name">'+p.name+'</p>';
+    html+='<span class="product-price">'+p.currentPrice.toLocaleString()+'원</span>';
+    html+='<span class="product-original">'+p.originalPrice.toLocaleString()+'원</span>';
+    html+='</div></div>';
+  });
+  document.getElementById('product-grid').innerHTML=html;
+}
+
+// ===== PRODUCT DETAIL =====
+function openDetail(id){
+  var p=PRODUCTS.find(function(x){return x.id===id});
+  if(!p)return;
+  document.getElementById('detail-img-wrap').innerHTML='<div class="img-placeholder" style="height:300px;font-size:80px">'+p.emoji+'</div>';
+  var target=Math.round(p.currentPrice*0.85);
+  var tier=p.currentPrice>=100000?'Gold':p.currentPrice>=20000?'Silver':'Bronze';
+  var tierColor=tier==='Gold'?'var(--gold)':tier==='Silver'?'var(--silver)':'var(--bronze)';
+  var deeplink='https://link.coupang.com/re/AFFTDP?lptag=AF'+p.id+'&subid=pricepick_user_'+Date.now();
+
+  var html='<h2>'+p.name+'</h2>';
+  html+='<div class="detail-prices"><span class="detail-discount">'+p.discount+'%</span><span class="detail-current">'+p.currentPrice.toLocaleString()+'원</span><span class="detail-original">'+p.originalPrice.toLocaleString()+'원</span></div>';
+
+  html+='<div class="card"><div class="card-title">구매 시 보상 <span class="badge" style="background:'+tierColor+';color:#fff">'+tier+' 티켓</span></div>';
+  html+='<p style="font-size:13px;color:var(--text-sub)">이 상품 구매 시 <b>'+tier+' 티켓 1장</b> + 추첨 응모권 1장이 지급됩니다</p></div>';
+
+  html+='<div class="card"><div class="card-title">딥링크 (예시)</div>';
+  html+='<div class="deeplink-box">쿠팡 파트너스 딥링크가 생성됩니다<code>'+deeplink+'</code></div>';
+  html+='<p style="font-size:11px;color:var(--text-light);margin-top:6px">* 실제 서비스에서는 쿠팡 파트너스 API로 생성됩니다</p></div>';
+
+  html+='<div class="card"><div class="card-title">관심상품 등록</div>';
+  html+='<div class="input-group"><label>목표 가격</label><input type="number" id="detail-target" value="'+target+'"></div>';
+  html+='<button class="btn btn-outline btn-full" onclick="addTrack('+p.id+')">관심상품 등록</button></div>';
+
+  html+='<a href="'+p.url+'" target="_blank" class="btn btn-coupang btn-full" style="margin-top:8px">쿠팡에서 보기</a>';
+  html+='<button class="btn btn-primary btn-full" style="margin-top:8px" onclick="simulatePurchase('+p.id+')">구매 시뮬레이션 (테스트)</button>';
+
+  document.getElementById('detail-body').innerHTML=html;
+  document.getElementById('detail-overlay').classList.add('show');
+}
+function closeDetail(){document.getElementById('detail-overlay').classList.remove('show')}
+
+// ===== PURCHASE SIMULATION =====
+function simulatePurchase(id){
+  var p=PRODUCTS.find(function(x){return x.id===id});
+  if(!p)return;
+  var tickets=getTickets();
+  var tier=p.currentPrice>=100000?'gold':p.currentPrice>=20000?'silver':'bronze';
+  tickets[tier]++;
+  setTickets(tickets);
+
+  var raffle=getRaffle();
+  setRaffle(raffle+1);
+
+  var purchases=getPurchases();
+  purchases.unshift({name:p.name,price:p.currentPrice,tier:tier,date:new Date().toISOString().slice(0,10)});
+  save('purchases',purchases);
+
+  closeDetail();
+  showModal('🎫','구매 완료!',p.name+'<br><b style="color:'+
+    (tier==='gold'?'var(--gold)':tier==='silver'?'var(--silver)':'var(--bronze)')+'">'+
+    tier.toUpperCase()+' 티켓 1장</b> + 응모권 1장 지급!');
+}
+
+// ===== TRACKS =====
+function addTrack(id){
+  var p=PRODUCTS.find(function(x){return x.id===id});
+  if(!p)return;
+  var target=parseInt(document.getElementById('detail-target').value,10);
+  if(!target)return;
+  var tracks=getTracks();
+  if(tracks.find(function(t){return t.productId===id}))return alert('이미 등록된 상품입니다');
+  var history=[];
+  for(var i=30;i>=0;i--){
+    var d=new Date();d.setDate(d.getDate()-i);
+    var v=p.currentPrice+Math.round(p.currentPrice*(Math.random()*0.3-0.15));
+    history.push({date:d.toISOString().slice(5,10),price:v});
+  }
+  tracks.push({productId:id,name:p.name,emoji:p.emoji,currentPrice:p.currentPrice,targetPrice:target,history:history});
+  setTracks(tracks);
+  closeDetail();
+  switchTab('track');
+}
+
+var chartInstance=null;
+function renderTracks(){
+  var tracks=getTracks();
+  var html='';
+  if(tracks.length===0){
+    html='<div class="empty-state"><div class="icon">👀</div><p>관심상품을 등록해보세요<br>핫딜에서 상품을 클릭!</p></div>';
+  }
+  tracks.forEach(function(t,i){
+    var diff=t.currentPrice-t.targetPrice;
+    html+='<div class="track-item" onclick="showChart('+i+')">';
+    html+='<div class="track-thumb" style="display:flex;align-items:center;justify-content:center;font-size:24px;background:#f0f0f0">'+t.emoji+'</div>';
+    html+='<div class="track-info"><h4>'+t.name+'</h4><p>목표 '+t.targetPrice.toLocaleString()+'원</p></div>';
+    html+='<div class="track-price"><div class="current">'+t.currentPrice.toLocaleString()+'원</div>';
+    html+='<div class="target">'+(diff<=0?'목표 도달!':diff.toLocaleString()+'원 초과')+'</div></div></div>';
+  });
+  document.getElementById('track-list').innerHTML=html;
+}
+
+function showChart(idx){
+  var tracks=getTracks();
+  var t=tracks[idx];
+  if(!t)return;
+  var wrap=document.getElementById('chart-wrap');
+  wrap.style.display=wrap.style.display==='block'?'none':'block';
+  if(wrap.style.display==='none')return;
+  if(chartInstance)chartInstance.destroy();
+  var ctx=document.getElementById('price-chart').getContext('2d');
+  chartInstance=new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:t.history.map(function(h){return h.date}),
+      datasets:[
+        {label:'가격',data:t.history.map(function(h){return h.price}),borderColor:'#FF4757',backgroundColor:'rgba(255,71,87,.1)',fill:true,tension:.3,pointRadius:1},
+        {label:'목표가',data:t.history.map(function(){return t.targetPrice}),borderColor:'#00B894',borderDash:[5,5],pointRadius:0,fill:false}
+      ]
+    },
+    options:{responsive:true,plugins:{legend:{position:'top',labels:{font:{size:11}}}},scales:{y:{ticks:{callback:function(v){return (v/10000).toFixed(0)+'만'}}}}}
+  });
+}
+
+// ===== REWARDS =====
+function renderRewards(){
+  var tickets=getTickets();
+  document.getElementById('tc-bronze').textContent=tickets.bronze;
+  document.getElementById('tc-silver').textContent=tickets.silver;
+  document.getElementById('tc-gold').textContent=tickets.gold;
+
+  var html='';
+  REWARDS.forEach(function(r){
+    var have=tickets[r.tier];
+    var canExchange=have>=r.count;
+    html+='<div class="reward-item">';
+    html+='<div class="reward-icon" style="background:var(--bg)">'+r.icon+'</div>';
+    html+='<div class="reward-info"><h4>'+r.prize+'</h4><p>'+r.desc+' (보유: '+have+'장)</p></div>';
+    html+='<div class="reward-action"><button class="btn btn-sm '+(canExchange?'btn-primary':'btn-disabled')+'" onclick="exchangeReward(\''+r.tier+'\','+r.count+',\''+r.prize+'\',\''+r.icon+'\')">'+(canExchange?'교환':'부족')+'</button></div>';
+    html+='</div>';
+  });
+  document.getElementById('reward-list').innerHTML=html;
+}
+
+function exchangeReward(tier,count,prize,icon){
+  var tickets=getTickets();
+  if(tickets[tier]<count)return;
+  tickets[tier]-=count;
+  setTickets(tickets);
+  setExchanged(getExchanged()+1);
+  showModal(icon,'교환 완료!','<b>'+prize+'</b> 쿠폰이 발급되었습니다!<br><span style="font-size:12px;color:var(--text-sub)">마이페이지에서 확인하세요</span>');
+  renderRewards();
+}
+
+// ===== RAFFLE =====
+function renderRaffle(){
+  document.getElementById('raffle-entries').textContent=getRaffle();
+  var html='';
+  RAFFLE_PRIZES.forEach(function(r){
+    html+='<div class="raffle-card"><div class="raffle-rank">';
+    html+='<div class="raffle-medal r'+r.rank+'">'+r.rank+'</div>';
+    html+='<div class="raffle-prize"><h4>'+r.icon+' '+r.prize+'</h4><p>'+r.desc+'</p></div>';
+    html+='</div></div>';
+  });
+  document.getElementById('raffle-prizes').innerHTML=html;
+}
+
+function doRaffle(){
+  var entries=getRaffle();
+  if(entries<1)return showModal('😅','응모권이 없어요','상품을 구매하면 응모권을 받을 수 있어요!');
+  setRaffle(entries-1);
+  var ball=document.getElementById('raffle-ball');
+  ball.classList.add('spinning');
+  ball.textContent='?';
+  var count=0;
+  var interval=setInterval(function(){
+    ball.textContent=['🍕','🍔','☕','🎁','🎉','✨'][count%6];
+    count++;
+    if(count>20){
+      clearInterval(interval);
+      ball.classList.remove('spinning');
+      var rand=Math.random();
+      var result;
+      if(rand<0.05)result=RAFFLE_PRIZES[0];
+      else if(rand<0.2)result=RAFFLE_PRIZES[1];
+      else result=RAFFLE_PRIZES[2];
+      ball.textContent=result.icon;
+      showModal(result.icon,result.rank+'등 당첨!','<b>'+result.prize+'</b><br><span style="font-size:12px;color:var(--text-sub)">'+result.desc+'</span>');
+      document.getElementById('raffle-entries').textContent=getRaffle();
+    }
+  },80);
+}
+
+// ===== MYPAGE =====
+function renderMypage(){
+  var u=getUser();if(!u)return;
+  var tickets=getTickets();
+  var purchases=getPurchases();
+  document.getElementById('my-avatar').textContent=u.nickname[0];
+  document.getElementById('my-name').textContent=u.nickname;
+  document.getElementById('my-email').textContent=u.email;
+  document.getElementById('my-badge-wrap').innerHTML=u.kakao?
+    '<span class="profile-badge kakao">카카오 연동 · 7일 대기</span>':
+    '<span class="profile-badge normal">일반회원 · 30일 대기</span>';
+  document.getElementById('my-bronze').textContent=tickets.bronze;
+  document.getElementById('my-silver').textContent=tickets.silver;
+  document.getElementById('my-gold').textContent=tickets.gold;
+  document.getElementById('my-purchases').textContent=purchases.length;
+  document.getElementById('my-raffle').textContent=getRaffle();
+  document.getElementById('my-exchanged').textContent=getExchanged();
+  document.getElementById('kakao-card').style.display=u.kakao?'none':'block';
+
+  var html='';
+  if(purchases.length===0)html='<p style="font-size:13px;color:var(--text-light)">아직 구매 내역이 없습니다</p>';
+  purchases.slice(0,5).forEach(function(p){
+    html+='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px">';
+    html+='<span>'+p.name.slice(0,15)+(p.name.length>15?'...':'')+'</span>';
+    html+='<span style="font-weight:600">'+p.price.toLocaleString()+'원</span></div>';
+  });
+  document.getElementById('purchase-history').innerHTML=html;
+}
+
+// ===== MODAL =====
+function showModal(icon,title,msg){
+  document.getElementById('modal-content').innerHTML=
+    '<div class="prize-icon">'+icon+'</div><h3>'+title+'</h3><p>'+msg+'</p>'+
+    '<button class="btn btn-primary btn-full" onclick="closeModal()">확인</button>';
+  document.getElementById('modal').classList.add('show');
+}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+
+// ===== START =====
+initApp();
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<%- include('layout', { body: `
+<div class="price-page">
+  <h2>가격 추적</h2>
+
+  <div class="section">
+    <h3>상품 추가</h3>
+    <form method="POST" action="/price/add" class="price-form">
+      <input type="text" name="productName" placeholder="상품명" required class="input">
+      <input type="number" name="currentPrice" placeholder="현재가격 (원)" required class="input">
+      <input type="number" name="targetPrice" placeholder="목표가격 (원)" required class="input">
+      <input type="text" name="productUrl" placeholder="상품 URL (선택)" class="input">
+      <button type="submit" class="btn btn-primary">추적 시작</button>
+    </form>
+  </div>
+
+  ${tracks.length === 0 ? '<p class="empty" style="padding:20px 0">추적중인 상품이 없습니다.</p>' : ''}
+
+  <div class="track-list">
+    ${tracks.map(t => '<div class="track-card" id="track-' + t.id + '">' +
+      '<div class="track-header">' +
+        '<div class="track-info">' +
+          '<h4>' + t.product_name + '</h4>' +
+          '<div class="track-prices">' +
+            '<span>현재 <b>' + Number(t.current_price).toLocaleString() + '원</b></span>' +
+            '<span class="track-arrow">→</span>' +
+            '<span>목표 <b class="target-price">' + Number(t.target_price).toLocaleString() + '원</b></span>' +
+          '</div>' +
+          '<div class="track-stats">' +
+            '<span>최저 ' + Number(t.minPrice).toLocaleString() + '원</span>' +
+            '<span>최고 ' + Number(t.maxPrice).toLocaleString() + '원</span>' +
+            '<span class="track-diff ' + (t.diff <= 0 ? 'reached' : 'above') + '">' +
+              (t.diff <= 0 ? '목표 도달!' : Number(t.diff).toLocaleString() + '원 초과') +
+            '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="track-actions">' +
+          '<button class="btn btn-sm" onclick="showChart(' + t.id + ')">차트</button>' +
+          '<form method="POST" action="/price/delete/' + t.id + '" style="display:inline">' +
+            '<button type="submit" class="btn btn-sm btn-danger">삭제</button>' +
+          '</form>' +
+        '</div>' +
+      '</div>' +
+      '<div class="chart-container" id="chart-' + t.id + '" style="display:none">' +
+        '<canvas id="canvas-' + t.id + '" height="200"></canvas>' +
+      '</div>' +
+    '</div>').join('')}
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script>
+var chartInstances = {};
+
+async function showChart(trackId) {
+  var container = document.getElementById('chart-' + trackId);
+  if (container.style.display === 'block') {
+    container.style.display = 'none';
+    return;
+  }
+  container.style.display = 'block';
+
+  if (chartInstances[trackId]) return;
+
+  var res = await fetch('/price/history/' + trackId);
+  var data = await res.json();
+  if (!data.success) return;
+
+  var ctx = document.getElementById('canvas-' + trackId).getContext('2d');
+  chartInstances[trackId] = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: data.history.map(function(h) { return h.date.slice(5); }),
+      datasets: [
+        {
+          label: '가격',
+          data: data.history.map(function(h) { return h.price; }),
+          borderColor: '#e74c3c',
+          backgroundColor: 'rgba(231,76,60,0.1)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 2,
+        },
+        {
+          label: '목표가',
+          data: data.history.map(function() { return data.product.target_price; }),
+          borderColor: '#2ecc71',
+          borderDash: [5, 5],
+          pointRadius: 0,
+          fill: false,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top' },
+      },
+      scales: {
+        y: {
+          ticks: {
+            callback: function(v) { return v.toLocaleString() + '원'; }
+          }
+        }
+      }
+    }
+  });
+}
+</script>
+` }) %>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pollcent - 쿠팡 리워드</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">Pollcent</a>
+      <div class="nav-links">
+        <% if (user) { %>
+          <a href="/dashboard">대시보드</a>
+          <a href="/tickets">티켓</a>
+          <a href="/rewards">교환소</a>
+          <a href="/price">가격추적</a>
+          <span class="nav-user"><%= user.nickname %>님</span>
+          <a href="/auth/logout" class="btn-sm">로그아웃</a>
+        <% } else { %>
+          <a href="/auth/login">로그인</a>
+          <a href="/auth/register">회원가입</a>
+        <% } %>
+      </div>
+    </div>
+  </nav>
+  <main class="container">
+    <%- body %>
+  </main>
+  <script src="/js/main.js"></script>
+</body>
+</html>

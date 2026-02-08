@@ -1,0 +1,24 @@
+<%- include('layout', { body: `
+<div class="auth-page">
+  <h2>회원가입</h2>
+  ${error ? '<div class="alert alert-error">' + error + '</div>' : ''}
+  <form method="POST" action="/auth/register" class="auth-form">
+    <div class="form-group">
+      <label>닉네임</label>
+      <input type="text" name="nickname" required placeholder="닉네임 입력">
+    </div>
+    <div class="form-group">
+      <label>이메일</label>
+      <input type="email" name="email" required placeholder="이메일 입력">
+    </div>
+    <div class="form-group">
+      <label>비밀번호</label>
+      <input type="password" name="password" required minlength="6" placeholder="6자 이상">
+    </div>
+    <button type="submit" class="btn btn-primary btn-full">가입하기</button>
+  </form>
+  <div class="auth-divider"><span>또는</span></div>
+  <a href="/auth/kakao" class="btn btn-kakao btn-full">카카오로 시작하기</a>
+  <p class="auth-link">이미 계정이 있으신가요? <a href="/auth/login">로그인</a></p>
+</div>
+` }) %>

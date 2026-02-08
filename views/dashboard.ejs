@@ -1,0 +1,63 @@
+<%- include('layout', { body: `
+<div class="dashboard">
+  <h2>대시보드</h2>
+
+  <div class="stats-grid">
+    <div class="stat-card balance">
+      <h3>내 잔액</h3>
+      <p class="stat-value">${Number(user.balance).toLocaleString()}원</p>
+    </div>
+    <div class="stat-card">
+      <h3>복권 티켓</h3>
+      <p class="stat-value">${unusedLottery}장</p>
+      ${unusedLottery > 0 ? '<a href="/tickets" class="btn btn-sm">사용하기</a>' : ''}
+    </div>
+    <div class="stat-card">
+      <h3>룰렛 티켓</h3>
+      <p class="stat-value">${unusedRoulette}장</p>
+      ${unusedRoulette > 0 ? '<a href="/tickets" class="btn btn-sm">사용하기</a>' : ''}
+    </div>
+    <div class="stat-card">
+      <h3>교환 가능 보상</h3>
+      <p class="stat-value">${Number(availableRewards.total).toLocaleString()}원</p>
+      <p class="stat-sub">${availableRewards.count}건</p>
+      ${availableRewards.count > 0 ? '<a href="/rewards" class="btn btn-sm">교환하기</a>' : ''}
+    </div>
+    <div class="stat-card">
+      <h3>대기중 보상</h3>
+      <p class="stat-value">${Number(pendingRewards.total).toLocaleString()}원</p>
+      <p class="stat-sub">${pendingRewards.count}건</p>
+    </div>
+    <div class="stat-card">
+      <h3>오늘 구매 한도</h3>
+      <p class="stat-value">${Number(dailyLimit.remaining).toLocaleString()}원</p>
+      <p class="stat-sub">사용: ${Number(dailyLimit.used).toLocaleString()} / ${Number(dailyLimit.limit).toLocaleString()}</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>구매 시뮬레이션 (테스트)</h3>
+    <form method="POST" action="/purchase/simulate" class="simulate-form">
+      <input type="text" name="productName" placeholder="상품명 (선택)" class="input">
+      <input type="number" name="amount" placeholder="구매금액 (원)" min="1000" step="1000" required class="input">
+      <button type="submit" class="btn btn-primary">구매 시뮬레이션</button>
+    </form>
+  </div>
+
+  <div class="section">
+    <h3>최근 구매</h3>
+    ${recentPurchases.length === 0 ? '<p class="empty">구매 내역이 없습니다.</p>' : ''}
+    <div class="purchase-list">
+      ${recentPurchases.map(p => '<div class="purchase-item"><span class="purchase-name">' + (p.product_name || p.coupang_order_id) + '</span><span class="purchase-amount">' + Number(p.amount).toLocaleString() + '원</span><span class="purchase-status status-' + p.status + '">' + p.status + '</span></div>').join('')}
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>리워드 요약</h3>
+    <table class="reward-table">
+      <tr><td>티켓 당첨 누적</td><td>${Number(ticketTotal).toLocaleString()}원</td></tr>
+      <tr><td>회원 유형</td><td>${user.login_type === 'kakao' ? '카카오 (7일 지연)' : '이메일 (30일 지연)'}</td></tr>
+    </table>
+  </div>
+</div>
+` }) %>

@@ -1,0 +1,41 @@
+<%- include('layout', { body: `
+<div class="tickets-page">
+  <h2>내 티켓</h2>
+
+  <div class="ticket-section">
+    <h3>복권 티켓 (${lotteryTickets.length}장)</h3>
+    ${lotteryTickets.length === 0 ? '<p class="empty">사용 가능한 복권 티켓이 없습니다.</p>' : ''}
+    ${lotteryTickets.length > 0 ? '<div class="ticket-actions"><button class="btn btn-primary" onclick="playAllLottery()">전체 긁기</button></div>' : ''}
+    <div class="ticket-grid" id="lottery-grid">
+      ${lotteryTickets.map(t => '<div class="ticket-card lottery" id="ticket-' + t.id + '"><div class="ticket-front" onclick="playLottery(' + t.id + ')"><span class="ticket-icon">🔒</span><span>긁어보세요!</span></div></div>').join('')}
+    </div>
+  </div>
+
+  <div class="ticket-section">
+    <h3>룰렛 티켓 (${rouletteTickets.length}장)</h3>
+    ${rouletteTickets.length === 0 ? '<p class="empty">사용 가능한 룰렛 티켓이 없습니다.</p>' : ''}
+    <div class="ticket-grid">
+      ${rouletteTickets.map(t => '<div class="ticket-card roulette" id="ticket-' + t.id + '"><button class="btn btn-roulette" onclick="playRoulette(' + t.id + ')">🎰 룰렛 돌리기</button></div>').join('')}
+    </div>
+  </div>
+
+  <div class="roulette-modal" id="roulette-modal" style="display:none">
+    <div class="roulette-container">
+      <div class="roulette-wheel" id="roulette-wheel">
+        ${rouletteTable.map((item, i) => '<div class="roulette-slice" style="background:' + item.color + ';transform:rotate(' + (i * 45) + 'deg)">' + item.label + '</div>').join('')}
+      </div>
+      <div class="roulette-pointer">▼</div>
+      <div class="roulette-result" id="roulette-result"></div>
+      <button class="btn btn-primary" onclick="closeRoulette()">확인</button>
+    </div>
+  </div>
+
+  <div class="ticket-section">
+    <h3>최근 사용 내역</h3>
+    ${usedTickets.length === 0 ? '<p class="empty">사용 내역이 없습니다.</p>' : ''}
+    <div class="used-list">
+      ${usedTickets.map(t => '<div class="used-item"><span class="used-type">' + (t.type === 'lottery' ? '복권' : '룰렛') + '</span><span class="used-amount ' + (t.reward_amount > 0 ? 'win' : 'lose') + '">' + (t.reward_amount > 0 ? Number(t.reward_amount).toLocaleString() + '원' : '꽝') + '</span></div>').join('')}
+    </div>
+  </div>
+</div>
+` }) %>

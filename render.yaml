@@ -2,8 +2,10 @@ services:
   - type: web
     name: price-pick
     runtime: node
-    buildCommand: npm install
+    nodeVersion: "20"
+    buildCommand: npm ci
     startCommand: node app.js
+    healthCheckPath: /
     envVars:
       - key: NODE_ENV
         value: production

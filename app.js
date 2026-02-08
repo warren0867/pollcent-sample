@@ -13,13 +13,17 @@ getDb();
 
 // 지연 보상 상태 자동 업데이트 (pending → available)
 function updateDelayedRewardStatus() {
-  const db = getDb();
-  db.prepare(`
-    UPDATE delayed_rewards SET status = 'available'
-    WHERE status = 'pending' AND available_at <= datetime('now')
-  `).run();
+  try {
+    const db = getDb();
+    db.prepare(`
+      UPDATE delayed_rewards SET status = 'available'
+      WHERE status = 'pending' AND available_at <= datetime('now')
+    `).run();
+  } catch (e) {
+    console.error('delayed reward update error:', e.message);
+  }
 }
-setInterval(updateDelayedRewardStatus, 60000); // 1분마다
+setInterval(updateDelayedRewardStatus, 60000);
 updateDelayedRewardStatus();
 
 // 미들웨어
@@ -32,7 +36,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'dev-secret',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 24 * 60 * 60 * 1000 }, // 24시간
+  cookie: { maxAge: 24 * 60 * 60 * 1000 },
 }));
 app.use(setLocals);
 
@@ -52,6 +56,12 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.listen(PORT, () => {
-  console.log(`PricePick 서버 실행: http://localhost:${PORT}`);
+// 글로벌 에러 핸들러
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+  res.status(500).send('서버 오류가 발생했습니다.');
+});
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`PricePick 서버 실행: port ${PORT}`);
 });

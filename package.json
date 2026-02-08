@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "PricePick - 쿠팡 리워드 앱 프로토타입",
   "engines": {
-    "node": ">=18.0.0"
+    "node": "20.x"
   },
   "main": "index.js",
   "scripts": {

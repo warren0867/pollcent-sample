@@ -30,8 +30,8 @@ router.post('/register', (req, res) => {
     'INSERT INTO users (email, password_hash, nickname, login_type, reward_delay_days) VALUES (?, ?, ?, ?, ?)'
   ).run(email, hash, nickname, 'email', 30);
 
-  req.session.userId = result.lastInsertRowid;
-  req.session.user = { id: result.lastInsertRowid, nickname, loginType: 'email' };
+  req.session.userId = Number(result.lastInsertRowid);
+  req.session.user = { id: Number(result.lastInsertRowid), nickname, loginType: 'email' };
   res.redirect('/dashboard');
 });
 

@@ -2,29 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const { getDb } = require('./db/database');
+const { initDb, getDb } = require('./db/database');
 const { setLocals } = require('./middleware/auth');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-// DB 초기화
-getDb();
-
-// 지연 보상 상태 자동 업데이트 (pending → available)
-function updateDelayedRewardStatus() {
-  try {
-    const db = getDb();
-    db.prepare(`
-      UPDATE delayed_rewards SET status = 'available'
-      WHERE status = 'pending' AND available_at <= datetime('now')
-    `).run();
-  } catch (e) {
-    console.error('delayed reward update error:', e.message);
-  }
-}
-setInterval(updateDelayedRewardStatus, 60000);
-updateDelayedRewardStatus();
 
 // 미들웨어
 app.set('view engine', 'ejs');
@@ -62,6 +44,27 @@ app.use((err, req, res, next) => {
   res.status(500).send('서버 오류가 발생했습니다.');
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`PricePick 서버 실행: port ${PORT}`);
+// DB 초기화 후 서버 시작
+initDb().then(() => {
+  // 지연 보상 상태 자동 업데이트
+  function updateDelayedRewardStatus() {
+    try {
+      const db = getDb();
+      db.prepare(`
+        UPDATE delayed_rewards SET status = 'available'
+        WHERE status = 'pending' AND available_at <= datetime('now')
+      `).run();
+    } catch (e) {
+      console.error('delayed reward update error:', e.message);
+    }
+  }
+  setInterval(updateDelayedRewardStatus, 60000);
+  updateDelayedRewardStatus();
+
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`PricePick 서버 실행: port ${PORT}`);
+  });
+}).catch(err => {
+  console.error('DB 초기화 실패:', err);
+  process.exit(1);
 });

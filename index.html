@@ -312,7 +312,7 @@ body{display:flex;flex-direction:column}
     <div style="padding:10px 16px">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
         <span class="chip active" id="wish-count">전체 0</span>
-        <span class="chip" onclick="switchTab('add')" style="font-size:18px;padding:4px 10px">+</span>
+        <span class="chip" onclick="switchTab('search')" style="font-size:14px;padding:6px 12px">+ 추가</span>
       </div>
     </div>
     <div class="category-row">
@@ -355,10 +355,7 @@ body{display:flex;flex-direction:column}
 
   <!-- 혜택 -->
   <div class="page" id="page-benefit">
-    <div class="benefit-tabs">
-      <div class="benefit-tab active" onclick="setBenefitTab(0)">🎫 이벤트 티켓</div>
-      <div class="benefit-tab" onclick="setBenefitTab(1)">P 포인트</div>
-    </div>
+    <div style="padding:12px 16px 0"><div style="font-size:11px;color:var(--text-sub);background:var(--primary-light);padding:8px 12px;border-radius:10px;text-align:center">🎫 구매 시 이벤트 티켓이 랜덤 지급됩니다. 금액이 클수록 더 좋은 티켓!</div></div>
 
     <div id="benefit-ticket">
       <div class="ticket-box">
@@ -380,7 +377,7 @@ body{display:flex;flex-direction:column}
       <div class="event-card">
         <div class="event-row">
           <div class="event-icon" style="background:#EFF6FF">🛍️</div>
-          <div class="event-info"><h4>쿠팡 쇼핑 적립</h4><p>1만원당 이벤트 티켓 1개</p></div>
+          <div class="event-info"><h4>쿠팡 쇼핑 적립</h4><p>구매 시 랜덤 티켓 지급</p></div>
           <span class="event-status live">진행중</span>
         </div>
       </div>
@@ -404,16 +401,20 @@ body{display:flex;flex-direction:column}
       <div class="raffle-prizes" id="raffle-prizes"></div>
     </div>
 
-    <div id="benefit-point" style="display:none">
-      <div class="ticket-box">
-        <div class="ticket-box-title"><h3>내 포인트</h3></div>
-        <div class="ticket-stats">
-          <div class="ticket-stat"><div class="label">적립예정</div><div class="val">P <span>0</span></div></div>
-          <div class="ticket-stat"><div class="label">사용가능</div><div class="val">P <span>0</span></div></div>
-        </div>
-        <p style="font-size:12px;color:var(--text-sub);text-align:center;margin-top:8px">포인트 기능은 준비중입니다</p>
+  </div>
+
+  <!-- 검색 -->
+  <div class="page" id="page-search">
+    <div style="padding:12px 16px">
+      <div style="display:flex;gap:8px;align-items:center">
+        <input type="text" class="input-field" id="search-input" placeholder="찾는 상품이 있나요?" oninput="doSearch()" style="flex:1">
       </div>
     </div>
+    <div style="padding:0 16px 8px">
+      <div style="font-size:13px;font-weight:700;margin-bottom:8px">추천 검색어</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px" id="search-tags"></div>
+    </div>
+    <div id="search-results" style="padding:0 16px"></div>
   </div>
 
   <!-- 마이페이지 -->
@@ -504,9 +505,11 @@ body{display:flex;flex-direction:column}
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.22.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
     핫딜
   </div>
-  <div class="tab tab-center" onclick="openAddModal()">
-    <button class="tab-center-btn">+</button>
-    <span style="margin-top:30px;font-size:10px;color:var(--text-sub)"></span>
+  <div class="tab tab-center" data-tab="search" onclick="switchTab('search')">
+    <button class="tab-center-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" width="22" height="22"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <span style="margin-top:30px;font-size:10px;color:var(--text-sub)">검색</span>
   </div>
   <div class="tab" data-tab="benefit" onclick="switchTab('benefit')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M12 6v14"/></svg>
@@ -556,14 +559,14 @@ body{display:flex;flex-direction:column}
 <script>
 // ===== DATA =====
 var PRODUCTS=[
-  {id:1,name:'LG 스탠바이미 27인치 포터블 모니터',emoji:'🖥️',originalPrice:1190000,currentPrice:899000,discount:24,url:'https://www.coupang.com/vp/products/7335498014',badge:'rocket'},
-  {id:2,name:'애플 에어팟 프로 2세대 USB-C',emoji:'🎧',originalPrice:359000,currentPrice:289000,discount:19,url:'https://www.coupang.com/vp/products/7601553541',badge:'rocket'},
-  {id:3,name:'다이슨 V15 디텍트 무선청소기',emoji:'🧹',originalPrice:1290000,currentPrice:899000,discount:30,url:'https://www.coupang.com/vp/products/6497498498',badge:'hot'},
-  {id:4,name:'삼성 갤럭시 버즈3 프로',emoji:'🎵',originalPrice:359900,currentPrice:279000,discount:22,url:'https://www.coupang.com/vp/products/8040177674',badge:'rocket'},
-  {id:5,name:'나이키 에어포스1 07 화이트',emoji:'👟',originalPrice:139000,currentPrice:99900,discount:28,url:'https://www.coupang.com/vp/products/6023436854',badge:'lowest'},
-  {id:6,name:'샤오미 로봇청소기 X20 Pro Plus',emoji:'🤖',originalPrice:899000,currentPrice:599000,discount:33,url:'https://www.coupang.com/vp/products/7812345678',badge:'hot'},
-  {id:7,name:'포카리스웨트 1.5L 12개',emoji:'💧',originalPrice:28000,currentPrice:25600,discount:9,url:'https://www.coupang.com/vp/products/1234567890',badge:'rocket'},
-  {id:8,name:'프로핏 스포츠 WPI 초콜릿 330ml x12',emoji:'🥛',originalPrice:29000,currentPrice:24900,discount:14,url:'https://www.coupang.com/vp/products/2345678901',badge:'rocket'},
+  {id:1,name:'LG 스탠바이미 27인치 포터블 모니터',emoji:'🖥️',originalPrice:1190000,currentPrice:899000,discount:24,url:'https://www.coupang.com/vp/products/7335498014',badge:'rocket',ai:'이동식 터치 모니터. 넷플릭스·유튜브 어디서든 시청 가능. 배터리 내장으로 충전 후 3시간 사용.'},
+  {id:2,name:'애플 에어팟 프로 2세대 USB-C',emoji:'🎧',originalPrice:359000,currentPrice:289000,discount:19,url:'https://www.coupang.com/vp/products/7601553541',badge:'rocket',ai:'액티브 노이즈캔슬링 + 적응형 오디오. USB-C 충전으로 편리. 아이폰 유저 필수템.'},
+  {id:3,name:'다이슨 V15 디텍트 무선청소기',emoji:'🧹',originalPrice:1290000,currentPrice:899000,discount:30,url:'https://www.coupang.com/vp/products/6497498498',badge:'hot',ai:'레이저로 미세먼지까지 시각화. 자동 흡입력 조절. 60분 연속 사용. 먼지 알레르기 가정 추천.'},
+  {id:4,name:'삼성 갤럭시 버즈3 프로',emoji:'🎵',originalPrice:359900,currentPrice:279000,discount:22,url:'https://www.coupang.com/vp/products/8040177674',badge:'rocket',ai:'갤럭시 유저 최적화 이어폰. ANC + 360 오디오. 통화 품질 탁월. 안드로이드 기본 호환.'},
+  {id:5,name:'나이키 에어포스1 07 화이트',emoji:'👟',originalPrice:139000,currentPrice:99900,discount:28,url:'https://www.coupang.com/vp/products/6023436854',badge:'lowest',ai:'30년 넘는 클래식 스니커즈. 어떤 코디에도 무난. 가죽 갑피로 내구성 우수.'},
+  {id:6,name:'샤오미 로봇청소기 X20 Pro Plus',emoji:'🤖',originalPrice:899000,currentPrice:599000,discount:33,url:'https://www.coupang.com/vp/products/7812345678',badge:'hot',ai:'자동 물걸레+먼지 비움. 장애물 회피 AI. 넓은 집도 한 번에 청소. 가성비 최고.'},
+  {id:7,name:'포카리스웨트 1.5L 12개',emoji:'💧',originalPrice:28000,currentPrice:25600,discount:9,url:'https://www.coupang.com/vp/products/1234567890',badge:'rocket',ai:'운동 후 수분·전해질 보충에 최적. 대용량 12개 세트로 단가 절약.'},
+  {id:8,name:'프로핏 스포츠 WPI 초콜릿 330ml x12',emoji:'🥛',originalPrice:29000,currentPrice:24900,discount:14,url:'https://www.coupang.com/vp/products/2345678901',badge:'rocket',ai:'분리유청단백 WPI 기반. 운동 직후 단백질 보충에 좋아요. 초콜릿맛으로 맛도 OK.'},
 ];
 
 var RAFFLE_PRIZES=[
@@ -739,7 +742,7 @@ function doLogout(){if(confirm('로그아웃 하시겠습니까?')){localStorage
 function doDeleteAccount(){if(confirm('정말 탈퇴하시겠습니까?\n모든 데이터가 삭제됩니다.')){localStorage.clear();location.reload()}}
 
 // ===== TABS =====
-var TITLES={wish:'관심상품',hot:'핫딜',benefit:'혜택',my:'마이페이지'};
+var TITLES={wish:'관심상품',hot:'핫딜',search:'검색',benefit:'혜택',my:'마이페이지'};
 function switchTab(name){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
@@ -750,6 +753,7 @@ function switchTab(name){
   document.getElementById('header-title').textContent=TITLES[name]||'';
   if(name==='wish')renderWishlist();
   if(name==='hot')renderHotdeals();
+  if(name==='search')renderSearch();
   if(name==='benefit')renderBenefit();
   if(name==='my')renderMypage();
   document.getElementById('content').scrollTop=0;
@@ -779,7 +783,7 @@ function renderWishlist(){
   document.getElementById('wish-count').textContent='전체 '+tracks.length;
   var html='';
   if(tracks.length===0){
-    html='<div class="empty"><div class="icon">👀</div><p>관심상품을 등록해보세요<br>핫딜에서 상품을 클릭하거나<br>+ 버튼으로 추가할 수 있어요!</p></div>';
+    html='<div class="empty"><div class="icon">👀</div><p>관심상품을 등록해보세요<br>핫딜이나 검색에서 상품을 찾아<br>관심상품으로 추가할 수 있어요!</p></div>';
   }
   tracks.forEach(function(t,i){
     var change=Math.round((Math.random()*6-3)*10)/10;
@@ -862,6 +866,12 @@ function openDetail(id,fromWish){
   var avgDiff=p.currentPrice-avgP;
 
   var html='';
+  // AI summary
+  if(p.ai){
+    html+='<div style="margin:12px 16px;background:linear-gradient(135deg,#EFF6FF,#E0E7FF);border-radius:14px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.04)">';
+    html+='<div style="font-size:12px;font-weight:700;color:var(--primary);margin-bottom:4px">🤖 AI 한줄평</div>';
+    html+='<div style="font-size:13px;line-height:1.5;color:var(--text)">'+p.ai+'</div></div>';
+  }
   // Graph
   html+='<div class="graph-card"><div class="graph-title">PricePick 가격 그래프 <span style="font-size:12px;color:var(--text-sub)">ⓘ</span></div>';
   html+='<canvas id="detail-chart" height="180"></canvas>';
@@ -1027,14 +1037,35 @@ function processTickets(){
   if(changed)setTickets(tickets);
 }
 
-// ===== BENEFIT =====
-function setBenefitTab(idx){
-  var tabs=document.querySelectorAll('.benefit-tab');
-  tabs.forEach(function(t,i){t.classList.toggle('active',i===idx)});
-  document.getElementById('benefit-ticket').style.display=idx===0?'block':'none';
-  document.getElementById('benefit-point').style.display=idx===1?'block':'none';
+// ===== SEARCH =====
+var SEARCH_TAGS=['에어팟','청소기','모니터','운동','스니커즈','로봇청소기','버즈','나이키'];
+function renderSearch(){
+  var html='';
+  SEARCH_TAGS.forEach(function(tag){
+    html+='<span class="chip" onclick="document.getElementById(\'search-input\').value=\''+tag+'\';doSearch()">'+tag+'</span>';
+  });
+  document.getElementById('search-tags').innerHTML=html;
+  document.getElementById('search-results').innerHTML='<div class="empty"><div class="icon">🔍</div><p>상품명을 검색해보세요</p></div>';
+  document.getElementById('search-input').value='';
+}
+function doSearch(){
+  var q=document.getElementById('search-input').value.trim().toLowerCase();
+  if(!q){document.getElementById('search-results').innerHTML='<div class="empty"><div class="icon">🔍</div><p>상품명을 검색해보세요</p></div>';return}
+  var results=PRODUCTS.filter(function(p){return p.name.toLowerCase().indexOf(q)>=0});
+  var html='';
+  if(results.length===0){html='<div class="empty"><div class="icon">😢</div><p>검색 결과가 없어요</p></div>'}
+  results.forEach(function(p){
+    html+='<div class="track-card" onclick="openDetail('+p.id+')" style="margin-bottom:1px">';
+    html+='<div class="track-thumb">'+p.emoji+'</div>';
+    html+='<div class="track-body"><div class="track-name">'+p.name+'</div>';
+    if(p.ai) html+='<div style="font-size:11px;color:var(--primary);margin-bottom:3px">🤖 '+p.ai.slice(0,30)+'...</div>';
+    html+='<div class="track-price-row"><span class="track-current">'+p.currentPrice.toLocaleString()+'원</span>';
+    html+='<span class="product-change down" style="font-size:11px">▼'+p.discount+'%</span></div></div></div>';
+  });
+  document.getElementById('search-results').innerHTML=html;
 }
 
+// ===== BENEFIT =====
 function renderBenefit(){
   processTickets();
   var tickets=getTickets();

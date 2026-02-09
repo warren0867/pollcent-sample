@@ -233,13 +233,32 @@ body{display:flex;flex-direction:column}
 .input-field:focus{border-color:var(--primary)}
 .input-label{display:block;font-size:12px;font-weight:600;color:var(--text-sub);margin-bottom:4px}
 
-/* Start page */
-.start-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:85vh;padding:24px;text-align:center}
-.start-logo{font-size:32px;font-weight:800;color:var(--primary);margin-bottom:4px;letter-spacing:-0.5px}
-.start-sub{color:var(--text-sub);font-size:14px;margin-bottom:36px}
-.start-form{width:100%;max-width:300px}
-.start-form .input-field{margin-bottom:10px}
-.start-btn{width:100%;padding:14px;border-radius:12px;background:var(--primary);color:#fff;font-size:15px;font-weight:700;border:none;cursor:pointer;margin-top:4px}
+/* Onboarding AI chat */
+.onboard{display:flex;flex-direction:column;height:100%;min-height:80vh}
+.onboard-header{text-align:center;padding:20px 16px 10px}
+.onboard-logo{font-size:28px;font-weight:800;color:var(--primary);letter-spacing:-0.5px}
+.onboard-sub{font-size:12px;color:var(--text-sub);margin-top:2px}
+.chat-area{flex:1;overflow-y:auto;padding:8px 16px;display:flex;flex-direction:column;gap:6px}
+.chat-row{display:flex;gap:8px;align-items:flex-end;animation:chatIn .3s ease}
+.chat-row.user{flex-direction:row-reverse}
+@keyframes chatIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.chat-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--primary-light)}
+.chat-bubble{max-width:75%;padding:10px 14px;border-radius:16px;font-size:13px;line-height:1.5;word-break:break-word}
+.chat-row:not(.user) .chat-bubble{background:var(--card);border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.chat-row.user .chat-bubble{background:var(--primary);color:#fff;border-bottom-right-radius:4px}
+.chat-typing{display:flex;gap:4px;padding:10px 14px;background:var(--card);border-radius:16px;border-bottom-left-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.06);width:fit-content}
+.chat-typing span{width:6px;height:6px;border-radius:50%;background:var(--text-light);animation:typing 1.2s infinite}
+.chat-typing span:nth-child(2){animation-delay:.2s}
+.chat-typing span:nth-child(3){animation-delay:.4s}
+@keyframes typing{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+.chat-input-area{padding:10px 16px;background:var(--card);box-shadow:0 -1px 6px rgba(0,0,0,.04);display:none;gap:8px;align-items:center}
+.chat-input-area.show{display:flex}
+.chat-input-area input{flex:1;padding:10px 14px;border:1.5px solid var(--border);border-radius:24px;font-size:14px;outline:none}
+.chat-input-area input:focus{border-color:var(--primary)}
+.chat-input-area button{width:36px;height:36px;border-radius:50%;background:var(--primary);color:#fff;border:none;font-size:16px;cursor:pointer;flex-shrink:0}
+.chat-options{display:flex;flex-wrap:wrap;gap:6px;padding:4px 0}
+.chat-opt{padding:8px 16px;border-radius:20px;border:1.5px solid var(--primary);color:var(--primary);font-size:13px;font-weight:600;cursor:pointer;background:#fff;transition:.2s}
+.chat-opt:active{background:var(--primary);color:#fff}
 
 /* Empty */
 .empty{text-align:center;padding:40px 20px;color:var(--text-light)}
@@ -273,15 +292,17 @@ body{display:flex;flex-direction:column}
 <!-- Content -->
 <div class="content" id="content">
 
-  <!-- Start Page -->
+  <!-- Onboarding AI Chat -->
   <div class="page active" id="page-start">
-    <div class="start-page">
-      <div class="start-logo">PricePick</div>
-      <p class="start-sub">쿠팡 최저가 추적 & 쇼핑 리워드</p>
-      <div class="start-form">
-        <input type="text" class="input-field" id="start-nick" placeholder="닉네임">
-        <input type="email" class="input-field" id="start-email" placeholder="이메일">
-        <button class="start-btn" onclick="doStart()">시작하기</button>
+    <div class="onboard">
+      <div class="onboard-header">
+        <div class="onboard-logo">PricePick</div>
+        <div class="onboard-sub">AI 쇼핑 어시스턴트</div>
+      </div>
+      <div class="chat-area" id="chat-area"></div>
+      <div class="chat-input-area" id="chat-input-area">
+        <input type="text" id="chat-input" placeholder="입력해주세요..." onkeydown="if(event.key==='Enter')sendChatInput()">
+        <button onclick="sendChatInput()">→</button>
       </div>
     </div>
   </div>
@@ -424,6 +445,18 @@ body{display:flex;flex-direction:column}
       </div>
     </div>
     <div class="mypage-section">
+      <div class="mypage-section-title">계정 연동</div>
+      <div class="mypage-row" id="kakao-row" onclick="linkKakao()">
+        <div class="left"><span class="icon">💬</span> 카카오 연동</div>
+        <div class="right" id="kakao-status"><span style="color:var(--primary);font-size:13px">연동하기</span> <span class="arrow">›</span></div>
+      </div>
+      <div class="mypage-divider"></div>
+      <div class="mypage-row">
+        <div class="left"><span class="icon">🍎</span> Apple 연동</div>
+        <div class="right"><span style="color:var(--text-sub);font-size:13px">준비중</span></div>
+      </div>
+    </div>
+    <div class="mypage-section">
       <div class="mypage-section-title">고객센터</div>
       <div class="mypage-row" onclick="openSub('notice')">
         <div class="left"><span class="icon">📋</span> 공지사항</div>
@@ -552,14 +585,156 @@ function setSettings(s){S('settings',s)}
 function getRaffleCount(){return S('raffles')||0}
 function setRaffleCount(n){S('raffles',n)}
 
-// ===== AUTH =====
-function doStart(){
-  var n=document.getElementById('start-nick').value.trim();
-  var e=document.getElementById('start-email').value.trim();
-  if(!n||!e)return alert('닉네임과 이메일을 입력하세요');
-  S('user',{nickname:n,email:e,joined:new Date().toISOString().slice(0,10)});
-  initApp();
+// ===== ONBOARDING AI CHAT =====
+var obStep=0;
+var obData={nickname:'',wow:false,noti:true};
+var chatArea,chatInput,chatInputArea;
+
+function startOnboarding(){
+  chatArea=document.getElementById('chat-area');
+  chatInput=document.getElementById('chat-input');
+  chatInputArea=document.getElementById('chat-input-area');
+  obStep=0;
+  chatArea.innerHTML='';
+  setTimeout(function(){obNext()},500);
 }
+
+function obNext(){
+  if(obStep===0){
+    addBotMsg('안녕하세요! 👋');
+    setTimeout(function(){
+      addBotMsg('저는 PricePick AI 어시스턴트예요.\n쿠팡 최저가를 추적하고, 쇼핑할 때 리워드를 받을 수 있도록 도와드려요!');
+      setTimeout(function(){
+        addBotMsg('먼저, 어떤 이름으로 불러드릴까요?');
+        showInput('닉네임을 입력해주세요');
+        obStep=1;
+      },800);
+    },600);
+  } else if(obStep===2){
+    addBotMsg(obData.nickname+'님, 반가워요! 😊');
+    setTimeout(function(){
+      addBotMsg('혹시 쿠팡 와우 회원이신가요?\n와우 회원이면 더 빠른 리워드 혜택을 받으실 수 있어요!');
+      showOptions(['네, 와우 회원이에요 🚀','아니요, 일반 회원이에요']);
+      obStep=3;
+    },700);
+  } else if(obStep===4){
+    var wowMsg=obData.wow?'와우 회원이시군요! 리워드 적립이 더 빨라져요 🎉':'나중에 마이페이지에서 언제든 와우 멤버십을 설정할 수 있어요!';
+    addBotMsg(wowMsg);
+    setTimeout(function(){
+      addBotMsg('가격이 내려가면 알림을 보내드릴까요?\n관심상품의 가격 변동을 실시간으로 추적해드려요!');
+      showOptions(['네, 알림 받을게요 🔔','아니요, 괜찮아요']);
+      obStep=5;
+    },700);
+  } else if(obStep===6){
+    var notiMsg=obData.noti?'좋아요! 최저가를 놓치지 않도록 알려드릴게요 📊':'알겠어요! 나중에 마이페이지에서 변경할 수 있어요.';
+    addBotMsg(notiMsg);
+    setTimeout(function(){
+      addBotMsg('PricePick은 이렇게 도와드려요:');
+      setTimeout(function(){
+        addBotMsg('📊 <b>가격 추적</b> — 관심상품의 가격을 매일 추적하고 역대 최저가를 알려드려요');
+        setTimeout(function(){
+          addBotMsg('🎫 <b>쇼핑 리워드</b> — 구매하면 이벤트 티켓이 지급돼요. 금액이 클수록 더 좋은 티켓!');
+          setTimeout(function(){
+            addBotMsg('🍕 <b>경품 추첨</b> — 티켓으로 도미노피자, 맥도날드, 스타벅스 등 경품에 응모해요');
+            setTimeout(function(){
+              addBotMsg('그럼 시작해볼까요? 😄');
+              showOptions(['시작하기! 🎉']);
+              obStep=7;
+            },600);
+          },600);
+        },600);
+      },500);
+    },600);
+  } else if(obStep===8){
+    addBotMsg('좋아요! '+obData.nickname+'님의 계정이 생성되었어요. ✅\n지금부터 스마트한 쇼핑을 시작해보세요!');
+    setTimeout(function(){
+      S('user',{nickname:obData.nickname,email:obData.nickname.toLowerCase()+'@pricepick.app',joined:new Date().toISOString().slice(0,10)});
+      var settings=getSettings();
+      settings.wow=obData.wow;
+      settings.marketing=obData.noti;
+      setSettings(settings);
+      setTimeout(function(){initApp()},1000);
+    },800);
+  }
+}
+
+function addBotMsg(text){
+  var row=document.createElement('div');row.className='chat-row';
+  row.innerHTML='<div class="chat-avatar">🤖</div><div class="chat-bubble">'+text+'</div>';
+  chatArea.appendChild(row);
+  chatArea.scrollTop=chatArea.scrollHeight;
+}
+
+function addUserMsg(text){
+  var row=document.createElement('div');row.className='chat-row user';
+  row.innerHTML='<div class="chat-avatar" style="background:var(--primary);color:#fff;font-size:12px;font-weight:700">나</div><div class="chat-bubble">'+text+'</div>';
+  chatArea.appendChild(row);
+  chatArea.scrollTop=chatArea.scrollHeight;
+}
+
+function addTyping(){
+  var row=document.createElement('div');row.className='chat-row';row.id='typing-row';
+  row.innerHTML='<div class="chat-avatar">🤖</div><div class="chat-typing"><span></span><span></span><span></span></div>';
+  chatArea.appendChild(row);
+  chatArea.scrollTop=chatArea.scrollHeight;
+}
+
+function removeTyping(){var el=document.getElementById('typing-row');if(el)el.remove()}
+
+function showInput(placeholder){
+  chatInputArea.classList.add('show');
+  chatInput.placeholder=placeholder||'입력해주세요...';
+  chatInput.value='';
+  chatInput.focus();
+}
+
+function hideInput(){chatInputArea.classList.remove('show')}
+
+function showOptions(opts){
+  hideInput();
+  var wrap=document.createElement('div');wrap.className='chat-row';wrap.id='options-row';
+  var inner='<div style="width:32px;flex-shrink:0"></div><div class="chat-options">';
+  opts.forEach(function(o,i){
+    inner+='<div class="chat-opt" onclick="pickOption('+i+',this)">'+o+'</div>';
+  });
+  inner+='</div>';
+  wrap.innerHTML=inner;
+  chatArea.appendChild(wrap);
+  chatArea.scrollTop=chatArea.scrollHeight;
+}
+
+function removeOptions(){var el=document.getElementById('options-row');if(el)el.remove()}
+
+function sendChatInput(){
+  var val=chatInput.value.trim();
+  if(!val)return;
+  hideInput();
+  addUserMsg(val);
+  if(obStep===1){
+    obData.nickname=val;
+    obStep=2;
+    addTyping();
+    setTimeout(function(){removeTyping();obNext()},800);
+  }
+}
+
+function pickOption(idx,el){
+  var text=el.textContent;
+  removeOptions();
+  addUserMsg(text);
+  if(obStep===3){
+    obData.wow=idx===0;
+    obStep=4;
+  } else if(obStep===5){
+    obData.noti=idx===0;
+    obStep=6;
+  } else if(obStep===7){
+    obStep=8;
+  }
+  addTyping();
+  setTimeout(function(){removeTyping();obNext()},800);
+}
+
 function doLogout(){if(confirm('로그아웃 하시겠습니까?')){localStorage.clear();location.reload()}}
 function doDeleteAccount(){if(confirm('정말 탈퇴하시겠습니까?\n모든 데이터가 삭제됩니다.')){localStorage.clear();location.reload()}}
 
@@ -583,10 +758,16 @@ function switchTab(name){
 // ===== INIT =====
 function initApp(){
   var u=getUser();
-  if(!u){document.getElementById('page-start').classList.add('active');document.getElementById('tabbar').style.display='none';return}
+  if(!u){
+    document.getElementById('page-start').classList.add('active');
+    document.getElementById('tabbar').style.display='none';
+    document.getElementById('main-header').style.display='none';
+    startOnboarding();
+    return;
+  }
   document.getElementById('page-start').classList.remove('active');
+  document.getElementById('main-header').style.display='flex';
   document.getElementById('tabbar').style.display='flex';
-  // process pending tickets
   processTickets();
   switchTab('wish');
   startCountdown();
@@ -922,9 +1103,22 @@ function renderMypage(){
   document.getElementById('my-raffles').textContent=getRaffleCount();
   document.getElementById('toggle-wow').className='toggle'+(settings.wow?' on':'');
   document.getElementById('toggle-marketing').className='toggle'+(settings.marketing?' on':'');
+  var kakaoStatus=document.getElementById('kakao-status');
+  if(kakaoStatus){
+    kakaoStatus.innerHTML=settings.kakao?
+      '<span style="color:var(--green);font-size:13px;font-weight:600">연동완료 ✓</span>':
+      '<span style="color:var(--primary);font-size:13px">연동하기</span> <span class="arrow">›</span>';
+  }
 }
 function toggleWow(){var s=getSettings();s.wow=!s.wow;setSettings(s);renderMypage()}
 function toggleMarketing(){var s=getSettings();s.marketing=!s.marketing;setSettings(s);renderMypage()}
+function linkKakao(){
+  var s=getSettings();
+  if(s.kakao)return;
+  s.kakao=true;setSettings(s);
+  showModal('🎉','카카오 연동 완료!','리워드 적립 대기 기간이 단축됩니다.');
+  renderMypage();
+}
 
 // ===== SUB PAGES =====
 var SUB_CONTENT={

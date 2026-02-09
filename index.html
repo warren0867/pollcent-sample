@@ -11,16 +11,14 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--primary:#3B82F6;--primary-light:#EFF6FF;--primary-dark:#2563EB;--bg:#F5F6FA;--card:#fff;--text:#1F2937;--text-sub:#9CA3AF;--text-light:#D1D5DB;--border:#F3F4F6;--red:#EF4444;--green:#10B981;--orange:#F59E0B;--tab-h:60px;--header-h:52px;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
-html,body{height:100vh;height:100dvh;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
-body{display:flex;flex-direction:column}
+html{background:var(--card)}
+body{display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);overflow:hidden;position:fixed;top:0;left:0;right:0;bottom:0}
 
 /* Header */
 .header{min-height:calc(var(--header-h) + var(--safe-top));padding-top:var(--safe-top);background:var(--card);display:flex;align-items:center;justify-content:space-between;padding-left:20px;padding-right:16px;z-index:100;flex-shrink:0}
 .header h1{font-size:18px;font-weight:800}
 .header-icons{display:flex;gap:12px;align-items:center}
 .header-icons span{font-size:18px;cursor:pointer}
-.header-right{display:flex;align-items:center;gap:8px}
-.header-right .avatar{width:28px;height:28px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
 
 /* Content */
 .content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--tab-h) + var(--safe-bottom) + 10px)}
@@ -28,9 +26,8 @@ body{display:flex;flex-direction:column}
 /* Pages */
 .page{display:none}
 .page.active{display:block}
-.page-pad{padding:16px}
 
-/* Tab bar - Pollcent style */
+/* Tab bar */
 .tabbar{position:fixed;bottom:0;left:0;right:0;height:calc(var(--tab-h) + var(--safe-bottom));padding-bottom:var(--safe-bottom);background:var(--card);display:flex;align-items:flex-end;box-shadow:0 -1px 10px rgba(0,0,0,.06);z-index:100}
 .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;height:var(--tab-h);gap:2px;font-size:10px;color:var(--text-sub);text-decoration:none;transition:.2s;cursor:pointer;position:relative}
 .tab.active{color:var(--primary)}
@@ -42,11 +39,11 @@ body{display:flex;flex-direction:column}
 /* Cards */
 .card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
 
-/* Chips / Badges */
+/* Chips */
 .chip{display:inline-flex;align-items:center;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;border:1.5px solid var(--border)}
 .chip.active{background:var(--primary);color:#fff;border-color:var(--primary)}
 
-/* Product grid - Pollcent style */
+/* Product grid */
 .product-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 16px 16px}
 .product-card{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.05);cursor:pointer;transition:transform .2s}
 .product-card:active{transform:scale(.97)}
@@ -92,14 +89,14 @@ body{display:flex;flex-direction:column}
 .countdown{display:flex;align-items:center;gap:2px;font-size:13px;font-weight:700;color:var(--red)}
 .countdown svg{width:16px;height:16px}
 
-/* Circular category icons - Pollcent style */
+/* Category icons */
 .category-row{display:flex;gap:16px;padding:12px 16px;overflow-x:auto;scrollbar-width:none}
 .category-row::-webkit-scrollbar{display:none}
 .cat-item{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;cursor:pointer}
 .cat-icon{width:52px;height:52px;border-radius:50%;background:var(--card);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
 .cat-label{font-size:10px;color:var(--text-sub);white-space:nowrap}
 
-/* Track items - Pollcent 관심상품 style */
+/* Track items */
 .track-card{display:flex;gap:12px;padding:14px 16px;background:var(--card);margin-bottom:1px;cursor:pointer}
 .track-thumb{width:80px;height:80px;border-radius:10px;background:#f8f9fa;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:32px}
 .track-body{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center}
@@ -108,7 +105,7 @@ body{display:flex;flex-direction:column}
 .track-current{font-size:16px;font-weight:800}
 .track-change{font-size:12px;font-weight:600}
 
-/* Detail overlay - Pollcent price graph style */
+/* Detail overlay */
 .detail-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:150;display:none;flex-direction:column}
 .detail-overlay.show{display:flex}
 .detail-top{display:flex;align-items:center;padding:10px 12px;padding-top:calc(10px + var(--safe-top));background:var(--card);gap:8px;flex-shrink:0}
@@ -146,10 +143,7 @@ body{display:flex;flex-direction:column}
 .toggle::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.3s;box-shadow:0 1px 3px rgba(0,0,0,.15)}
 .toggle.on::after{left:22px}
 
-/* 혜택 page - Pollcent style */
-.benefit-tabs{display:flex;padding:12px 16px;gap:8px}
-.benefit-tab{flex:1;text-align:center;padding:10px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;background:var(--border);color:var(--text-sub);transition:.2s}
-.benefit-tab.active{background:var(--primary);color:#fff}
+/* 혜택 page */
 .ticket-box{margin:0 16px 12px;background:var(--card);border-radius:16px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
 .ticket-box-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .ticket-box-title h3{font-size:15px;font-weight:700}
@@ -201,7 +195,6 @@ body{display:flex;flex-direction:column}
 .mypage-name{font-size:17px;font-weight:700;margin-bottom:2px}
 .mypage-email{font-size:13px;color:var(--text-sub)}
 .mypage-badge{display:inline-block;margin-top:6px;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:600}
-
 .mypage-section{background:var(--card);margin-bottom:8px}
 .mypage-section-title{padding:14px 16px 6px;font-size:13px;font-weight:700;color:var(--text-sub)}
 .mypage-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer}
@@ -211,6 +204,12 @@ body{display:flex;flex-direction:column}
 .mypage-row .right{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--text-sub)}
 .mypage-row .arrow{font-size:14px;color:var(--text-light)}
 .mypage-divider{height:1px;background:var(--border);margin:0 16px}
+
+/* Savings card */
+.savings-card{margin:0 16px 8px;background:linear-gradient(135deg,#3B82F6,#60A5FA);border-radius:16px;padding:20px;color:#fff;text-align:center}
+.savings-card .label{font-size:12px;opacity:.85;margin-bottom:4px}
+.savings-card .amount{font-size:28px;font-weight:800;letter-spacing:-0.5px}
+.savings-card .sub{font-size:11px;opacity:.7;margin-top:4px}
 
 /* Stats row */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;padding:12px 0;margin:0 16px;border-top:1px solid var(--border)}
@@ -269,13 +268,25 @@ body{display:flex;flex-direction:column}
 .deeplink-info{margin:0 16px 12px;background:#FFFBEB;border:1.5px dashed #F59E0B;border-radius:12px;padding:12px;font-size:11px;color:#92400E}
 .deeplink-info code{display:block;margin-top:6px;padding:6px;background:#FEF3C7;border-radius:6px;font-size:10px;word-break:break-all}
 
-/* Sub-page overlay (공지사항 etc) */
+/* Sub-page overlay */
 .sub-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:160;display:none;flex-direction:column}
 .sub-overlay.show{display:flex}
 .sub-header{display:flex;align-items:center;padding:12px 16px;padding-top:calc(12px + var(--safe-top));background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.04);flex-shrink:0}
 .sub-header button{width:36px;height:36px;border:none;background:transparent;font-size:18px;cursor:pointer}
 .sub-header h2{flex:1;text-align:center;font-size:15px;font-weight:700;margin-right:36px}
 .sub-body{flex:1;overflow-y:auto;padding:16px}
+.sub-body.no-pad{padding:0}
+
+/* Inquiry chatbot */
+.iq-chat{display:flex;flex-direction:column;height:100%}
+.iq-area{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:6px}
+.iq-bottom{padding:10px 16px;padding-bottom:calc(10px + var(--safe-bottom));background:var(--card);box-shadow:0 -1px 6px rgba(0,0,0,.04);display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.iq-bottom button{padding:10px 16px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--card)}
+.iq-bottom button.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+/* 2x event card */
+.event-2x-card{flex-shrink:0;width:140px;border-radius:14px;padding:14px;color:#fff;position:relative;overflow:hidden}
+.event-2x-card .badge-2x{position:absolute;top:8px;right:8px;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
 </style>
 </head>
 <body>
@@ -373,6 +384,9 @@ body{display:flex;flex-direction:column}
         </div>
       </div>
 
+      <div class="section-header" style="padding-top:8px">🎊 2배 적립 이벤트 <span class="more">전체보기 ›</span></div>
+      <div class="h-scroll" id="event-2x-scroll"></div>
+
       <div class="section-header" style="padding-top:8px">PricePick 쇼핑 이벤트</div>
       <div class="event-card">
         <div class="event-row">
@@ -433,23 +447,17 @@ body{display:flex;flex-direction:column}
         <div class="stat-box"><div class="val" id="my-raffles">0</div><div class="lbl">추첨</div></div>
       </div>
     </div>
-    <div class="mypage-section">
-      <div class="mypage-section-title">멤버십</div>
-      <div class="mypage-row" onclick="toggleWow()">
-        <div class="left"><span class="icon">🚀</span> 쿠팡 와우 멤버십</div>
-        <div class="right"><div class="toggle" id="toggle-wow"></div></div>
-      </div>
-      <div class="mypage-divider"></div>
-      <div class="mypage-row" onclick="toggleMarketing()">
-        <div class="left"><span class="icon">📢</span> 마케팅 수신 동의</div>
-        <div class="right"><div class="toggle" id="toggle-marketing"></div></div>
-      </div>
-    </div>
+    <div id="my-savings-section"></div>
     <div class="mypage-section">
       <div class="mypage-section-title">계정 연동</div>
       <div class="mypage-row" id="kakao-row" onclick="linkKakao()">
         <div class="left"><span class="icon">💬</span> 카카오 연동</div>
         <div class="right" id="kakao-status"><span style="color:var(--primary);font-size:13px">연동하기</span> <span class="arrow">›</span></div>
+      </div>
+      <div class="mypage-divider"></div>
+      <div class="mypage-row" onclick="toggleMarketing()">
+        <div class="left"><span class="icon">📢</span> 마케팅 수신 동의</div>
+        <div class="right"><div class="toggle" id="toggle-marketing"></div></div>
       </div>
     </div>
     <div class="mypage-section">
@@ -476,8 +484,8 @@ body{display:flex;flex-direction:column}
         <div class="right"><span class="arrow">›</span></div>
       </div>
       <div class="mypage-divider"></div>
-      <div class="mypage-row" onclick="openSub('inquiry')">
-        <div class="left"><span class="icon">💬</span> 1:1 문의하기</div>
+      <div class="mypage-row" onclick="openInquiry()">
+        <div class="left"><span class="icon">🤖</span> 1:1 문의하기</div>
         <div class="right"><span class="arrow">›</span></div>
       </div>
     </div>
@@ -571,20 +579,28 @@ body{display:flex;flex-direction:column}
 <script>
 // ===== DATA =====
 var PRODUCTS=[
-  {id:1,name:'LG 스탠바이미 27인치 포터블 모니터',emoji:'🖥️',originalPrice:1190000,currentPrice:899000,discount:24,url:'https://www.coupang.com/vp/products/7335498014',badge:'rocket',ai:'이동식 터치 모니터. 넷플릭스·유튜브 어디서든 시청 가능. 배터리 내장으로 충전 후 3시간 사용.'},
-  {id:2,name:'애플 에어팟 프로 2세대 USB-C',emoji:'🎧',originalPrice:359000,currentPrice:289000,discount:19,url:'https://www.coupang.com/vp/products/7601553541',badge:'rocket',ai:'액티브 노이즈캔슬링 + 적응형 오디오. USB-C 충전으로 편리. 아이폰 유저 필수템.'},
-  {id:3,name:'다이슨 V15 디텍트 무선청소기',emoji:'🧹',originalPrice:1290000,currentPrice:899000,discount:30,url:'https://www.coupang.com/vp/products/6497498498',badge:'hot',ai:'레이저로 미세먼지까지 시각화. 자동 흡입력 조절. 60분 연속 사용. 먼지 알레르기 가정 추천.'},
-  {id:4,name:'삼성 갤럭시 버즈3 프로',emoji:'🎵',originalPrice:359900,currentPrice:279000,discount:22,url:'https://www.coupang.com/vp/products/8040177674',badge:'rocket',ai:'갤럭시 유저 최적화 이어폰. ANC + 360 오디오. 통화 품질 탁월. 안드로이드 기본 호환.'},
-  {id:5,name:'나이키 에어포스1 07 화이트',emoji:'👟',originalPrice:139000,currentPrice:99900,discount:28,url:'https://www.coupang.com/vp/products/6023436854',badge:'lowest',ai:'30년 넘는 클래식 스니커즈. 어떤 코디에도 무난. 가죽 갑피로 내구성 우수.'},
-  {id:6,name:'샤오미 로봇청소기 X20 Pro Plus',emoji:'🤖',originalPrice:899000,currentPrice:599000,discount:33,url:'https://www.coupang.com/vp/products/7812345678',badge:'hot',ai:'자동 물걸레+먼지 비움. 장애물 회피 AI. 넓은 집도 한 번에 청소. 가성비 최고.'},
-  {id:7,name:'포카리스웨트 1.5L 12개',emoji:'💧',originalPrice:28000,currentPrice:25600,discount:9,url:'https://www.coupang.com/vp/products/1234567890',badge:'rocket',ai:'운동 후 수분·전해질 보충에 최적. 대용량 12개 세트로 단가 절약.'},
-  {id:8,name:'프로핏 스포츠 WPI 초콜릿 330ml x12',emoji:'🥛',originalPrice:29000,currentPrice:24900,discount:14,url:'https://www.coupang.com/vp/products/2345678901',badge:'rocket',ai:'분리유청단백 WPI 기반. 운동 직후 단백질 보충에 좋아요. 초콜릿맛으로 맛도 OK.'},
+  {id:1,name:'LG 스탠바이미 27인치 포터블 모니터',emoji:'🖥️',originalPrice:1190000,currentPrice:899000,discount:24,url:'https://www.coupang.com/vp/products/7335498014',badge:'rocket',ai:'주방에서 레시피 보면서 요리하려고 샀어요. 아이 영상 틀어놓기에도 딱!'},
+  {id:2,name:'애플 에어팟 프로 2세대 USB-C',emoji:'🎧',originalPrice:359000,currentPrice:289000,discount:19,url:'https://www.coupang.com/vp/products/7601553541',badge:'rocket',ai:'지하철 출퇴근길에 노이즈캔슬링이 필수라 구매했어요. 통화 품질도 좋아요.'},
+  {id:3,name:'다이슨 V15 디텍트 무선청소기',emoji:'🧹',originalPrice:1290000,currentPrice:899000,discount:30,url:'https://www.coupang.com/vp/products/6497498498',badge:'hot',ai:'아이 있는 집이라 매일 청소해야 해서요. 레이저로 먼지 보이니까 더 깨끗하게!'},
+  {id:4,name:'삼성 갤럭시 버즈3 프로',emoji:'🎵',originalPrice:359900,currentPrice:279000,discount:22,url:'https://www.coupang.com/vp/products/8040177674',badge:'rocket',ai:'갤럭시 쓰는데 에어팟보다 연동이 좋아서 바꿨어요. ANC 성능도 만족!'},
+  {id:5,name:'나이키 에어포스1 07 화이트',emoji:'👟',originalPrice:139000,currentPrice:99900,discount:28,url:'https://www.coupang.com/vp/products/6023436854',badge:'lowest',ai:'데일리 신발로 최고! 어떤 옷이든 잘 어울려서 몇 켤레째 재구매 중.'},
+  {id:6,name:'샤오미 로봇청소기 X20 Pro Plus',emoji:'🤖',originalPrice:899000,currentPrice:599000,discount:33,url:'https://www.coupang.com/vp/products/7812345678',badge:'hot',ai:'맞벌이라 청소할 시간이 없어서 구매. 물걸레까지 자동이라 너무 편해요.'},
+  {id:7,name:'포카리스웨트 1.5L 12개',emoji:'💧',originalPrice:28000,currentPrice:25600,discount:9,url:'https://www.coupang.com/vp/products/1234567890',badge:'rocket',ai:'헬스장 다니면서 운동 후 매일 마셔서 대량구매했어요. 단가 절약!'},
+  {id:8,name:'프로핏 스포츠 WPI 초콜릿 330ml x12',emoji:'🥛',originalPrice:29000,currentPrice:24900,discount:14,url:'https://www.coupang.com/vp/products/2345678901',badge:'rocket',ai:'운동 후 단백질 보충용으로 매일 하나씩. 맛도 괜찮고 가격도 합리적!'},
 ];
 
 var RAFFLE_PRIZES=[
   {rank:1,prize:'도미노피자 라지 세트',icon:'🍕',desc:'페퍼로니 + 콜라 1.25L'},
   {rank:2,prize:'맥도날드 빅맥 세트',icon:'🍔',desc:'빅맥 + 감자튀김 + 콜라'},
   {rank:3,prize:'스타벅스 아메리카노',icon:'☕',desc:'Tall 사이즈'},
+];
+
+var EVENT_2X=[
+  {cat:'전자제품',emoji:'🖥️',bg:'linear-gradient(135deg,#3B82F6,#60A5FA)',end:'02/28'},
+  {cat:'패션/의류',emoji:'👟',bg:'linear-gradient(135deg,#8B5CF6,#A78BFA)',end:'02/20'},
+  {cat:'생활용품',emoji:'🧹',bg:'linear-gradient(135deg,#10B981,#34D399)',end:'02/25'},
+  {cat:'식품/음료',emoji:'🥤',bg:'linear-gradient(135deg,#F59E0B,#FBBF24)',end:'03/05'},
+  {cat:'뷰티',emoji:'💄',bg:'linear-gradient(135deg,#EC4899,#F472B6)',end:'02/15'},
 ];
 
 // ===== STORAGE =====
@@ -595,14 +611,14 @@ function setTracks(t){S('tracks',t)}
 function getTickets(){return S('tickets')||{pending:0,available:0,history:[]}}
 function setTickets(t){S('tickets',t)}
 function getPurchases(){return S('purchases')||[]}
-function getSettings(){return S('settings')||{wow:false,marketing:false}}
+function getSettings(){return S('settings')||{marketing:false}}
 function setSettings(s){S('settings',s)}
 function getRaffleCount(){return S('raffles')||0}
 function setRaffleCount(n){S('raffles',n)}
 
 // ===== ONBOARDING AI CHAT =====
 var obStep=0;
-var obData={nickname:'',wow:false,noti:true};
+var obData={nickname:'',noti:true};
 var chatArea,chatInput,chatInputArea;
 
 function startOnboarding(){
@@ -628,19 +644,11 @@ function obNext(){
   } else if(obStep===2){
     addBotMsg(obData.nickname+'님, 반가워요! 😊');
     setTimeout(function(){
-      addBotMsg('혹시 쿠팡 와우 회원이신가요?\n와우 회원이면 더 빠른 리워드 혜택을 받으실 수 있어요!');
-      showOptions(['네, 와우 회원이에요 🚀','아니요, 일반 회원이에요']);
+      addBotMsg('가격이 내려가면 알림을 보내드릴까요?\n관심상품의 가격 변동을 실시간으로 추적해드려요!');
+      showOptions(['네, 알림 받을게요 🔔','아니요, 괜찮아요']);
       obStep=3;
     },700);
   } else if(obStep===4){
-    var wowMsg=obData.wow?'와우 회원이시군요! 리워드 적립이 더 빨라져요 🎉':'나중에 마이페이지에서 언제든 와우 멤버십을 설정할 수 있어요!';
-    addBotMsg(wowMsg);
-    setTimeout(function(){
-      addBotMsg('가격이 내려가면 알림을 보내드릴까요?\n관심상품의 가격 변동을 실시간으로 추적해드려요!');
-      showOptions(['네, 알림 받을게요 🔔','아니요, 괜찮아요']);
-      obStep=5;
-    },700);
-  } else if(obStep===6){
     var notiMsg=obData.noti?'좋아요! 최저가를 놓치지 않도록 알려드릴게요 📊':'알겠어요! 나중에 마이페이지에서 변경할 수 있어요.';
     addBotMsg(notiMsg);
     setTimeout(function(){
@@ -654,18 +662,17 @@ function obNext(){
             setTimeout(function(){
               addBotMsg('그럼 시작해볼까요? 😄');
               showOptions(['시작하기! 🎉']);
-              obStep=7;
+              obStep=5;
             },600);
           },600);
         },600);
       },500);
     },600);
-  } else if(obStep===8){
+  } else if(obStep===6){
     addBotMsg('좋아요! '+obData.nickname+'님의 계정이 생성되었어요. ✅\n지금부터 스마트한 쇼핑을 시작해보세요!');
     setTimeout(function(){
       S('user',{nickname:obData.nickname,email:obData.nickname.toLowerCase()+'@pricepick.app',joined:new Date().toISOString().slice(0,10)});
       var settings=getSettings();
-      settings.wow=obData.wow;
       settings.marketing=obData.noti;
       setSettings(settings);
       setTimeout(function(){initApp()},1000);
@@ -738,13 +745,10 @@ function pickOption(idx,el){
   removeOptions();
   addUserMsg(text);
   if(obStep===3){
-    obData.wow=idx===0;
+    obData.noti=idx===0;
     obStep=4;
   } else if(obStep===5){
-    obData.noti=idx===0;
     obStep=6;
-  } else if(obStep===7){
-    obStep=8;
   }
   addTyping();
   setTimeout(function(){removeTyping();obNext()},800);
@@ -789,7 +793,7 @@ function initApp(){
   startCountdown();
 }
 
-// ===== WISHLIST (관심상품) =====
+// ===== WISHLIST =====
 function renderWishlist(){
   var tracks=getTracks();
   document.getElementById('wish-count').textContent='전체 '+tracks.length;
@@ -797,7 +801,7 @@ function renderWishlist(){
   if(tracks.length===0){
     html='<div class="empty"><div class="icon">👀</div><p>관심상품을 등록해보세요<br>핫딜이나 검색에서 상품을 찾아<br>관심상품으로 추가할 수 있어요!</p></div>';
   }
-  tracks.forEach(function(t,i){
+  tracks.forEach(function(t){
     var change=Math.round((Math.random()*6-3)*10)/10;
     var changeClass=change<0?'down':'up';
     var arrow=change<0?'▼':'▲';
@@ -810,13 +814,12 @@ function renderWishlist(){
   document.getElementById('wish-list').innerHTML=html;
 }
 
-// ===== HOTDEALS (핫딜) =====
+// ===== HOTDEALS =====
 function renderHotdeals(){
-  // Horizontal popular
   var hhtml='';
   PRODUCTS.slice(0,5).forEach(function(p){
     hhtml+='<div class="h-card" onclick="openDetail('+p.id+')">';
-    hhtml+='<div class="h-card-img">'+p.emoji+'';
+    hhtml+='<div class="h-card-img">'+p.emoji;
     if(p.badge==='lowest')hhtml+='<div style="position:absolute;top:4px;left:4px;background:var(--red);color:#fff;font-size:9px;padding:2px 5px;border-radius:3px;font-weight:700">역대최저가</div>';
     hhtml+='</div>';
     hhtml+='<div class="h-card-name">'+p.name+'</div>';
@@ -824,7 +827,6 @@ function renderHotdeals(){
     hhtml+='<div class="h-card-discount">'+p.discount+'%</div></div>';
   });
   document.getElementById('hot-scroll').innerHTML=hhtml;
-  // Goldbox
   var ghtml='';
   PRODUCTS.slice(2,5).forEach(function(p){
     ghtml+='<div style="text-align:center;cursor:pointer" onclick="openDetail('+p.id+')">';
@@ -833,7 +835,6 @@ function renderHotdeals(){
     ghtml+='<div style="font-size:12px;font-weight:700;margin-top:2px">'+p.currentPrice.toLocaleString()+'원</div></div>';
   });
   document.getElementById('goldbox-grid').innerHTML=ghtml;
-  // Grid
   var phtml='';
   PRODUCTS.forEach(function(p){
     var badgeClass=p.badge==='hot'?'badge-hot':p.badge==='lowest'?'badge-lowest':'badge-rocket';
@@ -862,7 +863,7 @@ function startCountdown(){
   },1000);
 }
 
-// ===== PRODUCT DETAIL (Pollcent price graph style) =====
+// ===== PRODUCT DETAIL =====
 var currentDetailId=null;
 var chartInstance=null;
 function openDetail(id,fromWish){
@@ -871,20 +872,17 @@ function openDetail(id,fromWish){
   if(!p)return;
   var tracks=getTracks();
   var tracked=tracks.find(function(t){return t.productId===id});
-  // Generate history
   var history=tracked?tracked.history:genHistory(p);
   var prices=history.map(function(h){return h.price});
   var maxP=Math.max.apply(null,prices),minP=Math.min.apply(null,prices),avgP=Math.round(prices.reduce(function(a,b){return a+b},0)/prices.length);
   var avgDiff=p.currentPrice-avgP;
 
   var html='';
-  // AI summary
   if(p.ai){
     html+='<div style="margin:12px 16px;background:linear-gradient(135deg,#EFF6FF,#E0E7FF);border-radius:14px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.04)">';
-    html+='<div style="font-size:12px;font-weight:700;color:var(--primary);margin-bottom:4px">🤖 AI 한줄평</div>';
+    html+='<div style="font-size:12px;font-weight:700;color:var(--primary);margin-bottom:4px">💬 최근 구매 이유</div>';
     html+='<div style="font-size:13px;line-height:1.5;color:var(--text)">'+p.ai+'</div></div>';
   }
-  // Graph
   html+='<div class="graph-card"><div class="graph-title">PricePick 가격 그래프 <span style="font-size:12px;color:var(--text-sub)">ⓘ</span></div>';
   html+='<canvas id="detail-chart" height="180"></canvas>';
   html+='<div class="price-stats">';
@@ -893,12 +891,10 @@ function openDetail(id,fromWish){
   html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--green)"></span> 역대최저가</span><span class="value" style="color:var(--green)">'+minP.toLocaleString()+'원</span></div>';
   html+='</div></div>';
 
-  // Purchase info
   if(!tracked){
     html+='<div style="padding:12px 16px;font-size:13px;color:var(--text-sub);text-align:center;background:var(--card);margin:0 16px 12px;border-radius:12px">아직 구매한 적 없는 상품이에요. ⓘ</div>';
   }
 
-  // Alert settings
   html+='<div class="alert-card">';
   html+='<div class="alert-header">추가 알림 설정 <span style="font-size:14px;cursor:pointer">∧</span></div>';
   if(!tracked){
@@ -908,18 +904,15 @@ function openDetail(id,fromWish){
   html+='<div class="alert-row"><div class="left">🔔 재입고 알림</div><div class="right"><div class="toggle" onclick="this.classList.toggle(\'on\')"></div></div></div>';
   html+='</div>';
 
-  // Target price setting
   html+='<div style="margin:0 16px 12px;background:var(--card);border-radius:14px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.04)">';
   html+='<div style="font-size:14px;font-weight:700;margin-bottom:10px">원하는 가격 설정</div>';
   html+='<div style="margin-bottom:8px"><span class="input-label">목표 가격 (원)</span>';
   html+='<input type="number" class="input-field" id="detail-target" value="'+(tracked?tracked.targetPrice:Math.round(p.currentPrice*0.85))+'"></div></div>';
 
-  // Deeplink example
   html+='<div class="deeplink-info">쿠팡 파트너스 딥링크 (예시)<code>https://link.coupang.com/re/AFFTDP?lptag=AF'+p.id+'&amp;subid=pricepick_'+Date.now()+'</code></div>';
 
   document.getElementById('detail-scroll').innerHTML=html;
 
-  // Bottom bar
   var bottomHtml='<button class="add-btn" onclick="addToWishFromDetail('+p.id+')">+ 상품 추가</button>';
   bottomHtml+='<div class="avg-info">평균가 대비<b style="color:'+(avgDiff<0?'var(--primary)':'var(--red)')+'">'+
     (avgDiff<0?'':'+')+(avgDiff).toLocaleString()+'원</b></div>';
@@ -928,7 +921,6 @@ function openDetail(id,fromWish){
 
   document.getElementById('detail-overlay').classList.add('show');
 
-  // Render chart after DOM
   setTimeout(function(){
     if(chartInstance)chartInstance.destroy();
     var ctx=document.getElementById('detail-chart');
@@ -1014,22 +1006,33 @@ function closeAddModal(){document.getElementById('add-modal').classList.remove('
 function simulatePurchase(id){
   var p=PRODUCTS.find(function(x){return x.id===id});
   if(!p)return;
-  // Secret tier based on amount (user doesn't see this)
   var secretTier=p.currentPrice>=100000?'gold':p.currentPrice>=20000?'silver':'bronze';
-  // Give event ticket (shown as generic)
   var tickets=getTickets();
-  tickets.pending++;
-  tickets.history.push({id:Date.now(),tier:secretTier,amount:p.currentPrice,date:new Date().toISOString(),status:'pending',product:p.name});
+  // Check if 2x event applies
+  var is2x=false;
+  EVENT_2X.forEach(function(ev){
+    if(ev.cat==='전자제품'&&(p.emoji==='🖥️'||p.emoji==='🎧'||p.emoji==='🎵'))is2x=true;
+    if(ev.cat==='생활용품'&&(p.emoji==='🧹'||p.emoji==='🤖'))is2x=true;
+    if(ev.cat==='패션/의류'&&p.emoji==='👟')is2x=true;
+    if(ev.cat==='식품/음료'&&(p.emoji==='💧'||p.emoji==='🥛'))is2x=true;
+  });
+  var ticketCount=is2x?2:1;
+  tickets.pending+=ticketCount;
+  for(var ti=0;ti<ticketCount;ti++){
+    tickets.history.push({id:Date.now()+ti,tier:secretTier,amount:p.currentPrice,date:new Date().toISOString(),status:'pending',product:p.name});
+  }
   setTickets(tickets);
-  // Record purchase
   var purchases=getPurchases();
-  purchases.unshift({name:p.name,price:p.currentPrice,date:new Date().toISOString().slice(0,10),emoji:p.emoji});
+  purchases.unshift({name:p.name,price:p.currentPrice,originalPrice:p.originalPrice,date:new Date().toISOString().slice(0,10),emoji:p.emoji});
   S('purchases',purchases);
   closeDetail();
-  showModal('🎫','이벤트 티켓 지급!','<b>'+p.name+'</b> 구매 완료!<br><br>🎫 이벤트 티켓 1장이 지급되었습니다.<br><span style="font-size:12px;color:var(--text-sub)">금액이 클수록 더 좋은 티켓이 나올 수 있어요!</span>');
+  var msg='<b>'+p.name+'</b> 구매 완료!<br><br>🎫 이벤트 티켓 '+ticketCount+'장이 지급되었습니다.';
+  if(is2x)msg+='<br><span style="font-size:12px;color:var(--orange);font-weight:700">🎊 2배 적립 이벤트 적용!</span>';
+  msg+='<br><span style="font-size:12px;color:var(--text-sub)">금액이 클수록 더 좋은 티켓이 나올 수 있어요!</span>';
+  showModal('🎫','이벤트 티켓 지급!',msg);
 }
 
-// ===== TICKET PROCESSING (secret tier upgrade over time) =====
+// ===== TICKET PROCESSING =====
 function processTickets(){
   var tickets=getTickets();
   var now=Date.now();
@@ -1037,7 +1040,6 @@ function processTickets(){
   tickets.history.forEach(function(t){
     if(t.status==='pending'){
       var elapsed=(now-new Date(t.date).getTime())/1000;
-      // For demo: 30 seconds = "time passed" (real would be days)
       if(elapsed>30){
         t.status='available';
         tickets.pending=Math.max(0,tickets.pending-1);
@@ -1070,7 +1072,7 @@ function doSearch(){
     html+='<div class="track-card" onclick="openDetail('+p.id+')" style="margin-bottom:1px">';
     html+='<div class="track-thumb">'+p.emoji+'</div>';
     html+='<div class="track-body"><div class="track-name">'+p.name+'</div>';
-    if(p.ai) html+='<div style="font-size:11px;color:var(--primary);margin-bottom:3px">🤖 '+p.ai.slice(0,30)+'...</div>';
+    if(p.ai) html+='<div style="font-size:11px;color:var(--primary);margin-bottom:3px">💬 '+p.ai.slice(0,30)+'...</div>';
     html+='<div class="track-price-row"><span class="track-current">'+p.currentPrice.toLocaleString()+'원</span>';
     html+='<span class="product-change down" style="font-size:11px">▼'+p.discount+'%</span></div></div></div>';
   });
@@ -1084,6 +1086,18 @@ function renderBenefit(){
   document.getElementById('ticket-pending').textContent=tickets.pending;
   document.getElementById('ticket-available').textContent=tickets.available;
   document.getElementById('raffle-tickets').textContent=tickets.available;
+  // 2x event scroll
+  var ehtml='';
+  EVENT_2X.forEach(function(ev){
+    ehtml+='<div class="event-2x-card" style="background:'+ev.bg+'">';
+    ehtml+='<div class="badge-2x">x2</div>';
+    ehtml+='<div style="font-size:28px;margin-bottom:6px">'+ev.emoji+'</div>';
+    ehtml+='<div style="font-size:14px;font-weight:700">'+ev.cat+'</div>';
+    ehtml+='<div style="font-size:11px;opacity:.8;margin-bottom:6px">티켓 2배 적립</div>';
+    ehtml+='<div style="font-size:10px;background:rgba(255,255,255,.2);display:inline-block;padding:2px 8px;border-radius:10px">~'+ev.end+'</div>';
+    ehtml+='</div>';
+  });
+  document.getElementById('event-2x-scroll').innerHTML=ehtml;
   // Raffle prizes
   var html='';
   RAFFLE_PRIZES.forEach(function(r){
@@ -1105,7 +1119,6 @@ function doRaffle(){
   var tickets=getTickets();
   if(tickets.available<1)return showModal('😅','티켓이 없어요','상품을 구매하면 이벤트 티켓을 받을 수 있어요!');
   tickets.available--;
-  // Remove first available from history
   for(var i=0;i<tickets.history.length;i++){
     if(tickets.history[i].status==='available'){tickets.history[i].status='used';break}
   }
@@ -1137,14 +1150,24 @@ function renderMypage(){
   document.getElementById('my-avatar').textContent=u.nickname[0];
   document.getElementById('my-name').textContent=u.nickname;
   document.getElementById('my-email').textContent=u.email;
-  document.getElementById('my-badge-area').innerHTML=settings.wow?
-    '<span class="mypage-badge" style="background:#FEE500;color:#3C1E1E">쿠팡 와우 멤버</span>':
+  // Badge - kakao status
+  document.getElementById('my-badge-area').innerHTML=settings.kakao?
+    '<span class="mypage-badge" style="background:#FEE500;color:#3C1E1E">카카오 연동완료</span>':
     '<span class="mypage-badge" style="background:var(--border);color:var(--text-sub)">일반 회원</span>';
   document.getElementById('my-tickets').textContent=tickets.available+tickets.pending;
   document.getElementById('my-purchases').textContent=purchases.length;
   document.getElementById('my-wishcnt').textContent=tracks.length;
   document.getElementById('my-raffles').textContent=getRaffleCount();
-  document.getElementById('toggle-wow').className='toggle'+(settings.wow?' on':'');
+  // Total savings
+  var totalSaved=0;
+  purchases.forEach(function(p){
+    var orig=p.originalPrice;
+    if(!orig){var prod=PRODUCTS.find(function(x){return x.name===p.name});if(prod)orig=prod.originalPrice}
+    if(orig)totalSaved+=(orig-p.price);
+  });
+  document.getElementById('my-savings-section').innerHTML=
+    '<div class="savings-card"><div class="label">총 아낀 금액</div><div class="amount">'+totalSaved.toLocaleString()+'원</div><div class="sub">PricePick과 함께한 스마트 쇼핑</div></div>';
+  // Toggles
   document.getElementById('toggle-marketing').className='toggle'+(settings.marketing?' on':'');
   document.getElementById('toggle-price').className='toggle'+(settings.noti_price!==false?' on':'');
   document.getElementById('toggle-restock').className='toggle'+(settings.noti_restock?' on':'');
@@ -1156,7 +1179,6 @@ function renderMypage(){
       '<span style="color:var(--primary);font-size:13px">연동하기</span> <span class="arrow">›</span>';
   }
 }
-function toggleWow(){var s=getSettings();s.wow=!s.wow;setSettings(s);renderMypage()}
 function toggleMarketing(){var s=getSettings();s.marketing=!s.marketing;setSettings(s);renderMypage()}
 function toggleNoti(key){var s=getSettings();s['noti_'+key]=!s['noti_'+key];setSettings(s);renderMypage()}
 function linkKakao(){
@@ -1170,17 +1192,130 @@ function linkKakao(){
 // ===== SUB PAGES =====
 var SUB_CONTENT={
   notice:'<div class="card"><div style="font-size:14px;font-weight:700;margin-bottom:8px">📢 PricePick 오픈 안내</div><p style="font-size:13px;color:var(--text-sub);line-height:1.6">안녕하세요, PricePick입니다.<br><br>쿠팡 최저가 추적 & 쇼핑 리워드 서비스를 오픈했습니다. 관심상품을 등록하고 목표가를 설정하면, 가격 변동을 실시간으로 추적해드립니다.<br><br>구매 시 이벤트 티켓이 지급되며, 추첨을 통해 다양한 경품을 받아보실 수 있습니다.<br><br>많은 이용 부탁드립니다! 🙏<br><br><span style="color:var(--text-light)">2026.02.09</span></p></div>',
-  inquiry:'<div class="card"><div style="font-size:14px;font-weight:700;margin-bottom:12px">💬 1:1 문의하기</div><div style="margin-bottom:10px"><span class="input-label">문의 유형</span><select class="input-field" style="padding:10px 14px"><option>이용 문의</option><option>티켓/포인트</option><option>오류 신고</option><option>기타</option></select></div><div style="margin-bottom:10px"><span class="input-label">문의 내용</span><textarea class="input-field" rows="5" placeholder="문의 내용을 입력해주세요" style="resize:none"></textarea></div><button class="modal-btn" onclick="showModal(\'✅\',\'접수 완료\',\'문의가 접수되었습니다.\');closeSub()">문의하기</button></div>',
   terms:'<div class="card"><div style="font-size:14px;font-weight:700;margin-bottom:8px">이용약관</div><div style="font-size:12px;color:var(--text-sub);line-height:1.7"><p><b>제1조 (목적)</b><br>이 약관은 PricePick(이하 "서비스")의 이용과 관련하여 회사와 이용자 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p><br><p><b>제2조 (정의)</b><br>①"서비스"란 회사가 제공하는 가격 추적, 쇼핑 리워드 등 관련 서비스를 말합니다.<br>②"이용자"란 이 약관에 따라 서비스를 이용하는 자를 말합니다.</p><br><p><b>제3조 (서비스 이용)</b><br>①서비스 이용은 회원가입 후 가능합니다.<br>②이벤트 티켓 및 경품은 프로모션 기간 내에만 유효합니다.<br>③부정한 방법으로 획득한 리워드는 회수될 수 있습니다.</p><br><p><b>제4조 (개인정보)</b><br>회사는 이용자의 개인정보를 관련 법령에 따라 보호합니다.</p></div></div>',
   privacy:'<div class="card"><div style="font-size:14px;font-weight:700;margin-bottom:8px">개인정보 처리방침</div><div style="font-size:12px;color:var(--text-sub);line-height:1.7"><p><b>1. 수집하는 개인정보</b><br>닉네임, 이메일 주소</p><br><p><b>2. 수집 목적</b><br>서비스 제공, 가격 알림, 리워드 지급</p><br><p><b>3. 보유 기간</b><br>회원 탈퇴 시까지 (탈퇴 즉시 파기)</p><br><p><b>4. 제3자 제공</b><br>이용자의 개인정보를 제3자에게 제공하지 않습니다.</p><br><p><b>5. 안전성 확보 조치</b><br>개인정보는 localStorage에 저장되며, 서버로 전송되지 않습니다. (프로토타입)</p></div></div>'
 };
 function openSub(key){
-  var titles={notice:'공지사항',inquiry:'1:1 문의하기',terms:'이용약관',privacy:'개인정보 처리방침'};
+  var titles={notice:'공지사항',terms:'이용약관',privacy:'개인정보 처리방침'};
   document.getElementById('sub-title').textContent=titles[key]||'';
+  document.getElementById('sub-body').className='sub-body';
   document.getElementById('sub-body').innerHTML=SUB_CONTENT[key]||'';
   document.getElementById('sub-overlay').classList.add('show');
 }
 function closeSub(){document.getElementById('sub-overlay').classList.remove('show')}
+
+// ===== INQUIRY CHATBOT =====
+var iqArea;
+var IQ_ANSWERS={
+  '티켓/리워드 문의':'구매 시 이벤트 티켓이 자동 지급됩니다. 금액이 클수록 좋은 티켓이 나와요! 적립예정 티켓은 일정 시간 후 사용 가능 상태로 변경됩니다. 혜택 탭에서 티켓으로 추첨에 응모할 수 있어요. 🎫',
+  '가격 알림 문의':'관심상품에 등록하면 가격 변동을 추적해드립니다. 원하는 목표 가격을 설정하면 가격이 내려갔을 때 알림을 보내드려요. 마이페이지 > 알림 설정에서 알림 종류를 관리할 수 있습니다. 📊',
+  '계정/연동 문의':'카카오 연동은 마이페이지 > 계정 연동에서 설정할 수 있습니다. 카카오를 연동하면 리워드 적립 대기 기간이 단축됩니다. 💬',
+  '2배 적립 이벤트':'혜택 탭에서 현재 진행 중인 2배 적립 이벤트를 확인할 수 있어요. 해당 카테고리 상품 구매 시 티켓이 2장 지급됩니다! 🎊',
+  '기타 문의':'자세한 내용을 아래 1:1 게시판으로 남겨주시면 확인 후 답변드리겠습니다.'
+};
+
+function openInquiry(){
+  document.getElementById('sub-title').textContent='1:1 문의하기';
+  document.getElementById('sub-body').className='sub-body no-pad';
+  document.getElementById('sub-body').innerHTML=
+    '<div class="iq-chat">'+
+      '<div class="iq-area" id="iq-area"></div>'+
+      '<div class="iq-bottom" id="iq-bottom"></div>'+
+    '</div>';
+  document.getElementById('sub-overlay').classList.add('show');
+  iqArea=document.getElementById('iq-area');
+  setTimeout(function(){iqBotMsg('안녕하세요! PricePick 고객센터입니다. 😊\n어떤 도움이 필요하세요?');
+    setTimeout(function(){iqShowTopics()},400);
+  },300);
+}
+
+function iqBotMsg(text){
+  var row=document.createElement('div');row.className='chat-row';
+  row.innerHTML='<div class="chat-avatar">🤖</div><div class="chat-bubble">'+text+'</div>';
+  iqArea.appendChild(row);iqArea.scrollTop=iqArea.scrollHeight;
+}
+function iqUserMsg(text){
+  var row=document.createElement('div');row.className='chat-row user';
+  row.innerHTML='<div class="chat-avatar" style="background:var(--primary);color:#fff;font-size:12px;font-weight:700">나</div><div class="chat-bubble">'+text+'</div>';
+  iqArea.appendChild(row);iqArea.scrollTop=iqArea.scrollHeight;
+}
+
+function iqShowTopics(){
+  var topics=['티켓/리워드 문의','가격 알림 문의','계정/연동 문의','2배 적립 이벤트','기타 문의'];
+  var row=document.createElement('div');row.className='chat-row';row.id='iq-options';
+  var inner='<div style="width:32px;flex-shrink:0"></div><div class="chat-options">';
+  topics.forEach(function(t){
+    inner+='<div class="chat-opt" onclick="iqPickTopic(this)">'+t+'</div>';
+  });
+  inner+='</div>';
+  row.innerHTML=inner;
+  iqArea.appendChild(row);iqArea.scrollTop=iqArea.scrollHeight;
+  // Bottom buttons
+  document.getElementById('iq-bottom').innerHTML=
+    '<button onclick="iqShowBoard()">📋 1:1 게시판</button>'+
+    '<button onclick="iqShowAgent()">💬 상담원 연결</button>';
+}
+
+function iqPickTopic(el){
+  var topic=el.textContent;
+  var optRow=document.getElementById('iq-options');if(optRow)optRow.remove();
+  iqUserMsg(topic);
+  // typing
+  var typing=document.createElement('div');typing.className='chat-row';typing.id='iq-typing';
+  typing.innerHTML='<div class="chat-avatar">🤖</div><div class="chat-typing"><span></span><span></span><span></span></div>';
+  iqArea.appendChild(typing);iqArea.scrollTop=iqArea.scrollHeight;
+  setTimeout(function(){
+    var t=document.getElementById('iq-typing');if(t)t.remove();
+    iqBotMsg(IQ_ANSWERS[topic]||'확인 후 답변드리겠습니다.');
+    setTimeout(function(){
+      iqBotMsg('더 궁금한 점이 있으시면 아래에서 선택해주세요.');
+      iqShowTopics();
+    },500);
+  },800);
+}
+
+function iqShowBoard(){
+  iqArea.innerHTML='';
+  iqBotMsg('1:1 게시판 문의를 남겨주세요.');
+  var form=document.createElement('div');
+  form.style.cssText='padding:12px;';
+  form.innerHTML=
+    '<div class="card" style="margin:0"><div style="margin-bottom:10px"><span class="input-label">문의 유형</span>'+
+    '<select class="input-field" id="iq-type" style="padding:10px 14px"><option>이용 문의</option><option>티켓/리워드</option><option>오류 신고</option><option>기타</option></select></div>'+
+    '<div style="margin-bottom:10px"><span class="input-label">문의 내용</span>'+
+    '<textarea class="input-field" id="iq-content" rows="4" placeholder="문의 내용을 입력해주세요" style="resize:none"></textarea></div>'+
+    '<button class="modal-btn" onclick="iqSubmitBoard()">문의 접수하기</button></div>';
+  iqArea.appendChild(form);
+  document.getElementById('iq-bottom').innerHTML='<button onclick="openInquiry()">← 처음으로</button>';
+}
+
+function iqSubmitBoard(){
+  var content=document.getElementById('iq-content').value.trim();
+  if(!content)return;
+  iqArea.innerHTML='';
+  iqBotMsg('문의가 접수되었습니다. ✅\n빠른 시일 내에 답변드리겠습니다.');
+  document.getElementById('iq-bottom').innerHTML='<button class="primary" onclick="closeSub()">확인</button>';
+}
+
+function iqShowAgent(){
+  iqArea.innerHTML='';
+  document.getElementById('iq-bottom').innerHTML='';
+  var html='<div style="text-align:center;padding:40px 20px">';
+  html+='<div style="font-size:48px;margin-bottom:12px">💬</div>';
+  html+='<div style="font-size:16px;font-weight:700;margin-bottom:4px">상담원 연결 중...</div>';
+  html+='<div style="font-size:13px;color:var(--text-sub);margin-bottom:16px">텔레그램으로 상담원을 연결하고 있습니다.</div>';
+  html+='<div style="display:flex;gap:6px;justify-content:center;margin-bottom:16px">';
+  html+='<span style="width:8px;height:8px;border-radius:50%;background:var(--primary);animation:typing 1.2s infinite"></span>';
+  html+='<span style="width:8px;height:8px;border-radius:50%;background:var(--primary);animation:typing 1.2s infinite .2s"></span>';
+  html+='<span style="width:8px;height:8px;border-radius:50%;background:var(--primary);animation:typing 1.2s infinite .4s"></span>';
+  html+='</div>';
+  html+='<div style="font-size:12px;color:var(--text-sub)">평균 대기시간: 약 3분</div>';
+  html+='<div style="margin-top:20px;display:flex;gap:8px;justify-content:center">';
+  html+='<button style="padding:10px 20px;border-radius:12px;border:1.5px solid var(--border);background:var(--card);font-size:13px;font-weight:600;cursor:pointer" onclick="openInquiry()">← 돌아가기</button>';
+  html+='<button style="padding:10px 20px;border-radius:12px;border:none;background:var(--primary);color:#fff;font-size:13px;font-weight:600;cursor:pointer" onclick="iqShowBoard()">게시판 문의</button>';
+  html+='</div></div>';
+  iqArea.innerHTML=html;
+}
 
 // ===== MODAL =====
 function showModal(icon,title,msg){
@@ -1203,6 +1338,8 @@ var _openDetail=openDetail;
 openDetail=function(){pushState();_openDetail.apply(null,arguments)};
 var _openSub=openSub;
 openSub=function(){pushState();_openSub.apply(null,arguments)};
+var _openInquiry=openInquiry;
+openInquiry=function(){pushState();_openInquiry.apply(null,arguments)};
 
 // ===== START =====
 initApp();

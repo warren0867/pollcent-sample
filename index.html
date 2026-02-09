@@ -451,10 +451,22 @@ body{display:flex;flex-direction:column}
         <div class="left"><span class="icon">💬</span> 카카오 연동</div>
         <div class="right" id="kakao-status"><span style="color:var(--primary);font-size:13px">연동하기</span> <span class="arrow">›</span></div>
       </div>
+    </div>
+    <div class="mypage-section">
+      <div class="mypage-section-title">알림 설정</div>
+      <div class="mypage-row" onclick="toggleNoti('price')">
+        <div class="left"><span class="icon">📉</span> 가격 하락 알림</div>
+        <div class="right"><div class="toggle on" id="toggle-price"></div></div>
+      </div>
       <div class="mypage-divider"></div>
-      <div class="mypage-row">
-        <div class="left"><span class="icon">🍎</span> Apple 연동</div>
-        <div class="right"><span style="color:var(--text-sub);font-size:13px">준비중</span></div>
+      <div class="mypage-row" onclick="toggleNoti('restock')">
+        <div class="left"><span class="icon">📦</span> 재입고 알림</div>
+        <div class="right"><div class="toggle" id="toggle-restock"></div></div>
+      </div>
+      <div class="mypage-divider"></div>
+      <div class="mypage-row" onclick="toggleNoti('event')">
+        <div class="left"><span class="icon">🎉</span> 이벤트 알림</div>
+        <div class="right"><div class="toggle on" id="toggle-event"></div></div>
       </div>
     </div>
     <div class="mypage-section">
@@ -1134,6 +1146,9 @@ function renderMypage(){
   document.getElementById('my-raffles').textContent=getRaffleCount();
   document.getElementById('toggle-wow').className='toggle'+(settings.wow?' on':'');
   document.getElementById('toggle-marketing').className='toggle'+(settings.marketing?' on':'');
+  document.getElementById('toggle-price').className='toggle'+(settings.noti_price!==false?' on':'');
+  document.getElementById('toggle-restock').className='toggle'+(settings.noti_restock?' on':'');
+  document.getElementById('toggle-event').className='toggle'+(settings.noti_event!==false?' on':'');
   var kakaoStatus=document.getElementById('kakao-status');
   if(kakaoStatus){
     kakaoStatus.innerHTML=settings.kakao?
@@ -1143,6 +1158,7 @@ function renderMypage(){
 }
 function toggleWow(){var s=getSettings();s.wow=!s.wow;setSettings(s);renderMypage()}
 function toggleMarketing(){var s=getSettings();s.marketing=!s.marketing;setSettings(s);renderMypage()}
+function toggleNoti(key){var s=getSettings();s['noti_'+key]=!s['noti_'+key];setSettings(s);renderMypage()}
 function linkKakao(){
   var s=getSettings();
   if(s.kakao)return;

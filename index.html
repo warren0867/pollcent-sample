@@ -1721,9 +1721,7 @@ window.addEventListener('popstate',function(){
 (function(){
   var isStandalone=window.navigator.standalone||window.matchMedia('(display-mode:standalone)').matches;
   if(isStandalone&&window.innerHeight<screen.height-20){
-    var r=document.documentElement.style;
-    r.setProperty('--safe-top','0px');
-    r.setProperty('--safe-bottom','0px');
+    document.documentElement.style.setProperty('--safe-bottom','0px');
   }
 })();
 

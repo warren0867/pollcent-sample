@@ -13,8 +13,8 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--primary:#3B82F6;--primary-light:#EFF6FF;--primary-dark:#2563EB;--bg:#F5F6FA;--card:#fff;--text:#1F2937;--text-sub:#9CA3AF;--text-light:#D1D5DB;--border:#F3F4F6;--red:#EF4444;--green:#10B981;--orange:#F59E0B;--tab-h:60px;--header-h:52px;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
-html{background:var(--card);height:100%;height:-webkit-fill-available}
-body{display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);overflow:hidden;height:100%;height:-webkit-fill-available;min-height:-webkit-fill-available}
+html{background:var(--card);height:100%}
+body{display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
 
 /* Header */
 .header{min-height:calc(var(--header-h) + var(--safe-top));padding-top:var(--safe-top);background:var(--card);display:flex;align-items:center;justify-content:space-between;padding-left:20px;padding-right:16px;z-index:100;flex-shrink:0}
@@ -525,6 +525,23 @@ body{display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystem
       </div>
     </div>
     <div id="my-savings-section"></div>
+    <div class="mypage-section" id="wow-section">
+      <div class="mypage-section-title">쿠팡 멤버십</div>
+      <div class="mypage-row" onclick="toggleWow()">
+        <div class="left"><span class="icon">🚀</span> 쿠팡 와우 멤버십</div>
+        <div class="right" id="wow-status"><span style="color:var(--primary);font-size:13px">가입하기</span> <span class="arrow">›</span></div>
+      </div>
+      <div class="mypage-divider"></div>
+      <div class="mypage-row" onclick="showModal('🚀','와우 혜택 안내','<b>쿠팡 와우 멤버십 혜택</b><br><br>✅ 로켓배송 무료배송<br>✅ 로켓프레시 무료배송<br>✅ 쿠팡플레이 무료 이용<br>✅ 와우 할인가 적용<br>✅ 쿠팡이츠 무료배달<br><br><span style=font-size:12px;color:var(--text-sub)>월 4,990원 / 연 58,000원</span>')">
+        <div class="left"><span class="icon">📋</span> 와우 혜택 보기</div>
+        <div class="right"><span class="arrow">›</span></div>
+      </div>
+      <div class="mypage-divider"></div>
+      <div class="mypage-row" onclick="showModal('📊','이번 달 와우 절약','<b>무료배송으로 아낀 배송비</b><br><br>🚀 로켓배송: <b>12,000원</b><br>🥬 로켓프레시: <b>8,000원</b><br>🎬 쿠팡플레이: <b>7,900원</b><br><br>총 절약: <b style=color:var(--primary)>27,900원</b>')">
+        <div class="left"><span class="icon">💰</span> 이번 달 절약 내역</div>
+        <div class="right"><span class="arrow">›</span></div>
+      </div>
+    </div>
     <div class="mypage-section">
       <div class="mypage-section-title">계정 연동</div>
       <div class="mypage-row" id="kakao-row" onclick="linkKakao()">
@@ -1259,6 +1276,13 @@ function renderMypage(){
       '<span style="color:var(--green);font-size:13px;font-weight:600">연동완료 ✓</span>':
       '<span style="color:var(--primary);font-size:13px">연동하기</span> <span class="arrow">›</span>';
   }
+  // Wow membership
+  var wowStatus=document.getElementById('wow-status');
+  if(wowStatus){
+    wowStatus.innerHTML=settings.wow?
+      '<span style="color:var(--green);font-size:13px;font-weight:600">멤버 ✓</span>':
+      '<span style="color:var(--primary);font-size:13px">가입하기</span> <span class="arrow">›</span>';
+  }
 }
 function toggleMarketing(){var s=getSettings();s.marketing=!s.marketing;setSettings(s);renderMypage()}
 function toggleNoti(key){var s=getSettings();s['noti_'+key]=!s['noti_'+key];setSettings(s);renderMypage()}
@@ -1689,6 +1713,26 @@ window.addEventListener('popstate',function(){
   if(document.getElementById('sub-overlay').classList.contains('show')){closeSub();return}
   if(document.getElementById('detail-overlay').classList.contains('show')){closeDetail();return}
 });
+
+// ===== iOS HEIGHT FIX =====
+function setAppHeight(){
+  document.body.style.height=window.innerHeight+'px';
+}
+setAppHeight();
+window.addEventListener('resize',setAppHeight);
+window.addEventListener('orientationchange',function(){setTimeout(setAppHeight,100)});
+
+// ===== WOW MEMBERSHIP =====
+function toggleWow(){
+  var s=getSettings();
+  if(s.wow){
+    if(confirm('와우 멤버십 연동을 해제할까요?')){s.wow=false;setSettings(s);renderMypage()}
+    return;
+  }
+  s.wow=true;setSettings(s);
+  showModal('🚀','와우 멤버십 연동!','쿠팡 와우 멤버십이 연동되었습니다.<br>로켓배송 무료배송 혜택을 누리세요!');
+  renderMypage();
+}
 
 // ===== PWA SERVICE WORKER =====
 if('serviceWorker' in navigator){

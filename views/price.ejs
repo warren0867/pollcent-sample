@@ -1,4 +1,4 @@
-<%- include('layout', { body: `
+<%- include('header') %>
 <div class="price-page">
   <h2>가격 추적</h2>
 
@@ -13,37 +13,41 @@
     </form>
   </div>
 
-  ${tracks.length === 0 ? '<p class="empty" style="padding:20px 0">추적중인 상품이 없습니다.</p>' : ''}
+  <% if (tracks.length === 0) { %>
+    <p class="empty" style="padding:20px 0">추적중인 상품이 없습니다.</p>
+  <% } %>
 
   <div class="track-list">
-    ${tracks.map(t => '<div class="track-card" id="track-' + t.id + '">' +
-      '<div class="track-header">' +
-        '<div class="track-info">' +
-          '<h4>' + t.product_name + '</h4>' +
-          '<div class="track-prices">' +
-            '<span>현재 <b>' + Number(t.current_price).toLocaleString() + '원</b></span>' +
-            '<span class="track-arrow">→</span>' +
-            '<span>목표 <b class="target-price">' + Number(t.target_price).toLocaleString() + '원</b></span>' +
-          '</div>' +
-          '<div class="track-stats">' +
-            '<span>최저 ' + Number(t.minPrice).toLocaleString() + '원</span>' +
-            '<span>최고 ' + Number(t.maxPrice).toLocaleString() + '원</span>' +
-            '<span class="track-diff ' + (t.diff <= 0 ? 'reached' : 'above') + '">' +
-              (t.diff <= 0 ? '목표 도달!' : Number(t.diff).toLocaleString() + '원 초과') +
-            '</span>' +
-          '</div>' +
-        '</div>' +
-        '<div class="track-actions">' +
-          '<button class="btn btn-sm" onclick="showChart(' + t.id + ')">차트</button>' +
-          '<form method="POST" action="/price/delete/' + t.id + '" style="display:inline">' +
-            '<button type="submit" class="btn btn-sm btn-danger">삭제</button>' +
-          '</form>' +
-        '</div>' +
-      '</div>' +
-      '<div class="chart-container" id="chart-' + t.id + '" style="display:none">' +
-        '<canvas id="canvas-' + t.id + '" height="200"></canvas>' +
-      '</div>' +
-    '</div>').join('')}
+    <% tracks.forEach(function(t) { %>
+      <div class="track-card" id="track-<%= t.id %>">
+        <div class="track-header">
+          <div class="track-info">
+            <h4><%= t.product_name %></h4>
+            <div class="track-prices">
+              <span>현재 <b><%= Number(t.current_price).toLocaleString() %>원</b></span>
+              <span class="track-arrow">&rarr;</span>
+              <span>목표 <b class="target-price"><%= Number(t.target_price).toLocaleString() %>원</b></span>
+            </div>
+            <div class="track-stats">
+              <span>최저 <%= Number(t.minPrice).toLocaleString() %>원</span>
+              <span>최고 <%= Number(t.maxPrice).toLocaleString() %>원</span>
+              <span class="track-diff <%= t.diff <= 0 ? 'reached' : 'above' %>">
+                <%= t.diff <= 0 ? '목표 도달!' : Number(t.diff).toLocaleString() + '원 초과' %>
+              </span>
+            </div>
+          </div>
+          <div class="track-actions">
+            <button class="btn btn-sm" onclick="showChart(<%= t.id %>)">차트</button>
+            <form method="POST" action="/price/delete/<%= t.id %>" style="display:inline">
+              <button type="submit" class="btn btn-sm btn-danger">삭제</button>
+            </form>
+          </div>
+        </div>
+        <div class="chart-container" id="chart-<%= t.id %>" style="display:none">
+          <canvas id="canvas-<%= t.id %>" height="200"></canvas>
+        </div>
+      </div>
+    <% }); %>
   </div>
 </div>
 
@@ -106,4 +110,4 @@ async function showChart(trackId) {
   });
 }
 </script>
-` }) %>
+<%- include('footer') %>

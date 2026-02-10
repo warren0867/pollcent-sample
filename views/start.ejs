@@ -1,8 +1,10 @@
-<%- include('layout', { body: `
+<%- include('header') %>
 <div class="auth-page">
   <h2>PricePick 시작하기</h2>
   <p style="text-align:center;color:#888;margin-bottom:20px">간편하게 시작하세요. 비밀번호 없이!</p>
-  ${error ? '<div class="alert alert-error">' + error + '</div>' : ''}
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert alert-error"><%= error %></div>
+  <% } %>
   <form method="POST" action="/auth/start" class="auth-form">
     <div class="form-group">
       <label>닉네임</label>
@@ -16,4 +18,4 @@
   </form>
   <p class="auth-link" style="margin-top:12px">이미 가입했다면 같은 이메일로 입력하세요</p>
 </div>
-` }) %>
+<%- include('footer') %>

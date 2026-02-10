@@ -1,34 +1,69 @@
-<%- include('layout', { body: `
+<%- include('header') %>
 <div class="exchange-page">
   <h2>교환소</h2>
   <div class="balance-banner">
     <span>내 잔액</span>
-    <span class="balance-value">${Number(balance).toLocaleString()}원</span>
+    <span class="balance-value"><%= Number(balance).toLocaleString() %>원</span>
   </div>
 
   <div class="section">
-    <h3>교환 가능한 보상 (${availableRewards.length}건)</h3>
-    ${availableRewards.length > 1 ? '<button class="btn btn-primary" onclick="exchangeAll()">전체 교환</button>' : ''}
-    ${availableRewards.length === 0 ? '<p class="empty">교환 가능한 보상이 없습니다.</p>' : ''}
+    <h3>교환 가능한 보상 (<%= availableRewards.length %>건)</h3>
+    <% if (availableRewards.length > 1) { %>
+      <button class="btn btn-primary" onclick="exchangeAll()">전체 교환</button>
+    <% } %>
+    <% if (availableRewards.length === 0) { %>
+      <p class="empty">교환 가능한 보상이 없습니다.</p>
+    <% } %>
     <div class="reward-list">
-      ${availableRewards.map(r => '<div class="reward-item available"><div class="reward-info"><span class="tier tier-' + r.tier + '">' + r.tier.toUpperCase() + '</span><span>구매: ' + Number(r.purchase_amount).toLocaleString() + '원</span></div><div class="reward-action"><span class="reward-amount">' + Number(r.reward_amount).toLocaleString() + '원</span><button class="btn btn-sm btn-primary" onclick="exchangeReward(' + r.id + ')">교환</button></div></div>').join('')}
+      <% availableRewards.forEach(function(r) { %>
+        <div class="reward-item available">
+          <div class="reward-info">
+            <span class="tier tier-<%= r.tier %>"><%= r.tier.toUpperCase() %></span>
+            <span>구매: <%= Number(r.purchase_amount).toLocaleString() %>원</span>
+          </div>
+          <div class="reward-action">
+            <span class="reward-amount"><%= Number(r.reward_amount).toLocaleString() %>원</span>
+            <button class="btn btn-sm btn-primary" onclick="exchangeReward(<%= r.id %>)">교환</button>
+          </div>
+        </div>
+      <% }); %>
     </div>
   </div>
 
   <div class="section">
-    <h3>대기중인 보상 (${pendingRewards.length}건)</h3>
-    ${pendingRewards.length === 0 ? '<p class="empty">대기중인 보상이 없습니다.</p>' : ''}
+    <h3>대기중인 보상 (<%= pendingRewards.length %>건)</h3>
+    <% if (pendingRewards.length === 0) { %>
+      <p class="empty">대기중인 보상이 없습니다.</p>
+    <% } %>
     <div class="reward-list">
-      ${pendingRewards.map(r => '<div class="reward-item pending"><div class="reward-info"><span class="tier tier-' + r.tier + '">' + r.tier.toUpperCase() + '</span><span>구매: ' + Number(r.purchase_amount).toLocaleString() + '원</span></div><div class="reward-action"><span class="reward-amount">' + Number(r.reward_amount).toLocaleString() + '원</span><span class="reward-date">' + r.available_at.slice(0, 10) + ' 교환가능</span></div></div>').join('')}
+      <% pendingRewards.forEach(function(r) { %>
+        <div class="reward-item pending">
+          <div class="reward-info">
+            <span class="tier tier-<%= r.tier %>"><%= r.tier.toUpperCase() %></span>
+            <span>구매: <%= Number(r.purchase_amount).toLocaleString() %>원</span>
+          </div>
+          <div class="reward-action">
+            <span class="reward-amount"><%= Number(r.reward_amount).toLocaleString() %>원</span>
+            <span class="reward-date"><%= r.available_at.slice(0, 10) %> 교환가능</span>
+          </div>
+        </div>
+      <% }); %>
     </div>
   </div>
 
   <div class="section">
     <h3>교환 이력</h3>
-    ${history.length === 0 ? '<p class="empty">교환 이력이 없습니다.</p>' : ''}
+    <% if (history.length === 0) { %>
+      <p class="empty">교환 이력이 없습니다.</p>
+    <% } %>
     <div class="history-list">
-      ${history.map(h => '<div class="history-item"><span>' + Number(h.amount).toLocaleString() + '원</span><span class="history-date">' + h.created_at.slice(0, 10) + '</span></div>').join('')}
+      <% history.forEach(function(h) { %>
+        <div class="history-item">
+          <span><%= Number(h.amount).toLocaleString() %>원</span>
+          <span class="history-date"><%= h.created_at.slice(0, 10) %></span>
+        </div>
+      <% }); %>
     </div>
   </div>
 </div>
-` }) %>
+<%- include('footer') %>

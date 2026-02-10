@@ -1,4 +1,4 @@
-<%- include('layout', { body: `
+<%- include('header') %>
 <div class="hotdeals-page">
   <div class="page-header">
     <h2>핫딜</h2>
@@ -6,19 +6,21 @@
   </div>
 
   <div class="product-grid">
-    ${products.map(p => '<div class="product-card">' +
-      '<a href="/product/' + p.id + '">' +
-        '<div class="product-img"><img src="' + p.image + '" alt="' + p.name + '"></div>' +
-        '<div class="product-info">' +
-          '<p class="product-name">' + p.name + '</p>' +
-          '<div class="product-price-row">' +
-            '<span class="product-discount">' + p.discount + '%</span>' +
-            '<span class="product-price">' + Number(p.currentPrice).toLocaleString() + '원</span>' +
-          '</div>' +
-          '<p class="product-original">' + Number(p.originalPrice).toLocaleString() + '원</p>' +
-        '</div>' +
-      '</a>' +
-    '</div>').join('')}
+    <% products.forEach(function(p) { %>
+      <div class="product-card">
+        <a href="/product/<%= p.id %>">
+          <div class="product-img"><img src="<%= p.image %>" alt="<%= p.name %>"></div>
+          <div class="product-info">
+            <p class="product-name"><%= p.name %></p>
+            <div class="product-price-row">
+              <span class="product-discount"><%= p.discount %>%</span>
+              <span class="product-price"><%= Number(p.currentPrice).toLocaleString() %>원</span>
+            </div>
+            <p class="product-original"><%= Number(p.originalPrice).toLocaleString() %>원</p>
+          </div>
+        </a>
+      </div>
+    <% }); %>
   </div>
 </div>
-` }) %>
+<%- include('footer') %>

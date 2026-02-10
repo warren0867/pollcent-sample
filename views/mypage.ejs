@@ -1,60 +1,79 @@
-<%- include('layout', { body: `
+<%- include('header') %>
 <div class="mypage">
   <h2>마이페이지</h2>
 
   <div class="section">
     <div class="mypage-profile">
-      <h3>${user.nickname}님</h3>
-      <p>${user.email || ''}</p>
+      <h3><%= user.nickname %>님</h3>
+      <p><%= user.email || '' %></p>
       <p class="mypage-type">
-        ${user.kakao_id ? '<span class="badge badge-kakao">카카오 연동</span> 보상 대기 7일' : '<span class="badge badge-normal">일반회원</span> 보상 대기 30일'}
+        <% if (user.kakao_id) { %>
+          <span class="badge badge-kakao">카카오 연동</span> 보상 대기 7일
+        <% } else { %>
+          <span class="badge badge-normal">일반회원</span> 보상 대기 30일
+        <% } %>
       </p>
-      ${!user.kakao_id ? '<a href="/auth/kakao/link" class="btn btn-kakao" style="margin-top:8px">카카오 연동하면 7일로 단축!</a>' : ''}
+      <% if (!user.kakao_id) { %>
+        <a href="/auth/kakao/link" class="btn btn-kakao" style="margin-top:8px">카카오 연동하면 7일로 단축!</a>
+      <% } %>
     </div>
   </div>
 
   <div class="stats-grid">
     <div class="stat-card balance">
       <h3>내 잔액</h3>
-      <p class="stat-value">${Number(user.balance).toLocaleString()}원</p>
+      <p class="stat-value"><%= Number(user.balance).toLocaleString() %>원</p>
     </div>
     <div class="stat-card">
       <h3>복권</h3>
-      <p class="stat-value">${unusedLottery}장</p>
-      ${unusedLottery > 0 ? '<a href="/tickets" class="btn btn-sm">사용</a>' : ''}
+      <p class="stat-value"><%= unusedLottery %>장</p>
+      <% if (unusedLottery > 0) { %>
+        <a href="/tickets" class="btn btn-sm">사용</a>
+      <% } %>
     </div>
     <div class="stat-card">
       <h3>룰렛</h3>
-      <p class="stat-value">${unusedRoulette}장</p>
-      ${unusedRoulette > 0 ? '<a href="/tickets" class="btn btn-sm">사용</a>' : ''}
+      <p class="stat-value"><%= unusedRoulette %>장</p>
+      <% if (unusedRoulette > 0) { %>
+        <a href="/tickets" class="btn btn-sm">사용</a>
+      <% } %>
     </div>
     <div class="stat-card">
       <h3>교환가능</h3>
-      <p class="stat-value">${Number(availableRewards.total).toLocaleString()}원</p>
-      ${availableRewards.count > 0 ? '<a href="/rewards" class="btn btn-sm">교환</a>' : ''}
+      <p class="stat-value"><%= Number(availableRewards.total).toLocaleString() %>원</p>
+      <% if (availableRewards.count > 0) { %>
+        <a href="/rewards" class="btn btn-sm">교환</a>
+      <% } %>
     </div>
     <div class="stat-card">
       <h3>대기중</h3>
-      <p class="stat-value">${Number(pendingRewards.total).toLocaleString()}원</p>
+      <p class="stat-value"><%= Number(pendingRewards.total).toLocaleString() %>원</p>
     </div>
     <div class="stat-card">
       <h3>오늘한도</h3>
-      <p class="stat-value">${Number(dailyLimit.remaining).toLocaleString()}원</p>
+      <p class="stat-value"><%= Number(dailyLimit.remaining).toLocaleString() %>원</p>
     </div>
   </div>
 
   <div class="section">
     <h3>최근 구매</h3>
-    ${recentPurchases.length === 0 ? '<p class="empty">아직 구매 내역이 없습니다.</p>' : ''}
+    <% if (recentPurchases.length === 0) { %>
+      <p class="empty">아직 구매 내역이 없습니다.</p>
+    <% } %>
     <div class="purchase-list">
-      ${recentPurchases.map(p => '<div class="purchase-item"><span class="purchase-name">' + (p.product_name || '상품') + '</span><span class="purchase-amount">' + Number(p.amount).toLocaleString() + '원</span></div>').join('')}
+      <% recentPurchases.forEach(function(p) { %>
+        <div class="purchase-item">
+          <span class="purchase-name"><%= p.product_name || '상품' %></span>
+          <span class="purchase-amount"><%= Number(p.amount).toLocaleString() %>원</span>
+        </div>
+      <% }); %>
     </div>
   </div>
 
   <div class="section">
     <table class="reward-table">
-      <tr><td>티켓 당첨 누적</td><td>${Number(ticketTotal).toLocaleString()}원</td></tr>
-      <tr><td>보상 대기일</td><td>${user.reward_delay_days}일</td></tr>
+      <tr><td>티켓 당첨 누적</td><td><%= Number(ticketTotal).toLocaleString() %>원</td></tr>
+      <tr><td>보상 대기일</td><td><%= user.reward_delay_days %>일</td></tr>
     </table>
   </div>
 
@@ -62,4 +81,4 @@
     <a href="/auth/logout" class="btn btn-outline">로그아웃</a>
   </div>
 </div>
-` }) %>
+<%- include('footer') %>

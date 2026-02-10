@@ -1,4 +1,4 @@
-var CACHE='pricepick-v1';
+var CACHE='pricepick-v2';
 var ASSETS=['/','/manifest.json'];
 
 self.addEventListener('install',function(e){

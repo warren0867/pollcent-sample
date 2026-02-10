@@ -13,8 +13,8 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--primary:#3B82F6;--primary-light:#EFF6FF;--primary-dark:#2563EB;--bg:#F5F6FA;--card:#fff;--text:#1F2937;--text-sub:#9CA3AF;--text-light:#D1D5DB;--border:#F3F4F6;--red:#EF4444;--green:#10B981;--orange:#F59E0B;--tab-h:60px;--header-h:52px;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
-html{height:100%;overflow:hidden}
-body{margin:0;padding:0;height:100%;height:100dvh;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+html,body{margin:0;padding:0;height:100%;background:var(--card)}
+#app-shell{position:fixed;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
 
 /* Header */
 .header{min-height:calc(var(--header-h) + var(--safe-top));padding-top:var(--safe-top);background:var(--card);display:flex;align-items:center;justify-content:space-between;padding-left:20px;padding-right:16px;z-index:100;flex-shrink:0}
@@ -338,6 +338,7 @@ body{margin:0;padding:0;height:100%;height:100dvh;display:flex;flex-direction:co
 </style>
 </head>
 <body>
+<div id="app-shell">
 
 <!-- Header -->
 <div class="header" id="main-header">
@@ -1714,12 +1715,20 @@ window.addEventListener('popstate',function(){
   if(document.getElementById('detail-overlay').classList.contains('show')){closeDetail();return}
 });
 
-// ===== iOS HEIGHT FIX =====
-// Pure flex layout with dvh; fallback for older iOS
+// ===== iOS STANDALONE FIX =====
+// Ensure app-shell fills screen on all iOS devices
 (function(){
-  if(!CSS.supports||!CSS.supports('height','100dvh')){
-    function setH(){document.body.style.height=window.innerHeight+'px'}
-    setH();window.addEventListener('resize',setH);
+  var shell=document.getElementById('app-shell');
+  if(!shell)return;
+  function fix(){
+    shell.style.height=window.innerHeight+'px';
+    shell.style.width=window.innerWidth+'px';
+  }
+  // Always apply in standalone mode
+  if(window.navigator.standalone||window.matchMedia('(display-mode:standalone)').matches){
+    fix();
+    window.addEventListener('resize',fix);
+    window.addEventListener('orientationchange',function(){setTimeout(fix,100)});
   }
 })();
 
@@ -1744,5 +1753,6 @@ if('serviceWorker' in navigator){
 initApp();
 updateCartBadge();
 </script>
+</div><!-- /app-shell -->
 </body>
 </html>

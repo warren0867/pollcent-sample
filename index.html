@@ -7,12 +7,15 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>PricePick</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏷️</text></svg>">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#3B82F6">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--primary:#3B82F6;--primary-light:#EFF6FF;--primary-dark:#2563EB;--bg:#F5F6FA;--card:#fff;--text:#1F2937;--text-sub:#9CA3AF;--text-light:#D1D5DB;--border:#F3F4F6;--red:#EF4444;--green:#10B981;--orange:#F59E0B;--tab-h:60px;--header-h:52px;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
 html{background:var(--card)}
-body{display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);overflow:hidden;position:fixed;top:0;left:0;right:0;bottom:0}
+body{display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);overflow:hidden;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100dvh;height:100%}
+@supports(height:100dvh){body{height:100dvh}}
 
 /* Header */
 .header{min-height:calc(var(--header-h) + var(--safe-top));padding-top:var(--safe-top);background:var(--card);display:flex;align-items:center;justify-content:space-between;padding-left:20px;padding-right:16px;z-index:100;flex-shrink:0}
@@ -287,6 +290,52 @@ body{display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystem
 /* 2x event card */
 .event-2x-card{flex-shrink:0;width:140px;border-radius:14px;padding:14px;color:#fff;position:relative;overflow:hidden}
 .event-2x-card .badge-2x{position:absolute;top:8px;right:8px;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+
+/* Cart overlay */
+.cart-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:160;display:none;flex-direction:column}
+.cart-overlay.show{display:flex}
+.cart-header{display:flex;align-items:center;padding:12px 16px;padding-top:calc(12px + var(--safe-top));background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.04);flex-shrink:0}
+.cart-header button{width:36px;height:36px;border:none;background:transparent;font-size:18px;cursor:pointer}
+.cart-header h2{flex:1;text-align:center;font-size:15px;font-weight:700;margin-right:36px}
+.cart-body{flex:1;overflow-y:auto;padding:12px 16px;padding-bottom:calc(var(--tab-h) + var(--safe-bottom) + 20px)}
+.cart-item{display:flex;align-items:center;gap:12px;padding:14px;background:var(--card);border-radius:14px;margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.cart-check{width:24px;height:24px;border-radius:50%;border:2px solid var(--text-light);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:.2s;font-size:14px}
+.cart-check.checked{background:var(--primary);border-color:var(--primary);color:#fff}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-size:13px;line-height:1.3;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cart-item-price{font-size:15px;font-weight:800}
+.cart-item-del{width:28px;height:28px;border-radius:50%;border:none;background:var(--border);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cart-bottom{position:fixed;bottom:0;left:0;right:0;padding:12px 16px;padding-bottom:calc(12px + var(--safe-bottom));background:var(--card);box-shadow:0 -2px 10px rgba(0,0,0,.06);z-index:161}
+.cart-bottom button{width:100%;padding:14px;border-radius:12px;background:var(--primary);color:#fff;font-size:15px;font-weight:700;border:none;cursor:pointer}
+.cart-bottom button:disabled{background:var(--text-light);cursor:default}
+.cart-badge{position:absolute;top:-4px;right:-6px;min-width:16px;height:16px;border-radius:8px;background:var(--red);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px}
+
+/* Settings overlay */
+.settings-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:160;display:none;flex-direction:column}
+.settings-overlay.show{display:flex}
+.settings-header{display:flex;align-items:center;padding:12px 16px;padding-top:calc(12px + var(--safe-top));background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.04);flex-shrink:0}
+.settings-header button{width:36px;height:36px;border:none;background:transparent;font-size:18px;cursor:pointer}
+.settings-header h2{flex:1;text-align:center;font-size:15px;font-weight:700;margin-right:36px}
+.settings-body{flex:1;overflow-y:auto;padding:0;padding-bottom:calc(var(--safe-bottom) + 20px)}
+
+/* Reward exchange */
+.reward-ex{margin:0 16px 12px;background:var(--card);border-radius:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.reward-ex-header{padding:16px;font-size:15px;font-weight:700;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.reward-ex-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border)}
+.reward-ex-item:last-child{border-bottom:none}
+.reward-ex-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.reward-ex-info{flex:1}
+.reward-ex-info h4{font-size:14px;font-weight:600;margin-bottom:2px}
+.reward-ex-info p{font-size:12px;color:var(--text-sub)}
+.reward-ex-btn{padding:8px 14px;border-radius:10px;font-size:12px;font-weight:700;border:none;cursor:pointer;white-space:nowrap}
+.reward-ex-btn.bronze{background:#FEF3C7;color:#92400E}
+.reward-ex-btn.silver{background:#F3F4F6;color:#4B5563}
+.reward-ex-btn.gold{background:#FDF2F8;color:#9D174D}
+.reward-ex-btn:disabled{opacity:.4;cursor:default}
+.tier-badge{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;margin-right:4px}
+.tier-badge.bronze{background:#FEF3C7;color:#92400E}
+.tier-badge.silver{background:#E5E7EB;color:#374151}
+.tier-badge.gold{background:#FDF2F8;color:#9D174D}
 </style>
 </head>
 <body>
@@ -295,8 +344,8 @@ body{display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystem
 <div class="header" id="main-header">
   <h1 id="header-title">관심상품</h1>
   <div class="header-icons">
-    <span id="header-bell">🔔</span>
-    <span id="header-setting">⚙️</span>
+    <span id="header-cart" onclick="openCart()" style="position:relative">🛒<span class="cart-badge" id="cart-badge" style="display:none">0</span></span>
+    <span id="header-setting" onclick="openSettings()">⚙️</span>
   </div>
 </div>
 
@@ -381,6 +430,35 @@ body{display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystem
         <div class="ticket-actions">
           <button onclick="showModal('🎫','이벤트 티켓 안내','구매 시 이벤트 티켓이 자동 지급됩니다.<br>금액이 클수록 더 좋은 티켓이 나올 수 있어요!<br><br>티켓으로 추첨에 응모하고 경품을 받아보세요.')">내 기프티콘</button>
           <button class="primary" onclick="switchTab('benefit');scrollToRaffle()">티켓 사용하기</button>
+        </div>
+      </div>
+
+      <div class="section-header" style="padding-top:8px">☕ 선택형 보상 교환 <span class="more" style="font-size:11px">티켓으로 교환</span></div>
+      <div class="reward-ex" id="reward-exchange">
+        <div class="reward-ex-header">☕ 티켓 교환소</div>
+        <div class="reward-ex-item">
+          <div class="reward-ex-icon" style="background:#FEF3C7">☕</div>
+          <div class="reward-ex-info">
+            <h4><span class="tier-badge bronze">BRONZE</span> 아이스 아메리카노</h4>
+            <p>브론즈 티켓 8장 필요</p>
+          </div>
+          <button class="reward-ex-btn bronze" id="ex-bronze-btn" onclick="exchangeReward('bronze')">교환</button>
+        </div>
+        <div class="reward-ex-item">
+          <div class="reward-ex-icon" style="background:#E5E7EB">☕</div>
+          <div class="reward-ex-info">
+            <h4><span class="tier-badge silver">SILVER</span> 아이스 아메리카노</h4>
+            <p>실버 티켓 4장 필요</p>
+          </div>
+          <button class="reward-ex-btn silver" id="ex-silver-btn" onclick="exchangeReward('silver')">교환</button>
+        </div>
+        <div class="reward-ex-item">
+          <div class="reward-ex-icon" style="background:#FDF2F8">☕</div>
+          <div class="reward-ex-info">
+            <h4><span class="tier-badge gold">GOLD</span> 아이스 아메리카노</h4>
+            <p>골드 티켓 1장 필요</p>
+          </div>
+          <button class="reward-ex-btn gold" id="ex-gold-btn" onclick="exchangeReward('gold')">교환</button>
         </div>
       </div>
 
@@ -568,6 +646,86 @@ body{display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystem
     <div style="margin-bottom:10px"><span class="input-label">상품 선택</span></div>
     <div id="add-product-list" style="max-height:300px;overflow-y:auto"></div>
     <button class="modal-btn" style="margin-top:12px" onclick="closeAddModal()">닫기</button>
+  </div>
+</div>
+
+<!-- Cart Overlay -->
+<div class="cart-overlay" id="cart-overlay">
+  <div class="cart-header">
+    <button onclick="closeCart()">←</button>
+    <h2>장바구니</h2>
+  </div>
+  <div class="cart-body" id="cart-body"></div>
+  <div class="cart-bottom" id="cart-bottom-bar" style="display:none">
+    <button id="cart-go-btn" onclick="cartGoToCoupang()" disabled>선택한 상품 쿠팡에서 보기</button>
+  </div>
+</div>
+
+<!-- Settings Overlay -->
+<div class="settings-overlay" id="settings-overlay">
+  <div class="settings-header">
+    <button onclick="closeSettings()">←</button>
+    <h2>설정</h2>
+  </div>
+  <div class="settings-body" id="settings-body">
+    <div class="mypage-section">
+      <div class="mypage-section-title">알림</div>
+      <div class="mypage-row" onclick="toggleSetting('noti_price')">
+        <div class="left"><span class="icon">📉</span> 가격 하락 알림</div>
+        <div class="right"><div class="toggle on" id="set-noti-price"></div></div>
+      </div>
+      <div class="mypage-divider"></div>
+      <div class="mypage-row" onclick="toggleSetting('noti_restock')">
+        <div class="left"><span class="icon">📦</span> 재입고 알림</div>
+        <div class="right"><div class="toggle" id="set-noti-restock"></div></div>
+      </div>
+      <div class="mypage-divider"></div>
+      <div class="mypage-row" onclick="toggleSetting('noti_event')">
+        <div class="left"><span class="icon">🎉</span> 이벤트/혜택 알림</div>
+        <div class="right"><div class="toggle on" id="set-noti-event"></div></div>
+      </div>
+    </div>
+    <div class="mypage-section">
+      <div class="mypage-section-title">표시</div>
+      <div class="mypage-row" onclick="toggleSetting('dark_mode')">
+        <div class="left"><span class="icon">🌙</span> 다크 모드</div>
+        <div class="right"><div class="toggle" id="set-dark-mode"></div></div>
+      </div>
+      <div class="mypage-divider"></div>
+      <div class="mypage-row" onclick="toggleSetting('price_unit')">
+        <div class="left"><span class="icon">💰</span> 만원 단위 표시</div>
+        <div class="right"><div class="toggle" id="set-price-unit"></div></div>
+      </div>
+    </div>
+    <div class="mypage-section">
+      <div class="mypage-section-title">데이터</div>
+      <div class="mypage-row" onclick="clearCache()">
+        <div class="left"><span class="icon">🗑️</span> 캐시 삭제</div>
+        <div class="right"><span class="arrow">›</span></div>
+      </div>
+      <div class="mypage-divider"></div>
+      <div class="mypage-row" onclick="exportData()">
+        <div class="left"><span class="icon">📤</span> 데이터 내보내기</div>
+        <div class="right"><span class="arrow">›</span></div>
+      </div>
+    </div>
+    <div class="mypage-section">
+      <div class="mypage-section-title">앱 정보</div>
+      <div class="mypage-row">
+        <div class="left"><span class="icon">📱</span> 버전</div>
+        <div class="right"><span style="color:var(--text-sub)">1.0.0</span></div>
+      </div>
+      <div class="mypage-divider"></div>
+      <div class="mypage-row" onclick="openSub('terms')">
+        <div class="left"><span class="icon">📄</span> 이용약관</div>
+        <div class="right"><span class="arrow">›</span></div>
+      </div>
+      <div class="mypage-divider"></div>
+      <div class="mypage-row" onclick="openSub('privacy')">
+        <div class="left"><span class="icon">🔒</span> 개인정보 처리방침</div>
+        <div class="right"><span class="arrow">›</span></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -866,82 +1024,6 @@ function startCountdown(){
 // ===== PRODUCT DETAIL =====
 var currentDetailId=null;
 var chartInstance=null;
-function openDetail(id,fromWish){
-  currentDetailId=id;
-  var p=PRODUCTS.find(function(x){return x.id===id});
-  if(!p)return;
-  var tracks=getTracks();
-  var tracked=tracks.find(function(t){return t.productId===id});
-  var history=tracked?tracked.history:genHistory(p);
-  var prices=history.map(function(h){return h.price});
-  var maxP=Math.max.apply(null,prices),minP=Math.min.apply(null,prices),avgP=Math.round(prices.reduce(function(a,b){return a+b},0)/prices.length);
-  var avgDiff=p.currentPrice-avgP;
-
-  var html='';
-  if(p.ai){
-    html+='<div style="margin:12px 16px;background:linear-gradient(135deg,#EFF6FF,#E0E7FF);border-radius:14px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.04)">';
-    html+='<div style="font-size:12px;font-weight:700;color:var(--primary);margin-bottom:4px">💬 최근 구매 이유</div>';
-    html+='<div style="font-size:13px;line-height:1.5;color:var(--text)">'+p.ai+'</div></div>';
-  }
-  html+='<div class="graph-card"><div class="graph-title">PricePick 가격 그래프 <span style="font-size:12px;color:var(--text-sub)">ⓘ</span></div>';
-  html+='<canvas id="detail-chart" height="180"></canvas>';
-  html+='<div class="price-stats">';
-  html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--red)"></span> 역대최고가</span><span class="value" style="color:var(--red)">'+maxP.toLocaleString()+'원</span></div>';
-  html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--text-sub)"></span> 평균가</span><span class="value">'+avgP.toLocaleString()+'원</span></div>';
-  html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--green)"></span> 역대최저가</span><span class="value" style="color:var(--green)">'+minP.toLocaleString()+'원</span></div>';
-  html+='</div></div>';
-
-  if(!tracked){
-    html+='<div style="padding:12px 16px;font-size:13px;color:var(--text-sub);text-align:center;background:var(--card);margin:0 16px 12px;border-radius:12px">아직 구매한 적 없는 상품이에요. ⓘ</div>';
-  }
-
-  html+='<div class="alert-card">';
-  html+='<div class="alert-header">추가 알림 설정 <span style="font-size:14px;cursor:pointer">∧</span></div>';
-  if(!tracked){
-    html+='<div class="alert-info">ⓘ 관심상품으로 추가해야 설정할 수 있어요.</div>';
-  }
-  html+='<div class="alert-row"><div class="left">📊 원하는 가격 알림</div><div class="right">'+(tracked?'<span>'+tracked.targetPrice.toLocaleString()+'원</span>':'<span>설정 안됨</span>')+' ›</div></div>';
-  html+='<div class="alert-row"><div class="left">🔔 재입고 알림</div><div class="right"><div class="toggle" onclick="this.classList.toggle(\'on\')"></div></div></div>';
-  html+='</div>';
-
-  html+='<div style="margin:0 16px 12px;background:var(--card);border-radius:14px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.04)">';
-  html+='<div style="font-size:14px;font-weight:700;margin-bottom:10px">원하는 가격 설정</div>';
-  html+='<div style="margin-bottom:8px"><span class="input-label">목표 가격 (원)</span>';
-  html+='<input type="number" class="input-field" id="detail-target" value="'+(tracked?tracked.targetPrice:Math.round(p.currentPrice*0.85))+'"></div></div>';
-
-  html+='<div class="deeplink-info">쿠팡 파트너스 딥링크 (예시)<code>https://link.coupang.com/re/AFFTDP?lptag=AF'+p.id+'&amp;subid=pricepick_'+Date.now()+'</code></div>';
-
-  document.getElementById('detail-scroll').innerHTML=html;
-
-  var bottomHtml='<button class="add-btn" onclick="addToWishFromDetail('+p.id+')">+ 상품 추가</button>';
-  bottomHtml+='<div class="avg-info">평균가 대비<b style="color:'+(avgDiff<0?'var(--primary)':'var(--red)')+'">'+
-    (avgDiff<0?'':'+')+(avgDiff).toLocaleString()+'원</b></div>';
-  bottomHtml+='<button class="buy-btn" onclick="simulatePurchase('+p.id+')">구매하러 가기</button>';
-  document.getElementById('detail-bottom').innerHTML=bottomHtml;
-
-  document.getElementById('detail-overlay').classList.add('show');
-
-  setTimeout(function(){
-    if(chartInstance)chartInstance.destroy();
-    var ctx=document.getElementById('detail-chart');
-    if(!ctx)return;
-    chartInstance=new Chart(ctx.getContext('2d'),{
-      type:'line',
-      data:{
-        labels:history.map(function(h){return h.date}),
-        datasets:[
-          {label:'가격',data:prices,borderColor:'#EF4444',backgroundColor:'rgba(239,68,68,.08)',fill:true,tension:.3,pointRadius:0,borderWidth:2},
-          {label:'역대최저가',data:prices.map(function(){return minP}),borderColor:'#10B981',borderDash:[4,4],pointRadius:0,fill:false,borderWidth:1},
-        ]
-      },
-      options:{
-        responsive:true,
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.parsed.y.toLocaleString()+'원'}}}},
-        scales:{x:{ticks:{font:{size:10},maxTicksLimit:6}},y:{ticks:{font:{size:10},callback:function(v){return(v/10000).toFixed(0)+'만'}}}}
-      }
-    });
-  },100);
-}
 function closeDetail(){document.getElementById('detail-overlay').classList.remove('show');currentDetailId=null}
 
 function genHistory(p){
@@ -1327,22 +1409,299 @@ function showModal(icon,title,msg){
 function closeModal(){document.getElementById('modal').classList.remove('show')}
 
 // ===== BACK BUTTON =====
-window.addEventListener('popstate',function(){
-  if(document.getElementById('modal').classList.contains('show')){closeModal();return}
-  if(document.getElementById('add-modal').classList.contains('show')){closeAddModal();return}
-  if(document.getElementById('sub-overlay').classList.contains('show')){closeSub();return}
-  if(document.getElementById('detail-overlay').classList.contains('show')){closeDetail();return}
-});
 function pushState(){history.pushState({overlay:true},'','')}
-var _openDetail=openDetail;
-openDetail=function(){pushState();_openDetail.apply(null,arguments)};
 var _openSub=openSub;
 openSub=function(){pushState();_openSub.apply(null,arguments)};
 var _openInquiry=openInquiry;
 openInquiry=function(){pushState();_openInquiry.apply(null,arguments)};
 
+// ===== CART =====
+function getCart(){return S('cart')||[]}
+function setCart(c){S('cart',c);updateCartBadge()}
+
+function updateCartBadge(){
+  var cart=getCart();
+  var badge=document.getElementById('cart-badge');
+  if(!badge)return;
+  if(cart.length>0){badge.style.display='flex';badge.textContent=cart.length}
+  else{badge.style.display='none'}
+}
+
+function addToCart(id){
+  var p=PRODUCTS.find(function(x){return x.id===id});
+  if(!p)return;
+  var cart=getCart();
+  if(cart.find(function(c){return c.id===id}))return showModal('🛒','이미 담김','이 상품은 이미 장바구니에 있어요.');
+  cart.push({id:p.id,name:p.name,emoji:p.emoji,price:p.currentPrice,url:p.url,checked:false});
+  setCart(cart);
+  showModal('🛒','장바구니 추가!',p.name+'<br><span style="font-size:12px;color:var(--text-sub)">장바구니에서 확인하세요</span>');
+}
+
+function openCart(){
+  var cart=getCart();
+  var html='';
+  if(cart.length===0){
+    html='<div class="empty"><div class="icon">🛒</div><p>장바구니가 비어있어요<br>핫딜이나 검색에서 상품을 담아보세요!</p></div>';
+    document.getElementById('cart-bottom-bar').style.display='none';
+  }else{
+    cart.forEach(function(item,i){
+      html+='<div class="cart-item" id="cart-item-'+i+'">';
+      html+='<div class="cart-check'+(item.checked?' checked':'')+'" onclick="toggleCartCheck('+i+')">'+(item.checked?'✓':'')+'</div>';
+      html+='<div style="width:44px;height:44px;border-radius:10px;background:#f8f9fa;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">'+item.emoji+'</div>';
+      html+='<div class="cart-item-info"><div class="cart-item-name">'+item.name+'</div>';
+      html+='<div class="cart-item-price">'+item.price.toLocaleString()+'원</div></div>';
+      html+='<button class="cart-item-del" onclick="removeCartItem('+i+')">✕</button>';
+      html+='</div>';
+    });
+    document.getElementById('cart-bottom-bar').style.display='block';
+    updateCartGoBtn();
+  }
+  document.getElementById('cart-body').innerHTML=html;
+  document.getElementById('cart-overlay').classList.add('show');
+  history.pushState({overlay:true},'','');
+}
+
+function closeCart(){document.getElementById('cart-overlay').classList.remove('show')}
+
+function toggleCartCheck(i){
+  var cart=getCart();
+  if(cart[i])cart[i].checked=!cart[i].checked;
+  setCart(cart);
+  openCart();
+}
+
+function removeCartItem(i){
+  var cart=getCart();
+  cart.splice(i,1);
+  setCart(cart);
+  openCart();
+}
+
+function updateCartGoBtn(){
+  var cart=getCart();
+  var checked=cart.filter(function(c){return c.checked});
+  var btn=document.getElementById('cart-go-btn');
+  if(btn){
+    btn.disabled=checked.length===0;
+    btn.textContent=checked.length>0?'선택한 '+checked.length+'개 상품 쿠팡에서 보기':'상품을 선택해주세요';
+  }
+}
+
+function cartGoToCoupang(){
+  var cart=getCart();
+  var checked=cart.filter(function(c){return c.checked});
+  if(checked.length===0)return;
+  // Open first checked item, remove from cart
+  var item=checked[0];
+  var deeplink='https://link.coupang.com/re/AFFTDP?lptag=AF'+item.id+'&subid=pricepick_'+Date.now();
+  window.open(deeplink,'_blank');
+  // Mark as sent, uncheck
+  item.checked=false;
+  // Remove from cart
+  var newCart=cart.filter(function(c){return c.id!==item.id});
+  setCart(newCart);
+  if(checked.length>1){
+    showModal('🛒','다음 상품',checked[1].name+'<br>계속 진행하시려면 장바구니를 확인하세요.');
+  }else{
+    showModal('✅','쿠팡으로 이동!','상품 페이지로 이동했어요.<br>구매 후 리워드를 받으세요!');
+  }
+  openCart();
+}
+
+// ===== SETTINGS =====
+function openSettings(){
+  renderSettings();
+  document.getElementById('settings-overlay').classList.add('show');
+  history.pushState({overlay:true},'','');
+}
+
+function closeSettings(){document.getElementById('settings-overlay').classList.remove('show')}
+
+function renderSettings(){
+  var s=getSettings();
+  document.getElementById('set-noti-price').className='toggle'+(s.noti_price!==false?' on':'');
+  document.getElementById('set-noti-restock').className='toggle'+(s.noti_restock?' on':'');
+  document.getElementById('set-noti-event').className='toggle'+(s.noti_event!==false?' on':'');
+  document.getElementById('set-dark-mode').className='toggle'+(s.dark_mode?' on':'');
+  document.getElementById('set-price-unit').className='toggle'+(s.price_unit?' on':'');
+}
+
+function toggleSetting(key){
+  var s=getSettings();
+  s[key]=!s[key];
+  setSettings(s);
+  renderSettings();
+}
+
+function clearCache(){
+  if(confirm('캐시를 삭제하시겠습니까?')){
+    if('caches' in window)caches.keys().then(function(k){k.forEach(function(n){caches.delete(n)})});
+    showModal('🗑️','캐시 삭제 완료','앱 캐시가 삭제되었습니다.');
+  }
+}
+
+function exportData(){
+  var data={user:getUser(),tracks:getTracks(),tickets:getTickets(),purchases:getPurchases(),settings:getSettings()};
+  var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='pricepick_backup_'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+}
+
+// ===== REWARD EXCHANGE =====
+function getTicketsByTier(){
+  var tickets=getTickets();
+  var counts={bronze:0,silver:0,gold:0};
+  tickets.history.forEach(function(t){
+    if(t.status==='available'&&t.tier)counts[t.tier]=(counts[t.tier]||0)+1;
+  });
+  return counts;
+}
+
+function exchangeReward(tier){
+  var needed={bronze:8,silver:4,gold:1};
+  var counts=getTicketsByTier();
+  if((counts[tier]||0)<needed[tier]){
+    return showModal('😅','티켓이 부족해요',tier.toUpperCase()+' 티켓 '+needed[tier]+'장이 필요해요.<br>현재 '+tier.toUpperCase()+' 티켓: '+(counts[tier]||0)+'장<br><br>상품을 구매하면 티켓을 받을 수 있어요!');
+  }
+  // Use tickets
+  var tickets=getTickets();
+  var used=0;
+  for(var i=0;i<tickets.history.length&&used<needed[tier];i++){
+    if(tickets.history[i].status==='available'&&tickets.history[i].tier===tier){
+      tickets.history[i].status='exchanged';
+      tickets.available=Math.max(0,tickets.available-1);
+      used++;
+    }
+  }
+  setTickets(tickets);
+  var exchanges=S('exchanges')||[];
+  exchanges.push({tier:tier,reward:'아이스 아메리카노',date:new Date().toISOString().slice(0,10)});
+  S('exchanges',exchanges);
+  showModal('☕','교환 완료!','<b>아이스 아메리카노</b> 기프티콘이<br>발급되었습니다!<br><br><span style="font-size:12px;color:var(--text-sub)">'+tier.toUpperCase()+' 티켓 '+needed[tier]+'장 사용</span>');
+  renderBenefit();
+}
+
+function updateExchangeButtons(){
+  var counts=getTicketsByTier();
+  var needed={bronze:8,silver:4,gold:1};
+  ['bronze','silver','gold'].forEach(function(tier){
+    var btn=document.getElementById('ex-'+tier+'-btn');
+    if(btn){
+      var has=counts[tier]||0;
+      btn.disabled=has<needed[tier];
+      btn.textContent=has>=needed[tier]?'교환':'('+has+'/'+needed[tier]+')';
+    }
+  });
+}
+
+// ===== UPDATE DETAIL BOTTOM - add cart button =====
+var _origOpenDetail=_openDetail;
+_openDetail=null;
+openDetail=function(id,fromWish){
+  currentDetailId=id;
+  var p=PRODUCTS.find(function(x){return x.id===id});
+  if(!p)return;
+  var tracks=getTracks();
+  var tracked=tracks.find(function(t){return t.productId===id});
+  var history=tracked?tracked.history:genHistory(p);
+  var prices=history.map(function(h){return h.price});
+  var maxP=Math.max.apply(null,prices),minP=Math.min.apply(null,prices),avgP=Math.round(prices.reduce(function(a,b){return a+b},0)/prices.length);
+  var avgDiff=p.currentPrice-avgP;
+
+  var html='';
+  if(p.ai){
+    html+='<div style="margin:12px 16px;background:linear-gradient(135deg,#EFF6FF,#E0E7FF);border-radius:14px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.04)">';
+    html+='<div style="font-size:12px;font-weight:700;color:var(--primary);margin-bottom:4px">💬 최근 구매 이유</div>';
+    html+='<div style="font-size:13px;line-height:1.5;color:var(--text)">'+p.ai+'</div></div>';
+  }
+  html+='<div class="graph-card"><div class="graph-title">PricePick 가격 그래프 <span style="font-size:12px;color:var(--text-sub)">ⓘ</span></div>';
+  html+='<canvas id="detail-chart" height="180"></canvas>';
+  html+='<div class="price-stats">';
+  html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--red)"></span> 역대최고가</span><span class="value" style="color:var(--red)">'+maxP.toLocaleString()+'원</span></div>';
+  html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--text-sub)"></span> 평균가</span><span class="value">'+avgP.toLocaleString()+'원</span></div>';
+  html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--green)"></span> 역대최저가</span><span class="value" style="color:var(--green)">'+minP.toLocaleString()+'원</span></div>';
+  html+='</div></div>';
+
+  if(!tracked){
+    html+='<div style="padding:12px 16px;font-size:13px;color:var(--text-sub);text-align:center;background:var(--card);margin:0 16px 12px;border-radius:12px">아직 구매한 적 없는 상품이에요. ⓘ</div>';
+  }
+
+  html+='<div class="alert-card">';
+  html+='<div class="alert-header">추가 알림 설정 <span style="font-size:14px;cursor:pointer">∧</span></div>';
+  if(!tracked){
+    html+='<div class="alert-info">ⓘ 관심상품으로 추가해야 설정할 수 있어요.</div>';
+  }
+  html+='<div class="alert-row"><div class="left">📊 원하는 가격 알림</div><div class="right">'+(tracked?'<span>'+tracked.targetPrice.toLocaleString()+'원</span>':'<span>설정 안됨</span>')+' ›</div></div>';
+  html+='<div class="alert-row"><div class="left">🔔 재입고 알림</div><div class="right"><div class="toggle" onclick="this.classList.toggle(\'on\')"></div></div></div>';
+  html+='</div>';
+
+  html+='<div style="margin:0 16px 12px;background:var(--card);border-radius:14px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.04)">';
+  html+='<div style="font-size:14px;font-weight:700;margin-bottom:10px">원하는 가격 설정</div>';
+  html+='<div style="margin-bottom:8px"><span class="input-label">목표 가격 (원)</span>';
+  html+='<input type="number" class="input-field" id="detail-target" value="'+(tracked?tracked.targetPrice:Math.round(p.currentPrice*0.85))+'"></div></div>';
+
+  html+='<div class="deeplink-info">쿠팡 파트너스 딥링크 (예시)<code>https://link.coupang.com/re/AFFTDP?lptag=AF'+p.id+'&amp;subid=pricepick_'+Date.now()+'</code></div>';
+
+  document.getElementById('detail-scroll').innerHTML=html;
+
+  var bottomHtml='<button class="add-btn" onclick="addToCart('+p.id+')">🛒 담기</button>';
+  bottomHtml+='<button class="add-btn" onclick="addToWishFromDetail('+p.id+')">+ 관심</button>';
+  bottomHtml+='<button class="buy-btn" onclick="simulatePurchase('+p.id+')">구매하러 가기</button>';
+  document.getElementById('detail-bottom').innerHTML=bottomHtml;
+
+  document.getElementById('detail-overlay').classList.add('show');
+  history.pushState({overlay:true},'','');
+
+  setTimeout(function(){
+    if(chartInstance)chartInstance.destroy();
+    var ctx=document.getElementById('detail-chart');
+    if(!ctx)return;
+    chartInstance=new Chart(ctx.getContext('2d'),{
+      type:'line',
+      data:{
+        labels:history.map(function(h){return h.date}),
+        datasets:[
+          {label:'가격',data:prices,borderColor:'#EF4444',backgroundColor:'rgba(239,68,68,.08)',fill:true,tension:.3,pointRadius:0,borderWidth:2},
+          {label:'역대최저가',data:prices.map(function(){return minP}),borderColor:'#10B981',borderDash:[4,4],pointRadius:0,fill:false,borderWidth:1},
+        ]
+      },
+      options:{
+        responsive:true,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.parsed.y.toLocaleString()+'원'}}}},
+        scales:{x:{ticks:{font:{size:10},maxTicksLimit:6}},y:{ticks:{font:{size:10},callback:function(v){return(v/10000).toFixed(0)+'만'}}}}
+      }
+    });
+  },100);
+};
+
+// ===== UPDATE BENEFIT RENDER =====
+var _origRenderBenefit=renderBenefit;
+renderBenefit=function(){
+  _origRenderBenefit();
+  updateExchangeButtons();
+};
+
+// ===== UPDATE BACK BUTTON FOR NEW OVERLAYS =====
+window.removeEventListener('popstate',arguments.callee);
+window.addEventListener('popstate',function(){
+  if(document.getElementById('modal').classList.contains('show')){closeModal();return}
+  if(document.getElementById('add-modal').classList.contains('show')){closeAddModal();return}
+  if(document.getElementById('cart-overlay').classList.contains('show')){closeCart();return}
+  if(document.getElementById('settings-overlay').classList.contains('show')){closeSettings();return}
+  if(document.getElementById('sub-overlay').classList.contains('show')){closeSub();return}
+  if(document.getElementById('detail-overlay').classList.contains('show')){closeDetail();return}
+});
+
+// ===== PWA SERVICE WORKER =====
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/sw.js').catch(function(){});
+}
+
 // ===== START =====
 initApp();
+updateCartBadge();
 </script>
 </body>
 </html>

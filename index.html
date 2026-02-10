@@ -411,6 +411,7 @@ html,body{margin:0;padding:0;height:100%;background:#fff}
     </div>
     <div class="section-header">추천 상품</div>
     <div class="product-grid" id="product-grid"></div>
+    <div id="hot-extra"></div>
   </div>
 
   <!-- 혜택 -->
@@ -1019,6 +1020,7 @@ function renderHotdeals(){
     phtml+='<span class="product-change down">▼'+p.discount+'%</span></div></div></div>';
   });
   document.getElementById('product-grid').innerHTML=phtml;
+  renderHotExtra();
 }
 
 // ===== COUNTDOWN =====
@@ -1185,6 +1187,15 @@ function addRecentView(id){
 // 검색 홈 렌더링
 function renderSearchHome(){
   var html='';
+  // 추천검색어
+  html+='<div style="padding:0 16px 12px">';
+  html+='<div style="font-size:13px;font-weight:700;margin-bottom:8px">추천 검색어</div>';
+  html+='<div style="display:flex;flex-wrap:wrap;gap:6px">';
+  SEARCH_TAGS.forEach(function(tag){
+    html+='<span class="chip" onclick="document.getElementById(\'search-input\').value=\''+tag+'\';doSearch()">'+tag+'</span>';
+  });
+  html+='</div></div>';
+
   // 최근검색어
   var recent=getRecentSearches();
   if(recent.length>0){
@@ -1199,15 +1210,6 @@ function renderSearchHome(){
     });
     html+='</div></div>';
   }
-
-  // 추천검색어
-  html+='<div style="padding:0 16px 12px">';
-  html+='<div style="font-size:13px;font-weight:700;margin-bottom:8px">추천 검색어</div>';
-  html+='<div style="display:flex;flex-wrap:wrap;gap:6px">';
-  SEARCH_TAGS.forEach(function(tag){
-    html+='<span class="chip" onclick="document.getElementById(\'search-input\').value=\''+tag+'\';doSearch()">'+tag+'</span>';
-  });
-  html+='</div></div>';
 
   // 최근 본 상품
   var views=getRecentViews();
@@ -1227,8 +1229,15 @@ function renderSearchHome(){
     html+='</div></div>';
   }
 
+  document.getElementById('search-home').innerHTML=html;
+  document.getElementById('search-results').innerHTML='';
+}
+
+// 핫딜탭 하단 섹션
+function renderHotExtra(){
+  var html='';
   // 이벤트 상품 배너
-  html+='<div style="padding:0 16px 12px">';
+  html+='<div style="padding:12px 16px">';
   html+='<div style="font-size:14px;font-weight:700;margin-bottom:8px">🎉 이벤트 상품</div>';
   html+='<div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch">';
   EVENT_2X.forEach(function(ev){
@@ -1260,7 +1269,7 @@ function renderSearchHome(){
   html+='<div style="padding:0 16px 12px">';
   html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">';
   html+='<span style="font-size:14px;font-weight:700">🏆 골드박스</span>';
-  html+='<span id="goldbox-timer" style="font-size:12px;color:var(--red);font-weight:600"></span></div>';
+  html+='<span id="hot-goldbox-timer" style="font-size:12px;color:var(--red);font-weight:600"></span></div>';
   html+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">';
   PRODUCTS.slice(0,6).forEach(function(p){
     html+='<div onclick="openDetail('+p.id+')" style="background:var(--card);border-radius:12px;padding:10px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.06);text-align:center">';
@@ -1296,7 +1305,7 @@ function renderSearchHome(){
   html+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">';
   CATEGORIES.forEach(function(c){
     var active=c.name===selectedCategory;
-    html+='<span class="chip" style="'+(active?'background:var(--primary);color:#fff;border-color:var(--primary)':'')+'" onclick="selectedCategory=\''+c.name+'\';renderSearchHome()">'+c.emoji+' '+c.name+'</span>';
+    html+='<span class="chip" style="'+(active?'background:var(--primary);color:#fff;border-color:var(--primary)':'')+'" onclick="selectedCategory=\''+c.name+'\';renderHotExtra()">'+c.emoji+' '+c.name+'</span>';
   });
   html+='</div>';
   var catProducts=PRODUCTS.filter(function(p){return p.category===selectedCategory});
@@ -1317,15 +1326,12 @@ function renderSearchHome(){
   }
   html+='</div>';
 
-  document.getElementById('search-home').innerHTML=html;
-  document.getElementById('search-results').innerHTML='';
-
-  // 골드박스 카운트다운
-  updateGoldboxTimer();
+  document.getElementById('hot-extra').innerHTML=html;
+  updateHotGoldboxTimer();
 }
 
-function updateGoldboxTimer(){
-  var el=document.getElementById('goldbox-timer');
+function updateHotGoldboxTimer(){
+  var el=document.getElementById('hot-goldbox-timer');
   if(!el)return;
   var now=new Date();
   var end=new Date(now);
@@ -1335,7 +1341,7 @@ function updateGoldboxTimer(){
   var m=Math.floor((diff%3600000)/60000);
   var s=Math.floor((diff%60000)/1000);
   el.textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+' 남음';
-  setTimeout(updateGoldboxTimer,1000);
+  setTimeout(updateHotGoldboxTimer,1000);
 }
 
 function renderSearch(){

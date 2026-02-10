@@ -1715,21 +1715,24 @@ window.addEventListener('popstate',function(){
   if(document.getElementById('detail-overlay').classList.contains('show')){closeDetail();return}
 });
 
-// ===== iOS STANDALONE FIX =====
-// Ensure app-shell fills screen on all iOS devices
+// ===== DEBUG (임시) =====
 (function(){
-  var shell=document.getElementById('app-shell');
-  if(!shell)return;
-  function fix(){
-    shell.style.height=window.innerHeight+'px';
-    shell.style.width=window.innerWidth+'px';
+  var d=document.createElement('div');
+  d.id='dbg';
+  d.style.cssText='position:fixed;bottom:70px;left:8px;right:8px;background:rgba(0,0,0,.85);color:#0f0;font:11px/1.4 monospace;padding:8px 10px;border-radius:8px;z-index:9999;pointer-events:none';
+  document.body.appendChild(d);
+  function upd(){
+    var sa=getComputedStyle(document.documentElement);
+    d.innerHTML=[
+      'v5 | standalone:'+(window.navigator.standalone||false),
+      'innerH:'+window.innerHeight+' screenH:'+screen.height,
+      'shellH:'+(document.getElementById('app-shell')||{}).offsetHeight,
+      'safeB:'+sa.getPropertyValue('--safe-bottom'),
+      'dvpR:'+window.devicePixelRatio,
+      'vf:cover | mode:'+window.matchMedia('(display-mode:standalone)').matches
+    ].join('<br>');
   }
-  // Always apply in standalone mode
-  if(window.navigator.standalone||window.matchMedia('(display-mode:standalone)').matches){
-    fix();
-    window.addEventListener('resize',fix);
-    window.addEventListener('orientationchange',function(){setTimeout(fix,100)});
-  }
+  upd();setInterval(upd,2000);
 })();
 
 // ===== WOW MEMBERSHIP =====

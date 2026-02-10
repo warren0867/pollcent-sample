@@ -40,6 +40,11 @@ app.get('/', (req, res) => {
   res.render('index', { products: getHotdeals() });
 });
 
+// 검색 API - 상품 JSON 반환
+app.get('/api/products', (req, res) => {
+  res.json(getHotdeals());
+});
+
 // 상품 상세
 app.get('/product/:id', (req, res) => {
   const product = getHotdealById(parseInt(req.params.id, 10));

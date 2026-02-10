@@ -1,5 +1,70 @@
 <%- include('header') %>
 <div class="hotdeals-page">
+  <!-- 검색 섹션 -->
+  <div class="search-section">
+    <div class="search-bar">
+      <input type="text" id="search-input" class="search-input" placeholder="찾는 상품이 있나요?" autocomplete="off">
+    </div>
+    <div id="search-home">
+      <!-- 최근검색어 -->
+      <div id="recent-searches-area"></div>
+      <!-- 추천검색어 -->
+      <div class="search-block">
+        <h4>추천 검색어</h4>
+        <div class="chip-wrap">
+          <% ['에어팟','청소기','모니터','운동','스니커즈','로봇청소기','버즈','나이키'].forEach(function(t){ %>
+            <span class="s-chip" onclick="doTagSearch('<%= t %>')"><%= t %></span>
+          <% }); %>
+        </div>
+      </div>
+      <!-- 최근 본 상품 -->
+      <div id="recent-views-area"></div>
+      <!-- 이벤트 상품 -->
+      <div class="search-block">
+        <h4>🎉 이벤트 상품</h4>
+        <div class="h-scroll">
+          <% [
+            {cat:'전자제품',emoji:'🖥️',bg:'linear-gradient(135deg,#3B82F6,#60A5FA)',end:'02/28'},
+            {cat:'패션/의류',emoji:'👟',bg:'linear-gradient(135deg,#8B5CF6,#A78BFA)',end:'02/20'},
+            {cat:'생활용품',emoji:'🧹',bg:'linear-gradient(135deg,#10B981,#34D399)',end:'02/25'},
+            {cat:'식품/음료',emoji:'🥤',bg:'linear-gradient(135deg,#F59E0B,#FBBF24)',end:'03/05'},
+          ].forEach(function(ev){ %>
+            <div class="event-banner" style="background:<%= ev.bg %>">
+              <div style="font-size:24px;margin-bottom:4px"><%= ev.emoji %></div>
+              <div style="font-size:14px;font-weight:700"><%= ev.cat %> 2배 적립</div>
+              <div style="font-size:11px;opacity:.85;margin-top:4px">~<%= ev.end %>까지</div>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+      <!-- 인기 상품 -->
+      <div class="search-block">
+        <h4>🔥 인기 상품</h4>
+        <div class="h-scroll" id="popular-products"></div>
+      </div>
+      <!-- 골드박스 -->
+      <div class="search-block">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <h4 style="margin:0">🏆 골드박스</h4>
+          <span id="goldbox-timer" style="font-size:12px;color:#e74c3c;font-weight:600"></span>
+        </div>
+        <div class="grid-3" id="goldbox-products"></div>
+      </div>
+      <!-- 최저가 -->
+      <div class="search-block" id="lowest-area"></div>
+      <!-- 카테고리별 -->
+      <div class="search-block">
+        <h4>📂 카테고리별 상품</h4>
+        <div class="chip-wrap" id="category-chips"></div>
+        <div class="grid-2" id="category-products"></div>
+      </div>
+    </div>
+    <!-- 검색 결과 -->
+    <div id="search-results" style="display:none"></div>
+  </div>
+
+  <hr style="border:none;border-top:1px solid #eee;margin:24px 0">
+
   <div class="page-header">
     <h2>핫딜</h2>
     <p>상품을 클릭하고 원하는 가격을 설정하세요</p>

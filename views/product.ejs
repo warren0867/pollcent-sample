@@ -1,4 +1,12 @@
 <%- include('header') %>
+<script>
+(function(){
+  try{var k='pp_recent_view',l=JSON.parse(localStorage.getItem(k))||[];
+  l=l.filter(function(v){return v!==<%= product.id %>});
+  l.unshift(<%= product.id %>);if(l.length>10)l=l.slice(0,10);
+  localStorage.setItem(k,JSON.stringify(l));}catch(e){}
+})();
+</script>
 <div class="product-detail">
   <div class="product-detail-img">
     <img src="<%= product.image %>" alt="<%= product.name %>">

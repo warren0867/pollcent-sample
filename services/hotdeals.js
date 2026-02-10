@@ -7,6 +7,8 @@ const HOTDEALS = [
     originalPrice: 1190000,
     currentPrice: 899000,
     discount: 24,
+    badge: 'rocket',
+    category: '전자/디지털',
     url: 'https://www.coupang.com/vp/products/7335498014',
   },
   {
@@ -16,6 +18,8 @@ const HOTDEALS = [
     originalPrice: 359000,
     currentPrice: 289000,
     discount: 19,
+    badge: 'rocket',
+    category: '전자/디지털',
     url: 'https://www.coupang.com/vp/products/7601553541',
   },
   {
@@ -25,6 +29,8 @@ const HOTDEALS = [
     originalPrice: 1290000,
     currentPrice: 899000,
     discount: 30,
+    badge: 'hot',
+    category: '생활/주방',
     url: 'https://www.coupang.com/vp/products/6497498498',
   },
   {
@@ -34,6 +40,8 @@ const HOTDEALS = [
     originalPrice: 359900,
     currentPrice: 279000,
     discount: 22,
+    badge: 'rocket',
+    category: '전자/디지털',
     url: 'https://www.coupang.com/vp/products/8040177674',
   },
   {
@@ -43,6 +51,8 @@ const HOTDEALS = [
     originalPrice: 139000,
     currentPrice: 99900,
     discount: 28,
+    badge: 'lowest',
+    category: '패션/의류',
     url: 'https://www.coupang.com/vp/products/6023436854',
   },
   {
@@ -52,7 +62,31 @@ const HOTDEALS = [
     originalPrice: 899000,
     currentPrice: 599000,
     discount: 33,
+    badge: 'hot',
+    category: '생활/주방',
     url: 'https://www.coupang.com/vp/products/7812345678',
+  },
+  {
+    id: 7,
+    name: '포카리스웨트 1.5L 12개',
+    image: 'https://thumbnail6.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2023/06/12/11/3/a1b2c3d4-5e6f-7a8b-9c0d-e1f2a3b4c5d6.jpg',
+    originalPrice: 28000,
+    currentPrice: 25600,
+    discount: 9,
+    badge: 'rocket',
+    category: '식품/음료',
+    url: 'https://www.coupang.com/vp/products/1234567890',
+  },
+  {
+    id: 8,
+    name: '프로핏 스포츠 WPI 초콜릿 330ml x12',
+    image: 'https://thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/retail/images/2023/08/20/09/5/f1e2d3c4-b5a6-9788-0fed-cba987654321.jpg',
+    originalPrice: 29000,
+    currentPrice: 24900,
+    discount: 14,
+    badge: 'rocket',
+    category: '식품/음료',
+    url: 'https://www.coupang.com/vp/products/2345678901',
   },
 ];
 

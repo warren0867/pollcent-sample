@@ -1597,8 +1597,6 @@ function updateExchangeButtons(){
 }
 
 // ===== UPDATE DETAIL BOTTOM - add cart button =====
-var _origOpenDetail=_openDetail;
-_openDetail=null;
 openDetail=function(id,fromWish){
   currentDetailId=id;
   var p=PRODUCTS.find(function(x){return x.id===id});
@@ -1684,7 +1682,6 @@ renderBenefit=function(){
 };
 
 // ===== UPDATE BACK BUTTON FOR NEW OVERLAYS =====
-window.removeEventListener('popstate',arguments.callee);
 window.addEventListener('popstate',function(){
   if(document.getElementById('modal').classList.contains('show')){closeModal();return}
   if(document.getElementById('add-modal').classList.contains('show')){closeAddModal();return}

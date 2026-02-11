@@ -394,23 +394,6 @@ html,body{margin:0;padding:0;height:100%;background:#fff}
 
   <!-- 핫딜 -->
   <div class="page" id="page-hot">
-    <div class="banner b1" style="margin-top:12px">
-      <h3>이번 주 특가 모음</h3>
-      <p>놓치면 후회할 핫딜을 모았어요</p>
-    </div>
-    <div class="section-header">실시간 인기 상품 <span class="more">더보기 ›</span></div>
-    <div class="section-sub">최근 2시간 동안 많이 구매한 상품이에요.</div>
-    <div class="h-scroll" id="hot-scroll"></div>
-    <div class="goldbox">
-      <div class="goldbox-header">
-        <span style="font-size:18px">🏆</span>
-        <h3>골드박스 특가</h3>
-        <div class="countdown"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> <span id="countdown-timer">--:--:--</span></div>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px" id="goldbox-grid"></div>
-    </div>
-    <div class="section-header">추천 상품</div>
-    <div class="product-grid" id="product-grid"></div>
     <div id="hot-extra"></div>
   </div>
 
@@ -500,7 +483,7 @@ html,body{margin:0;padding:0;height:100%;background:#fff}
   <div class="page" id="page-search">
     <div style="padding:12px 16px">
       <div style="display:flex;gap:8px;align-items:center">
-        <input type="text" class="input-field" id="search-input" placeholder="찾는 상품이 있나요?" oninput="doSearch()" style="flex:1">
+        <input type="text" class="input-field" id="search-input" placeholder="찾는 상품이 있나요?" oninput="doSearch()" onkeydown="if(event.key==='Enter'){addRecentSearch(this.value.trim().toLowerCase());renderSearchHome()}" style="flex:1">
       </div>
     </div>
     <div id="search-home"></div>
@@ -963,7 +946,6 @@ function initApp(){
   document.getElementById('tabbar').style.display='flex';
   processTickets();
   switchTab('wish');
-  startCountdown();
 }
 
 // ===== WISHLIST =====
@@ -989,54 +971,10 @@ function renderWishlist(){
 
 // ===== HOTDEALS =====
 function renderHotdeals(){
-  var hhtml='';
-  PRODUCTS.slice(0,5).forEach(function(p){
-    hhtml+='<div class="h-card" onclick="openDetail('+p.id+')">';
-    hhtml+='<div class="h-card-img">'+p.emoji;
-    if(p.badge==='lowest')hhtml+='<div style="position:absolute;top:4px;left:4px;background:var(--red);color:#fff;font-size:9px;padding:2px 5px;border-radius:3px;font-weight:700">역대최저가</div>';
-    hhtml+='</div>';
-    hhtml+='<div class="h-card-name">'+p.name+'</div>';
-    hhtml+='<div class="h-card-price">'+p.currentPrice.toLocaleString()+'원</div>';
-    hhtml+='<div class="h-card-discount">'+p.discount+'%</div></div>';
-  });
-  document.getElementById('hot-scroll').innerHTML=hhtml;
-  var ghtml='';
-  PRODUCTS.slice(2,5).forEach(function(p){
-    ghtml+='<div style="text-align:center;cursor:pointer" onclick="openDetail('+p.id+')">';
-    ghtml+='<div style="width:100%;aspect-ratio:1;background:#f8f9fa;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:4px">'+p.emoji+'</div>';
-    ghtml+='<div style="font-size:11px;line-height:1.2;height:27px;overflow:hidden">'+p.name+'</div>';
-    ghtml+='<div style="font-size:12px;font-weight:700;margin-top:2px">'+p.currentPrice.toLocaleString()+'원</div></div>';
-  });
-  document.getElementById('goldbox-grid').innerHTML=ghtml;
-  var phtml='';
-  PRODUCTS.forEach(function(p){
-    var badgeClass=p.badge==='hot'?'badge-hot':p.badge==='lowest'?'badge-lowest':'badge-rocket';
-    var badgeText=p.badge==='hot'?'핫딜':p.badge==='lowest'?'역대최저가':'로켓배송';
-    phtml+='<div class="product-card" onclick="openDetail('+p.id+')">';
-    phtml+='<div class="product-img"><div class="img-placeholder">'+p.emoji+'</div>';
-    phtml+='<div class="product-badge '+badgeClass+'">'+badgeText+'</div></div>';
-    phtml+='<div class="product-info"><p class="product-name">'+p.name+'</p>';
-    phtml+='<div class="product-price-row"><span class="product-price">'+p.currentPrice.toLocaleString()+'원</span>';
-    phtml+='<span class="product-change down">▼'+p.discount+'%</span></div></div></div>';
-  });
-  document.getElementById('product-grid').innerHTML=phtml;
   renderHotExtra();
 }
 
 // ===== COUNTDOWN =====
-var countdownInterval;
-function startCountdown(){
-  if(countdownInterval)clearInterval(countdownInterval);
-  var end=new Date();end.setHours(23,59,59,999);
-  countdownInterval=setInterval(function(){
-    var now=new Date();var diff=end-now;
-    if(diff<=0){diff=0}
-    var h=Math.floor(diff/3600000);var m=Math.floor((diff%3600000)/60000);var s=Math.floor((diff%60000)/1000);
-    document.getElementById('countdown-timer').textContent=
-      (h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s+' 남음';
-  },1000);
-}
-
 // ===== PRODUCT DETAIL =====
 var currentDetailId=null;
 var chartInstance=null;
@@ -1346,18 +1284,21 @@ function updateHotGoldboxTimer(){
 
 function renderSearch(){
   document.getElementById('search-input').value='';
+  document.getElementById('search-home').style.display='';
+  document.getElementById('search-results').style.display='none';
+  document.getElementById('search-results').innerHTML='';
   renderSearchHome();
 }
 function doSearch(){
   var q=document.getElementById('search-input').value.trim().toLowerCase();
   if(!q){
     document.getElementById('search-home').style.display='';
+    document.getElementById('search-results').style.display='none';
     document.getElementById('search-results').innerHTML='';
-    renderSearchHome();
     return;
   }
   document.getElementById('search-home').style.display='none';
-  addRecentSearch(q);
+  document.getElementById('search-results').style.display='';
   var results=PRODUCTS.filter(function(p){return p.name.toLowerCase().indexOf(q)>=0});
   var html='';
   if(results.length===0){html='<div class="empty"><div class="icon">😢</div><p>검색 결과가 없어요</p></div>'}

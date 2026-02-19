@@ -8,12 +8,12 @@
 <title>PricePick</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏷️</text></svg>">
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#3B82F6">
+<meta name="theme-color" content="#346aff">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--primary:#3B82F6;--primary-light:#EFF6FF;--primary-dark:#2563EB;--bg:#F5F6FA;--card:#fff;--text:#1F2937;--text-sub:#9CA3AF;--text-light:#D1D5DB;--border:#F3F4F6;--red:#EF4444;--green:#10B981;--orange:#F59E0B;--tab-h:60px;--header-h:52px;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
-html,body{margin:0;padding:0;height:100%;background:#fff}
+:root{--primary:#346aff;--primary-light:rgba(52,106,255,0.08);--primary-dark:#2856d9;--bg:#f5f5f5;--bg-elevated:#fff;--card:#fff;--card-hover:#f9fafb;--text:#111;--text-sub:#888;--text-light:#bbb;--border:#eee;--red:#e74c3c;--green:#10B981;--orange:#F59E0B;--gold:#FFD93D;--tab-h:60px;--header-h:52px;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
+html,body{margin:0;padding:0;height:100%;background:#f5f5f5}
 #app-shell{position:fixed;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
 
 /* Header */
@@ -175,7 +175,7 @@ html,body{margin:0;padding:0;height:100%;background:#fff}
 .raffle-section{margin:0 16px 12px;background:linear-gradient(135deg,#6366F1,#818CF8);border-radius:16px;padding:24px;text-align:center;color:#fff}
 .raffle-section h3{font-size:18px;font-weight:800;margin-bottom:4px}
 .raffle-section p{font-size:12px;opacity:.8;margin-bottom:16px}
-.raffle-ball{width:72px;height:72px;border-radius:50%;background:#fff;color:var(--primary);font-size:28px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 4px 16px rgba(0,0,0,.2);transition:.3s}
+.raffle-ball{width:72px;height:72px;border-radius:50%;background:#fff;color:var(--primary);font-size:28px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 4px 16px rgba(0,0,0,.3);transition:.3s}
 .raffle-ball.spinning{animation:spin .1s linear infinite}
 @keyframes spin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(1.1)}100%{transform:rotate(360deg) scale(1)}}
 .raffle-info{display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;margin-bottom:14px;opacity:.9}
@@ -208,7 +208,7 @@ html,body{margin:0;padding:0;height:100%;background:#fff}
 .mypage-divider{height:1px;background:var(--border);margin:0 16px}
 
 /* Savings card */
-.savings-card{margin:0 16px 8px;background:linear-gradient(135deg,#3B82F6,#60A5FA);border-radius:16px;padding:20px;color:#fff;text-align:center}
+.savings-card{margin:0 16px 8px;background:linear-gradient(135deg,#346aff,#6B8FFF);border-radius:16px;padding:20px;color:#fff;text-align:center}
 .savings-card .label{font-size:12px;opacity:.85;margin-bottom:4px}
 .savings-card .amount{font-size:28px;font-weight:800;letter-spacing:-0.5px}
 .savings-card .sub{font-size:11px;opacity:.7;margin-top:4px}
@@ -335,6 +335,102 @@ html,body{margin:0;padding:0;height:100%;background:#fff}
 .tier-badge.bronze{background:#FEF3C7;color:#92400E}
 .tier-badge.silver{background:#E5E7EB;color:#374151}
 .tier-badge.gold{background:#FDF2F8;color:#9D174D}
+
+/* Savings top bar */
+.savings-top{margin:0 16px 8px;background:linear-gradient(135deg,#346aff,#6B8FFF);border-radius:14px;padding:14px 16px;color:#fff;display:flex;align-items:center;justify-content:space-between}
+.savings-top .left{display:flex;align-items:center;gap:8px}
+.savings-top .left .icon{font-size:20px}
+.savings-top .left .info .label{font-size:11px;opacity:.85}
+.savings-top .left .info .amount{font-size:18px;font-weight:800}
+.savings-top .btn{padding:6px 14px;border-radius:8px;background:rgba(255,255,255,.25);color:#fff;font-size:12px;font-weight:600;border:none;cursor:pointer}
+
+/* Price drop alert */
+.price-alert{margin:0 16px 8px;background:#FFF8E1;border:1.5px solid #FFD54F;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;animation:alertPulse 2s ease-in-out infinite}
+@keyframes alertPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,213,79,0)}50%{box-shadow:0 0 0 4px rgba(255,213,79,0.3)}}
+.price-alert .emoji{font-size:24px;flex-shrink:0}
+.price-alert .info{flex:1;min-width:0}
+.price-alert .info .title{font-size:13px;font-weight:700;color:#333;margin-bottom:2px}
+.price-alert .info .desc{font-size:11px;color:#888}
+.price-alert .action{font-size:12px;font-weight:700;color:#346aff;white-space:nowrap}
+.price-alert .close-btn{font-size:14px;color:#bbb;cursor:pointer;padding:4px}
+
+/* Quick buy button */
+.quick-buy{display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:8px;background:#346aff;color:#fff;font-size:11px;font-weight:600;border:none;cursor:pointer;white-space:nowrap;margin-top:6px}
+.quick-buy:active{opacity:.85}
+
+/* Simple reward banner */
+.reward-simple{margin:0 16px 10px;background:linear-gradient(135deg,#FF6B35,#FF9F1C);border-radius:14px;padding:20px;color:#fff;text-align:center}
+.reward-simple h3{font-size:18px;font-weight:800;margin-bottom:4px}
+.reward-simple p{font-size:13px;opacity:.9;margin-bottom:4px}
+.reward-simple .sub{font-size:11px;opacity:.7}
+.reward-steps{display:flex;gap:0;margin:0 16px 10px;background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.reward-step{flex:1;text-align:center;padding:16px 8px;position:relative}
+.reward-step:not(:last-child)::after{content:'→';position:absolute;right:-6px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--text-light);z-index:1}
+.reward-step .icon{font-size:24px;margin-bottom:4px}
+.reward-step .label{font-size:12px;font-weight:700;color:var(--text)}
+.reward-step .desc{font-size:10px;color:var(--text-sub);margin-top:2px}
+
+/* Invite card */
+.invite-card{margin:0 16px 8px;background:linear-gradient(135deg,#7C3AED,#A78BFA);border-radius:16px;padding:20px;color:#fff;text-align:center}
+.invite-card h3{font-size:16px;font-weight:800;margin-bottom:4px}
+.invite-card p{font-size:12px;opacity:.85;margin-bottom:14px}
+.invite-reward{display:flex;justify-content:center;gap:16px;margin-bottom:14px}
+.invite-reward .item{background:rgba(255,255,255,.2);border-radius:10px;padding:8px 14px;font-size:12px;font-weight:600}
+.invite-btn{padding:10px 24px;border-radius:12px;background:#fff;color:#7C3AED;font-size:14px;font-weight:700;border:none;cursor:pointer}
+.invite-btn:active{opacity:.85}
+.invite-stats{display:flex;justify-content:center;gap:20px;margin-top:12px;font-size:11px;opacity:.8}
+.invite-code{margin:8px 16px 0;background:var(--card);border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.invite-code .code{font-size:13px;font-weight:700;color:var(--primary);letter-spacing:1px}
+.invite-code .copy-btn{padding:6px 12px;border-radius:8px;background:var(--primary);color:#fff;font-size:12px;font-weight:600;border:none;cursor:pointer}
+
+/* Traffic light */
+.timing-badge{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700;margin-top:4px}
+.timing-badge.buy{background:#DCFCE7;color:#16A34A}
+.timing-badge.wait{background:#FEF3C7;color:#92400E}
+.timing-badge.expensive{background:#FEE2E2;color:#DC2626}
+
+/* Challenge card */
+.challenge-card{margin:0 16px 8px;background:var(--card);border-radius:16px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.challenge-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.challenge-header h3{font-size:15px;font-weight:800}
+.challenge-header .badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:8px;background:#DCFCE7;color:#16A34A}
+.challenge-goal{font-size:13px;color:var(--text-sub);margin-bottom:8px}
+.challenge-bar-bg{width:100%;height:10px;border-radius:5px;background:var(--border);overflow:hidden;margin-bottom:6px}
+.challenge-bar{height:100%;border-radius:5px;background:linear-gradient(90deg,#346aff,#6B8FFF);transition:width .5s}
+.challenge-info{display:flex;justify-content:space-between;font-size:12px;color:var(--text-sub)}
+.challenge-info .current{color:var(--primary);font-weight:700}
+.challenge-bonus{margin-top:10px;padding:8px 12px;background:var(--primary-light);border-radius:8px;font-size:12px;color:var(--primary);font-weight:600;text-align:center}
+
+/* Share wishlist */
+.share-btn{display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:8px;background:#FEF3C7;color:#92400E;font-size:11px;font-weight:600;border:none;cursor:pointer;white-space:nowrap}
+.share-btn:active{opacity:.85}
+.gift-request{margin:0 16px 10px;background:linear-gradient(135deg,#EC4899,#F472B6);border-radius:14px;padding:14px 16px;color:#fff;display:flex;align-items:center;gap:10px;cursor:pointer}
+.gift-request .icon{font-size:24px}
+.gift-request .info{flex:1}
+.gift-request .info h4{font-size:14px;font-weight:700;margin-bottom:2px}
+.gift-request .info p{font-size:11px;opacity:.85}
+.gift-request .action{padding:6px 14px;border-radius:8px;background:rgba(255,255,255,.25);color:#fff;font-size:12px;font-weight:600;border:none;cursor:pointer}
+
+/* Streak card */
+.streak-card{margin:0 16px 8px;background:linear-gradient(135deg,#FF6B35,#FF9F1C);border-radius:16px;padding:20px;color:#fff;text-align:center}
+.streak-card h3{font-size:16px;font-weight:800;margin-bottom:12px}
+.streak-dots{display:flex;justify-content:center;gap:10px;margin-bottom:10px}
+.streak-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.streak-dot.filled{background:#fff;color:#FF6B35}
+.streak-dot.empty{background:rgba(255,255,255,0.3);color:#fff}
+.streak-card .tip{font-size:12px;opacity:.85}
+.streak-card .record{font-size:11px;opacity:.7;margin-top:4px}
+
+/* Ranking card */
+.ranking-card{margin:0 16px 8px;background:var(--card);border-radius:16px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.ranking-card h3{font-size:15px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.ranking-item{display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);gap:10px}
+.ranking-item:last-child{border-bottom:none}
+.ranking-item.me{background:#EFF6FF;margin:0 -16px;padding:10px 16px;border-radius:8px}
+.ranking-medal{font-size:18px;width:28px;text-align:center}
+.ranking-rank{font-size:14px;font-weight:700;color:var(--text-sub);width:28px;text-align:center}
+.ranking-name{flex:1;font-size:14px;font-weight:600}
+.ranking-amount{font-size:14px;font-weight:700;color:var(--primary)}
 </style>
 </head>
 <body>
@@ -369,7 +465,15 @@ html,body{margin:0;padding:0;height:100%;background:#fff}
 
   <!-- 관심상품 -->
   <div class="page" id="page-wish">
-    <div style="padding:10px 16px">
+    <div class="gift-request" onclick="shareWishlist()">
+      <span class="icon">🎁</span>
+      <div class="info">
+        <h4>위시리스트 공유하기</h4>
+        <p>친구에게 내가 갖고 싶은 상품을 알려주세요</p>
+      </div>
+      <button class="action">공유</button>
+    </div>
+    <div style="padding:4px 16px 0">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
         <span class="chip active" id="wish-count">전체 0</span>
         <span class="chip" onclick="switchTab('search')" style="font-size:14px;padding:6px 12px">+ 추가</span>
@@ -392,89 +496,93 @@ html,body{margin:0;padding:0;height:100%;background:#fff}
     <div id="wish-list"></div>
   </div>
 
-  <!-- 핫딜 -->
+  <!-- 핫딜 (홈) -->
   <div class="page" id="page-hot">
+    <div id="savings-top-area"></div>
+    <div id="price-alert-area"></div>
     <div id="hot-extra"></div>
   </div>
 
   <!-- 혜택 -->
   <div class="page" id="page-benefit">
-    <div style="padding:12px 16px 0"><div style="font-size:11px;color:var(--text-sub);background:var(--primary-light);padding:8px 12px;border-radius:10px;text-align:center">🎫 구매 시 이벤트 티켓이 랜덤 지급됩니다. 금액이 클수록 더 좋은 티켓!</div></div>
+    <!-- 핵심 메시지 -->
+    <div class="reward-simple" style="margin-top:10px">
+      <h3>쇼핑하면 커피가 공짜! ☕</h3>
+      <p>쿠팡에서 평소처럼 쇼핑하세요</p>
+      <div class="sub">구매 금액에 따라 리워드 티켓이 쌓여요</div>
+    </div>
+
+    <!-- 3단계 안내 -->
+    <div class="reward-steps">
+      <div class="reward-step">
+        <div class="icon">🛒</div>
+        <div class="label">쿠팡 구매</div>
+        <div class="desc">평소처럼 쇼핑</div>
+      </div>
+      <div class="reward-step">
+        <div class="icon">🎫</div>
+        <div class="label">티켓 적립</div>
+        <div class="desc">자동 지급</div>
+      </div>
+      <div class="reward-step">
+        <div class="icon">☕</div>
+        <div class="label">커피 교환</div>
+        <div class="desc">기프티콘 받기</div>
+      </div>
+    </div>
 
     <div id="benefit-ticket">
+      <!-- 내 티켓 현황 (간결) -->
       <div class="ticket-box">
         <div class="ticket-box-title">
-          <h3>내 이벤트 티켓</h3>
-          <span class="tip">금액이 클수록 좋은 티켓!</span>
+          <h3>내 티켓</h3>
+          <span class="tip" id="ticket-pending">적립예정 0장</span>
         </div>
         <div class="ticket-stats">
-          <div class="ticket-stat"><div class="label">적립예정</div><div class="val"><span class="icon">🎫</span> <span id="ticket-pending">0</span></div></div>
-          <div class="ticket-stat"><div class="label">사용가능</div><div class="val"><span class="icon">🎫</span> <span id="ticket-available">0</span></div></div>
+          <div class="ticket-stat"><div class="label">사용 가능</div><div class="val"><span class="icon">🎫</span> <span id="ticket-available">0</span></div></div>
+          <div class="ticket-stat"><div class="label">커피까지</div><div class="val"><span class="icon">☕</span> <span id="ticket-remaining">8</span></div></div>
         </div>
         <div class="ticket-actions">
-          <button onclick="showModal('🎫','이벤트 티켓 안내','구매 시 이벤트 티켓이 자동 지급됩니다.<br>금액이 클수록 더 좋은 티켓이 나올 수 있어요!<br><br>티켓으로 추첨에 응모하고 경품을 받아보세요.')">내 기프티콘</button>
-          <button class="primary" onclick="switchTab('benefit');scrollToRaffle()">티켓 사용하기</button>
+          <button onclick="switchTab('hot')">쇼핑하러 가기</button>
+          <button class="primary" onclick="scrollToRaffle()">경품 추첨</button>
         </div>
       </div>
 
-      <div class="section-header" style="padding-top:8px">☕ 선택형 보상 교환 <span class="more" style="font-size:11px">티켓으로 교환</span></div>
+      <!-- 교환소 (심플) -->
+      <div class="section-header" style="padding-top:8px">☕ 티켓 교환소</div>
       <div class="reward-ex" id="reward-exchange">
-        <div class="reward-ex-header">☕ 티켓 교환소</div>
         <div class="reward-ex-item">
           <div class="reward-ex-icon" style="background:#FEF3C7">☕</div>
           <div class="reward-ex-info">
-            <h4><span class="tier-badge bronze">BRONZE</span> 아이스 아메리카노</h4>
-            <p>브론즈 티켓 8장 필요</p>
+            <h4>아이스 아메리카노</h4>
+            <p>티켓 8장으로 교환</p>
           </div>
           <button class="reward-ex-btn bronze" id="ex-bronze-btn" onclick="exchangeReward('bronze')">교환</button>
         </div>
         <div class="reward-ex-item">
-          <div class="reward-ex-icon" style="background:#E5E7EB">☕</div>
+          <div class="reward-ex-icon" style="background:#FEF3C7">🍕</div>
           <div class="reward-ex-info">
-            <h4><span class="tier-badge silver">SILVER</span> 아이스 아메리카노</h4>
-            <p>실버 티켓 4장 필요</p>
+            <h4>도미노피자 세트</h4>
+            <p>티켓 20장으로 교환</p>
           </div>
-          <button class="reward-ex-btn silver" id="ex-silver-btn" onclick="exchangeReward('silver')">교환</button>
-        </div>
-        <div class="reward-ex-item">
-          <div class="reward-ex-icon" style="background:#FDF2F8">☕</div>
-          <div class="reward-ex-info">
-            <h4><span class="tier-badge gold">GOLD</span> 아이스 아메리카노</h4>
-            <p>골드 티켓 1장 필요</p>
-          </div>
-          <button class="reward-ex-btn gold" id="ex-gold-btn" onclick="exchangeReward('gold')">교환</button>
+          <button class="reward-ex-btn gold" onclick="exchangeReward('gold')">교환</button>
         </div>
       </div>
 
-      <div class="section-header" style="padding-top:8px">🎊 2배 적립 이벤트 <span class="more">전체보기 ›</span></div>
-      <div class="h-scroll" id="event-2x-scroll"></div>
-
-      <div class="section-header" style="padding-top:8px">PricePick 쇼핑 이벤트</div>
-      <div class="event-card">
-        <div class="event-row">
-          <div class="event-icon" style="background:#EFF6FF">🛍️</div>
-          <div class="event-info"><h4>쿠팡 쇼핑 적립</h4><p>구매 시 랜덤 티켓 지급</p></div>
-          <span class="event-status live">진행중</span>
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-row">
-          <div class="event-icon" style="background:#FEF3C7">🎰</div>
-          <div class="event-info"><h4>이벤트 티켓 추첨</h4><p>티켓으로 경품 응모!</p></div>
-          <span class="event-status live">진행중</span>
-        </div>
-      </div>
-
-      <div class="section-header" id="raffle-anchor">이달의 추첨</div>
+      <!-- 추첨 -->
+      <div class="section-header" id="raffle-anchor" style="padding-top:8px">🎰 경품 추첨</div>
       <div class="raffle-section">
-        <h3>경품 추첨</h3>
-        <p>이벤트 티켓으로 응모하세요</p>
+        <h3>티켓으로 경품 응모!</h3>
+        <p>매일 추첨 기회</p>
         <div class="raffle-ball" id="raffle-ball">?</div>
         <div class="raffle-info">내 티켓: <b id="raffle-tickets">0</b>장</div>
         <button class="raffle-btn" onclick="doRaffle()">추첨하기</button>
       </div>
-      <div class="section-header">경품 안내</div>
       <div class="raffle-prizes" id="raffle-prizes"></div>
+
+      <!-- 진행중 이벤트 -->
+      <div class="section-header" style="padding-top:8px">🎊 진행중 이벤트</div>
+      <div class="h-scroll" id="event-2x-scroll"></div>
     </div>
 
   </div>
@@ -506,7 +614,11 @@ html,body{margin:0;padding:0;height:100%;background:#fff}
         <div class="stat-box"><div class="val" id="my-raffles">0</div><div class="lbl">추첨</div></div>
       </div>
     </div>
+    <div id="my-invite-section"></div>
+    <div id="my-challenge-section"></div>
+    <div id="my-streak-section"></div>
     <div id="my-savings-section"></div>
+    <div id="my-ranking-section"></div>
     <div class="mypage-section" id="wow-section">
       <div class="mypage-section-title">쿠팡 멤버십</div>
       <div class="mypage-row" onclick="toggleWow()">
@@ -593,13 +705,13 @@ html,body{margin:0;padding:0;height:100%;background:#fff}
 
 <!-- Tab bar -->
 <div class="tabbar" id="tabbar" style="display:none">
-  <div class="tab active" data-tab="wish" onclick="switchTab('wish')">
+  <div class="tab" data-tab="hot" onclick="switchTab('hot')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    홈
+  </div>
+  <div class="tab" data-tab="wish" onclick="switchTab('wish')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
     관심상품
-  </div>
-  <div class="tab" data-tab="hot" onclick="switchTab('hot')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.22.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-    핫딜
   </div>
   <div class="tab tab-center" data-tab="search" onclick="switchTab('search')">
     <button class="tab-center-btn">
@@ -752,7 +864,7 @@ var RAFFLE_PRIZES=[
 ];
 
 var EVENT_2X=[
-  {cat:'전자제품',emoji:'🖥️',bg:'linear-gradient(135deg,#3B82F6,#60A5FA)',end:'02/28'},
+  {cat:'전자제품',emoji:'🖥️',bg:'linear-gradient(135deg,#346aff,#6B8FFF)',end:'02/28'},
   {cat:'패션/의류',emoji:'👟',bg:'linear-gradient(135deg,#8B5CF6,#A78BFA)',end:'02/20'},
   {cat:'생활용품',emoji:'🧹',bg:'linear-gradient(135deg,#10B981,#34D399)',end:'02/25'},
   {cat:'식품/음료',emoji:'🥤',bg:'linear-gradient(135deg,#F59E0B,#FBBF24)',end:'03/05'},
@@ -771,6 +883,9 @@ function getSettings(){return S('settings')||{marketing:false}}
 function setSettings(s){S('settings',s)}
 function getRaffleCount(){return S('raffles')||0}
 function setRaffleCount(n){S('raffles',n)}
+function getStreak(){return S('streak')||{current:0,longest:0,lastDate:null}}
+function setStreak(s){S('streak',s)}
+function getRanking(){return S('ranking')||[]}
 
 // ===== ONBOARDING AI CHAT =====
 var obStep=0;
@@ -913,8 +1028,58 @@ function pickOption(idx,el){
 function doLogout(){if(confirm('로그아웃 하시겠습니까?')){localStorage.clear();location.reload()}}
 function doDeleteAccount(){if(confirm('정말 탈퇴하시겠습니까?\n모든 데이터가 삭제됩니다.')){localStorage.clear();location.reload()}}
 
+// 친구 초대
+function shareInvite(){
+  var u=getUser();if(!u)return;
+  var msg='PricePick에서 쿠팡 최저가 추적하고 커피도 받아요! ☕\n내 초대코드로 가입하면 보너스 티켓 2장!\nhttps://pricepick.app/invite/'+u.nickname;
+  if(navigator.share){
+    navigator.share({title:'PricePick 초대',text:msg}).catch(function(){});
+  }else{
+    navigator.clipboard.writeText(msg).then(function(){showModal('📋','복사 완료!','초대 메시지가 클립보드에 복사되었어요.<br>카카오톡이나 메시지로 공유해보세요!')});
+  }
+  // 시뮬: 초대 카운트 증가
+  var inv=S('invite')||{count:0,earned:0};
+  inv.count++;inv.earned+=2;S('invite',inv);
+}
+function copyInviteCode(code){
+  navigator.clipboard.writeText(code).then(function(){showModal('📋','복사 완료!','초대코드 <b>'+code+'</b>가 복사되었어요.')}).catch(function(){showModal('📋','초대코드',code)});
+}
+
+// 위시리스트 공유/선물요청
+function shareWishlist(){
+  var tracks=getTracks();
+  var u=getUser();if(!u)return;
+  if(tracks.length===0)return showModal('📋','관심상품 없음','먼저 관심상품을 등록해주세요.');
+  var msg=u.nickname+'님의 위시리스트 🎁\n\n';
+  tracks.forEach(function(t,i){msg+=(i+1)+'. '+t.name+' ('+t.currentPrice.toLocaleString()+'원)\n'});
+  msg+='\nPricePick에서 확인해보세요!';
+  if(navigator.share){
+    navigator.share({title:u.nickname+'의 위시리스트',text:msg}).catch(function(){});
+  }else{
+    navigator.clipboard.writeText(msg).then(function(){showModal('📋','복사 완료!','위시리스트가 클립보드에 복사되었어요.')});
+  }
+}
+function shareGiftRequest(id){
+  var p=PRODUCTS.find(function(x){return x.id===id});
+  var u=getUser();
+  if(!p||!u)return;
+  var msg='💝 '+u.nickname+'님이 이 상품을 갖고 싶어해요!\n\n'+p.emoji+' '+p.name+'\n💰 '+p.currentPrice.toLocaleString()+'원\n\n쿠팡에서 선물하기: '+p.url;
+  if(navigator.share){
+    navigator.share({title:'선물 요청',text:msg}).catch(function(){});
+  }else{
+    navigator.clipboard.writeText(msg).then(function(){showModal('🎁','선물 요청 복사!','메시지가 클립보드에 복사되었어요.<br>친구에게 보내보세요!')});
+  }
+}
+
+// 구매 타이밍 판단
+function getTimingSignal(p){
+  if(p.discount>=25)return{signal:'buy',label:'🟢 지금 사세요',reason:'역대 최저가 근접'};
+  if(p.discount>=15)return{signal:'wait',label:'🟡 좀 더 기다려보세요',reason:'추가 할인 가능성'};
+  return{signal:'expensive',label:'🔴 비싸요',reason:'평균가보다 높음'};
+}
+
 // ===== TABS =====
-var TITLES={wish:'관심상품',hot:'핫딜',search:'검색',benefit:'혜택',my:'마이페이지'};
+var TITLES={wish:'관심상품',hot:'홈',search:'검색',benefit:'혜택',my:'마이페이지'};
 function switchTab(name){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
@@ -945,7 +1110,7 @@ function initApp(){
   document.getElementById('main-header').style.display='flex';
   document.getElementById('tabbar').style.display='flex';
   processTickets();
-  switchTab('wish');
+  switchTab('hot');
 }
 
 // ===== WISHLIST =====
@@ -960,17 +1125,52 @@ function renderWishlist(){
     var change=Math.round((Math.random()*6-3)*10)/10;
     var changeClass=change<0?'down':'up';
     var arrow=change<0?'▼':'▲';
+    var prod=PRODUCTS.find(function(x){return x.id===t.productId});
+    var sig=prod?getTimingSignal(prod):{signal:'wait',label:'🟡 확인중'};
     html+='<div class="track-card" onclick="openDetail('+t.productId+',true)">';
     html+='<div class="track-thumb">'+t.emoji+'</div>';
     html+='<div class="track-body"><div class="track-name">'+t.name+'</div>';
     html+='<div class="track-price-row"><span class="track-current">'+t.currentPrice.toLocaleString()+'원</span>';
-    html+='<span class="track-change '+changeClass+'">'+arrow+' '+Math.abs(change)+'%</span></div></div></div>';
+    html+='<span class="track-change '+changeClass+'">'+arrow+' '+Math.abs(change)+'%</span></div>';
+    html+='<div style="display:flex;align-items:center;gap:6px;margin-top:4px">';
+    html+='<span class="timing-badge '+sig.signal+'">'+sig.label+'</span>';
+    html+='<button class="share-btn" onclick="event.stopPropagation();shareGiftRequest('+t.productId+')">🎁 선물요청</button>';
+    html+='</div></div></div>';
   });
   document.getElementById('wish-list').innerHTML=html;
 }
 
 // ===== HOTDEALS =====
 function renderHotdeals(){
+  // 절약 금액 상단 배너
+  var purchases=getPurchases();
+  var totalSaved=0;
+  purchases.forEach(function(p){
+    var orig=p.originalPrice;
+    if(!orig){var prod=PRODUCTS.find(function(x){return x.name===p.name});if(prod)orig=prod.originalPrice}
+    if(orig)totalSaved+=(orig-p.price);
+  });
+  var savingsArea=document.getElementById('savings-top-area');
+  if(purchases.length>0){
+    savingsArea.innerHTML='<div class="savings-top" style="margin-top:10px"><div class="left"><span class="icon">💰</span><div class="info"><div class="label">PricePick으로 아낀 금액</div><div class="amount">'+totalSaved.toLocaleString()+'원</div></div></div><button class="btn" onclick="switchTab(\'my\')">내역 보기</button></div>';
+  }else{
+    savingsArea.innerHTML='<div class="savings-top" style="margin-top:10px"><div class="left"><span class="icon">💰</span><div class="info"><div class="label">PricePick으로 절약 시작!</div><div class="amount">최저가에 사고 리워드까지</div></div></div></div>';
+  }
+  // 절약 챌린지 미니
+  var chalTarget=50000;
+  var chalPct=Math.min(100,Math.round(totalSaved/chalTarget*100));
+  if(purchases.length>0){
+    savingsArea.innerHTML+='<div style="margin:0 16px 4px;display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--text-sub)">🎯 이달 챌린지</span><div style="flex:1;height:6px;border-radius:3px;background:var(--border);overflow:hidden"><div style="height:100%;width:'+chalPct+'%;background:var(--primary);border-radius:3px"></div></div><span style="font-size:12px;font-weight:700;color:var(--primary)">'+chalPct+'%</span></div>';
+  }
+  // 가격 하락 알림
+  var alertArea=document.getElementById('price-alert-area');
+  var tracks=getTracks();
+  var alertProduct=tracks.length>0?PRODUCTS.find(function(x){return x.id===tracks[0].productId}):PRODUCTS[1];
+  if(alertProduct){
+    var dropPct=alertProduct.discount;
+    var prevPrice=alertProduct.originalPrice;
+    alertArea.innerHTML='<div class="price-alert" onclick="openDetail('+alertProduct.id+')"><span class="emoji">📉</span><div class="info"><div class="title">'+alertProduct.name+'</div><div class="desc">'+prevPrice.toLocaleString()+'원 → <b style="color:#e74c3c">'+alertProduct.currentPrice.toLocaleString()+'원</b> ('+dropPct+'%↓)</div></div><span class="action">보러가기 ›</span></div>';
+  }
   renderHotExtra();
 }
 
@@ -1039,6 +1239,14 @@ function openAddModal(){
 function closeAddModal(){document.getElementById('add-modal').classList.remove('show')}
 
 // ===== PURCHASE SIMULATION =====
+function quickBuy(id){
+  var p=PRODUCTS.find(function(x){return x.id===id});
+  if(!p)return;
+  simulatePurchase(id);
+  // 실제로는 쿠팡 딥링크로 이동
+  // window.open(p.url, '_blank');
+}
+
 function simulatePurchase(id){
   var p=PRODUCTS.find(function(x){return x.id===id});
   if(!p)return;
@@ -1061,11 +1269,66 @@ function simulatePurchase(id){
   var purchases=getPurchases();
   purchases.unshift({name:p.name,price:p.currentPrice,originalPrice:p.originalPrice,date:new Date().toISOString().slice(0,10),emoji:p.emoji});
   S('purchases',purchases);
+  // 스트릭 업데이트
+  var streakResult=updatePurchaseStreak();
+  // 랭킹 업데이트
+  updateRankingData(p.currentPrice);
   closeDetail();
   var msg='<b>'+p.name+'</b> 구매 완료!<br><br>🎫 이벤트 티켓 '+ticketCount+'장이 지급되었습니다.';
   if(is2x)msg+='<br><span style="font-size:12px;color:var(--orange);font-weight:700">🎊 2배 적립 이벤트 적용!</span>';
+  if(streakResult.bonusTicket)msg+='<br><span style="font-size:12px;color:var(--orange);font-weight:700">🔥 5일 연속 구매 보너스 티켓!</span>';
+  else if(streakResult.streak>1)msg+='<br><span style="font-size:12px;color:var(--text-sub)">🔥 연속 구매 '+streakResult.streak+'일째!</span>';
   msg+='<br><span style="font-size:12px;color:var(--text-sub)">금액이 클수록 더 좋은 티켓이 나올 수 있어요!</span>';
   showModal('🎫','이벤트 티켓 지급!',msg);
+}
+
+// ===== STREAK =====
+function updatePurchaseStreak(){
+  var today=new Date().toISOString().slice(0,10);
+  var yesterday=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  var streak=getStreak();
+  if(streak.lastDate===today)return{streak:streak.current,bonusTicket:false};
+  var newStreak;
+  if(streak.lastDate===yesterday){newStreak=streak.current+1}
+  else{newStreak=1}
+  var bonusTicket=false;
+  if(newStreak>=5){
+    var tickets=getTickets();
+    var tier=Math.random()<0.5?'lottery':'roulette';
+    tickets.available++;
+    tickets.history.push({id:Date.now()+99,tier:'silver',amount:0,date:new Date().toISOString(),status:'available',product:'5일 연속 보너스'});
+    setTickets(tickets);
+    bonusTicket=true;
+    newStreak=0;
+  }
+  var longest=Math.max(newStreak,streak.longest);
+  setStreak({current:newStreak,longest:longest,lastDate:today});
+  return{streak:newStreak,bonusTicket:bonusTicket};
+}
+
+// ===== RANKING =====
+function updateRankingData(amount){
+  var u=getUser();if(!u)return;
+  var month=new Date().toISOString().slice(0,7);
+  var ranking=S('ranking_data')||{};
+  if(!ranking[month])ranking[month]={};
+  if(!ranking[month][u.nickname])ranking[month][u.nickname]=0;
+  ranking[month][u.nickname]+=amount;
+  S('ranking_data',ranking);
+}
+
+function getMonthlyRanking(){
+  var month=new Date().toISOString().slice(0,7);
+  var ranking=S('ranking_data')||{};
+  var data=ranking[month]||{};
+  // 더미 유저 추가 (리얼감)
+  var dummies={'김지수':156000,'이하늘':98000,'박서윤':72000,'최민준':45000,'정수아':31000};
+  var merged={};
+  Object.keys(dummies).forEach(function(k){merged[k]=dummies[k]});
+  Object.keys(data).forEach(function(k){merged[k]=(merged[k]||0)+data[k]});
+  var arr=Object.keys(merged).map(function(k){return{name:k,total:merged[k]}});
+  arr.sort(function(a,b){return b.total-a.total});
+  return arr.slice(0,10);
 }
 
 // ===== TICKET PROCESSING =====
@@ -1207,13 +1470,19 @@ function renderHotExtra(){
   html+='<div style="font-size:14px;font-weight:700;margin-bottom:8px">🔥 인기 상품</div>';
   html+='<div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch">';
   popular.forEach(function(p){
-    html+='<div onclick="openDetail('+p.id+')" style="min-width:140px;max-width:140px;background:var(--card);border-radius:12px;padding:12px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.06);flex-shrink:0">';
+    html+='<div style="min-width:150px;max-width:150px;background:var(--card);border-radius:12px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);flex-shrink:0">';
+    html+='<div onclick="openDetail('+p.id+')" style="cursor:pointer">';
     html+='<div style="font-size:30px;text-align:center;margin-bottom:6px">'+p.emoji+'</div>';
     html+='<div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+p.name+'</div>';
     html+='<div style="display:flex;align-items:center;gap:4px;margin-top:4px">';
     html+='<span style="font-size:13px;font-weight:700;color:var(--red)">'+p.discount+'%</span>';
     html+='<span style="font-size:12px;font-weight:700">'+p.currentPrice.toLocaleString()+'원</span>';
-    html+='</div></div>';
+    html+='</div>';
+    var sig=getTimingSignal(p);
+    html+='<div class="timing-badge '+sig.signal+'">'+sig.label+'</div>';
+    html+='</div>';
+    html+='<button class="quick-buy" onclick="event.stopPropagation();quickBuy('+p.id+')">🛒 쿠팡에서 보기</button>';
+    html+='</div>';
   });
   html+='</div></div>';
 
@@ -1245,8 +1514,10 @@ function renderHotExtra(){
       html+='<span style="font-size:11px;color:var(--text-sub);text-decoration:line-through">'+p.originalPrice.toLocaleString()+'원</span>';
       html+='<span style="font-size:14px;font-weight:700;color:var(--red)">'+p.currentPrice.toLocaleString()+'원</span>';
       html+='</div></div>';
+      html+='<div style="display:flex;flex-direction:column;align-items:center;gap:4px">';
       html+='<div style="background:var(--red);color:#fff;border-radius:8px;padding:4px 8px;font-size:12px;font-weight:700">최저가</div>';
-      html+='</div>';
+      html+='<button class="quick-buy" onclick="event.stopPropagation();quickBuy('+p.id+')" style="margin-top:0">보러가기</button>';
+      html+='</div></div>';
     });
     html+='</div>';
   }
@@ -1331,8 +1602,10 @@ function doSearch(){
 function renderBenefit(){
   processTickets();
   var tickets=getTickets();
-  document.getElementById('ticket-pending').textContent=tickets.pending;
+  document.getElementById('ticket-pending').textContent='적립예정 '+tickets.pending+'장';
   document.getElementById('ticket-available').textContent=tickets.available;
+  var remaining=Math.max(0,8-tickets.available);
+  document.getElementById('ticket-remaining').textContent=remaining>0?remaining+'장':'교환 가능!';
   document.getElementById('raffle-tickets').textContent=tickets.available;
   // 2x event scroll
   var ehtml='';
@@ -1415,6 +1688,63 @@ function renderMypage(){
   });
   document.getElementById('my-savings-section').innerHTML=
     '<div class="savings-card"><div class="label">총 아낀 금액</div><div class="amount">'+totalSaved.toLocaleString()+'원</div><div class="sub">PricePick과 함께한 스마트 쇼핑</div></div>';
+  // 친구 초대 카드
+  var inviteData=S('invite')||{count:0,earned:0};
+  var inviteCode=u.nickname.toUpperCase().slice(0,3)+Math.floor(Math.random()*900+100);
+  var invHtml='<div class="invite-card">';
+  invHtml+='<h3>친구 초대하고 티켓 받기! 🎁</h3>';
+  invHtml+='<p>친구가 가입하면 나도, 친구도 보너스 티켓</p>';
+  invHtml+='<div class="invite-reward"><div class="item">🎫 나 +2장</div><div class="item">🎫 친구 +2장</div></div>';
+  invHtml+='<button class="invite-btn" onclick="shareInvite()">초대 링크 공유하기</button>';
+  invHtml+='<div class="invite-stats"><span>초대한 친구: '+inviteData.count+'명</span><span>받은 티켓: '+inviteData.earned+'장</span></div>';
+  invHtml+='</div>';
+  invHtml+='<div class="invite-code"><span style="font-size:12px;color:var(--text-sub)">내 초대코드</span><span class="code">'+inviteCode+'</span><button class="copy-btn" onclick="copyInviteCode(\''+inviteCode+'\')">복사</button></div>';
+  document.getElementById('my-invite-section').innerHTML=invHtml;
+  // 절약 챌린지
+  var chalTarget=50000;
+  var chalSaved=totalSaved;
+  var chalPct=Math.min(100,Math.round(chalSaved/chalTarget*100));
+  var chalHtml='<div class="challenge-card">';
+  chalHtml+='<div class="challenge-header"><h3>🎯 이달의 챌린지</h3>';
+  if(chalPct>=100)chalHtml+='<span class="badge">달성! 🎉</span>';
+  else chalHtml+='<span class="badge" style="background:var(--primary-light);color:var(--primary)">진행중</span>';
+  chalHtml+='</div>';
+  chalHtml+='<div class="challenge-goal">이번 달 '+chalTarget.toLocaleString()+'원 절약하기</div>';
+  chalHtml+='<div class="challenge-bar-bg"><div class="challenge-bar" style="width:'+chalPct+'%"></div></div>';
+  chalHtml+='<div class="challenge-info"><span class="current">'+chalSaved.toLocaleString()+'원 절약</span><span>목표 '+chalTarget.toLocaleString()+'원</span></div>';
+  if(chalPct>=100)chalHtml+='<div class="challenge-bonus">🎫 챌린지 달성 보너스 티켓 3장 지급!</div>';
+  else chalHtml+='<div class="challenge-bonus">달성 시 보너스 티켓 3장!</div>';
+  chalHtml+='</div>';
+  document.getElementById('my-challenge-section').innerHTML=chalHtml;
+  // 스트릭 카드
+  var streak=getStreak();
+  var streakHtml='<div class="streak-card"><h3>';
+  if(streak.current>0)streakHtml+='🔥 연속 구매 '+streak.current+'일째!';
+  else streakHtml+='🔥 연속 구매 도전!';
+  streakHtml+='</h3><div class="streak-dots">';
+  for(var si=1;si<=5;si++){
+    if(si<=streak.current)streakHtml+='<div class="streak-dot filled">✓</div>';
+    else streakHtml+='<div class="streak-dot empty">'+si+'</div>';
+  }
+  streakHtml+='</div><div class="tip">5일 달성 시 보너스 티켓!</div>';
+  if(streak.longest>0)streakHtml+='<div class="record">최장 기록: '+streak.longest+'일</div>';
+  streakHtml+='</div>';
+  document.getElementById('my-streak-section').innerHTML=streakHtml;
+  // 절약왕 랭킹
+  var rankings=getMonthlyRanking();
+  var rankHtml='<div class="ranking-card"><h3>🏆 이달의 절약왕</h3>';
+  var medals=['🥇','🥈','🥉'];
+  rankings.forEach(function(r,idx){
+    var isMe=r.name===u.nickname;
+    rankHtml+='<div class="ranking-item'+(isMe?' me':'')+'">';
+    if(idx<3)rankHtml+='<span class="ranking-medal">'+medals[idx]+'</span>';
+    else rankHtml+='<span class="ranking-rank">'+(idx+1)+'</span>';
+    rankHtml+='<span class="ranking-name">'+r.name+(isMe?' ← 나':'')+'</span>';
+    rankHtml+='<span class="ranking-amount">'+r.total.toLocaleString()+'원</span>';
+    rankHtml+='</div>';
+  });
+  rankHtml+='</div>';
+  document.getElementById('my-ranking-section').innerHTML=rankHtml;
   // Toggles
   document.getElementById('toggle-marketing').className='toggle'+(settings.marketing?' on':'');
   document.getElementById('toggle-price').className='toggle'+(settings.noti_price!==false?' on':'');
@@ -1835,7 +2165,7 @@ openDetail=function(id,fromWish){
       data:{
         labels:history.map(function(h){return h.date}),
         datasets:[
-          {label:'가격',data:prices,borderColor:'#EF4444',backgroundColor:'rgba(239,68,68,.08)',fill:true,tension:.3,pointRadius:0,borderWidth:2},
+          {label:'가격',data:prices,borderColor:'#346aff',backgroundColor:'rgba(52,106,255,.08)',fill:true,tension:.3,pointRadius:0,borderWidth:2},
           {label:'역대최저가',data:prices.map(function(){return minP}),borderColor:'#10B981',borderDash:[4,4],pointRadius:0,fill:false,borderWidth:1},
         ]
       },

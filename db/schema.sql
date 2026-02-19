@@ -94,3 +94,12 @@ CREATE TABLE IF NOT EXISTS price_history (
 CREATE INDEX IF NOT EXISTS idx_daily_limits_user_date ON daily_limits(user_id, date);
 CREATE INDEX IF NOT EXISTS idx_price_tracks_user ON price_tracks(user_id);
 CREATE INDEX IF NOT EXISTS idx_price_history_track ON price_history(track_id);
+
+CREATE TABLE IF NOT EXISTS purchase_streaks (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL UNIQUE,
+  current_streak INTEGER DEFAULT 0,
+  last_purchase_date TEXT,
+  longest_streak INTEGER DEFAULT 0,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);

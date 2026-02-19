@@ -5,7 +5,7 @@
   <div class="section">
     <div class="mypage-profile">
       <h3><%= user.nickname %>님</h3>
-      <p><%= user.email || '' %></p>
+      <p style="color:var(--text-sub)"><%= user.email || '' %></p>
       <p class="mypage-type">
         <% if (user.kakao_id) { %>
           <span class="badge badge-kakao">카카오 연동</span> 보상 대기 7일
@@ -17,6 +17,30 @@
         <a href="/auth/kakao/link" class="btn btn-kakao" style="margin-top:8px">카카오 연동하면 7일로 단축!</a>
       <% } %>
     </div>
+  </div>
+
+  <!-- 연속 구매 스트릭 -->
+  <div class="streak-card">
+    <h3>
+      <% if (streak.current_streak > 0) { %>
+        🔥 연속 구매 <%= streak.current_streak %>일째!
+      <% } else { %>
+        🔥 연속 구매 도전!
+      <% } %>
+    </h3>
+    <div class="streak-dots">
+      <% for (var i = 1; i <= 5; i++) { %>
+        <div class="streak-dot <%= i <= streak.current_streak ? 'filled' : 'empty' %>">
+          <%= i <= streak.current_streak ? '✓' : i %>
+        </div>
+      <% } %>
+    </div>
+    <p>
+      <span class="streak-bonus">5일 달성 시 보너스 티켓!</span>
+      <% if (streak.longest_streak > 0) { %>
+        <br><span style="font-size:11px;color:var(--text-muted)">최장 기록: <%= streak.longest_streak %>일</span>
+      <% } %>
+    </p>
   </div>
 
   <div class="stats-grid">
@@ -53,6 +77,38 @@
       <h3>오늘한도</h3>
       <p class="stat-value"><%= Number(dailyLimit.remaining).toLocaleString() %>원</p>
     </div>
+  </div>
+
+  <!-- 이달의 절약왕 랭킹 -->
+  <div class="ranking-card">
+    <h3>🏆 이달의 절약왕</h3>
+    <% if (rankings.length === 0) { %>
+      <p class="empty">이번 달 교환 내역이 없습니다.</p>
+    <% } else { %>
+      <% var medals = ['🥇','🥈','🥉']; %>
+      <% rankings.forEach(function(r, idx) { %>
+        <div class="ranking-item <%= r.id === user.id ? 'me' : '' %>">
+          <% if (idx < 3) { %>
+            <span class="ranking-medal"><%= medals[idx] %></span>
+          <% } else { %>
+            <span class="ranking-rank"><%= idx + 1 %></span>
+          <% } %>
+          <span class="ranking-name">
+            <%= r.nickname %><%= r.id === user.id ? ' ← 나' : '' %>
+          </span>
+          <span class="ranking-amount"><%= Number(r.total).toLocaleString() %>원</span>
+        </div>
+      <% }); %>
+      <% var inTop10 = rankings.some(function(r) { return r.id === user.id; }); %>
+      <% if (!inTop10 && myTotal > 0) { %>
+        <hr class="ranking-divider">
+        <div class="ranking-item me">
+          <span class="ranking-rank"><%= myRank %></span>
+          <span class="ranking-name"><%= user.nickname %> ← 나</span>
+          <span class="ranking-amount"><%= Number(myTotal).toLocaleString() %>원</span>
+        </div>
+      <% } %>
+    <% } %>
   </div>
 
   <div class="section">

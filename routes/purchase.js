@@ -6,6 +6,44 @@ const { calculateDelayedReward, getLotteryTicketCount, checkDailyLimit, updateDa
 
 const router = express.Router();
 
+// 스트릭 업데이트 함수
+function updateStreak(db, userId) {
+  const today = new Date().toISOString().slice(0, 10);
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+
+  let streak = db.prepare('SELECT * FROM purchase_streaks WHERE user_id = ?').get(userId);
+  if (!streak) {
+    db.prepare('INSERT INTO purchase_streaks (user_id, current_streak, last_purchase_date, longest_streak) VALUES (?, 1, ?, 1)').run(userId, today);
+    return { streak: 1, bonusTicket: false };
+  }
+
+  if (streak.last_purchase_date === today) {
+    return { streak: streak.current_streak, bonusTicket: false };
+  }
+
+  let newStreak;
+  if (streak.last_purchase_date === yesterday) {
+    newStreak = streak.current_streak + 1;
+  } else {
+    newStreak = 1;
+  }
+
+  let bonusTicket = false;
+  if (newStreak >= 5) {
+    // 보너스 티켓 지급
+    const type = Math.random() < 0.5 ? 'lottery' : 'roulette';
+    db.prepare('INSERT INTO tickets (user_id, type, status) VALUES (?, ?, ?)').run(userId, type, 'unused');
+    bonusTicket = true;
+    newStreak = 0;
+  }
+
+  const longest = Math.max(newStreak, streak.longest_streak);
+  db.prepare('UPDATE purchase_streaks SET current_streak = ?, last_purchase_date = ?, longest_streak = ? WHERE user_id = ?')
+    .run(newStreak, today, longest, userId);
+
+  return { streak: newStreak, bonusTicket };
+}
+
 // 딥링크 생성 (상품 URL → 파트너스 딥링크)
 router.post('/deeplink', requireLogin, async (req, res) => {
   const { productUrl } = req.body;
@@ -74,6 +112,9 @@ router.get('/postback', (req, res) => {
     `).run(userId, purchaseId, delayed.tier, effectiveAmount, delayed.rewardAmount, delayDays, delayDays);
   }
 
+  // 스트릭 업데이트
+  updateStreak(db, userId);
+
   res.status(200).send('OK');
 });
 
@@ -129,7 +170,11 @@ router.post('/simulate', requireLogin, (req, res) => {
     `).run(userId, purchaseId, delayed.tier, effectiveAmount, delayed.rewardAmount, delayDays, delayDays);
   }
 
-  res.redirect('/dashboard?success=구매 시뮬레이션 완료! 티켓 ' + (ticketCount + 1) + '장 지급');
+  // 스트릭 업데이트
+  const streakResult = updateStreak(db, userId);
+  const bonusMsg = streakResult.bonusTicket ? ' + 5일 연속 보너스 티켓!' : '';
+
+  res.redirect('/mypage?success=구매 시뮬레이션 완료! 티켓 ' + (ticketCount + 1) + '장 지급' + bonusMsg);
 });
 
 module.exports = router;

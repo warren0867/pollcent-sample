@@ -78,8 +78,8 @@ async function showChart(trackId) {
         {
           label: '가격',
           data: data.history.map(function(h) { return h.price; }),
-          borderColor: '#e74c3c',
-          backgroundColor: 'rgba(231,76,60,0.1)',
+          borderColor: '#00F5D4',
+          backgroundColor: 'rgba(0,245,212,0.1)',
           fill: true,
           tension: 0.3,
           pointRadius: 2,
@@ -97,13 +97,19 @@ async function showChart(trackId) {
     options: {
       responsive: true,
       plugins: {
-        legend: { position: 'top' },
+        legend: { position: 'top', labels: { color: '#E8E8F0' } },
       },
       scales: {
         y: {
           ticks: {
+            color: '#6B6B8D',
             callback: function(v) { return v.toLocaleString() + '원'; }
-          }
+          },
+          grid: { color: 'rgba(42,42,64,0.5)' }
+        },
+        x: {
+          ticks: { color: '#6B6B8D' },
+          grid: { color: 'rgba(42,42,64,0.5)' }
         }
       }
     }

@@ -370,6 +370,58 @@ html,body{margin:0;padding:0;height:100%;background:#f5f5f5}
 .reward-step .label{font-size:12px;font-weight:700;color:var(--text)}
 .reward-step .desc{font-size:10px;color:var(--text-sub);margin-top:2px}
 
+/* Attendance check */
+.attend-card{margin:0 16px 8px;background:var(--card);border-radius:16px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.attend-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.attend-header h3{font-size:15px;font-weight:800}
+.attend-header .streak{font-size:12px;font-weight:600;color:var(--primary)}
+.attend-days{display:flex;justify-content:space-between;gap:4px}
+.attend-day{flex:1;text-align:center;padding:8px 0;border-radius:10px;background:var(--bg);position:relative}
+.attend-day .d{font-size:10px;color:var(--text-sub);margin-bottom:4px}
+.attend-day .stamp{width:28px;height:28px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:14px;background:var(--border);color:var(--text-light)}
+.attend-day.done .stamp{background:var(--primary);color:#fff}
+.attend-day.today .stamp{background:#FEF3C7;color:#F59E0B;border:2px solid #F59E0B}
+.attend-day.today.done .stamp{background:var(--primary);color:#fff;border:2px solid var(--primary)}
+.attend-day.bonus .stamp{background:linear-gradient(135deg,#F59E0B,#FBBF24);color:#fff}
+.attend-bonus{margin-top:10px;text-align:center;font-size:12px;color:var(--text-sub)}
+.attend-btn{display:block;margin:10px auto 0;padding:8px 24px;border-radius:10px;background:var(--primary);color:#fff;font-size:13px;font-weight:700;border:none;cursor:pointer}
+.attend-btn:disabled{background:var(--border);color:var(--text-sub);cursor:default}
+
+/* AI Price Prediction */
+.predict-card{margin:0 16px 12px;background:var(--card);border-radius:14px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.predict-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.predict-header .ai-badge{padding:3px 8px;border-radius:6px;background:linear-gradient(135deg,#8B5CF6,#A78BFA);color:#fff;font-size:10px;font-weight:700}
+.predict-header h4{font-size:14px;font-weight:700;flex:1}
+.predict-main{display:flex;align-items:center;gap:16px;margin-bottom:12px}
+.predict-circle{width:72px;height:72px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:20px;font-weight:800;flex-shrink:0}
+.predict-circle.down{background:#DCFCE7;color:#16A34A}
+.predict-circle.up{background:#FEE2E2;color:#DC2626}
+.predict-circle.stable{background:#FEF3C7;color:#92400E}
+.predict-circle .pct{font-size:10px;font-weight:600;margin-top:-2px}
+.predict-info{flex:1}
+.predict-info .verdict{font-size:15px;font-weight:700;margin-bottom:4px}
+.predict-info .reason{font-size:12px;color:var(--text-sub);line-height:1.4}
+.predict-factors{display:flex;flex-wrap:wrap;gap:6px}
+.predict-factor{display:flex;align-items:center;gap:4px;padding:4px 10px;border-radius:8px;background:var(--bg);font-size:11px;color:var(--text-sub)}
+.predict-factor .dot{width:6px;height:6px;border-radius:50%}
+
+/* Notification center */
+.noti-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:160;display:none;flex-direction:column}
+.noti-overlay.show{display:flex}
+.noti-header{display:flex;align-items:center;padding:12px 16px;padding-top:calc(12px + var(--safe-top));background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.04);flex-shrink:0}
+.noti-header button{width:36px;height:36px;border:none;background:transparent;font-size:18px;cursor:pointer}
+.noti-header h2{flex:1;text-align:center;font-size:15px;font-weight:700;margin-right:36px}
+.noti-body{flex:1;overflow-y:auto;padding:0}
+.noti-item{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer}
+.noti-item.unread{background:#F8FAFF}
+.noti-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.noti-content{flex:1;min-width:0}
+.noti-content h4{font-size:13px;font-weight:600;margin-bottom:2px}
+.noti-content p{font-size:12px;color:var(--text-sub);line-height:1.4}
+.noti-time{font-size:11px;color:var(--text-light);white-space:nowrap;flex-shrink:0}
+.noti-badge{position:absolute;top:-2px;right:-2px;min-width:14px;height:14px;border-radius:7px;background:#e74c3c;color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 3px}
+.header-bell{position:relative;cursor:pointer}
+
 /* Invite card */
 .invite-card{margin:0 16px 8px;background:linear-gradient(135deg,#7C3AED,#A78BFA);border-radius:16px;padding:20px;color:#fff;text-align:center}
 .invite-card h3{font-size:16px;font-weight:800;margin-bottom:4px}
@@ -440,6 +492,7 @@ html,body{margin:0;padding:0;height:100%;background:#f5f5f5}
 <div class="header" id="main-header">
   <h1 id="header-title">관심상품</h1>
   <div class="header-icons">
+    <span class="header-bell" onclick="openNotiCenter()">🔔<span class="noti-badge" id="noti-badge" style="display:none">0</span></span>
     <span id="header-cart" onclick="openCart()" style="position:relative">🛒<span class="cart-badge" id="cart-badge" style="display:none">0</span></span>
     <span id="header-setting" onclick="openSettings()">⚙️</span>
   </div>
@@ -498,6 +551,7 @@ html,body{margin:0;padding:0;height:100%;background:#f5f5f5}
 
   <!-- 핫딜 (홈) -->
   <div class="page" id="page-hot">
+    <div id="attend-area"></div>
     <div id="savings-top-area"></div>
     <div id="price-alert-area"></div>
     <div id="hot-extra"></div>
@@ -839,6 +893,15 @@ html,body{margin:0;padding:0;height:100%;background:#f5f5f5}
   </div>
 </div>
 
+<!-- Notification Center -->
+<div class="noti-overlay" id="noti-overlay">
+  <div class="noti-header">
+    <button onclick="closeNotiCenter()">←</button>
+    <h2>알림</h2>
+  </div>
+  <div class="noti-body" id="noti-body"></div>
+</div>
+
 <!-- Modal -->
 <div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal" id="modal-content"></div>
@@ -1071,6 +1134,172 @@ function shareGiftRequest(id){
   }
 }
 
+// ===== 출석체크 =====
+function getAttendance(){return S('attendance')||{days:[],streak:0,lastDate:null}}
+function setAttendance(a){S('attendance',a)}
+
+function doAttendance(){
+  var today=new Date().toISOString().slice(0,10);
+  var att=getAttendance();
+  if(att.lastDate===today)return;
+  var yesterday=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  att.days.push(today);
+  if(att.days.length>30)att.days=att.days.slice(-30);
+  att.streak=(att.lastDate===yesterday)?att.streak+1:1;
+  att.lastDate=today;
+  // 7일 보너스
+  if(att.streak>=7){
+    var tickets=getTickets();
+    tickets.available+=2;
+    tickets.history.push({id:Date.now()+77,tier:'silver',amount:0,date:new Date().toISOString(),status:'available',product:'7일 출석 보너스'});
+    setTickets(tickets);
+    att.streak=0;
+    setAttendance(att);
+    addNotification('attend','📅 7일 연속 출석 달성!','보너스 티켓 2장이 지급되었어요');
+    showModal('📅','7일 연속 출석!','축하해요! 보너스 티켓 2장이 지급되었습니다 🎫🎫');
+    return;
+  }
+  setAttendance(att);
+  addNotification('attend','📅 출석 체크 완료!','연속 '+att.streak+'일째 출석중');
+}
+
+function renderAttendance(){
+  var att=getAttendance();
+  var today=new Date().toISOString().slice(0,10);
+  var checkedToday=att.lastDate===today;
+  var dayNames=['월','화','수','목','금','토','일'];
+  var todayIdx=new Date().getDay();
+  todayIdx=todayIdx===0?6:todayIdx-1;
+  var html='<div class="attend-card" style="margin-top:10px">';
+  html+='<div class="attend-header"><h3>📅 출석체크</h3><span class="streak">연속 '+att.streak+'일</span></div>';
+  html+='<div class="attend-days">';
+  for(var i=0;i<7;i++){
+    var isToday=i===todayIdx;
+    var isDone=i<todayIdx||(isToday&&checkedToday);
+    var isBonus=i===6;
+    var cls='attend-day';
+    if(isDone)cls+=' done';
+    if(isToday)cls+=' today';
+    if(isBonus)cls+=' bonus';
+    html+='<div class="'+cls+'"><div class="d">'+dayNames[i]+'</div>';
+    if(isBonus)html+='<div class="stamp">'+(isDone?'✓':'🎁')+'</div>';
+    else html+='<div class="stamp">'+(isDone?'✓':'')+'</div>';
+    html+='</div>';
+  }
+  html+='</div>';
+  html+='<div class="attend-bonus">7일 연속 출석 시 보너스 티켓 2장!</div>';
+  if(!checkedToday)html+='<button class="attend-btn" onclick="doAttendance();renderAttendance()">오늘 출석하기</button>';
+  else html+='<button class="attend-btn" disabled>출석 완료 ✓</button>';
+  html+='</div>';
+  document.getElementById('attend-area').innerHTML=html;
+}
+
+// ===== 알림센터 =====
+function getNotifications(){return S('notifications')||[]}
+function addNotification(type,title,desc){
+  var notis=getNotifications();
+  notis.unshift({id:Date.now(),type:type,title:title,desc:desc,time:new Date().toISOString(),read:false});
+  if(notis.length>30)notis=notis.slice(0,30);
+  S('notifications',notis);
+  updateNotiBadge();
+}
+function updateNotiBadge(){
+  var notis=getNotifications();
+  var unread=notis.filter(function(n){return!n.read}).length;
+  var badge=document.getElementById('noti-badge');
+  if(badge){
+    if(unread>0){badge.style.display='flex';badge.textContent=unread>9?'9+':unread}
+    else{badge.style.display='none'}
+  }
+}
+function openNotiCenter(){
+  var notis=getNotifications();
+  if(notis.length===0){
+    // 기본 알림 생성
+    var defaults=[
+      {type:'price',title:'📉 에어팟 프로 가격 하락!',desc:'359,000원 → 289,000원 (19% 할인)',time:new Date(Date.now()-3600000).toISOString()},
+      {type:'ticket',title:'🎫 이벤트 티켓 도착',desc:'구매한 상품의 이벤트 티켓이 사용 가능해요',time:new Date(Date.now()-7200000).toISOString()},
+      {type:'event',title:'🎊 전자제품 2배 적립 이벤트',desc:'2/28까지 전자제품 구매 시 티켓 2배!',time:new Date(Date.now()-86400000).toISOString()},
+      {type:'friend',title:'🎁 친구가 가입했어요!',desc:'초대 보너스 티켓 2장이 지급되었습니다',time:new Date(Date.now()-172800000).toISOString()},
+      {type:'price',title:'📉 다이슨 청소기 역대 최저가',desc:'1,290,000원 → 899,000원 (30% 할인)',time:new Date(Date.now()-259200000).toISOString()},
+      {type:'challenge',title:'🎯 절약 챌린지 50% 달성!',desc:'목표 절반을 이뤘어요. 계속 화이팅!',time:new Date(Date.now()-345600000).toISOString()},
+    ];
+    defaults.forEach(function(d){
+      notis.push({id:Date.now()+Math.random()*1000,type:d.type,title:d.title,desc:d.desc,time:d.time,read:false});
+    });
+    S('notifications',notis);
+  }
+  var iconMap={price:'#EFF6FF',ticket:'#FEF3C7',event:'#F3E8FF',friend:'#DCFCE7',attend:'#EFF6FF',challenge:'#FFF7ED'};
+  var html='';
+  notis.forEach(function(n){
+    var ago=getTimeAgo(n.time);
+    var bg=iconMap[n.type]||'#f5f5f5';
+    html+='<div class="noti-item'+(n.read?'':' unread')+'" onclick="markNotiRead('+n.id+')">';
+    html+='<div class="noti-icon" style="background:'+bg+'">'+n.title.slice(0,2)+'</div>';
+    html+='<div class="noti-content"><h4>'+n.title.slice(2).trim()+'</h4><p>'+n.desc+'</p></div>';
+    html+='<span class="noti-time">'+ago+'</span></div>';
+  });
+  if(notis.length===0)html='<div class="empty"><div class="icon">🔔</div><p>아직 알림이 없어요</p></div>';
+  document.getElementById('noti-body').innerHTML=html;
+  document.getElementById('noti-overlay').classList.add('show');
+  // 모두 읽음 처리
+  notis.forEach(function(n){n.read=true});
+  S('notifications',notis);
+  setTimeout(updateNotiBadge,500);
+}
+function closeNotiCenter(){document.getElementById('noti-overlay').classList.remove('show')}
+function markNotiRead(id){
+  var notis=getNotifications();
+  notis.forEach(function(n){if(n.id===id)n.read=true});
+  S('notifications',notis);
+  updateNotiBadge();
+}
+function getTimeAgo(isoStr){
+  var diff=Date.now()-new Date(isoStr).getTime();
+  var min=Math.floor(diff/60000);
+  if(min<1)return '방금';
+  if(min<60)return min+'분 전';
+  var hr=Math.floor(min/60);
+  if(hr<24)return hr+'시간 전';
+  var day=Math.floor(hr/24);
+  return day+'일 전';
+}
+
+// ===== AI 가격 예측 =====
+function getPricePrediction(p){
+  // 시뮬레이션: 할인율, 시즌, 패턴 기반 예측
+  var seed=(p.id*7+p.currentPrice)%100;
+  var factors=[];
+  var direction,pct,verdict,reason;
+  if(p.discount>=30){
+    direction='down';pct=Math.floor(65+seed%20);
+    verdict='📉 추가 하락 가능성 '+pct+'%';
+    reason='현재 역대 최저가 구간이에요. 비슷한 패턴에서 추가 할인이 있었어요.';
+    factors.push({label:'역대최저가 근접',color:'#16A34A'});
+    factors.push({label:'시즌 세일 진행중',color:'#346aff'});
+  }else if(p.discount>=20){
+    direction='down';pct=Math.floor(50+seed%25);
+    verdict='📉 하락 가능성 '+pct+'%';
+    reason='최근 30일 패턴상 추가 할인 가능성이 있어요. 조금 더 기다려보세요.';
+    factors.push({label:'30일 평균 이하',color:'#16A34A'});
+    factors.push({label:'2주 주기 세일 패턴',color:'#F59E0B'});
+  }else if(p.discount>=10){
+    direction='stable';pct=Math.floor(30+seed%20);
+    verdict='➡️ 현재가 유지 가능성 '+pct+'%';
+    reason='당분간 큰 가격 변동이 없을 것으로 예상돼요.';
+    factors.push({label:'가격 안정 구간',color:'#F59E0B'});
+    factors.push({label:'재고 충분',color:'#6B7280'});
+  }else{
+    direction='up';pct=Math.floor(40+seed%30);
+    verdict='📈 상승 가능성 '+pct+'%';
+    reason='현재 할인폭이 작아요. 과거 패턴상 가격이 오를 수 있어요.';
+    factors.push({label:'할인 종료 임박',color:'#DC2626'});
+    factors.push({label:'수요 증가 추세',color:'#F59E0B'});
+  }
+  factors.push({label:'30일 데이터 분석',color:'#8B5CF6'});
+  return{direction:direction,pct:pct,verdict:verdict,reason:reason,factors:factors};
+}
+
 // 구매 타이밍 판단
 function getTimingSignal(p){
   if(p.discount>=25)return{signal:'buy',label:'🟢 지금 사세요',reason:'역대 최저가 근접'};
@@ -1110,6 +1339,7 @@ function initApp(){
   document.getElementById('main-header').style.display='flex';
   document.getElementById('tabbar').style.display='flex';
   processTickets();
+  updateNotiBadge();
   switchTab('hot');
 }
 
@@ -1142,6 +1372,8 @@ function renderWishlist(){
 
 // ===== HOTDEALS =====
 function renderHotdeals(){
+  // 출석체크
+  renderAttendance();
   // 절약 금액 상단 배너
   var purchases=getPurchases();
   var totalSaved=0;
@@ -2124,6 +2356,20 @@ openDetail=function(id,fromWish){
   html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--red)"></span> 역대최고가</span><span class="value" style="color:var(--red)">'+maxP.toLocaleString()+'원</span></div>';
   html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--text-sub)"></span> 평균가</span><span class="value">'+avgP.toLocaleString()+'원</span></div>';
   html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--green)"></span> 역대최저가</span><span class="value" style="color:var(--green)">'+minP.toLocaleString()+'원</span></div>';
+  html+='</div></div>';
+
+  // AI 가격 예측
+  var pred=getPricePrediction(p);
+  html+='<div class="predict-card">';
+  html+='<div class="predict-header"><span class="ai-badge">AI 예측</span><h4>가격 전망</h4></div>';
+  html+='<div class="predict-main">';
+  html+='<div class="predict-circle '+pred.direction+'">'+pred.pct+'%<div class="pct">'+(pred.direction==='down'?'하락':'상승')+'</div></div>';
+  html+='<div class="predict-info"><div class="verdict">'+pred.verdict+'</div>';
+  html+='<div class="reason">'+pred.reason+'</div></div></div>';
+  html+='<div class="predict-factors">';
+  pred.factors.forEach(function(f){
+    html+='<div class="predict-factor"><span class="dot" style="background:'+f.color+'"></span>'+f.label+'</div>';
+  });
   html+='</div></div>';
 
   if(!tracked){

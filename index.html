@@ -370,6 +370,39 @@ html,body{margin:0;padding:0;height:100%;background:#f5f5f5}
 .reward-step .label{font-size:12px;font-weight:700;color:var(--text)}
 .reward-step .desc{font-size:10px;color:var(--text-sub);margin-top:2px}
 
+/* Monthly report */
+.report-card{margin:0 16px 8px;background:var(--card);border-radius:16px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.report-card h3{font-size:15px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.report-summary{display:flex;gap:0;margin-bottom:14px;background:var(--bg);border-radius:12px;overflow:hidden}
+.report-stat{flex:1;text-align:center;padding:12px 8px}
+.report-stat .val{font-size:18px;font-weight:800;margin-bottom:2px}
+.report-stat .val.blue{color:var(--primary)}
+.report-stat .val.green{color:#16A34A}
+.report-stat .val.orange{color:#F59E0B}
+.report-stat .lbl{font-size:10px;color:var(--text-sub)}
+.report-cats{display:flex;flex-direction:column;gap:8px}
+.report-cat{display:flex;align-items:center;gap:10px}
+.report-cat .emoji{font-size:18px;width:24px;text-align:center}
+.report-cat .info{flex:1}
+.report-cat .name{font-size:12px;font-weight:600;margin-bottom:2px}
+.report-cat .bar-bg{width:100%;height:6px;border-radius:3px;background:var(--border)}
+.report-cat .bar{height:100%;border-radius:3px}
+.report-cat .amount{font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;min-width:60px;text-align:right}
+.report-tip{margin-top:12px;padding:10px 12px;background:linear-gradient(135deg,#EFF6FF,#E0E7FF);border-radius:10px;font-size:12px;color:var(--primary);font-weight:600;text-align:center}
+
+/* Similar products */
+.similar-section{margin:0 16px 12px}
+.similar-header{font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.similar-scroll{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.similar-scroll::-webkit-scrollbar{display:none}
+.similar-card{flex-shrink:0;width:120px;background:var(--card);border-radius:12px;padding:10px;box-shadow:0 1px 4px rgba(0,0,0,.06);cursor:pointer}
+.similar-card:active{transform:scale(.97)}
+.similar-card .emoji{font-size:28px;text-align:center;margin-bottom:6px}
+.similar-card .name{font-size:11px;line-height:1.3;height:29px;overflow:hidden;margin-bottom:4px}
+.similar-card .price{font-size:12px;font-weight:700}
+.similar-card .discount{font-size:11px;color:var(--red);font-weight:600}
+.similar-card .timing{margin-top:4px}
+
 /* Attendance check */
 .attend-card{margin:0 16px 8px;background:var(--card);border-radius:16px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .attend-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -668,6 +701,7 @@ html,body{margin:0;padding:0;height:100%;background:#f5f5f5}
         <div class="stat-box"><div class="val" id="my-raffles">0</div><div class="lbl">추첨</div></div>
       </div>
     </div>
+    <div id="my-report-section"></div>
     <div id="my-invite-section"></div>
     <div id="my-challenge-section"></div>
     <div id="my-streak-section"></div>
@@ -1920,6 +1954,46 @@ function renderMypage(){
   });
   document.getElementById('my-savings-section').innerHTML=
     '<div class="savings-card"><div class="label">총 아낀 금액</div><div class="amount">'+totalSaved.toLocaleString()+'원</div><div class="sub">PricePick과 함께한 스마트 쇼핑</div></div>';
+  // 월간 소비 리포트
+  var totalSpent=0;
+  var catSpend={};
+  purchases.forEach(function(p){
+    totalSpent+=p.price;
+    var prod=PRODUCTS.find(function(x){return x.name===p.name});
+    var cat=prod?prod.category:'기타';
+    catSpend[cat]=(catSpend[cat]||0)+p.price;
+  });
+  // 더미 데이터 보강
+  if(totalSpent===0){totalSpent=523000;totalSaved=32000;catSpend={'전자/디지털':289000,'생활/주방':134000,'식품/음료':50500,'패션/의류':49500}}
+  var catEmojis={'전자/디지털':'📱','생활/주방':'🏠','패션/의류':'👕','식품/음료':'🍽️','스포츠/건강':'💪','뷰티/미용':'💄','기타':'📦'};
+  var catColors=['#346aff','#10B981','#F59E0B','#EC4899','#8B5CF6','#EF4444'];
+  var catArr=Object.keys(catSpend).map(function(k){return{name:k,amount:catSpend[k]}}).sort(function(a,b){return b.amount-a.amount});
+  var maxCatAmount=catArr.length>0?catArr[0].amount:1;
+  var savingsRate=totalSpent>0?Math.round(totalSaved/totalSpent*100):0;
+  var repHtml='<div class="report-card">';
+  repHtml+='<h3>📊 이번 달 소비 리포트</h3>';
+  repHtml+='<div class="report-summary">';
+  repHtml+='<div class="report-stat"><div class="val blue">'+totalSpent.toLocaleString()+'</div><div class="lbl">총 지출(원)</div></div>';
+  repHtml+='<div class="report-stat"><div class="val green">'+totalSaved.toLocaleString()+'</div><div class="lbl">절약(원)</div></div>';
+  repHtml+='<div class="report-stat"><div class="val orange">'+savingsRate+'%</div><div class="lbl">절약률</div></div>';
+  repHtml+='</div>';
+  repHtml+='<div style="font-size:13px;font-weight:700;margin-bottom:8px">카테고리별 지출</div>';
+  repHtml+='<div class="report-cats">';
+  catArr.forEach(function(c,i){
+    var pct=Math.round(c.amount/maxCatAmount*100);
+    var color=catColors[i%catColors.length];
+    repHtml+='<div class="report-cat">';
+    repHtml+='<span class="emoji">'+(catEmojis[c.name]||'📦')+'</span>';
+    repHtml+='<div class="info"><div class="name">'+c.name+'</div>';
+    repHtml+='<div class="bar-bg"><div class="bar" style="width:'+pct+'%;background:'+color+'"></div></div></div>';
+    repHtml+='<span class="amount">'+c.amount.toLocaleString()+'원</span>';
+    repHtml+='</div>';
+  });
+  repHtml+='</div>';
+  var tipMsg=savingsRate>=5?'👍 절약률 '+savingsRate+'%! 잘하고 있어요':'💡 PricePick 최저가 알림을 활용해보세요';
+  repHtml+='<div class="report-tip">'+tipMsg+'</div>';
+  repHtml+='</div>';
+  document.getElementById('my-report-section').innerHTML=repHtml;
   // 친구 초대 카드
   var inviteData=S('invite')||{count:0,earned:0};
   var inviteCode=u.nickname.toUpperCase().slice(0,3)+Math.floor(Math.random()*900+100);
@@ -2389,6 +2463,26 @@ openDetail=function(id,fromWish){
   html+='<div style="font-size:14px;font-weight:700;margin-bottom:10px">원하는 가격 설정</div>';
   html+='<div style="margin-bottom:8px"><span class="input-label">목표 가격 (원)</span>';
   html+='<input type="number" class="input-field" id="detail-target" value="'+(tracked?tracked.targetPrice:Math.round(p.currentPrice*0.85))+'"></div></div>';
+
+  // 비슷한 상품 추천
+  var similar=PRODUCTS.filter(function(x){return x.category===p.category&&x.id!==p.id});
+  if(similar.length<3)similar=similar.concat(PRODUCTS.filter(function(x){return x.id!==p.id&&x.category!==p.category}).slice(0,3-similar.length));
+  if(similar.length>0){
+    html+='<div class="similar-section">';
+    html+='<div class="similar-header">👀 이 상품을 본 사람이 같이 본 상품</div>';
+    html+='<div class="similar-scroll">';
+    similar.slice(0,5).forEach(function(s){
+      var sSig=getTimingSignal(s);
+      html+='<div class="similar-card" onclick="openDetail('+s.id+')">';
+      html+='<div class="emoji">'+s.emoji+'</div>';
+      html+='<div class="name">'+s.name+'</div>';
+      html+='<div class="discount">'+s.discount+'%</div>';
+      html+='<div class="price">'+s.currentPrice.toLocaleString()+'원</div>';
+      html+='<div class="timing"><span class="timing-badge '+sSig.signal+'" style="font-size:9px;padding:2px 6px">'+sSig.label+'</span></div>';
+      html+='</div>';
+    });
+    html+='</div></div>';
+  }
 
   html+='<div class="deeplink-info">쿠팡 파트너스 딥링크 (예시)<code>https://link.coupang.com/re/AFFTDP?lptag=AF'+p.id+'&amp;subid=pricepick_'+Date.now()+'</code></div>';
 

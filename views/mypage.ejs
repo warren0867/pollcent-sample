@@ -136,5 +136,18 @@
   <div style="text-align:center;margin-top:20px">
     <a href="/auth/logout" class="btn btn-outline">로그아웃</a>
   </div>
+
+  <div style="text-align:center;margin-top:40px;padding-bottom:20px">
+    <button onclick="confirmDelete()" style="background:none;border:none;color:#aaa;font-size:13px;text-decoration:underline;cursor:pointer">계정 삭제</button>
+  </div>
+
+  <form id="delete-account-form" method="POST" action="/auth/delete-account" style="display:none"></form>
+  <script>
+    function confirmDelete() {
+      if (confirm('정말 계정을 삭제하시겠습니까?\n\n모든 잔액, 보상, 구매 내역이 영구 삭제됩니다.')) {
+        document.getElementById('delete-account-form').submit();
+      }
+    }
+  </script>
 </div>
 <%- include('footer') %>

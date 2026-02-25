@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>유저 목록 | 어드민</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,sans-serif;background:#f5f6fa}
+    .header{background:#1a1a2e;color:#fff;padding:16px 32px;display:flex;justify-content:space-between;align-items:center}
+    .header h1{font-size:1.1rem}
+    .header a{color:#aaa;text-decoration:none;font-size:.85rem}
+    .header a:hover{color:#fff}
+    .container{max-width:1100px;margin:0 auto;padding:32px 24px}
+    .section{background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+    h2{font-size:1.1rem;margin-bottom:20px}
+    table{width:100%;border-collapse:collapse}
+    th{text-align:left;font-size:.8rem;color:#888;padding:10px 12px;border-bottom:1px solid #f0f0f0}
+    td{padding:11px 12px;border-bottom:1px solid #f7f7f7;font-size:.85rem}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:#fafafa}
+    .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.75rem}
+    .badge-kakao{background:#fff3cd;color:#856404}
+    .badge-email{background:#e8f0ff;color:#3a5bd9}
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>👥 유저 목록 (최근 100명)</h1>
+  <a href="/admin">← 어드민 홈</a>
+</div>
+<div class="container">
+  <div class="section">
+    <h2>전체 유저 (<%= users.length %>명 표시)</h2>
+    <table>
+      <thead><tr><th>ID</th><th>닉네임</th><th>이메일</th><th>가입 유형</th><th>잔액</th><th>보상 대기일</th><th>가입일</th></tr></thead>
+      <tbody>
+        <% for (const u of users) { %>
+        <tr>
+          <td>#<%= u.id %></td>
+          <td><strong><%= u.nickname %></strong></td>
+          <td style="color:#666"><%= u.email || '-' %></td>
+          <td><span class="badge <%= u.login_type === 'kakao' ? 'badge-kakao' : 'badge-email' %>"><%= u.login_type === 'kakao' ? '🟡 카카오' : '✉️ 이메일' %></span></td>
+          <td><strong><%= Number(u.balance || 0).toLocaleString() %>원</strong></td>
+          <td><%= u.reward_delay_days %>일</td>
+          <td><%= new Date(u.created_at).toLocaleDateString('ko-KR') %></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

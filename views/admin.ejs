@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>어드민 | PricePick</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,sans-serif;background:#f5f6fa}
+    .header{background:#1a1a2e;color:#fff;padding:16px 32px;display:flex;justify-content:space-between;align-items:center}
+    .header h1{font-size:1.2rem}
+    .header a{color:#aaa;text-decoration:none;margin-left:20px;font-size:.85rem}
+    .header a:hover{color:#fff}
+    .container{max-width:1100px;margin:0 auto;padding:32px 24px}
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:32px}
+    .stat-card{background:#fff;border-radius:12px;padding:20px 24px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+    .stat-card .label{font-size:.8rem;color:#888;margin-bottom:6px}
+    .stat-card .value{font-size:1.8rem;font-weight:700;color:#1a1a1a}
+    .stat-card .value span{font-size:.9rem;font-weight:400;color:#888}
+    .alert{padding:12px 16px;border-radius:8px;margin-bottom:20px;font-size:.9rem}
+    .alert.success{background:#e8f5e9;color:#2e7d32}
+    .alert.error{background:#ffebee;color:#c62828}
+    .section{background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-bottom:24px}
+    .section h2{font-size:1.1rem;margin-bottom:20px}
+    .add-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .add-form .full{grid-column:1/-1}
+    .form-group label{display:block;font-size:.8rem;color:#666;margin-bottom:4px}
+    .form-group input,.form-group select{width:100%;padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:.9rem;outline:none}
+    .btn{padding:9px 18px;border:none;border-radius:8px;font-size:.85rem;cursor:pointer;font-weight:600}
+    .btn-primary{background:#5b7eff;color:#fff}
+    .btn-danger{background:#ff4f4f;color:#fff;font-size:.75rem;padding:6px 12px}
+    table{width:100%;border-collapse:collapse}
+    th{text-align:left;font-size:.8rem;color:#888;padding:10px 12px;border-bottom:1px solid #f0f0f0}
+    td{padding:12px;border-bottom:1px solid #f7f7f7;font-size:.9rem}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:#fafafa}
+    .badge{display:inline-block;padding:3px 8px;border-radius:12px;font-size:.75rem;background:#eef0ff;color:#5b7eff}
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>🛠 PricePick 어드민</h1>
+  <div>
+    <a href="/admin/users">👥 유저 목록</a>
+    <a href="/">← 앱으로</a>
+    <a href="/admin/logout">로그아웃</a>
+  </div>
+</div>
+<div class="container">
+  <% if (success) { %><div class="alert success">✅ <%= success %></div><% } %>
+  <% if (error) { %><div class="alert error">⚠️ <%= error %></div><% } %>
+
+  <div class="stats">
+    <div class="stat-card"><div class="label">전체 유저</div><div class="value"><%= stats.userCount.toLocaleString() %> <span>명</span></div></div>
+    <div class="stat-card"><div class="label">오늘 가입</div><div class="value"><%= stats.todayUsers %> <span>명</span></div></div>
+    <div class="stat-card"><div class="label">지급 대기 보상</div><div class="value"><%= stats.pendingRewards.toLocaleString() %> <span>원</span></div></div>
+    <div class="stat-card"><div class="label">총 교환 완료</div><div class="value"><%= stats.exchangedRewards.toLocaleString() %> <span>원</span></div></div>
+  </div>
+
+  <div class="section">
+    <h2>➕ 핫딜 상품 추가</h2>
+    <form method="POST" action="/admin/products">
+      <div class="add-form">
+        <div class="form-group full"><label>상품명 *</label><input type="text" name="name" placeholder="예: 애플 에어팟 프로 2세대" required></div>
+        <div class="form-group"><label>정가 (원) *</label><input type="number" name="originalPrice" placeholder="329000" required></div>
+        <div class="form-group"><label>할인가 (원) *</label><input type="number" name="discountPrice" placeholder="249000" required></div>
+        <div class="form-group"><label>리워드율 (%)</label><input type="number" name="rewardRate" value="2" min="0" max="20" step="0.1"></div>
+        <div class="form-group"><label>카테고리</label><select name="category"><option>전자기기</option><option>패션</option><option>식품</option><option>생활용품</option><option>스포츠</option><option>일반</option></select></div>
+        <div class="form-group full"><label>이미지 URL</label><input type="url" name="imageUrl" placeholder="https://..."></div>
+        <div class="form-group full"><label>쿠팡 파트너스 URL</label><input type="url" name="coupangUrl" placeholder="https://link.coupang.com/..."></div>
+        <div class="form-group full" style="text-align:right"><button type="submit" class="btn btn-primary">상품 추가</button></div>
+      </div>
+    </form>
+  </div>
+
+  <div class="section">
+    <h2>📦 등록된 핫딜 상품 (<%= products.length %>개)</h2>
+    <% if (products.length === 0) { %>
+      <p style="color:#aaa;text-align:center;padding:24px">등록된 상품이 없습니다.<br><small>※ 기존 상품은 services/hotdeals.js에 하드코딩되어 있습니다.</small></p>
+    <% } else { %>
+      <table>
+        <thead><tr><th>상품명</th><th>정가</th><th>할인가</th><th>리워드율</th><th>카테고리</th><th>등록일</th><th>관리</th></tr></thead>
+        <tbody>
+          <% for (const p of products) { %>
+          <tr>
+            <td><strong><%= p.name %></strong></td>
+            <td><%= Number(p.original_price).toLocaleString() %>원</td>
+            <td style="color:#e53935"><strong><%= Number(p.discount_price).toLocaleString() %>원</strong></td>
+            <td><span class="badge"><%= p.reward_rate %>%</span></td>
+            <td><%= p.category %></td>
+            <td><%= new Date(p.created_at).toLocaleDateString('ko-KR') %></td>
+            <td>
+              <form method="POST" action="/admin/products/<%= p.id %>/delete" style="display:inline" onsubmit="return confirm('삭제하시겠습니까?')">
+                <button type="submit" class="btn btn-danger">삭제</button>
+              </form>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    <% } %>
+  </div>
+</div>
+</body>
+</html>

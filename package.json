@@ -21,6 +21,7 @@
     "dotenv": "^17.2.4",
     "ejs": "^4.0.1",
     "express": "^4.22.1",
+    "express-rate-limit": "^8.2.1",
     "express-session": "^1.19.0",
     "sql.js": "^1.13.0"
   }

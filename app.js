@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+const rateLimit = require('express-rate-limit');
 const { initDb, getDb } = require('./db/database');
 const { setLocals } = require('./middleware/auth');
 const { getHotdeals, getHotdealById } = require('./services/hotdeals');
@@ -9,57 +10,75 @@ const { getHotdeals, getHotdealById } = require('./services/hotdeals');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 미들웨어
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+// ✅ 수정: public 폴더만 정적 제공 (기존엔 루트 전체가 열려있어서 .env 등이 노출됨)
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(__dirname));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'dev-secret',
+  secret: process.env.SESSION_SECRET || 'dev-secret-change-in-production',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 24 * 60 * 60 * 1000 },
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000,
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+  },
 }));
 app.use(setLocals);
 
-// 라우트
-app.use('/auth', require('./routes/auth'));
+// ✅ Rate Limiting (어뷰징 방지)
+const generalLimiter = rateLimit({
+  windowMs: 60 * 1000, max: 100,
+  standardHeaders: true, legacyHeaders: false,
+  message: { success: false, error: '요청이 너무 많습니다. 잠시 후 다시 시도해주세요.' },
+});
+const rewardLimiter = rateLimit({
+  windowMs: 60 * 1000, max: 10,
+  standardHeaders: true, legacyHeaders: false,
+  message: { success: false, error: '교환 요청이 너무 많습니다. 잠시 후 다시 시도해주세요.' },
+});
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, max: 20,
+  standardHeaders: true, legacyHeaders: false,
+  message: '요청이 너무 많습니다. 15분 후 다시 시도해주세요.',
+});
+
+app.use(generalLimiter);
+
+app.use('/auth', authLimiter, require('./routes/auth'));
 app.use('/purchase', require('./routes/purchase'));
 app.use('/tickets', require('./routes/ticket'));
-app.use('/rewards', require('./routes/reward'));
+app.use('/rewards', rewardLimiter, require('./routes/reward'));
 app.use('/price', require('./routes/price'));
 app.use('/mypage', require('./routes/mypage'));
+app.use('/admin', require('./routes/admin'));
 
-// 메인 페이지 (핫딜)
 app.get('/', (req, res) => {
-  if (!req.session.userId) {
-    return res.render('index', { products: getHotdeals() });
-  }
   res.render('index', { products: getHotdeals() });
 });
 
-// 검색 API - 상품 JSON 반환
 app.get('/api/products', (req, res) => {
   res.json(getHotdeals());
 });
 
-// 상품 상세
 app.get('/product/:id', (req, res) => {
-  const product = getHotdealById(parseInt(req.params.id, 10));
+  const idNum = parseInt(req.params.id, 10);
+  if (isNaN(idNum)) return res.redirect('/');
+  const product = getHotdealById(idNum);
   if (!product) return res.redirect('/');
   if (!req.session.userId) return res.redirect('/auth/start');
   res.render('product', { product });
 });
 
-// 글로벌 에러 핸들러
 app.use((err, req, res, next) => {
   console.error('Server error:', err);
   res.status(500).send('서버 오류가 발생했습니다.');
 });
 
-// DB 초기화 후 서버 시작
 initDb().then(() => {
   function updateDelayedRewardStatus() {
     try {

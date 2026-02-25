@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const { getDb } = require('../db/database');
+const { requireLogin } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -88,6 +89,26 @@ router.get('/kakao/callback', async (req, res) => {
 // 로그아웃
 router.get('/logout', (req, res) => {
   req.session.destroy(() => res.redirect('/'));
+});
+
+// ✅ 계정 삭제 (Apple App Store 필수 요구사항)
+router.post('/delete-account', requireLogin, (req, res) => {
+  const db = getDb();
+  const userId = req.session.userId;
+
+  const deleteAccount = db.transaction((userId) => {
+    db.prepare('DELETE FROM exchange_history WHERE user_id = ?').run(userId);
+    db.prepare('DELETE FROM delayed_rewards WHERE user_id = ?').run(userId);
+    db.prepare('DELETE FROM users WHERE id = ?').run(userId);
+  });
+
+  try {
+    deleteAccount(userId);
+    req.session.destroy(() => res.redirect('/?deleted=true'));
+  } catch (e) {
+    console.error('account delete error:', e.message);
+    res.redirect('/mypage?error=계정 삭제 중 오류가 발생했습니다.');
+  }
 });
 
 module.exports = router;

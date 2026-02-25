@@ -594,27 +594,37 @@ html,body{margin:0;padding:0;height:100%;background:#f5f5f5}
   <div class="page" id="page-benefit">
     <!-- 핵심 메시지 -->
     <div class="reward-simple" style="margin-top:10px">
-      <h3>쇼핑하면 커피가 공짜! ☕</h3>
-      <p>쿠팡에서 평소처럼 쇼핑하세요</p>
-      <div class="sub">구매 금액에 따라 리워드 티켓이 쌓여요</div>
+      <h3>앱 참여 활동으로 포인트 적립 ☕</h3>
+      <p>쿠팡 상품을 탐색하고 구매에 참여하세요</p>
+      <div class="sub">조건 충족 시 포인트 지급 · 1일 적립 한도 있음</div>
     </div>
 
     <!-- 3단계 안내 -->
     <div class="reward-steps">
       <div class="reward-step">
         <div class="icon">🛒</div>
-        <div class="label">쿠팡 구매</div>
-        <div class="desc">평소처럼 쇼핑</div>
+        <div class="label">상품 탐색</div>
+        <div class="desc">쿠팡 상품 참여</div>
       </div>
       <div class="reward-step">
         <div class="icon">🎫</div>
         <div class="label">티켓 적립</div>
-        <div class="desc">자동 지급</div>
+        <div class="desc">조건 충족 시 지급</div>
       </div>
       <div class="reward-step">
         <div class="icon">☕</div>
-        <div class="label">커피 교환</div>
-        <div class="desc">기프티콘 받기</div>
+        <div class="label">기프티콘 교환</div>
+        <div class="desc">약관 조건 참조</div>
+      </div>
+    </div>
+    <!-- 보상 조건 안내 -->
+    <div style="margin:0 16px 12px;padding:12px 14px;background:var(--primary-light);border-radius:12px;border-left:3px solid var(--primary)">
+      <div style="font-size:12px;font-weight:700;color:var(--primary);margin-bottom:4px">📋 적립 조건 안내</div>
+      <div style="font-size:11px;color:var(--text-sub);line-height:1.7">
+        · 구매 후 <b>30일</b>(일반) / <b>7일</b>(카카오 연동) 대기 후 교환 가능<br>
+        · 취소·반품 시 미지급 · 1일 최대 적립 한도 있음<br>
+        · 동일 상품 반복 구매 시 지급 제한될 수 있음<br>
+        · 부정행위 탐지 시 지급 보류 · 이의제기 가능
       </div>
     </div>
 
@@ -629,11 +639,15 @@ html,body{margin:0;padding:0;height:100%;background:#f5f5f5}
           <div class="ticket-stat"><div class="label">사용 가능</div><div class="val"><span class="icon">🎫</span> <span id="ticket-available">0</span></div></div>
           <div class="ticket-stat"><div class="label">커피까지</div><div class="val"><span class="icon">☕</span> <span id="ticket-remaining">8</span></div></div>
         </div>
+        <div id="ticket-delay-info" style="font-size:11px;color:var(--text-sub);text-align:center;padding:4px 0 8px"></div>
         <div class="ticket-actions">
           <button onclick="switchTab('hot')">쇼핑하러 가기</button>
-          <button class="primary" onclick="scrollToRaffle()">경품 추첨</button>
+          <button class="primary" onclick="scrollToRaffle()">경품 응모</button>
         </div>
       </div>
+
+      <!-- 적립 대기 중 -->
+      <div id="pending-rewards-area"></div>
 
       <!-- 교환소 (심플) -->
       <div class="section-header" style="padding-top:8px">☕ 티켓 교환소</div>
@@ -657,13 +671,17 @@ html,body{margin:0;padding:0;height:100%;background:#f5f5f5}
       </div>
 
       <!-- 추첨 -->
-      <div class="section-header" id="raffle-anchor" style="padding-top:8px">🎰 경품 추첨</div>
+      <div class="section-header" id="raffle-anchor" style="padding-top:8px">🎁 경품 응모</div>
       <div class="raffle-section">
         <h3>티켓으로 경품 응모!</h3>
-        <p>매일 추첨 기회</p>
+        <p>매일 1회 응모 기회 · 티켓 1장 소모</p>
         <div class="raffle-ball" id="raffle-ball">?</div>
         <div class="raffle-info">내 티켓: <b id="raffle-tickets">0</b>장</div>
-        <button class="raffle-btn" onclick="doRaffle()">추첨하기</button>
+        <button class="raffle-btn" onclick="doRaffle()">응모하기</button>
+        <div style="font-size:10px;opacity:.7;margin-top:10px;line-height:1.6">
+          당첨 확률: 1등 5% · 2등 15% · 3등 80%<br>
+          응모 결과는 당일 자정 초기화 · 1일 1회 제한
+        </div>
       </div>
       <div class="raffle-prizes" id="raffle-prizes"></div>
 
@@ -774,6 +792,11 @@ html,body{margin:0;padding:0;height:100%;background:#f5f5f5}
       <div class="mypage-divider"></div>
       <div class="mypage-row" onclick="openSub('privacy')">
         <div class="left"><span class="icon">🔒</span> 개인정보 처리방침</div>
+        <div class="right"><span class="arrow">›</span></div>
+      </div>
+      <div class="mypage-divider"></div>
+      <div class="mypage-row" onclick="openSub('reward-policy')">
+        <div class="left"><span class="icon">🎫</span> 보상 정책</div>
         <div class="right"><span class="arrow">›</span></div>
       </div>
     </div>
@@ -1518,6 +1541,10 @@ function simulatePurchase(id){
   if(!p)return;
   var secretTier=p.currentPrice>=100000?'gold':p.currentPrice>=20000?'silver':'bronze';
   var tickets=getTickets();
+  var s=getSettings();
+  var delayDays=s.kakao?7:30;
+  var availableAt=new Date(Date.now()+(delayDays*86400000)).toISOString();
+  var availableDate=new Date(availableAt).toLocaleDateString('ko-KR');
   // Check if 2x event applies
   var is2x=false;
   EVENT_2X.forEach(function(ev){
@@ -1529,7 +1556,7 @@ function simulatePurchase(id){
   var ticketCount=is2x?2:1;
   tickets.pending+=ticketCount;
   for(var ti=0;ti<ticketCount;ti++){
-    tickets.history.push({id:Date.now()+ti,tier:secretTier,amount:p.currentPrice,date:new Date().toISOString(),status:'pending',product:p.name});
+    tickets.history.push({id:Date.now()+ti,tier:secretTier,amount:p.currentPrice,date:new Date().toISOString(),status:'pending',product:p.name,available_at:availableAt,delay_days:delayDays});
   }
   setTickets(tickets);
   var purchases=getPurchases();
@@ -1540,12 +1567,17 @@ function simulatePurchase(id){
   // 랭킹 업데이트
   updateRankingData(p.currentPrice);
   closeDetail();
-  var msg='<b>'+p.name+'</b> 구매 완료!<br><br>🎫 이벤트 티켓 '+ticketCount+'장이 지급되었습니다.';
+  var tierLabel=secretTier==='gold'?'🥇 골드 티켓':secretTier==='silver'?'🥈 실버 티켓':'🥉 브론즈 티켓';
+  var msg='<b>'+p.name+'</b><br><br>';
+  msg+='🎫 '+tierLabel+' '+ticketCount+'장 적립 대기 중<br>';
+  msg+='<div style="margin-top:8px;padding:10px;background:#f5f5f5;border-radius:8px;font-size:12px">';
+  msg+='📅 교환 가능일: <b>'+availableDate+'</b><br>';
+  msg+='⏳ 대기 기간: '+delayDays+'일'+(s.kakao?'':' · <a href="#" onclick="linkKakao();return false;" style="color:var(--primary)">카카오 연동 시 7일로 단축</a>');
+  msg+='</div>';
   if(is2x)msg+='<br><span style="font-size:12px;color:var(--orange);font-weight:700">🎊 2배 적립 이벤트 적용!</span>';
   if(streakResult.bonusTicket)msg+='<br><span style="font-size:12px;color:var(--orange);font-weight:700">🔥 5일 연속 구매 보너스 티켓!</span>';
   else if(streakResult.streak>1)msg+='<br><span style="font-size:12px;color:var(--text-sub)">🔥 연속 구매 '+streakResult.streak+'일째!</span>';
-  msg+='<br><span style="font-size:12px;color:var(--text-sub)">금액이 클수록 더 좋은 티켓이 나올 수 있어요!</span>';
-  showModal('🎫','이벤트 티켓 지급!',msg);
+  showModal('⏳','보상 적립 대기 중',msg);
 }
 
 // ===== STREAK =====
@@ -1598,14 +1630,17 @@ function getMonthlyRanking(){
 }
 
 // ===== TICKET PROCESSING =====
+function getDelayDays(){return getSettings().kakao?7:30}
 function processTickets(){
   var tickets=getTickets();
   var now=Date.now();
   var changed=false;
   tickets.history.forEach(function(t){
     if(t.status==='pending'){
-      var elapsed=(now-new Date(t.date).getTime())/1000;
-      if(elapsed>30){
+      var availableAt=t.available_at
+        ?new Date(t.available_at).getTime()
+        :new Date(t.date).getTime()+(getDelayDays()*86400000);
+      if(now>=availableAt){
         t.status='available';
         tickets.pending=Math.max(0,tickets.pending-1);
         tickets.available++;
@@ -1748,6 +1783,7 @@ function renderHotExtra(){
     html+='<div class="timing-badge '+sig.signal+'">'+sig.label+'</div>';
     html+='</div>';
     html+='<button class="quick-buy" onclick="event.stopPropagation();quickBuy('+p.id+')">🛒 쿠팡에서 보기</button>';
+    html+='<div style="font-size:9px;color:var(--text-light);text-align:center;margin-top:2px">쿠팡 파트너스 제휴 링크 · 구매 시 수수료 지급</div>';
     html+='</div>';
   });
   html+='</div></div>';
@@ -1783,6 +1819,7 @@ function renderHotExtra(){
       html+='<div style="display:flex;flex-direction:column;align-items:center;gap:4px">';
       html+='<div style="background:var(--red);color:#fff;border-radius:8px;padding:4px 8px;font-size:12px;font-weight:700">최저가</div>';
       html+='<button class="quick-buy" onclick="event.stopPropagation();quickBuy('+p.id+')" style="margin-top:0">보러가기</button>';
+      html+='<div style="font-size:9px;color:var(--text-light);text-align:center;margin-top:2px">쿠팡 파트너스 제휴 링크</div>';
       html+='</div></div>';
     });
     html+='</div>';
@@ -1868,11 +1905,42 @@ function doSearch(){
 function renderBenefit(){
   processTickets();
   var tickets=getTickets();
+  var s=getSettings();
+  var delayDays=s.kakao?7:30;
   document.getElementById('ticket-pending').textContent='적립예정 '+tickets.pending+'장';
   document.getElementById('ticket-available').textContent=tickets.available;
   var remaining=Math.max(0,8-tickets.available);
   document.getElementById('ticket-remaining').textContent=remaining>0?remaining+'장':'교환 가능!';
   document.getElementById('raffle-tickets').textContent=tickets.available;
+  // 대기 기간 안내
+  var delayEl=document.getElementById('ticket-delay-info');
+  if(delayEl){
+    delayEl.innerHTML=s.kakao
+      ?'✅ 카카오 연동 완료 · 구매 후 <b>7일</b> 대기'
+      :'구매 후 <b>30일</b> 대기 · <a href="#" onclick="linkKakao();return false;" style="color:var(--primary)">카카오 연동 시 7일로 단축</a>';
+  }
+  // 적립 대기 목록
+  var pendingTickets=tickets.history.filter(function(t){return t.status==='pending'});
+  var pendingHtml='';
+  if(pendingTickets.length>0){
+    pendingHtml='<div class="section-header" style="padding-top:8px">⏳ 적립 대기 중</div>';
+    pendingHtml+='<div style="padding:0 16px 12px">';
+    pendingTickets.forEach(function(t){
+      var availableAt=t.available_at?new Date(t.available_at):new Date(new Date(t.date).getTime()+(delayDays*86400000));
+      var daysLeft=Math.max(0,Math.ceil((availableAt.getTime()-Date.now())/86400000));
+      var tierColor=t.tier==='gold'?'#F59E0B':t.tier==='silver'?'#9CA3AF':'#CD7F32';
+      var tierLabel=t.tier==='gold'?'🥇 골드':t.tier==='silver'?'🥈 실버':'🥉 브론즈';
+      pendingHtml+='<div style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--card);border-radius:12px;margin-bottom:6px;box-shadow:0 1px 4px rgba(0,0,0,.04)">';
+      pendingHtml+='<div style="width:36px;height:36px;border-radius:50%;background:'+tierColor+';display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🎫</div>';
+      pendingHtml+='<div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+t.product+'</div>';
+      pendingHtml+='<div style="font-size:11px;color:var(--text-sub)">'+tierLabel+' · 검증 대기 중</div></div>';
+      pendingHtml+='<div style="text-align:right;flex-shrink:0"><div style="font-size:13px;font-weight:700;color:var(--primary)">D-'+daysLeft+'</div>';
+      pendingHtml+='<div style="font-size:10px;color:var(--text-light)">'+availableAt.toLocaleDateString('ko-KR')+'</div></div>';
+      pendingHtml+='</div>';
+    });
+    pendingHtml+='</div>';
+  }
+  document.getElementById('pending-rewards-area').innerHTML=pendingHtml;
   // 2x event scroll
   var ehtml='';
   EVENT_2X.forEach(function(ev){
@@ -2083,11 +2151,12 @@ function linkKakao(){
 // ===== SUB PAGES =====
 var SUB_CONTENT={
   notice:'<div class="card"><div style="font-size:14px;font-weight:700;margin-bottom:8px">📢 PricePick 오픈 안내</div><p style="font-size:13px;color:var(--text-sub);line-height:1.6">안녕하세요, PricePick입니다.<br><br>쿠팡 최저가 추적 & 쇼핑 리워드 서비스를 오픈했습니다. 관심상품을 등록하고 목표가를 설정하면, 가격 변동을 실시간으로 추적해드립니다.<br><br>구매 시 이벤트 티켓이 지급되며, 추첨을 통해 다양한 경품을 받아보실 수 있습니다.<br><br>많은 이용 부탁드립니다! 🙏<br><br><span style="color:var(--text-light)">2026.02.09</span></p></div>',
-  terms:'<div class="card"><div style="font-size:14px;font-weight:700;margin-bottom:8px">이용약관</div><div style="font-size:12px;color:var(--text-sub);line-height:1.7"><p><b>제1조 (목적)</b><br>이 약관은 PricePick(이하 "서비스")의 이용과 관련하여 회사와 이용자 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p><br><p><b>제2조 (정의)</b><br>①"서비스"란 회사가 제공하는 가격 추적, 쇼핑 리워드 등 관련 서비스를 말합니다.<br>②"이용자"란 이 약관에 따라 서비스를 이용하는 자를 말합니다.</p><br><p><b>제3조 (서비스 이용)</b><br>①서비스 이용은 회원가입 후 가능합니다.<br>②이벤트 티켓 및 경품은 프로모션 기간 내에만 유효합니다.<br>③부정한 방법으로 획득한 리워드는 회수될 수 있습니다.</p><br><p><b>제4조 (개인정보)</b><br>회사는 이용자의 개인정보를 관련 법령에 따라 보호합니다.</p></div></div>',
-  privacy:'<div class="card"><div style="font-size:14px;font-weight:700;margin-bottom:8px">개인정보 처리방침</div><div style="font-size:12px;color:var(--text-sub);line-height:1.7"><p><b>1. 수집하는 개인정보</b><br>닉네임, 이메일 주소</p><br><p><b>2. 수집 목적</b><br>서비스 제공, 가격 알림, 리워드 지급</p><br><p><b>3. 보유 기간</b><br>회원 탈퇴 시까지 (탈퇴 즉시 파기)</p><br><p><b>4. 제3자 제공</b><br>이용자의 개인정보를 제3자에게 제공하지 않습니다.</p><br><p><b>5. 안전성 확보 조치</b><br>개인정보는 localStorage에 저장되며, 서버로 전송되지 않습니다. (프로토타입)</p></div></div>'
+  terms:'<div class="card"><div style="font-size:14px;font-weight:700;margin-bottom:8px">이용약관</div><div style="font-size:12px;color:var(--text-sub);line-height:1.7"><p><b>제1조 (목적)</b><br>이 약관은 PricePick(이하 "서비스")의 이용과 관련하여 회사와 이용자 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p><br><p><b>제2조 (정의)</b><br>①"서비스"란 회사가 제공하는 가격 추적, 쇼핑 리워드 등 관련 서비스를 말합니다.<br>②"이용자"란 이 약관에 따라 서비스를 이용하는 자를 말합니다.</p><br><p><b>제3조 (서비스 이용)</b><br>①서비스 이용은 회원가입 후 가능합니다.<br>②이벤트 티켓 및 경품은 프로모션 기간 내에만 유효합니다.<br>③부정한 방법으로 획득한 리워드는 회수될 수 있습니다.</p><br><p><b>제4조 (리워드 및 포인트)</b><br>①포인트는 앱 내 참여 활동(상품 탐색, 구매 참여 등)에 대한 보상으로 지급됩니다.<br>②적립 조건, 1일 상한, 지급 제한 사유는 보상 정책에서 확인하실 수 있습니다.<br>③취소·반품된 구매에 대한 포인트는 회수됩니다.<br>④포인트의 현금 가치는 없으며, 양도·거래·환급이 불가합니다.</p><br><p><b>제5조 (부정행위 금지)</b><br>①자동화 도구, 다중 계정, 비정상 트래픽을 이용한 포인트 획득은 금지됩니다.<br>②부정행위 적발 시 포인트 전액 회수 및 계정 이용이 제한될 수 있습니다.<br>③이의가 있는 경우 고객센터를 통해 소명하실 수 있습니다.</p><br><p><b>제6조 (제휴 광고 고지)</b><br>본 서비스는 쿠팡 파트너스 제휴 마케팅에 참여하고 있습니다. 상품 링크를 통해 구매 시 수수료를 지급받을 수 있습니다.</p><br><p><b>제7조 (개인정보)</b><br>회사는 이용자의 개인정보를 관련 법령에 따라 보호합니다. 자세한 내용은 개인정보 처리방침을 참고하세요.</p></div></div>',
+  privacy:'<div class="card"><div style="font-size:14px;font-weight:700;margin-bottom:8px">개인정보 처리방침</div><div style="font-size:12px;color:var(--text-sub);line-height:1.7"><p><b>1. 수집하는 개인정보 항목</b><br>· 필수: 닉네임, 이메일 주소<br>· 자동 수집: 앱 이용 기록 (localStorage 저장, 서버 미전송)</p><br><p><b>2. 수집 및 이용 목적</b><br>· 서비스 제공 및 회원 관리<br>· 가격 알림 및 리워드 지급<br>· 부정행위 방지 및 서비스 보안</p><br><p><b>3. 보유 및 파기</b><br>· 보유 기간: 회원 탈퇴 시까지<br>· 파기 방법: 탈퇴 즉시 localStorage 데이터 삭제</p><br><p><b>4. 제3자 제공</b><br>· 이용자의 개인정보를 제3자에게 제공하지 않습니다.<br>· 쿠팡 파트너스 링크 클릭 시 쿠팡의 별도 개인정보처리방침이 적용됩니다.</p><br><p><b>5. 이용자 권리</b><br>· 개인정보 열람·정정·삭제를 요청할 수 있습니다.<br>· 계정 삭제: 마이페이지 > 계정탈퇴<br>· 수집 동의 철회: 계정탈퇴로 처리됩니다.</p><br><p><b>6. 개인정보 보호책임자</b><br>문의: 고객센터 > 1:1 문의하기</p></div></div>',
+  'reward-policy':'<div class="card"><div style="font-size:14px;font-weight:700;margin-bottom:8px">🎫 보상 정책</div><div style="font-size:12px;color:var(--text-sub);line-height:1.7"><p><b>1. 포인트(티켓) 정의</b><br>티켓은 앱 내 참여 활동에 대한 보상으로, 현금 가치가 없으며 양도·거래·환급이 불가합니다.</p><br><p><b>2. 적립 조건</b><br>· 쿠팡 상품 탐색 및 구매 참여 활동<br>· 구매 후 30일(일반 회원) 또는 7일(카카오 연동 회원) 대기 후 교환 가능<br>· 취소·반품·교환된 주문은 지급 대상에서 제외</p><br><p><b>3. 1일 적립 상한</b><br>· 계정당 1일 티켓 최대 5장<br>· 동일 상품 반복 구매는 1회만 인정</p><br><p><b>4. 지급 불가 사유</b><br>· 부정행위(자동화, 다중계정, VPN 등) 탐지 시<br>· 비정상 트래픽으로 판단되는 경우<br>· 동일 IP 과다 반복 접근 시</p><br><p><b>5. 보상 보류 및 검증</b><br>부정행위 의심 시 포인트는 즉시 지급되지 않고 검증 후 지급됩니다 (최대 14일 소요).</p><br><p><b>6. 교환 및 사용</b><br>· 티켓 8장: 아이스 아메리카노 기프티콘 교환<br>· 티켓 20장: 도미노피자 세트 기프티콘 교환<br>· 기프티콘 유효기간: 발행 후 60일</p><br><p><b>7. 이의제기 절차</b><br>· 부당하게 포인트가 지급되지 않았다고 판단되면 고객센터 > 보상 이의제기를 통해 소명하세요.<br>· 접수 후 3영업일 이내 검토 결과를 안내드립니다.</p><br><p><b>8. 경품 응모 확률</b><br>· 1등 (도미노피자): 5%<br>· 2등 (맥도날드 세트): 15%<br>· 3등 (스타벅스 아메리카노): 80%</p></div></div>'
 };
 function openSub(key){
-  var titles={notice:'공지사항',terms:'이용약관',privacy:'개인정보 처리방침'};
+  var titles={notice:'공지사항',terms:'이용약관',privacy:'개인정보 처리방침','reward-policy':'보상 정책'};
   document.getElementById('sub-title').textContent=titles[key]||'';
   document.getElementById('sub-body').className='sub-body';
   document.getElementById('sub-body').innerHTML=SUB_CONTENT[key]||'';
@@ -2098,7 +2167,8 @@ function closeSub(){document.getElementById('sub-overlay').classList.remove('sho
 // ===== INQUIRY CHATBOT =====
 var iqArea;
 var IQ_ANSWERS={
-  '티켓/리워드 문의':'구매 시 이벤트 티켓이 자동 지급됩니다. 금액이 클수록 좋은 티켓이 나와요! 적립예정 티켓은 일정 시간 후 사용 가능 상태로 변경됩니다. 혜택 탭에서 티켓으로 추첨에 응모할 수 있어요. 🎫',
+  '티켓/리워드 문의':'앱 내 참여 활동(상품 탐색·구매) 조건 충족 시 티켓이 지급됩니다. 1일 적립 한도가 있으며 취소/반품 시 지급되지 않습니다. 혜택 탭 > 보상 정책에서 상세 조건을 확인하세요. 🎫',
+  '보상 이의제기':'티켓이 지급되지 않았거나 부당하게 차단되었다고 느끼시면 아래 1:1 게시판에 남겨주세요. 확인 후 3영업일 이내 답변드립니다. 이의제기 처리 기간 중에는 해당 보상이 보류 상태로 유지됩니다. ✉️',
   '가격 알림 문의':'관심상품에 등록하면 가격 변동을 추적해드립니다. 원하는 목표 가격을 설정하면 가격이 내려갔을 때 알림을 보내드려요. 마이페이지 > 알림 설정에서 알림 종류를 관리할 수 있습니다. 📊',
   '계정/연동 문의':'카카오 연동은 마이페이지 > 계정 연동에서 설정할 수 있습니다. 카카오를 연동하면 리워드 적립 대기 기간이 단축됩니다. 💬',
   '2배 적립 이벤트':'혜택 탭에서 현재 진행 중인 2배 적립 이벤트를 확인할 수 있어요. 해당 카테고리 상품 구매 시 티켓이 2장 지급됩니다! 🎊',
@@ -2132,7 +2202,7 @@ function iqUserMsg(text){
 }
 
 function iqShowTopics(){
-  var topics=['티켓/리워드 문의','가격 알림 문의','계정/연동 문의','2배 적립 이벤트','기타 문의'];
+  var topics=['티켓/리워드 문의','보상 이의제기','가격 알림 문의','계정/연동 문의','기타 문의'];
   var row=document.createElement('div');row.className='chat-row';row.id='iq-options';
   var inner='<div style="width:32px;flex-shrink:0"></div><div class="chat-options">';
   topics.forEach(function(t){

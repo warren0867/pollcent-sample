@@ -1042,9 +1042,12 @@ function obNext(){
           setTimeout(function(){
             addBotMsg('🍕 <b>경품 추첨</b> — 티켓으로 도미노피자, 맥도날드, 스타벅스 등 경품에 응모해요');
             setTimeout(function(){
-              addBotMsg('그럼 시작해볼까요? 😄');
-              showOptions(['시작하기! 🎉']);
-              obStep=5;
+              addBotMsg('시작 전에 약관 확인이 필요해요 📋');
+              setTimeout(function(){
+                addBotMsg('<a href="#" onclick="openSub(\'terms\');return false;" style="color:var(--primary);font-weight:600">이용약관</a> 및 <a href="#" onclick="openSub(\'privacy\');return false;" style="color:var(--primary);font-weight:600">개인정보처리방침</a>에 동의하시면 시작할 수 있어요.');
+                showOptions(['동의하고 시작하기 ✅','동의 안함']);
+                obStep=5;
+              },500);
             },600);
           },600);
         },600);
@@ -1130,7 +1133,21 @@ function pickOption(idx,el){
     obData.noti=idx===0;
     obStep=4;
   } else if(obStep===5){
-    obStep=6;
+    if(idx===0){
+      obData.terms=true;
+      obStep=6;
+    } else {
+      addTyping();
+      setTimeout(function(){
+        removeTyping();
+        addBotMsg('서비스를 이용하시려면 약관 동의가 필요해요 😊');
+        setTimeout(function(){
+          addBotMsg('<a href="#" onclick="openSub(\'terms\');return false;" style="color:var(--primary);font-weight:600">이용약관</a> 및 <a href="#" onclick="openSub(\'privacy\');return false;" style="color:var(--primary);font-weight:600">개인정보처리방침</a>을 확인해주세요.');
+          showOptions(['동의하고 시작하기 ✅','동의 안함']);
+        },400);
+      },600);
+      return;
+    }
   }
   addTyping();
   setTimeout(function(){removeTyping();obNext()},800);
@@ -1524,14 +1541,7 @@ function openBuyLink(id){
   if(!p)return;
   var url='https://link.coupang.com/re/AFFTDP?lptag=AF'+p.id+'&subid=pricepick_'+Date.now();
   window.open(url,'_blank');
-  var msg='<p style="font-size:13px;color:var(--text-sub);margin-bottom:16px;text-align:center">';
-  msg+='쿠팡에서 구매를 완료하셨나요?<br>';
-  msg+='<span style="font-size:11px">구매 완료 후 티켓이 적립됩니다</span></p>';
-  msg+='<div style="display:flex;gap:8px">';
-  msg+='<button onclick="closeModal()" style="flex:1;padding:12px;border-radius:12px;background:#f0f0f0;color:var(--text);font-size:13px;font-weight:600;border:none;cursor:pointer">아직 구매 중</button>';
-  msg+='<button onclick="closeModal();simulatePurchase('+id+')" style="flex:1;padding:12px;border-radius:12px;background:var(--primary);color:#fff;font-size:13px;font-weight:600;border:none;cursor:pointer">네, 구매했어요 🛍️</button>';
-  msg+='</div>';
-  showModal('🛒','구매 확인',msg);
+  simulatePurchase(id);
 }
 
 function quickBuy(id){
@@ -1562,7 +1572,7 @@ function simulatePurchase(id){
   var ticketCount=is2x?2:1;
   tickets.pending+=ticketCount;
   for(var ti=0;ti<ticketCount;ti++){
-    tickets.history.push({id:Date.now()+ti,tier:secretTier,amount:p.currentPrice,date:new Date().toISOString(),status:'pending',product:p.name,available_at:availableAt,delay_days:delayDays});
+    tickets.history.push({id:Date.now()+ti,tier:secretTier,sealed:true,amount:p.currentPrice,date:new Date().toISOString(),status:'pending',product:p.name,available_at:availableAt,delay_days:delayDays});
   }
   setTickets(tickets);
   var purchases=getPurchases();
@@ -1573,17 +1583,20 @@ function simulatePurchase(id){
   // 랭킹 업데이트
   updateRankingData(p.currentPrice);
   closeDetail();
-  var tierLabel=secretTier==='gold'?'🥇 골드 티켓':secretTier==='silver'?'🥈 실버 티켓':'🥉 브론즈 티켓';
-  var msg='<b>'+p.name+'</b><br><br>';
-  msg+='🎫 '+tierLabel+' '+ticketCount+'장 적립 대기 중<br>';
-  msg+='<div style="margin-top:8px;padding:10px;background:#f5f5f5;border-radius:8px;font-size:12px">';
-  msg+='📅 교환 가능일: <b>'+availableDate+'</b><br>';
+  var msg='<div style="text-align:center">';
+  msg+='<div style="font-size:48px;margin-bottom:8px">🎁</div>';
+  msg+='<div style="font-size:14px;font-weight:700;margin-bottom:4px">봉인된 티켓 적립 대기 중</div>';
+  msg+='<div style="font-size:12px;color:var(--text-sub);margin-bottom:12px">'+p.name+'</div>';
+  msg+='<div style="padding:10px;background:#f5f5f5;border-radius:8px;font-size:12px;text-align:left">';
+  msg+='📅 개봉 가능일: <b>'+availableDate+'</b><br>';
   msg+='⏳ 대기 기간: '+delayDays+'일'+(s.kakao?'':' · <a href="#" onclick="linkKakao();return false;" style="color:var(--primary)">카카오 연동 시 7일로 단축</a>');
+  msg+='</div>';
+  msg+='<div style="font-size:11px;color:var(--text-sub);margin-top:8px">구매 확인 후 브론즈·실버·골드 티켓으로 개봉됩니다</div>';
   msg+='</div>';
   if(is2x)msg+='<br><span style="font-size:12px;color:var(--orange);font-weight:700">🎊 2배 적립 이벤트 적용!</span>';
   if(streakResult.bonusTicket)msg+='<br><span style="font-size:12px;color:var(--orange);font-weight:700">🔥 5일 연속 구매 보너스 티켓!</span>';
   else if(streakResult.streak>1)msg+='<br><span style="font-size:12px;color:var(--text-sub)">🔥 연속 구매 '+streakResult.streak+'일째!</span>';
-  showModal('⏳','보상 적립 대기 중',msg);
+  showModal('','',msg);
 }
 
 // ===== STREAK =====
@@ -1648,6 +1661,7 @@ function processTickets(){
         :new Date(t.date).getTime()+(getDelayDays()*86400000);
       if(now>=availableAt){
         t.status='available';
+        t.sealed=false;
         tickets.pending=Math.max(0,tickets.pending-1);
         tickets.available++;
         changed=true;

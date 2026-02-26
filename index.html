@@ -1040,12 +1040,12 @@ function obNext(){
         setTimeout(function(){
           addBotMsg('🎫 <b>쇼핑 리워드</b> — 구매하면 이벤트 티켓이 지급돼요. 금액이 클수록 더 좋은 티켓!');
           setTimeout(function(){
-            addBotMsg('🍕 <b>경품 추첨</b> — 티켓으로 도미노피자, 맥도날드, 스타벅스 등 경품에 응모해요');
+            addBotMsg('🎁 <b>기프티콘 교환</b> — 모인 티켓으로 아메리카노·맥도날드·도미노피자 기프티콘을 직접 골라 교환해요');
             setTimeout(function(){
               addBotMsg('시작 전에 약관 확인이 필요해요 📋');
               setTimeout(function(){
-                addBotMsg('<a href="#" onclick="openSub(\'terms\');return false;" style="color:var(--primary);font-weight:600">이용약관</a> 및 <a href="#" onclick="openSub(\'privacy\');return false;" style="color:var(--primary);font-weight:600">개인정보처리방침</a>에 동의하시면 시작할 수 있어요.');
-                showOptions(['동의하고 시작하기 ✅','동의 안함']);
+                addBotMsg('본 서비스는 <b>만 14세 이상</b>만 이용 가능합니다.\n<a href="#" onclick="openSub(\'terms\');return false;" style="color:var(--primary);font-weight:600">이용약관</a> 및 <a href="#" onclick="openSub(\'privacy\');return false;" style="color:var(--primary);font-weight:600">개인정보처리방침</a>을 확인하고 동의해주세요.');
+                showOptions(['만 14세 이상이며 동의합니다 ✅','동의 안함']);
                 obStep=5;
               },500);
             },600);
@@ -1596,7 +1596,7 @@ function simulatePurchase(id){
   if(is2x)msg+='<br><span style="font-size:12px;color:var(--orange);font-weight:700">🎊 2배 적립 이벤트 적용!</span>';
   if(streakResult.bonusTicket)msg+='<br><span style="font-size:12px;color:var(--orange);font-weight:700">🔥 5일 연속 구매 보너스 티켓!</span>';
   else if(streakResult.streak>1)msg+='<br><span style="font-size:12px;color:var(--text-sub)">🔥 연속 구매 '+streakResult.streak+'일째!</span>';
-  showModal('','',msg);
+  showModal('🎁','봉인 티켓 지급',msg);
 }
 
 // ===== STREAK =====
@@ -1803,7 +1803,7 @@ function renderHotExtra(){
     html+='<div class="timing-badge '+sig.signal+'">'+sig.label+'</div>';
     html+='</div>';
     html+='<button class="quick-buy" onclick="event.stopPropagation();quickBuy('+p.id+')">🛒 쿠팡에서 보기</button>';
-    html+='<div style="font-size:9px;color:var(--text-light);text-align:center;margin-top:2px">쿠팡 파트너스 제휴 링크 · 구매 시 수수료 지급</div>';
+    html+='<div style="font-size:11px;color:var(--text-sub);font-weight:500;text-align:center;margin-top:4px">※ 쿠팡 파트너스 제휴 링크 · 구매 시 수수료 지급</div>';
     html+='</div>';
   });
   html+='</div></div>';
@@ -1839,7 +1839,7 @@ function renderHotExtra(){
       html+='<div style="display:flex;flex-direction:column;align-items:center;gap:4px">';
       html+='<div style="background:var(--red);color:#fff;border-radius:8px;padding:4px 8px;font-size:12px;font-weight:700">최저가</div>';
       html+='<button class="quick-buy" onclick="event.stopPropagation();quickBuy('+p.id+')" style="margin-top:0">보러가기</button>';
-      html+='<div style="font-size:9px;color:var(--text-light);text-align:center;margin-top:2px">쿠팡 파트너스 제휴 링크</div>';
+      html+='<div style="font-size:11px;color:var(--text-sub);font-weight:500;text-align:center;margin-top:4px">※ 쿠팡 파트너스 제휴 링크</div>';
       html+='</div></div>';
     });
     html+='</div>';
@@ -1948,12 +1948,18 @@ function renderBenefit(){
     pendingTickets.forEach(function(t){
       var availableAt=t.available_at?new Date(t.available_at):new Date(new Date(t.date).getTime()+(delayDays*86400000));
       var daysLeft=Math.max(0,Math.ceil((availableAt.getTime()-Date.now())/86400000));
-      var tierColor=t.tier==='gold'?'#F59E0B':t.tier==='silver'?'#9CA3AF':'#CD7F32';
-      var tierLabel=t.tier==='gold'?'🥇 골드':t.tier==='silver'?'🥈 실버':'🥉 브론즈';
       pendingHtml+='<div style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--card);border-radius:12px;margin-bottom:6px;box-shadow:0 1px 4px rgba(0,0,0,.04)">';
-      pendingHtml+='<div style="width:36px;height:36px;border-radius:50%;background:'+tierColor+';display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🎫</div>';
-      pendingHtml+='<div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+t.product+'</div>';
-      pendingHtml+='<div style="font-size:11px;color:var(--text-sub)">'+tierLabel+' · 검증 대기 중</div></div>';
+      if(t.sealed){
+        pendingHtml+='<div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#6366F1,#818CF8);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🎁</div>';
+        pendingHtml+='<div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+t.product+'</div>';
+        pendingHtml+='<div style="font-size:11px;color:#818CF8;font-weight:600">봉인됨 · 구매 확인 대기 중</div></div>';
+      } else {
+        var tierColor=t.tier==='gold'?'#F59E0B':t.tier==='silver'?'#9CA3AF':'#CD7F32';
+        var tierLabel=t.tier==='gold'?'🥇 골드':t.tier==='silver'?'🥈 실버':'🥉 브론즈';
+        pendingHtml+='<div style="width:36px;height:36px;border-radius:50%;background:'+tierColor+';display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🎫</div>';
+        pendingHtml+='<div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+t.product+'</div>';
+        pendingHtml+='<div style="font-size:11px;color:var(--text-sub)">'+tierLabel+' · 개봉 대기 중</div></div>';
+      }
       pendingHtml+='<div style="text-align:right;flex-shrink:0"><div style="font-size:13px;font-weight:700;color:var(--primary)">D-'+daysLeft+'</div>';
       pendingHtml+='<div style="font-size:10px;color:var(--text-light)">'+availableAt.toLocaleDateString('ko-KR')+'</div></div>';
       pendingHtml+='</div>';

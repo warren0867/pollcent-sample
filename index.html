@@ -656,26 +656,9 @@ html,body{margin:0;padding:0;height:100%;background:#f5f5f5}
       <!-- 적립 대기 중 -->
       <div id="pending-rewards-area"></div>
 
-      <!-- 교환소 (심플) -->
-      <div class="section-header" style="padding-top:8px">☕ 티켓 교환소</div>
-      <div class="reward-ex" id="reward-exchange">
-        <div class="reward-ex-item">
-          <div class="reward-ex-icon" style="background:#FEF3C7">☕</div>
-          <div class="reward-ex-info">
-            <h4>아이스 아메리카노</h4>
-            <p>티켓 8장으로 교환</p>
-          </div>
-          <button class="reward-ex-btn bronze" id="ex-bronze-btn" onclick="exchangeReward('bronze')">교환</button>
-        </div>
-        <div class="reward-ex-item">
-          <div class="reward-ex-icon" style="background:#FEF3C7">🍕</div>
-          <div class="reward-ex-info">
-            <h4>도미노피자 세트</h4>
-            <p>티켓 20장으로 교환</p>
-          </div>
-          <button class="reward-ex-btn gold" onclick="exchangeReward('gold')">교환</button>
-        </div>
-      </div>
+      <!-- 교환소 -->
+      <div class="section-header" style="padding-top:8px">🎁 티켓 교환소</div>
+      <div id="reward-exchange"></div>
 
       <!-- 추첨 -->
       <div class="section-header" id="raffle-anchor" style="padding-top:8px">🎁 경품 응모</div>
@@ -720,7 +703,8 @@ html,body{margin:0;padding:0;height:100%;background:#f5f5f5}
     </div>
     <div class="mypage-section">
       <div class="stats-grid">
-        <div class="stat-box"><div class="val" id="my-tickets">0</div><div class="lbl">티켓</div></div>
+        <div class="stat-box" onclick="switchTab('benefit')" style="cursor:pointer"><div class="val" id="my-ticket-avail">0</div><div class="lbl">교환가능 🎫</div></div>
+        <div class="stat-box"><div class="val" id="my-ticket-pending">0</div><div class="lbl">대기중 ⏳</div></div>
         <div class="stat-box"><div class="val" id="my-purchases">0</div><div class="lbl">구매</div></div>
         <div class="stat-box"><div class="val" id="my-wishcnt">0</div><div class="lbl">관심상품</div></div>
         <div class="stat-box"><div class="val" id="my-raffles">0</div><div class="lbl">추첨</div></div>
@@ -1535,6 +1519,21 @@ function openAddModal(){
 function closeAddModal(){document.getElementById('add-modal').classList.remove('show')}
 
 // ===== PURCHASE SIMULATION =====
+function openBuyLink(id){
+  var p=PRODUCTS.find(function(x){return x.id===id});
+  if(!p)return;
+  var url='https://link.coupang.com/re/AFFTDP?lptag=AF'+p.id+'&subid=pricepick_'+Date.now();
+  window.open(url,'_blank');
+  var msg='<p style="font-size:13px;color:var(--text-sub);margin-bottom:16px;text-align:center">';
+  msg+='쿠팡에서 구매를 완료하셨나요?<br>';
+  msg+='<span style="font-size:11px">구매 완료 후 티켓이 적립됩니다</span></p>';
+  msg+='<div style="display:flex;gap:8px">';
+  msg+='<button onclick="closeModal()" style="flex:1;padding:12px;border-radius:12px;background:#f0f0f0;color:var(--text);font-size:13px;font-weight:600;border:none;cursor:pointer">아직 구매 중</button>';
+  msg+='<button onclick="closeModal();simulatePurchase('+id+')" style="flex:1;padding:12px;border-radius:12px;background:var(--primary);color:#fff;font-size:13px;font-weight:600;border:none;cursor:pointer">네, 구매했어요 🛍️</button>';
+  msg+='</div>';
+  showModal('🛒','구매 확인',msg);
+}
+
 function quickBuy(id){
   var p=PRODUCTS.find(function(x){return x.id===id});
   if(!p)return;
@@ -1948,6 +1947,28 @@ function renderBenefit(){
     pendingHtml+='</div>';
   }
   document.getElementById('pending-rewards-area').innerHTML=pendingHtml;
+  // 교환소 렌더링
+  var exCounts=getTicketsByTier();
+  var exItems=[
+    {tier:'bronze',icon:'☕',name:'아이스 아메리카노',needed:8,color:'#CD7F32',label:'🥉 브론즈'},
+    {tier:'silver',icon:'🍔',name:'맥도날드 해피밀 세트',needed:4,color:'#9CA3AF',label:'🥈 실버'},
+    {tier:'gold',icon:'🍕',name:'도미노피자 세트',needed:1,color:'#F59E0B',label:'🥇 골드'}
+  ];
+  var exHtml='<div class="reward-ex">';
+  exItems.forEach(function(item){
+    var have=exCounts[item.tier]||0;
+    var enough=have>=item.needed;
+    exHtml+='<div class="reward-ex-item">';
+    exHtml+='<div class="reward-ex-icon" style="background:#FEF3C7">'+item.icon+'</div>';
+    exHtml+='<div class="reward-ex-info">';
+    exHtml+='<h4>'+item.name+'</h4>';
+    exHtml+='<p style="display:flex;gap:6px;align-items:center">'+item.label+' '+item.needed+'장 · 보유 <b style="color:'+(enough?'var(--primary)':'var(--red)')+'">'+have+'장</b></p>';
+    exHtml+='</div>';
+    exHtml+='<button class="reward-ex-btn '+(enough?item.tier:'disabled')+'" onclick="'+(enough?'exchangeReward(\''+item.tier+'\')':'void(0)')+'" style="'+(enough?'':'opacity:.4;cursor:not-allowed')+'">교환</button>';
+    exHtml+='</div>';
+  });
+  exHtml+='</div>';
+  document.getElementById('reward-exchange').innerHTML=exHtml;
   // 2x event scroll
   var ehtml='';
   EVENT_2X.forEach(function(ev){
@@ -2016,7 +2037,8 @@ function renderMypage(){
   document.getElementById('my-badge-area').innerHTML=settings.kakao?
     '<span class="mypage-badge" style="background:#FEE500;color:#3C1E1E">카카오 연동완료</span>':
     '<span class="mypage-badge" style="background:var(--border);color:var(--text-sub)">일반 회원</span>';
-  document.getElementById('my-tickets').textContent=tickets.available+tickets.pending;
+  document.getElementById('my-ticket-avail').textContent=tickets.available;
+  document.getElementById('my-ticket-pending').textContent=tickets.pending;
   document.getElementById('my-purchases').textContent=purchases.length;
   document.getElementById('my-wishcnt').textContent=tracks.length;
   document.getElementById('my-raffles').textContent=getRaffleCount();
@@ -2447,11 +2469,16 @@ function getTicketsByTier(){
 
 function exchangeReward(tier){
   var needed={bronze:8,silver:4,gold:1};
+  var rewards={
+    bronze:{icon:'☕',name:'아이스 아메리카노'},
+    silver:{icon:'🍔',name:'맥도날드 해피밀 세트'},
+    gold:{icon:'🍕',name:'도미노피자 세트'}
+  };
+  var labels={bronze:'🥉 브론즈',silver:'🥈 실버',gold:'🥇 골드'};
   var counts=getTicketsByTier();
   if((counts[tier]||0)<needed[tier]){
-    return showModal('😅','티켓이 부족해요',tier.toUpperCase()+' 티켓 '+needed[tier]+'장이 필요해요.<br>현재 '+tier.toUpperCase()+' 티켓: '+(counts[tier]||0)+'장<br><br>상품을 구매하면 티켓을 받을 수 있어요!');
+    return showModal('😅','티켓이 부족해요',labels[tier]+' 티켓 '+needed[tier]+'장이 필요해요.<br>현재 보유: '+(counts[tier]||0)+'장<br><br>상품을 구매하면 티켓을 받을 수 있어요!');
   }
-  // Use tickets
   var tickets=getTickets();
   var used=0;
   for(var i=0;i<tickets.history.length&&used<needed[tier];i++){
@@ -2462,10 +2489,11 @@ function exchangeReward(tier){
     }
   }
   setTickets(tickets);
+  var r=rewards[tier];
   var exchanges=S('exchanges')||[];
-  exchanges.push({tier:tier,reward:'아이스 아메리카노',date:new Date().toISOString().slice(0,10)});
+  exchanges.push({tier:tier,reward:r.name,date:new Date().toISOString().slice(0,10)});
   S('exchanges',exchanges);
-  showModal('☕','교환 완료!','<b>아이스 아메리카노</b> 기프티콘이<br>발급되었습니다!<br><br><span style="font-size:12px;color:var(--text-sub)">'+tier.toUpperCase()+' 티켓 '+needed[tier]+'장 사용</span>');
+  showModal(r.icon,'교환 완료!','<b>'+r.name+'</b> 기프티콘이<br>발급되었습니다!<br><br><span style="font-size:12px;color:var(--text-sub)">'+labels[tier]+' 티켓 '+needed[tier]+'장 사용</span>');
   renderBenefit();
 }
 
@@ -2567,7 +2595,7 @@ openDetail=function(id,fromWish){
 
   var bottomHtml='<button class="add-btn" onclick="addToCart('+p.id+')">🛒 담기</button>';
   bottomHtml+='<button class="add-btn" onclick="addToWishFromDetail('+p.id+')">+ 관심</button>';
-  bottomHtml+='<button class="buy-btn" onclick="simulatePurchase('+p.id+')">구매하러 가기</button>';
+  bottomHtml+='<button class="buy-btn" onclick="openBuyLink('+p.id+')">구매하러 가기</button>';
   document.getElementById('detail-bottom').innerHTML=bottomHtml;
 
   document.getElementById('detail-overlay').classList.add('show');

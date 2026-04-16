@@ -3106,6 +3106,169 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); }
   .hot-cat-chips .chip { background: #2C2C2E; border-color: #3A3A3C; }
   .sub-body .card { background: #1C1C1E; }
 }
+
+/* ====================================================
+   ROUND 5 — 세부 polish & 마무리
+   ==================================================== */
+
+/* 인기 상품 카드 원가 */
+.hot-popular-orig {
+  font-size: 10px;
+  color: var(--text-light);
+  text-decoration: line-through;
+  margin-bottom: 3px;
+  font-weight: 400;
+}
+
+/* ── 전체 section 간격 일관성 ── */
+.hot-section + .hot-section { margin-top: 0; }
+#hot-extra > .hot-section:first-child { margin-top: 10px; }
+#hot-extra > .hot-section { margin-bottom: 8px; border-radius: var(--radius); box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+
+/* ── attend-area 여백 ── */
+#attend-area { padding-top: 0; }
+
+/* ── savings-top 여백 ── */
+#savings-top-area > .savings-top { margin-top: 10px; }
+
+/* ── 헤더 logo 탭 전환 트랜지션 ── */
+#header-title { transition: opacity 0.15s; }
+
+/* ── 탭 라벨 활성화 색 ── */
+.tab.active { color: #7C3AED; }
+
+/* ── 검색 입력 포커스 아이콘 색 변경 ── */
+#page-search > div:first-child:focus-within svg {
+  stroke: var(--primary);
+}
+
+/* ── search-results 안의 track-card 배경 ── */
+#search-results .track-card { background: #fff; }
+#search-results .track-card:active { background: var(--bg); }
+
+/* ── 카테고리 아이템 hover 효과 ── */
+.hot-cat-item:hover { background: #FAFAFE; }
+.hot-goldbox-item:hover { background: #FAFAFE; }
+.hot-popular-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.1); }
+
+/* ── detail-bottom 여백 ── */
+.detail-bottom {
+  padding: 12px 16px;
+  padding-bottom: calc(12px + var(--safe-bottom));
+  gap: 10px;
+}
+
+/* ── 차트 tooltip ── */
+.chartjs-tooltip { border-radius: 8px !important; }
+
+/* ── 관심상품 페이지 헤더 ── */
+#page-wish > .wish-toolbar { border-radius: 0; }
+
+/* ── 상세 overlay 배경 (스크롤시 보이는 영역) ── */
+.detail-scroll { background: var(--bg); }
+
+/* ── 상세 overlay 목표가 입력 ── */
+.detail-scroll input[type="number"] {
+  -moz-appearance: textfield;
+}
+.detail-scroll input[type="number"]::-webkit-inner-spin-button,
+.detail-scroll input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ── 혜택 페이지 그룹 간격 ── */
+#page-benefit { padding-bottom: 24px; }
+#page-benefit > .mypage-group { border-radius: var(--radius); margin: 0 0 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+#page-benefit > .reward-simple { margin: 10px 16px 8px; }
+#page-benefit > .reward-steps  { margin: 0 16px 8px; }
+
+/* ── 혜택 적립 조건 안내 박스 ── */
+#page-benefit [style*="primary-light"] {
+  margin: 0 16px 8px;
+  border-radius: 14px;
+}
+#page-benefit [style*="FFF7ED"] {
+  margin: 0 16px 8px;
+  border-radius: 14px;
+}
+
+/* ── section header padding 통일 ── */
+.section-header { padding: 18px 18px 10px; }
+.section-sub { padding: 0 18px 12px; font-size: 12px; color: var(--text-sub); }
+
+/* ── 보고서 카드 ── */
+.report-card { padding: 16px 18px; }
+.report-summary { border-radius: 12px; background: var(--bg); }
+
+/* ── 보고서 카테고리 바 ── */
+.report-cat .bar-bg { border-radius: 4px; overflow: hidden; }
+.report-cat .bar { border-radius: 4px; }
+
+/* ── 스트릭 날 도트 크기 조정 ── */
+.streak-dot { max-width: 38px; font-size: 13px; }
+.streak-day-label { font-size: 9px; opacity: 0.65; }
+
+/* ── 랭킹 나 표시 ── */
+.ranking-item.me .ranking-name { font-weight: 700; color: var(--primary); }
+.ranking-item.me .ranking-amount { color: var(--primary); }
+
+/* ── 온보딩 hero 추가 개선 ── */
+.onboard-logo span { color: var(--primary); }
+.chat-area { gap: 10px; padding: 12px 16px; }
+.chat-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--primary-light);
+  border: 1.5px solid rgba(124,58,237,0.2);
+  font-size: 15px;
+}
+
+/* ── 입력 placeholder 스타일 ── */
+input::placeholder { color: #C0C0C8; font-weight: 400; }
+
+/* ── 전체 스크롤 시 부드럽게 ── */
+html { scroll-behavior: smooth; }
+
+/* ── 모바일 가로모드 대응 ── */
+@media (orientation: landscape) and (max-height: 450px) {
+  .tabbar { height: calc(48px + var(--safe-bottom)); }
+  .tab { height: 48px; }
+  .tab svg { width: 18px; height: 18px; }
+  .tab { font-size: 9px; }
+}
+
+/* ── 작은 화면 (SE 등) ── */
+@media (max-width: 360px) {
+  .hot-popular-card { width: 124px; }
+  .hot-event-card { width: 144px; }
+  .product-grid { gap: 8px; padding: 0 14px 14px; }
+  .section-header { padding: 16px 16px 8px; }
+}
+
+/* ── 다크모드 Round 5 ── */
+@media (prefers-color-scheme: dark) {
+  .hot-popular-orig { color: #58585E; }
+  #search-results .track-card { background: #1C1C1E; }
+  #search-results .track-card:active { background: #2C2C2E; }
+  .hot-cat-item:hover { background: #2C2C2E; }
+  .hot-goldbox-item:hover { background: #2C2C2E; }
+  .detail-scroll { background: #111113; }
+  .detail-product-header { border-bottom-color: #2C2C2E; }
+  .similar-card { background: #1C1C1E; border-color: #2C2C2E; }
+  .my-savings-hero { background: linear-gradient(135deg, #4C1D95, #6D28D9); }
+  .report-summary { background: #2C2C2E; }
+  .onboard-header {
+    background: linear-gradient(170deg, #1A1528 0%, #16131F 45%, #111113 100%);
+  }
+  .chat-opt {
+    background: #1C1C1E;
+    border-color: rgba(124,58,237,0.4);
+  }
+  .wish-sort-label { color: #58585E; }
+  .wish-actions span { color: #88888E; }
+  input::placeholder { color: #5A5A60; }
+}
 </style>
 </head>
 <body>
@@ -3910,17 +4073,24 @@ function openNotiCenter(){
     });
     S('notifications',notis);
   }
-  var iconMap={price:'#EFF6FF',ticket:'#FEF3C7',event:'#F3E8FF',friend:'#DCFCE7',attend:'#EFF6FF',challenge:'#FFF7ED'};
+  var iconMap={
+    price:  {bg:'#EFF6FF', emoji:'📉'},
+    ticket: {bg:'#FEF9EC', emoji:'🎫'},
+    event:  {bg:'#F3E8FF', emoji:'🎊'},
+    friend: {bg:'#DCFCE7', emoji:'🎁'},
+    attend: {bg:'#EFF6FF', emoji:'📅'},
+    challenge:{bg:'#FFF7ED', emoji:'🎯'}
+  };
   var html='';
   notis.forEach(function(n){
     var ago=getTimeAgo(n.time);
-    var bg=iconMap[n.type]||'#f5f5f5';
+    var ic=iconMap[n.type]||{bg:'#F5F5F7',emoji:'🔔'};
     html+='<div class="noti-item'+(n.read?'':' unread')+'" onclick="markNotiRead('+n.id+')">';
-    html+='<div class="noti-icon" style="background:'+bg+'">'+n.title.slice(0,2)+'</div>';
-    html+='<div class="noti-content"><h4>'+n.title.slice(2).trim()+'</h4><p>'+n.desc+'</p></div>';
+    html+='<div class="noti-icon" style="background:'+ic.bg+'">'+ic.emoji+'</div>';
+    html+='<div class="noti-content"><h4>'+n.title.replace(/^[^\s]+ /,'')+'</h4><p>'+n.desc+'</p></div>';
     html+='<span class="noti-time">'+ago+'</span></div>';
   });
-  if(notis.length===0)html='<div class="empty-state"><div class="empty-state-icon">🔔</div><h3>알림 없음</h3><p>아직 알림이 없어요</p></div>';
+  if(notis.length===0)html='<div class="empty-state" style="padding:60px 32px"><div class="empty-state-icon">🔔</div><h3>새 알림 없음</h3><p>가격이 내려가면 바로 알려드릴게요</p></div>';
   document.getElementById('noti-body').innerHTML=html;
   document.getElementById('noti-overlay').classList.add('show');
   // 모두 읽음 처리
@@ -4035,7 +4205,12 @@ function renderWishlist(){
   document.getElementById('wish-count').textContent='전체 '+tracks.length;
   var html='';
   if(tracks.length===0){
-    html='<div class="empty-state"><div class="empty-state-icon">👀</div><h3>관심상품 없음</h3><p>핫딜이나 검색에서 상품을 찾아<br>관심상품으로 추가할 수 있어요!</p></div>';
+    html='<div class="empty-state">'+
+      '<div class="empty-state-icon">👀</div>'+
+      '<h3>관심상품 없음</h3>'+
+      '<p>가격 추적하고 싶은 상품을 추가하면<br>최저가에 살 수 있도록 알려드려요</p>'+
+      '<button class="empty-state-btn" onclick="switchTab(\'search\')">상품 검색하기</button>'+
+    '</div>';
   }
   tracks.forEach(function(t){
     var change=Math.round((Math.random()*6-3)*10)/10;
@@ -4415,14 +4590,14 @@ function renderHotExtra(){
     html+='<div onclick="openDetail('+p.id+')" style="cursor:pointer">';
     html+='<div class="hot-popular-emoji">'+p.emoji+'</div>';
     html+='<div class="hot-popular-name">'+p.name+'</div>';
+    html+='<div class="hot-popular-orig">'+p.originalPrice.toLocaleString()+'원</div>';
     html+='<div class="hot-popular-price-row">';
     html+='<span class="hot-popular-discount">'+p.discount+'%</span>';
     html+='<span class="hot-popular-price">'+p.currentPrice.toLocaleString()+'원</span>';
     html+='</div>';
-    html+='<span class="timing-badge '+sig.signal+'" style="font-size:9px">'+sig.label+'</span>';
+    html+='<span class="timing-badge '+sig.signal+'" style="font-size:9px;margin-top:5px;display:inline-flex">'+sig.label+'</span>';
     html+='</div>';
     html+='<button class="quick-buy" onclick="event.stopPropagation();quickBuy('+p.id+')">쿠팡에서 보기</button>';
-    html+='<div class="affiliate-notice-xs">※ 제휴 링크</div>';
     html+='</div>';
   });
   html+='</div></div>';
@@ -4528,7 +4703,7 @@ function doSearch(){
   document.getElementById('search-results').style.display='';
   var results=PRODUCTS.filter(function(p){return p.name.toLowerCase().indexOf(q)>=0});
   var html='';
-  if(results.length===0){html='<div class="empty-state"><div class="empty-state-icon">😢</div><h3>검색 결과 없음</h3><p>다른 키워드로 검색해보세요</p></div>'}
+  if(results.length===0){html='<div class="empty-state" style="padding:56px 32px"><div class="empty-state-icon">🔍</div><h3>검색 결과 없음</h3><p>다른 키워드로 검색해보거나<br>추천 검색어를 이용해보세요</p></div>'}
   results.forEach(function(p){
     html+='<div class="track-card" onclick="openDetail('+p.id+')" style="margin-bottom:1px">';
     html+='<div class="track-thumb">'+p.emoji+'</div>';
@@ -5001,7 +5176,7 @@ function openCart(){
   var cart=getCart();
   var html='';
   if(cart.length===0){
-    html='<div class="empty-state"><div class="empty-state-icon">🛒</div><h3>장바구니 비어있음</h3><p>핫딜이나 검색에서 상품을 담아보세요!</p></div>';
+    html='<div class="empty-state" style="padding:60px 32px"><div class="empty-state-icon">🛒</div><h3>장바구니가 비어있어요</h3><p>상품 상세에서 담기 버튼을 눌러<br>한 번에 쿠팡으로 이동할 수 있어요</p><button class="empty-state-btn" onclick="closeCart();switchTab(\'hot\')">핫딜 보러가기</button></div>';
     document.getElementById('cart-bottom-bar').style.display='none';
   }else{
     cart.forEach(function(item,i){

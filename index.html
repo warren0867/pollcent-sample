@@ -2446,6 +2446,665 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); }
     background: rgba(124,58,237,0.12);
     border-bottom-color: rgba(124,58,237,0.18);
   }
+  .savings-top { background: linear-gradient(135deg, #5B21B6, #7C3AED); }
+  .hot-event-card { opacity: 0.95; }
+  .hot-popular-card, .hot-cat-item, .hot-goldbox-item {
+    background: #1C1C1E;
+    border-color: #2C2C2E;
+  }
+  .hot-lowest-card {
+    background: rgba(245,158,11,0.1);
+    border-color: rgba(245,158,11,0.18);
+  }
+  .search-home-section { background: #1C1C1E; border-bottom-color: #2C2C2E; }
+  .search-recent-card { background: #2C2C2E; border-color: #3A3A3C; }
+  .affiliate-notice { background: #2C2C2E; }
+  .detail-product-header { background: #1C1C1E; border-bottom-color: #2C2C2E; }
+  .detail-emoji-wrap { background: #2C2C2E; border-color: #3A3A3C; }
+  .detail-ai-box { background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.2); }
+  .hot-section { background: #1C1C1E; }
+  .attend-card { background: #1C1C1E; }
+  .attend-day { background: #2C2C2E; }
+  .pending-ticket-card { background: #1C1C1E; border-color: #2C2C2E; }
+  .home-challenge-bar { background: #1C1C1E; border-bottom-color: #2C2C2E; }
+}
+
+/* ====================================================
+   ROUND 3 — 나머지 컴포넌트 CSS
+   ==================================================== */
+
+/* ── 홈 챌린지 바 ── */
+.home-challenge-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 16px 8px;
+  padding: 11px 14px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  border: 1px solid var(--border);
+}
+.home-challenge-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-sub);
+  white-space: nowrap;
+}
+.home-challenge-track {
+  flex: 1;
+  height: 7px;
+  border-radius: 4px;
+  background: var(--border);
+  overflow: hidden;
+}
+.home-challenge-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #7C3AED, #A855F7);
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.home-challenge-pct {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+  min-width: 30px;
+  text-align: right;
+}
+
+/* ── 대기 티켓 카드 ── */
+.pending-ticket-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  background: var(--card);
+  border-radius: 14px;
+  margin-bottom: 6px;
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.pending-icon {
+  width: 38px; height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6366F1, #818CF8);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.pending-icon.sealed {
+  background: linear-gradient(135deg, #6366F1, #818CF8);
+}
+.pending-info { flex: 1; min-width: 0; }
+.pending-product {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.pending-status {
+  font-size: 11px;
+  color: var(--text-sub);
+  font-weight: 500;
+}
+.pending-status.sealed-status {
+  color: #818CF8;
+  font-weight: 600;
+}
+.pending-countdown { text-align: right; flex-shrink: 0; }
+.pending-d {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: -0.3px;
+}
+.pending-date {
+  font-size: 10px;
+  color: var(--text-light);
+  margin-top: 1px;
+}
+
+/* ── 온보딩 chat-opt 버튼 ── */
+.chat-opt {
+  padding: 10px 20px;
+  border-radius: 100px;
+  border: 1.5px solid rgba(124,58,237,0.35);
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #fff;
+  transition: all 0.18s;
+  letter-spacing: -0.2px;
+  box-shadow: 0 1px 4px rgba(124,58,237,0.1);
+}
+.chat-opt:active {
+  background: var(--primary);
+  color: #fff;
+  transform: scale(0.96);
+  border-color: var(--primary);
+}
+
+/* ── 알림 center 뱃지 ── */
+.noti-badge {
+  position: absolute;
+  top: -3px; right: -5px;
+  min-width: 16px; height: 16px;
+  border-radius: 8px;
+  background: #EF4444;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 4px;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(239,68,68,0.4);
+}
+.cart-badge {
+  position: absolute;
+  top: -4px; right: -6px;
+  min-width: 16px; height: 16px;
+  border-radius: 8px;
+  background: #EF4444;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 4px;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(239,68,68,0.35);
+}
+
+/* ── modal 개선 ── */
+.modal-overlay {
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.modal {
+  border-radius: 22px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.18), 0 4px 12px rgba(0,0,0,0.1);
+}
+.modal .icon { margin-bottom: 14px; }
+.modal h3 { margin-bottom: 10px; }
+.modal p { font-size: 14px; line-height: 1.65; margin-bottom: 22px; }
+.modal-btn {
+  border-radius: 14px;
+  letter-spacing: -0.3px;
+  box-shadow: 0 4px 14px rgba(124,58,237,0.28);
+}
+.modal-btn:active { transform: scale(0.97); }
+
+/* ── 카트 바텀 버튼 ── */
+.cart-bottom button {
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(124,58,237,0.3);
+}
+
+/* ── gift-request 카드 ── */
+.gift-request {
+  margin: 0 16px 8px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 13px 15px;
+  display: flex; align-items: center; gap: 12px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  transition: background 0.12s;
+}
+.gift-request:active { background: var(--bg); }
+.gift-request .icon { font-size: 22px; }
+.gift-request .info h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.gift-request .info p { font-size: 11px; color: var(--text-sub); }
+.gift-request .action {
+  padding: 6px 13px;
+  border-radius: 9px;
+  background: var(--primary-light);
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+}
+
+/* ── 섹션 그룹 (mypage) ── */
+.mypage-group {
+  background: #fff;
+  margin: 0 0 8px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* ── 비슷한 상품 헤더 ── */
+.similar-header {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── 티켓 교환소 폴리시 ── */
+.reward-ex {
+  background: var(--card);
+  border-radius: 0;
+  overflow: hidden;
+}
+.reward-ex-header {
+  padding: 14px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.reward-ex-icon {
+  width: 46px; height: 46px;
+  border-radius: 14px;
+  background: #FEF3C7;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+}
+.reward-ex-info h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 3px;
+  letter-spacing: -0.3px;
+}
+.reward-ex-info p { font-size: 12px; color: var(--text-sub); }
+.reward-ex-btn {
+  padding: 9px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  transition: opacity 0.15s;
+}
+.reward-ex-btn:active { opacity: 0.75; }
+.reward-ex-btn.bronze { background: #FEF3C7; color: #92400E; }
+.reward-ex-btn.silver { background: #F3F4F6; color: #374151; }
+.reward-ex-btn.gold   { background: #FDF2F8; color: #9D174D; }
+
+/* ── event 2x 스크롤 카드 ── */
+.event-2x-card {
+  flex-shrink: 0;
+  width: 136px;
+  border-radius: 16px;
+  padding: 16px 12px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+.event-2x-card::before {
+  content: '';
+  position: absolute;
+  top: -16px; right: -16px;
+  width: 64px; height: 64px;
+  background: rgba(255,255,255,0.14);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.badge-2x {
+  position: absolute;
+  top: 8px; right: 8px;
+  background: rgba(255,255,255,0.28);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+/* ── raffle prize cards ── */
+.raffle-prize-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  background: var(--card);
+  border-radius: 14px;
+  margin-bottom: 7px;
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+.raffle-medal {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+.raffle-medal.r1 { background: linear-gradient(135deg, #F59E0B, #D97706); }
+.raffle-medal.r2 { background: linear-gradient(135deg, #9CA3AF, #6B7280); }
+.raffle-medal.r3 { background: linear-gradient(135deg, #CD7F32, #A0522D); }
+.raffle-prize-info h4 { font-size: 14px; font-weight: 700; letter-spacing: -0.3px; }
+.raffle-prize-info p  { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
+
+/* ── 관심상품 툴바 ── */
+.wish-toolbar {
+  background: #fff;
+  padding: 14px 18px 0;
+}
+.wish-filter-row {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.wish-sort-row { padding: 8px 0 6px; }
+.wish-sort-label { font-size: 12px; color: var(--text-light); font-weight: 600; }
+.wish-actions span {
+  font-size: 12px;
+  color: var(--text-sub);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* ── share-btn 폴리시 ── */
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 9px;
+  border-radius: 7px;
+  background: var(--bg);
+  color: var(--text-sub);
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  letter-spacing: -0.1px;
+  transition: background 0.12s;
+}
+.share-btn:active { background: #EDEDF0; }
+
+/* ── 빈 관심상품 ── */
+#wish-list .empty-state { padding: 56px 24px; }
+
+/* ── price-alert 폴리시 ── */
+.price-alert {
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.price-alert:active { transform: scale(0.98); }
+.price-alert .emoji { font-size: 22px; flex-shrink: 0; }
+.price-alert .info .title { font-size: 13px; font-weight: 700; color: var(--text); }
+.price-alert .info .desc { font-size: 11px; color: var(--text-sub); margin-top: 2px; }
+.price-alert .action { font-size: 12px; font-weight: 700; color: var(--primary); white-space: nowrap; flex-shrink: 0; }
+
+/* ── sub-body 스크롤 영역 ── */
+.sub-body { padding: 16px; }
+.sub-body .card { border-radius: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+
+/* ── 공지/약관 content ── */
+.sub-body .card p { font-size: 13px; line-height: 1.7; color: var(--text-sub); }
+.sub-body .card b { color: var(--text); }
+
+/* ── 설정 오버레이 rows ── */
+.settings-body .mypage-group { margin-top: 8px; border-radius: var(--radius); }
+
+/* ── 타이밍 배지 pulse (buy 상태) ── */
+.timing-badge.buy {
+  background: #ECFDF5;
+  color: #059669;
+  animation: buyPulse 2s ease-in-out infinite;
+}
+@keyframes buyPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+  50%      { box-shadow: 0 0 0 3px rgba(16,185,129,0.2); }
+}
+
+/* ── 스크롤 영역 컨텐츠 상단 패딩 ── */
+#page-hot > div:first-child { padding-top: 0; }
+
+/* ====================================================
+   ROUND 4 — 마이페이지 & 나머지 컴포넌트
+   ==================================================== */
+
+/* ── 절약 히어로 카드 (마이페이지) ── */
+.my-savings-hero {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 18px;
+  background: linear-gradient(135deg, #7C3AED, #9333EA);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.my-savings-hero::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 120px; height: 120px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.my-savings-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -20px; left: 40px;
+  width: 80px; height: 80px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.my-savings-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+  position: relative; z-index: 1;
+}
+.my-savings-info { flex: 1; min-width: 0; position: relative; z-index: 1; }
+.my-savings-label {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.82;
+  margin-bottom: 4px;
+  letter-spacing: 0.1px;
+}
+.my-savings-amount {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.my-savings-unit {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin-left: 1px;
+}
+.my-savings-sub {
+  font-size: 11px;
+  opacity: 0.75;
+  font-weight: 500;
+}
+
+/* ── 초대코드 라벨 ── */
+.invite-code-label {
+  font-size: 11px;
+  color: var(--text-sub);
+  font-weight: 500;
+}
+
+/* ── 초대 카드 내 stats ── */
+.invite-stats {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 14px;
+  font-size: 12px;
+  opacity: 0.82;
+  font-weight: 500;
+}
+
+/* ── 초대 리워드 아이템 ── */
+.invite-reward .item {
+  background: rgba(255,255,255,0.22);
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+/* ── 복사 버튼 ── */
+.copy-btn {
+  padding: 7px 14px;
+  border-radius: 9px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  letter-spacing: -0.2px;
+  transition: opacity 0.15s;
+}
+.copy-btn:active { opacity: 0.75; }
+
+/* ── 탭 전환 시 header title ── */
+#header-title {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  color: var(--text);
+}
+
+/* ── 홈 탭 title은 로고처럼 ── */
+.header h1#header-title span { color: var(--primary); }
+
+/* ── 가격 하락 알림 텍스트 ── */
+.price-alert .close-btn {
+  font-size: 16px;
+  color: #CCC;
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* ── input-label 텍스트 ── */
+.input-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-sub);
+  margin-bottom: 7px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* ── 상세 목표가 섹션 ── */
+.detail-scroll > div[style*="목표 가격"] {
+  border-radius: 16px;
+  margin: 0 16px 12px;
+}
+
+/* ── chart.js 캔버스 max-height ── */
+#detail-chart { max-height: 160px; }
+
+/* ── 관심상품 empty state CTA ── */
+#wish-list .empty-state-btn {
+  margin-top: 16px;
+}
+
+/* ── 스켈레톤 로딩 ── */
+.skeleton-row {
+  padding: 14px 18px;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+.skeleton-thumb { border-radius: 12px; }
+.skeleton-line { border-radius: 6px; }
+
+/* ── chip 호버/액티브 ── */
+.chip:active {
+  transform: scale(0.95);
+  opacity: 0.85;
+}
+
+/* ── 전체 앱 content 영역 배경 ── */
+.content {
+  background: var(--bg);
+}
+
+/* ── 검색 결과 패딩 정리 ── */
+#search-results {
+  padding: 0 !important;
+  margin: 0 16px 16px;
+}
+
+/* ── 핫딜 첫 섹션 상단 여백 ── */
+#attend-area .attend-card { margin-top: 10px; }
+
+/* ── 마이페이지 그룹 사이 gap ── */
+#page-my { padding-bottom: 24px; }
+#page-my > .mypage-group:first-child { margin-top: 0; }
+
+/* ── 섹션별 배경 흰색 블록 ── */
+.page-section-group {
+  background: #fff;
+  margin: 0 0 8px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* ── WOW 멤버십 뱃지 ── */
+#wow-section .mypage-section-title::after {
+  content: '';
+}
+
+/* ── 로딩 fade ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.page.active > * {
+  animation: fadeIn 0.25s ease;
+}
+
+/* ── 다크모드 Round 4 ── */
+@media (prefers-color-scheme: dark) {
+  .my-savings-hero { background: linear-gradient(135deg, #5B21B6, #7C3AED); }
+  .pending-ticket-card { background: #1C1C1E; border-color: #2C2C2E; }
+  .home-challenge-bar { background: #1C1C1E; border-color: #2C2C2E; }
+  .hot-section { background: #1C1C1E; }
+  .mypage-group { background: #1C1C1E; box-shadow: none; }
+  .raffle-prize-card { background: #1C1C1E; border-color: #2C2C2E; }
+  .gift-request { background: #1C1C1E; border-color: #2C2C2E; }
+  .gift-request:active { background: #2C2C2E; }
+  .share-btn { background: #2C2C2E; border-color: #3A3A3C; color: #888; }
+  #search-results { background: #1C1C1E; }
+  .search-home-section { background: #1C1C1E; border-bottom-color: #2C2C2E; }
+  .search-recent-card { background: #2C2C2E; border-color: #3A3A3C; }
+  .hot-lowest-card { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.18); }
+  .hot-event-card { filter: brightness(0.9); }
+  .wish-toolbar { background: #1C1C1E; }
+  .wish-filter-row { border-bottom-color: #2C2C2E; }
+  #wish-list { background: transparent !important; }
+  .similar-card { background: #1C1C1E; border-color: #2C2C2E; }
+  .detail-ai-box { background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.2); }
+  .affiliate-notice { background: #2C2C2E; }
+  .hot-cat-chips .chip { background: #2C2C2E; border-color: #3A3A3C; }
+  .sub-body .card { background: #1C1C1E; }
 }
 </style>
 </head>
@@ -3338,7 +3997,12 @@ function switchTab(name){
   if(pg)pg.classList.add('active');
   var tb=document.querySelector('.tab[data-tab="'+name+'"]');
   if(tb)tb.classList.add('active');
-  document.getElementById('header-title').textContent=TITLES[name]||'';
+  var ht=document.getElementById('header-title');
+  if(name==='hot'){
+    ht.innerHTML='Price<span style="color:var(--primary)">Pick</span>';
+  } else {
+    ht.textContent=TITLES[name]||'';
+  }
   if(name==='wish')renderWishlist();
   if(name==='hot')renderHotdeals();
   if(name==='search')renderSearch();
@@ -3405,16 +4069,13 @@ function renderHotdeals(){
     if(orig)totalSaved+=(orig-p.price);
   });
   var savingsArea=document.getElementById('savings-top-area');
-  if(purchases.length>0){
-    savingsArea.innerHTML='<div class="savings-top" style="margin-top:10px"><div class="left"><span class="icon">💰</span><div class="info"><div class="label">PricePick으로 아낀 금액</div><div class="amount">'+totalSaved.toLocaleString()+'원</div></div></div><button class="btn" onclick="switchTab(\'my\')">내역 보기</button></div>';
-  }else{
-    savingsArea.innerHTML='<div class="savings-top" style="margin-top:10px"><div class="left"><span class="icon">💰</span><div class="info"><div class="label">PricePick으로 절약 시작!</div><div class="amount">최저가에 사고 리워드까지</div></div></div></div>';
-  }
-  // 절약 챌린지 미니
   var chalTarget=50000;
   var chalPct=Math.min(100,Math.round(totalSaved/chalTarget*100));
   if(purchases.length>0){
-    savingsArea.innerHTML+='<div style="margin:0 16px 4px;display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--text-sub)">🎯 이달 챌린지</span><div style="flex:1;height:6px;border-radius:3px;background:var(--border);overflow:hidden"><div style="height:100%;width:'+chalPct+'%;background:var(--primary);border-radius:3px"></div></div><span style="font-size:12px;font-weight:700;color:var(--primary)">'+chalPct+'%</span></div>';
+    savingsArea.innerHTML='<div class="savings-top"><div class="left"><span class="icon">💰</span><div class="info"><div class="label">PricePick으로 아낀 금액</div><div class="amount">'+totalSaved.toLocaleString()+'원</div></div></div><button class="btn" onclick="switchTab(\'my\')">내역 보기</button></div>';
+    savingsArea.innerHTML+='<div class="home-challenge-bar"><span class="home-challenge-label">🎯 이달 챌린지</span><div class="home-challenge-track"><div class="home-challenge-fill" style="width:'+chalPct+'%"></div></div><span class="home-challenge-pct">'+chalPct+'%</span></div>';
+  }else{
+    savingsArea.innerHTML='<div class="savings-top"><div class="left"><span class="icon">✨</span><div class="info"><div class="label">스마트 쇼핑 시작하기</div><div class="amount" style="font-size:14px;font-weight:600">최저가 알림 + 리워드 적립</div></div></div></div>';
   }
   // 가격 하락 알림
   var alertArea=document.getElementById('price-alert-area');
@@ -3906,20 +4567,20 @@ function renderBenefit(){
     pendingTickets.forEach(function(t){
       var availableAt=t.available_at?new Date(t.available_at):new Date(new Date(t.date).getTime()+(delayDays*86400000));
       var daysLeft=Math.max(0,Math.ceil((availableAt.getTime()-Date.now())/86400000));
-      pendingHtml+='<div style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--card);border-radius:12px;margin-bottom:6px;box-shadow:0 1px 4px rgba(0,0,0,.04)">';
+      pendingHtml+='<div class="pending-ticket-card">';
       if(t.sealed){
-        pendingHtml+='<div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#6366F1,#818CF8);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🎁</div>';
-        pendingHtml+='<div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+t.product+'</div>';
-        pendingHtml+='<div style="font-size:11px;color:#818CF8;font-weight:600">봉인됨 · 구매 확인 대기 중</div></div>';
+        pendingHtml+='<div class="pending-icon sealed">🎁</div>';
+        pendingHtml+='<div class="pending-info"><div class="pending-product">'+t.product+'</div>';
+        pendingHtml+='<div class="pending-status sealed-status">봉인됨 · 구매 확인 대기 중</div></div>';
       } else {
         var tierColor=t.tier==='gold'?'#F59E0B':t.tier==='silver'?'#9CA3AF':'#CD7F32';
         var tierLabel=t.tier==='gold'?'🥇 골드':t.tier==='silver'?'🥈 실버':'🥉 브론즈';
-        pendingHtml+='<div style="width:36px;height:36px;border-radius:50%;background:'+tierColor+';display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🎫</div>';
-        pendingHtml+='<div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+t.product+'</div>';
-        pendingHtml+='<div style="font-size:11px;color:var(--text-sub)">'+tierLabel+' · 개봉 대기 중</div></div>';
+        pendingHtml+='<div class="pending-icon" style="background:'+tierColor+'">🎫</div>';
+        pendingHtml+='<div class="pending-info"><div class="pending-product">'+t.product+'</div>';
+        pendingHtml+='<div class="pending-status">'+tierLabel+' · 개봉 대기 중</div></div>';
       }
-      pendingHtml+='<div style="text-align:right;flex-shrink:0"><div style="font-size:13px;font-weight:700;color:var(--primary)">D-'+daysLeft+'</div>';
-      pendingHtml+='<div style="font-size:10px;color:var(--text-light)">'+availableAt.toLocaleDateString('ko-KR')+'</div></div>';
+      pendingHtml+='<div class="pending-countdown"><div class="pending-d">D-'+daysLeft+'</div>';
+      pendingHtml+='<div class="pending-date">'+availableAt.toLocaleDateString('ko-KR')+'</div></div>';
       pendingHtml+='</div>';
     });
     pendingHtml+='</div>';
@@ -4028,7 +4689,14 @@ function renderMypage(){
     if(orig)totalSaved+=(orig-p.price);
   });
   document.getElementById('my-savings-section').innerHTML=
-    '<div class="savings-card"><div style="font-size:28px">💰</div><div><div class="label">총 절약 금액</div><div class="amount">'+totalSaved.toLocaleString()+'원</div><div class="sub">PricePick과 함께한 스마트 쇼핑</div></div></div>';
+    '<div class="my-savings-hero">'+
+      '<div class="my-savings-icon">💰</div>'+
+      '<div class="my-savings-info">'+
+        '<div class="my-savings-label">PricePick으로 아낀 금액</div>'+
+        '<div class="my-savings-amount">'+totalSaved.toLocaleString()+'<span class="my-savings-unit">원</span></div>'+
+        '<div class="my-savings-sub">스마트 쇼핑 리워드 함께 적립 중 🎫</div>'+
+      '</div>'+
+    '</div>';
   // 월간 소비 리포트
   var totalSpent=0;
   var catSpend={};
@@ -4073,13 +4741,13 @@ function renderMypage(){
   var inviteData=S('invite')||{count:0,earned:0};
   var inviteCode=u.nickname.toUpperCase().slice(0,3)+Math.floor(Math.random()*900+100);
   var invHtml='<div class="invite-card">';
-  invHtml+='<h3>친구 초대하고 티켓 받기! 🎁</h3>';
-  invHtml+='<p>친구가 가입하면 나도, 친구도 보너스 티켓</p>';
+  invHtml+='<h3>친구 초대하고 티켓 받기 🎁</h3>';
+  invHtml+='<p>가입하면 나도 친구도 각각 티켓 2장</p>';
   invHtml+='<div class="invite-reward"><div class="item">🎫 나 +2장</div><div class="item">🎫 친구 +2장</div></div>';
   invHtml+='<button class="invite-btn" onclick="shareInvite()">초대 링크 공유하기</button>';
-  invHtml+='<div class="invite-stats"><span>초대한 친구: '+inviteData.count+'명</span><span>받은 티켓: '+inviteData.earned+'장</span></div>';
+  invHtml+='<div class="invite-stats"><span>초대 '+inviteData.count+'명</span><span>받은 티켓 '+inviteData.earned+'장</span></div>';
   invHtml+='</div>';
-  invHtml+='<div class="invite-code"><span style="font-size:12px;color:var(--text-sub)">내 초대코드</span><span class="code">'+inviteCode+'</span><button class="copy-btn" onclick="copyInviteCode(\''+inviteCode+'\')">복사</button></div>';
+  invHtml+='<div class="invite-code"><span class="invite-code-label">내 초대코드</span><span class="code">'+inviteCode+'</span><button class="copy-btn" onclick="copyInviteCode(\''+inviteCode+'\')">복사</button></div>';
   document.getElementById('my-invite-section').innerHTML=invHtml;
   // 절약 챌린지
   var chalTarget=50000;

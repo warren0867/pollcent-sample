@@ -3269,6 +3269,220 @@ html { scroll-behavior: smooth; }
   .wish-actions span { color: #88888E; }
   input::placeholder { color: #5A5A60; }
 }
+
+/* ══════════════════════════════════════
+   Round 6 — Settings rows, mypage profile,
+   detail chart area, micro-polish
+   ══════════════════════════════════════ */
+
+/* Settings overlay icon pill */
+.mypage-row .icon-pill {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.icon-pill.purple { background: #EDE9FE; }
+.icon-pill.blue   { background: #DBEAFE; }
+.icon-pill.green  { background: #DCFCE7; }
+.icon-pill.orange { background: #FEF3C7; }
+.icon-pill.red    { background: #FEE2E2; }
+.icon-pill.gray   { background: #F3F4F6; }
+
+/* Chevron arrow for row navigation */
+.row-chevron {
+  display: flex; align-items: center;
+  color: #C7C7CC;
+}
+.row-chevron svg { width: 16px; height: 16px; }
+
+/* Settings section title upgrade */
+.settings-body .mypage-section-title {
+  padding: 16px 18px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-light);
+  letter-spacing: 0.6px;
+}
+
+/* mypage row right value text */
+.row-value {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-sub);
+}
+
+/* Detail chart wrapper */
+.detail-chart-wrap {
+  background: var(--card);
+  margin: 0 0 8px;
+  padding: 16px 16px 12px;
+}
+.detail-chart-label-row {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.detail-chart-title {
+  font-size: 13px; font-weight: 700; color: var(--text);
+}
+.detail-chart-legend {
+  display: flex; align-items: center; gap: 12px;
+}
+.chart-legend-item {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; color: var(--text-sub);
+}
+.chart-legend-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+}
+.chart-legend-dash {
+  width: 14px; height: 2px; border-radius: 1px;
+  background: repeating-linear-gradient(
+    90deg, #10B981 0px, #10B981 4px, transparent 4px, transparent 8px
+  );
+}
+
+/* Detail price stats row */
+.detail-stats-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+  border-radius: 12px; overflow: hidden;
+  margin: 0 16px 8px;
+}
+.detail-stat-item {
+  background: var(--card);
+  padding: 12px 10px;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+}
+.detail-stat-label {
+  font-size: 10px; font-weight: 600; color: var(--text-light);
+  text-align: center;
+}
+.detail-stat-value {
+  font-size: 14px; font-weight: 800; color: var(--text);
+  letter-spacing: -0.4px;
+}
+.detail-stat-value.green { color: #059669; }
+.detail-stat-value.red   { color: var(--red); }
+
+/* Buy CTA button shine effect */
+.buy-btn {
+  position: relative; overflow: hidden;
+}
+.buy-btn::after {
+  content: '';
+  position: absolute; top: 0; left: -75%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    120deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%
+  );
+  animation: btnShine 3s ease-in-out infinite 1s;
+}
+@keyframes btnShine {
+  0%,100% { left: -75%; }
+  40%,60%  { left: 120%; }
+}
+
+/* Empty state upgrade */
+.empty-state {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 60px 32px;
+  text-align: center;
+}
+.empty-state-icon {
+  font-size: 52px; margin-bottom: 16px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.08));
+}
+.empty-state h3 {
+  font-size: 17px; font-weight: 800;
+  color: var(--text); margin: 0 0 8px;
+  letter-spacing: -0.4px;
+}
+.empty-state p {
+  font-size: 13px; color: var(--text-sub);
+  line-height: 1.6; margin: 0 0 24px;
+}
+.empty-state-btn {
+  padding: 12px 24px;
+  background: var(--primary); color: #fff;
+  border-radius: 12px; font-size: 14px; font-weight: 700;
+  border: none; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(124,58,237,0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.empty-state-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 8px rgba(124,58,237,0.25);
+}
+
+/* Noti center item upgrade */
+.noti-item {
+  display: flex; align-items: flex-start;
+  gap: 12px; padding: 14px 18px;
+  cursor: pointer; transition: background 0.15s;
+  border-bottom: 1px solid var(--border);
+}
+.noti-item:active { background: var(--card-hover); }
+.noti-item.unread { background: #FAFAFF; }
+.noti-icon {
+  width: 38px; height: 38px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.noti-content { flex: 1; min-width: 0; }
+.noti-title {
+  font-size: 13px; font-weight: 700; color: var(--text);
+  margin-bottom: 2px; line-height: 1.4;
+}
+.noti-body-text {
+  font-size: 12px; color: var(--text-sub);
+  line-height: 1.5;
+  overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.noti-time {
+  font-size: 11px; color: var(--text-light);
+  white-space: nowrap; margin-top: 2px;
+}
+
+/* Toggle switch upgrade */
+.toggle {
+  width: 44px; height: 26px; border-radius: 13px;
+  background: #D1D1D6; position: relative;
+  transition: background 0.25s cubic-bezier(0.4,0,0.2,1);
+  cursor: pointer; flex-shrink: 0;
+}
+.toggle::after {
+  content: '';
+  position: absolute; top: 3px; left: 3px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+.toggle.on {
+  background: var(--primary);
+}
+.toggle.on::after {
+  transform: translateX(18px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .icon-pill.purple { background: #2D1F5E; }
+  .icon-pill.blue   { background: #1E3A5F; }
+  .icon-pill.green  { background: #14352A; }
+  .icon-pill.orange { background: #3D2A0E; }
+  .icon-pill.red    { background: #3D1212; }
+  .icon-pill.gray   { background: #2C2C2E; }
+  .noti-item.unread { background: #18181F; }
+  .detail-chart-wrap { background: #1C1C1E; }
+  .detail-stats-row  { background: #2C2C2E; }
+  .detail-stat-item  { background: #1C1C1E; }
+  .toggle { background: #48484A; }
+  .row-chevron { color: #48484A; }
+  .chart-legend-item { color: #8A8A9A; }
+}
 </style>
 </head>
 <body>
@@ -3515,59 +3729,59 @@ html { scroll-behavior: smooth; }
     <div class="mypage-group" style="margin-top:8px">
       <div class="mypage-section-title">계정 연동</div>
       <div class="mypage-row" id="kakao-row" onclick="linkKakao()">
-        <div class="left"><span class="icon">💬</span> 카카오 연동</div>
-        <div class="right" id="kakao-status"><span style="color:var(--primary);font-size:13px">연동하기</span> <span class="arrow">›</span></div>
+        <div class="left"><span class="icon-pill orange">💬</span> 카카오 연동</div>
+        <div class="right" id="kakao-status"><span style="color:var(--primary);font-size:13px;font-weight:600">연동하기</span> <span class="row-chevron" style="display:inline-flex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="9 18 15 12 9 6"/></svg></span></div>
       </div>
       <div class="mypage-divider"></div>
       <div class="mypage-row" onclick="toggleMarketing()">
-        <div class="left"><span class="icon">📢</span> 마케팅 수신 동의</div>
+        <div class="left"><span class="icon-pill blue">📢</span> 마케팅 수신 동의</div>
         <div class="right"><div class="toggle" id="toggle-marketing"></div></div>
       </div>
     </div>
     <div class="mypage-group" style="margin-top:8px">
       <div class="mypage-section-title">알림 설정</div>
       <div class="mypage-row" onclick="toggleNoti('price')">
-        <div class="left"><span class="icon">📉</span> 가격 하락 알림</div>
+        <div class="left"><span class="icon-pill purple">📉</span> 가격 하락 알림</div>
         <div class="right"><div class="toggle on" id="toggle-price"></div></div>
       </div>
       <div class="mypage-divider"></div>
       <div class="mypage-row" onclick="toggleNoti('restock')">
-        <div class="left"><span class="icon">📦</span> 재입고 알림</div>
+        <div class="left"><span class="icon-pill blue">📦</span> 재입고 알림</div>
         <div class="right"><div class="toggle" id="toggle-restock"></div></div>
       </div>
       <div class="mypage-divider"></div>
       <div class="mypage-row" onclick="toggleNoti('event')">
-        <div class="left"><span class="icon">🎉</span> 이벤트 알림</div>
+        <div class="left"><span class="icon-pill orange">🎉</span> 이벤트 알림</div>
         <div class="right"><div class="toggle on" id="toggle-event"></div></div>
       </div>
     </div>
     <div class="mypage-group" style="margin-top:8px">
       <div class="mypage-section-title">고객센터</div>
       <div class="mypage-row" onclick="openSub('notice')">
-        <div class="left"><span class="icon">📋</span> 공지사항</div>
-        <div class="right"><span class="arrow">›</span></div>
+        <div class="left"><span class="icon-pill gray">📋</span> 공지사항</div>
+        <div class="right row-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
       </div>
       <div class="mypage-divider"></div>
       <div class="mypage-row" onclick="openInquiry()">
-        <div class="left"><span class="icon">🤖</span> 1:1 문의하기</div>
-        <div class="right"><span class="arrow">›</span></div>
+        <div class="left"><span class="icon-pill purple">🤖</span> 1:1 문의하기</div>
+        <div class="right row-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
       </div>
     </div>
     <div class="mypage-group" style="margin-top:8px">
       <div class="mypage-section-title">약관 및 정책</div>
       <div class="mypage-row" onclick="openSub('terms')">
-        <div class="left"><span class="icon">📄</span> 이용약관</div>
-        <div class="right"><span class="arrow">›</span></div>
+        <div class="left"><span class="icon-pill gray">📄</span> 이용약관</div>
+        <div class="right row-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
       </div>
       <div class="mypage-divider"></div>
       <div class="mypage-row" onclick="openSub('privacy')">
-        <div class="left"><span class="icon">🔒</span> 개인정보 처리방침</div>
-        <div class="right"><span class="arrow">›</span></div>
+        <div class="left"><span class="icon-pill gray">🔒</span> 개인정보 처리방침</div>
+        <div class="right row-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
       </div>
       <div class="mypage-divider"></div>
       <div class="mypage-row" onclick="openSub('reward-policy')">
-        <div class="left"><span class="icon">🎫</span> 보상 정책</div>
-        <div class="right"><span class="arrow">›</span></div>
+        <div class="left"><span class="icon-pill green">🎫</span> 보상 정책</div>
+        <div class="right row-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
       </div>
     </div>
     <div class="mypage-section" style="margin-bottom:20px">
@@ -3662,59 +3876,59 @@ html { scroll-behavior: smooth; }
     <div class="mypage-group" style="margin-top:8px">
       <div class="mypage-section-title">알림</div>
       <div class="mypage-row" onclick="toggleSetting('noti_price')">
-        <div class="left"><span class="icon">📉</span> 가격 하락 알림</div>
+        <div class="left"><span class="icon-pill purple">📉</span> 가격 하락 알림</div>
         <div class="right"><div class="toggle on" id="set-noti-price"></div></div>
       </div>
       <div class="mypage-divider"></div>
       <div class="mypage-row" onclick="toggleSetting('noti_restock')">
-        <div class="left"><span class="icon">📦</span> 재입고 알림</div>
+        <div class="left"><span class="icon-pill blue">📦</span> 재입고 알림</div>
         <div class="right"><div class="toggle" id="set-noti-restock"></div></div>
       </div>
       <div class="mypage-divider"></div>
       <div class="mypage-row" onclick="toggleSetting('noti_event')">
-        <div class="left"><span class="icon">🎉</span> 이벤트/혜택 알림</div>
+        <div class="left"><span class="icon-pill orange">🎉</span> 이벤트/혜택 알림</div>
         <div class="right"><div class="toggle on" id="set-noti-event"></div></div>
       </div>
     </div>
     <div class="mypage-group" style="margin-top:8px">
       <div class="mypage-section-title">표시</div>
       <div class="mypage-row" onclick="toggleSetting('dark_mode')">
-        <div class="left"><span class="icon">🌙</span> 다크 모드</div>
+        <div class="left"><span class="icon-pill gray">🌙</span> 다크 모드</div>
         <div class="right"><div class="toggle" id="set-dark-mode"></div></div>
       </div>
       <div class="mypage-divider"></div>
       <div class="mypage-row" onclick="toggleSetting('price_unit')">
-        <div class="left"><span class="icon">💰</span> 만원 단위 표시</div>
+        <div class="left"><span class="icon-pill green">💰</span> 만원 단위 표시</div>
         <div class="right"><div class="toggle" id="set-price-unit"></div></div>
       </div>
     </div>
     <div class="mypage-group" style="margin-top:8px">
       <div class="mypage-section-title">데이터</div>
       <div class="mypage-row" onclick="clearCache()">
-        <div class="left"><span class="icon">🗑️</span> 캐시 삭제</div>
-        <div class="right"><span class="arrow">›</span></div>
+        <div class="left"><span class="icon-pill red">🗑️</span> 캐시 삭제</div>
+        <div class="right row-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
       </div>
       <div class="mypage-divider"></div>
       <div class="mypage-row" onclick="exportData()">
-        <div class="left"><span class="icon">📤</span> 데이터 내보내기</div>
-        <div class="right"><span class="arrow">›</span></div>
+        <div class="left"><span class="icon-pill blue">📤</span> 데이터 내보내기</div>
+        <div class="right row-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
       </div>
     </div>
     <div class="mypage-group" style="margin-top:8px">
       <div class="mypage-section-title">앱 정보</div>
       <div class="mypage-row">
-        <div class="left"><span class="icon">📱</span> 버전</div>
-        <div class="right"><span style="color:var(--text-sub)">1.0.0</span></div>
+        <div class="left"><span class="icon-pill gray">📱</span> 버전</div>
+        <div class="right"><span class="row-value">1.0.0</span></div>
       </div>
       <div class="mypage-divider"></div>
       <div class="mypage-row" onclick="openSub('terms')">
-        <div class="left"><span class="icon">📄</span> 이용약관</div>
-        <div class="right"><span class="arrow">›</span></div>
+        <div class="left"><span class="icon-pill gray">📄</span> 이용약관</div>
+        <div class="right row-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
       </div>
       <div class="mypage-divider"></div>
       <div class="mypage-row" onclick="openSub('privacy')">
-        <div class="left"><span class="icon">🔒</span> 개인정보 처리방침</div>
-        <div class="right"><span class="arrow">›</span></div>
+        <div class="left"><span class="icon-pill purple">🔒</span> 개인정보 처리방침</div>
+        <div class="right row-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
       </div>
     </div>
   </div>
@@ -5371,13 +5585,21 @@ openDetail=function(id,fromWish){
     html+='<div class="detail-ai-label">💬 구매자 후기</div>';
     html+='<div class="detail-ai-text">'+p.ai+'</div></div>';
   }
-  html+='<div class="graph-card"><div class="graph-title">가격 추이 <span style="font-size:12px;color:var(--text-sub);font-weight:400">최근 50일</span></div>';
-  html+='<canvas id="detail-chart" height="180"></canvas>';
-  html+='<div class="price-stats">';
-  html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--red)"></span> 역대최고가</span><span class="value" style="color:var(--red)">'+maxP.toLocaleString()+'원</span></div>';
-  html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--text-sub)"></span> 평균가</span><span class="value">'+avgP.toLocaleString()+'원</span></div>';
-  html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--green)"></span> 역대최저가</span><span class="value" style="color:var(--green)">'+minP.toLocaleString()+'원</span></div>';
+  html+='<div class="detail-chart-wrap">';
+  html+='<div class="detail-chart-label-row">';
+  html+='<span class="detail-chart-title">가격 추이 <span style="font-size:11px;color:var(--text-light);font-weight:400">최근 50일</span></span>';
+  html+='<div class="detail-chart-legend">';
+  html+='<span class="chart-legend-item"><span class="chart-legend-dot" style="background:#7C3AED"></span>현재가</span>';
+  html+='<span class="chart-legend-item"><span class="chart-legend-dash"></span>최저가</span>';
   html+='</div></div>';
+  html+='<canvas id="detail-chart" height="160"></canvas>';
+  html+='</div>';
+  var fmtP=function(v){return v>=10000?(v/10000).toFixed(1)+'만원':v.toLocaleString()+'원';};
+  html+='<div class="detail-stats-row">';
+  html+='<div class="detail-stat-item"><div class="detail-stat-label">역대최고가</div><div class="detail-stat-value red">'+fmtP(maxP)+'</div></div>';
+  html+='<div class="detail-stat-item"><div class="detail-stat-label">평균가</div><div class="detail-stat-value">'+fmtP(avgP)+'</div></div>';
+  html+='<div class="detail-stat-item"><div class="detail-stat-label">역대최저가</div><div class="detail-stat-value green">'+fmtP(minP)+'</div></div>';
+  html+='</div>';
 
   // AI 가격 예측
   var pred=getPricePrediction(p);
@@ -5447,19 +5669,102 @@ openDetail=function(id,fromWish){
     if(chartInstance)chartInstance.destroy();
     var ctx=document.getElementById('detail-chart');
     if(!ctx)return;
+    var isDark=window.matchMedia('(prefers-color-scheme:dark)').matches;
+    var gridCol=isDark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.05)';
+    var tickCol=isDark?'#8A8A9A':'#9CA3AF';
+    // mark last point (current price)
+    var pointRadii=prices.map(function(_,i){return i===prices.length-1?5:0;});
+    var pointBg=prices.map(function(_,i){return i===prices.length-1?'#7C3AED':'transparent';});
     chartInstance=new Chart(ctx.getContext('2d'),{
       type:'line',
       data:{
         labels:history.map(function(h){return h.date}),
         datasets:[
-          {label:'가격',data:prices,borderColor:'#7C3AED',backgroundColor:'rgba(124,58,237,.08)',fill:true,tension:.3,pointRadius:0,borderWidth:2},
-          {label:'역대최저가',data:prices.map(function(){return minP}),borderColor:'#10B981',borderDash:[4,4],pointRadius:0,fill:false,borderWidth:1},
+          {
+            label:'가격',
+            data:prices,
+            borderColor:'#7C3AED',
+            backgroundColor:isDark?'rgba(124,58,237,0.12)':'rgba(124,58,237,0.07)',
+            fill:true,
+            tension:0.35,
+            pointRadius:pointRadii,
+            pointBackgroundColor:pointBg,
+            pointBorderColor:'#fff',
+            pointBorderWidth:2,
+            pointHoverRadius:6,
+            pointHoverBackgroundColor:'#7C3AED',
+            pointHoverBorderColor:'#fff',
+            pointHoverBorderWidth:2,
+            borderWidth:2.5
+          },
+          {
+            label:'역대최저가',
+            data:prices.map(function(){return minP;}),
+            borderColor:'#10B981',
+            borderDash:[5,4],
+            pointRadius:0,
+            pointHoverRadius:0,
+            fill:false,
+            tension:0,
+            borderWidth:1.5
+          }
         ]
       },
       options:{
         responsive:true,
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.parsed.y.toLocaleString()+'원'}}}},
-        scales:{x:{ticks:{font:{size:10},maxTicksLimit:6}},y:{ticks:{font:{size:10},callback:function(v){return(v/10000).toFixed(0)+'만'}}}}
+        maintainAspectRatio:true,
+        layout:{padding:{top:8,right:8,bottom:0,left:0}},
+        interaction:{mode:'index',intersect:false},
+        plugins:{
+          legend:{display:false},
+          tooltip:{
+            backgroundColor:isDark?'#2C2C3A':'#1F1F2E',
+            titleColor:'#A78BFA',
+            bodyColor:isDark?'#E5E5EA':'#F3F4F6',
+            borderColor:'rgba(124,58,237,0.3)',
+            borderWidth:1,
+            cornerRadius:10,
+            padding:{top:9,right:12,bottom:9,left:12},
+            titleFont:{size:11,weight:'600'},
+            bodyFont:{size:13,weight:'700'},
+            displayColors:false,
+            callbacks:{
+              title:function(items){return items[0].label;},
+              label:function(c){
+                if(c.datasetIndex===1)return '최저가 '+c.parsed.y.toLocaleString()+'원';
+                return '가격 '+c.parsed.y.toLocaleString()+'원';
+              }
+            }
+          }
+        },
+        scales:{
+          x:{
+            grid:{color:gridCol,drawBorder:false,tickLength:0},
+            border:{display:false},
+            ticks:{
+              color:tickCol,
+              font:{size:10,family:'Pretendard'},
+              maxTicksLimit:6,
+              maxRotation:0,
+              padding:6
+            }
+          },
+          y:{
+            position:'right',
+            grid:{color:gridCol,drawBorder:false,tickLength:0},
+            border:{display:false},
+            ticks:{
+              color:tickCol,
+              font:{size:10,family:'Pretendard'},
+              callback:function(v){
+                if(v>=10000)return (v/10000).toFixed(0)+'만';
+                return v.toLocaleString();
+              },
+              maxTicksLimit:5,
+              padding:6
+            }
+          }
+        }
       }
     });
   },100);

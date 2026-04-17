@@ -5688,13 +5688,16 @@ function renderMypage(){
   var maxCatAmount=catArr.length>0?catArr[0].amount:1;
   var savingsRate=totalSpent>0?Math.round(totalSaved/totalSpent*100):0;
   var repHtml='<div class="report-card">';
-  repHtml+='<h3>📊 이번 달 소비 리포트</h3>';
+  repHtml+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">';
+  repHtml+='<h3 style="font-size:14px;font-weight:800;letter-spacing:-0.4px">이번 달 소비 리포트</h3>';
+  repHtml+='<span style="font-size:11px;color:var(--text-light)">'+(new Date().getMonth()+1)+'월</span>';
+  repHtml+='</div>';
   repHtml+='<div class="report-summary">';
-  repHtml+='<div class="report-stat"><div class="val blue">'+totalSpent.toLocaleString()+'</div><div class="lbl">총 지출(원)</div></div>';
-  repHtml+='<div class="report-stat"><div class="val green">'+totalSaved.toLocaleString()+'</div><div class="lbl">절약(원)</div></div>';
+  repHtml+='<div class="report-stat"><div class="val blue">'+(totalSpent/10000).toFixed(1)+'만</div><div class="lbl">총 지출</div></div>';
+  repHtml+='<div class="report-stat"><div class="val green">'+(totalSaved/1000).toFixed(0)+'천</div><div class="lbl">절약</div></div>';
   repHtml+='<div class="report-stat"><div class="val orange">'+savingsRate+'%</div><div class="lbl">절약률</div></div>';
   repHtml+='</div>';
-  repHtml+='<div style="font-size:13px;font-weight:700;margin-bottom:8px">카테고리별 지출</div>';
+  repHtml+='<div style="font-size:12px;font-weight:700;color:var(--text-sub);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">카테고리별 지출</div>';
   repHtml+='<div class="report-cats">';
   catArr.forEach(function(c,i){
     var pct=Math.round(c.amount/maxCatAmount*100);
@@ -5768,7 +5771,7 @@ function renderMypage(){
     rankHtml+='<div class="ranking-item'+(isMe?' me':'')+'">';
     if(idx<3)rankHtml+='<span class="ranking-medal">'+medals[idx]+'</span>';
     else rankHtml+='<span class="ranking-rank">'+(idx+1)+'</span>';
-    rankHtml+='<span class="ranking-name">'+r.name+(isMe?' ← 나':'')+'</span>';
+    rankHtml+='<span class="ranking-name">'+r.name+(isMe?' <span style="font-size:10px;background:var(--primary);color:#fff;padding:1px 6px;border-radius:100px;vertical-align:middle">나</span>':'')+'</span>';
     rankHtml+='<span class="ranking-amount">'+r.total.toLocaleString()+'원</span>';
     rankHtml+='</div>';
   });

@@ -243,8 +243,8 @@ html,body{margin:0;padding:0;height:100%;background:var(--bg);-webkit-font-smoot
 /* Stats row */
 .stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;padding:10px 0;margin:0 16px;border-top:1px solid var(--border)}
 .stat-box{text-align:center}
-.stat-box .val{font-size:18px;font-weight:900;color:var(--primary);letter-spacing:-0.5px}
-.stat-box .lbl{font-size:11px;font-weight:600;color:var(--text-sub);margin-top:3px}
+.stat-box .val{font-size:15px;font-weight:900;color:var(--primary);letter-spacing:-0.3px}
+.stat-box .lbl{font-size:9px;font-weight:600;color:var(--text-sub);margin-top:2px}
 
 /* Modal */
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,23,42,.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
@@ -546,7 +546,7 @@ html,body{margin:0;padding:0;height:100%;background:var(--bg);-webkit-font-smoot
 .streak-days{display:flex;gap:8px;margin-bottom:12px;justify-content:space-between}
 .streak-day-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px}
 .streak-day-label{font-size:10px;font-weight:600;color:var(--text-light)}
-.streak-dot{width:32px;height:10px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0;font-weight:800;transition:transform .2s;flex-shrink:0}
+.streak-dot{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0;font-weight:800;transition:transform .2s;flex-shrink:0}
 .streak-dot.filled{background:var(--primary);color:#fff;box-shadow:0 2px 8px rgba(124,58,237,.3)}
 .streak-dot.today{background:#F59E0B;color:#fff;box-shadow:0 2px 8px rgba(245,158,11,.4)}
 .streak-dot.empty{background:var(--border);color:var(--text-light)}
@@ -829,8 +829,8 @@ html, body, #app-shell { background: var(--bg); }
   background: #fff;
 }
 .stat-box { text-align: center; padding: 4px 0; }
-.stat-box .val { font-size: 18px; font-weight: 900; color: var(--primary); letter-spacing: -0.5px; }
-.stat-box .lbl { font-size: 11px; font-weight: 600; color: var(--text-sub); margin-top: 3px; }
+.stat-box .val { font-size: 16px; font-weight: 800; color: var(--primary); letter-spacing: -0.3px; }
+.stat-box .lbl { font-size: 9px; font-weight: 600; color: var(--text-sub); margin-top: 2px; }
 
 /* 13. mypage-row */
 .mypage-row { padding: 13px 18px; }
@@ -860,7 +860,7 @@ html, body, #app-shell { background: var(--bg); }
 }
 .streak-top { margin-bottom: 10px; }
 .streak-days { gap: 8px; margin-bottom: 8px; }
-.streak-dot { width: 32px; height: 10px; border-radius: 4px; font-size: 0; }
+.streak-dot { width: 20px; height: 20px; border-radius: 6px; font-size: 0; }
 .streak-day-label { font-size: 10px; }
 .streak-tip { padding: 7px 10px; font-size: 12px; border-radius: 8px; }
 
@@ -2159,8 +2159,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); }
   padding: 14px 0 12px;
   background: #fff;
 }
-.stat-box .val { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
-.stat-box .lbl { font-size: 11px; font-weight: 600; color: #AAAAAA; margin-top: 3px; }
+.stat-box .val { font-size: 17px; font-weight: 800; letter-spacing: -0.4px; }
+.stat-box .lbl { font-size: 9px; font-weight: 600; color: #AAAAAA; margin-top: 3px; }
 
 /* ── savings card ── */
 .savings-card {
@@ -3178,7 +3178,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); }
 .report-cat .bar { border-radius: 4px; }
 
 /* ── 스트릭 날 도트 크기 조정 ── */
-.streak-dot { width: 32px; height: 10px; border-radius: 4px; font-size: 0; }
+.streak-dot { width: 20px; height: 20px; border-radius: 6px; font-size: 0; }
 .streak-day-label { font-size: 10px; }
 
 /* ── 랭킹 나 표시 ── */
@@ -3583,11 +3583,11 @@ html { scroll-behavior: smooth; }
   display: flex; flex-direction: column; align-items: center; gap: 2px;
 }
 .mypage-stat-value {
-  font-size: 18px; font-weight: 900;
-  color: var(--text); letter-spacing: -0.5px;
+  font-size: 16px; font-weight: 800;
+  color: var(--text); letter-spacing: -0.4px;
 }
 .mypage-stat-label {
-  font-size: 11px; font-weight: 600; color: var(--text-sub);
+  font-size: 10px; font-weight: 600; color: var(--text-sub);
 }
 
 @media (prefers-color-scheme: dark) {

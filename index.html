@@ -4076,6 +4076,174 @@ button:active, [onclick]:active {
   .product-name { color: var(--text); }
   #detail-target { background: #1C1C1E; color: var(--text); border-color: #3A3A3C; }
 }
+
+/* ══════════════════════════════════════
+   교환소 — 완전 재설계 (ex-*)
+   기존 reward-ex-* 규칙을 덮어씁니다
+   ══════════════════════════════════════ */
+
+/* 아이템 행 */
+.ex-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.ex-item:last-child { border-bottom: none; }
+
+/* 아이콘 */
+.ex-icon {
+  width: 46px; height: 46px;
+  border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+/* 중간 텍스트 블록 */
+.ex-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* 상품명 */
+.ex-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 티어 배지 + 필요 장수 한 줄 */
+.ex-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ex-tier-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ex-tier-badge.ex-tier-gold   { background: #FEF3C7; color: #92400E; }
+.ex-tier-badge.ex-tier-silver { background: #F3F4F6; color: #52525B; }
+.ex-tier-badge.ex-tier-bronze { background: #FFF0E6; color: #9A3412; }
+.ex-needed {
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* 진행 바 + 보유수 */
+.ex-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ex-progress-bar {
+  flex: 1;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--border);
+  overflow: hidden;
+}
+.ex-progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #7C3AED, #A855F7);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ex-have {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-light);
+  white-space: nowrap;
+  min-width: 28px;
+  text-align: right;
+}
+.ex-have.ex-have-enough {
+  color: #059669;
+}
+
+/* 교환 버튼 — 고정 너비로 오른쪽 정렬 통일 */
+.ex-btn {
+  flex-shrink: 0;
+  width: 56px;
+  height: 34px;
+  border-radius: 10px;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s, opacity 0.12s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ex-btn-gold {
+  background: linear-gradient(135deg, #FCD34D, #F59E0B);
+  color: #78350F;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
+}
+.ex-btn-silver {
+  background: #E5E7EB;
+  color: #374151;
+}
+.ex-btn-bronze {
+  background: #FEF3C7;
+  color: #92400E;
+}
+.ex-btn-disabled {
+  background: var(--bg);
+  color: var(--text-light);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.ex-btn:not(.ex-btn-disabled):active {
+  transform: scale(0.93);
+  opacity: 0.85;
+}
+
+/* 교환소 섹션 헤더 */
+.ex-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.ex-section-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+.ex-section-sub {
+  font-size: 11px;
+  color: var(--text-sub);
+  font-weight: 500;
+}
+
+@media (prefers-color-scheme: dark) {
+  .ex-tier-badge.ex-tier-gold   { background: #3D2A0E; color: #FCD34D; }
+  .ex-tier-badge.ex-tier-silver { background: #2C2C2E; color: #A1A1AA; }
+  .ex-tier-badge.ex-tier-bronze { background: #2C1810; color: #FDBA74; }
+  .ex-progress-bar  { background: #3A3A3C; }
+  .ex-btn-silver    { background: #3A3A3C; color: #D1D5DB; }
+  .ex-btn-disabled  { background: #2C2C2E; color: #48484A; }
+  .ex-icon          { filter: brightness(0.85); }
+}
 </style>
 </head>
 <body>
@@ -4254,8 +4422,11 @@ button:active, [onclick]:active {
 
       <!-- 교환소 -->
       <div class="mypage-group" style="margin-top:0">
-      <div style="padding:12px 18px 4px;font-size:12px;font-weight:700;color:var(--text-sub)">🎁 티켓 교환소</div>
-      <div id="reward-exchange"></div>
+        <div class="ex-section-header">
+          <span class="ex-section-title">티켓 교환소</span>
+          <span class="ex-section-sub">보유 티켓으로 기프티콘 교환</span>
+        </div>
+        <div id="reward-exchange"></div>
       </div>
 
       <!-- 추첨 -->
@@ -5663,21 +5834,32 @@ function renderBenefit(){
     {tier:'silver',icon:'🍔',name:'맥도날드 해피밀 세트',needed:4,color:'#9CA3AF',label:'🥈 실버'},
     {tier:'gold',icon:'🍕',name:'도미노피자 세트',needed:1,color:'#F59E0B',label:'🥇 골드'}
   ];
-  var exHtml='<div class="reward-ex">';
+  var exHtml='';
   exItems.forEach(function(item){
     var have=exCounts[item.tier]||0;
     var enough=have>=item.needed;
-    exHtml+='<div class="reward-ex-item">';
-    var iconBg=item.tier==='gold'?'#FEF3C7':item.tier==='silver'?'#F3F4F6':'#FFF7ED';
-    exHtml+='<div class="reward-ex-icon" style="background:'+iconBg+'">'+item.icon+'</div>';
-    exHtml+='<div class="reward-ex-info">';
-    exHtml+='<h4>'+item.name+'</h4>';
-    exHtml+='<p style="display:flex;gap:6px;align-items:center">'+item.label+' '+item.needed+'장 · 보유 <b style="color:'+(enough?'var(--primary)':'var(--red)')+'">'+have+'장</b></p>';
+    var iconBgs={gold:'#FEF3C7',silver:'#F4F4F6',bronze:'#FFF0E6'};
+    var tierColors={gold:'#B45309',silver:'#52525B',bronze:'#9A3412'};
+    var progress=Math.min(100,Math.round(have/item.needed*100));
+    exHtml+='<div class="ex-item">';
+    // 왼쪽: 아이콘
+    exHtml+='<div class="ex-icon" style="background:'+iconBgs[item.tier]+'">'+item.icon+'</div>';
+    // 가운데: 정보
+    exHtml+='<div class="ex-body">';
+    exHtml+='<div class="ex-name">'+item.name+'</div>';
+    exHtml+='<div class="ex-meta">';
+    exHtml+='<span class="ex-tier-badge ex-tier-'+item.tier+'">'+item.label+'</span>';
+    exHtml+='<span class="ex-needed">'+item.needed+'장 필요</span>';
     exHtml+='</div>';
-    exHtml+='<button class="reward-ex-btn '+(enough?item.tier:'disabled')+'" onclick="'+(enough?'exchangeReward(\''+item.tier+'\')':'void(0)')+'" style="'+(enough?'':'opacity:.4;cursor:not-allowed')+'">교환</button>';
+    exHtml+='<div class="ex-progress-wrap">';
+    exHtml+='<div class="ex-progress-bar"><div class="ex-progress-fill" style="width:'+progress+'%"></div></div>';
+    exHtml+='<span class="ex-have'+(enough?' ex-have-enough':'')+'">'+have+'/'+item.needed+'</span>';
+    exHtml+='</div>';
+    exHtml+='</div>';
+    // 오른쪽: 버튼
+    exHtml+='<button class="ex-btn ex-btn-'+item.tier+(enough?'':' ex-btn-disabled')+'" '+(enough?'onclick="exchangeReward(\''+item.tier+'\')"':'disabled')+'>교환</button>';
     exHtml+='</div>';
   });
-  exHtml+='</div>';
   document.getElementById('reward-exchange').innerHTML=exHtml;
   // 2x event scroll
   var ehtml='';

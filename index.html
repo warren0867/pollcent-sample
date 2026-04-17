@@ -1941,8 +1941,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); }
   letter-spacing: 0.1px;
 }
 .product-info { padding: 10px 12px 14px; }
-.product-name { font-size: 12px; height: 33px; color: #555; }
-.product-price { font-size: 15px; font-weight: 800; letter-spacing: -0.5px; }
+.product-name { font-size: 12px; height: 33px; color: var(--text); font-weight: 500; }
+.product-price { font-size: 15px; font-weight: 800; letter-spacing: -0.5px; color: var(--text); }
 .product-change { font-size: 11px; font-weight: 700; }
 
 /* ── 관심상품 track-card ── */
@@ -3984,6 +3984,98 @@ html { scroll-behavior: smooth; }
   .chat-avatar { box-shadow: 0 2px 6px rgba(167,139,250,0.3); }
   .search-home-section { background: #1C1C1E; }
 }
+
+/* ══════════════════════════════════════
+   Round 13 — 최종 마무리 polish
+   ══════════════════════════════════════ */
+
+/* Onboarding hero 플로팅 원 추가 */
+.onboard-hero-bg {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+}
+.onboard-blob {
+  position: absolute; border-radius: 50%;
+  opacity: 0.18; animation: blobFloat 6s ease-in-out infinite;
+}
+.onboard-blob.b1 {
+  width: 140px; height: 140px;
+  background: radial-gradient(circle, #7C3AED, transparent);
+  top: -40px; right: -30px;
+  animation-delay: 0s;
+}
+.onboard-blob.b2 {
+  width: 90px; height: 90px;
+  background: radial-gradient(circle, #A855F7, transparent);
+  bottom: -10px; left: -20px;
+  animation-delay: 2s;
+}
+.onboard-blob.b3 {
+  width: 60px; height: 60px;
+  background: radial-gradient(circle, #6D28D9, transparent);
+  top: 30%; left: 10%;
+  animation-delay: 4s;
+}
+@keyframes blobFloat {
+  0%,100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-12px) scale(1.08); }
+}
+
+/* Hot section 타이틀 "더보기" 링크 */
+.hot-section-more {
+  font-size: 12px; font-weight: 600;
+  color: var(--text-sub); cursor: pointer;
+}
+.hot-section-more:active { color: var(--primary); }
+
+/* Product card image area height 개선 */
+.img-placeholder { height: 100%; min-height: 100px; font-size: 44px; }
+
+/* Detail target input 개선 */
+#detail-target {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px; font-size: 14px;
+  font-family: inherit; outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: var(--bg);
+}
+#detail-target:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* Benefit tab section header padding 통일 */
+.benefit-section-title {
+  padding: 14px 18px 6px;
+  font-size: 12px; font-weight: 700; color: var(--text-sub);
+  letter-spacing: 0.4px;
+}
+
+/* 전체 탭 전환 애니메이션 강화 */
+.page {
+  animation: pageIn 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Active state feedback — iOS-like 전체 */
+button:active, [onclick]:active {
+  opacity: 0.85;
+}
+
+/* 마지막 safe area bottom 보장 */
+.page { padding-bottom: 0; }
+#page-hot, #page-wish, #page-search, #page-benefit, #page-my {
+  padding-bottom: 24px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .product-card { border-color: #2C2C2E; }
+  .product-name { color: var(--text); }
+  #detail-target { background: #1C1C1E; color: var(--text); border-color: #3A3A3C; }
+}
 </style>
 </head>
 <body>
@@ -4019,6 +4111,11 @@ html { scroll-behavior: smooth; }
   <div class="page active" id="page-start">
     <div class="onboard">
       <div class="onboard-header">
+        <div class="onboard-hero-bg">
+          <div class="onboard-blob b1"></div>
+          <div class="onboard-blob b2"></div>
+          <div class="onboard-blob b3"></div>
+        </div>
         <div class="onboard-hero">
           <div class="onboard-hero-icon">
             <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>

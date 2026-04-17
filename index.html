@@ -3846,6 +3846,144 @@ html { scroll-behavior: smooth; }
   .detail-ai-label { color: #A78BFA; }
   .streak-badge { background: linear-gradient(135deg, #3D2A0E, #4A3210); color: #FCD34D; }
 }
+
+/* ══════════════════════════════════════
+   Round 10 — Chat UI, price-alert 개선,
+   홈 히어로 마무리, 기타 micro-polish
+   ══════════════════════════════════════ */
+
+/* AI 채팅 아바타 */
+.chat-avatar {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: linear-gradient(135deg, #7C3AED, #9333EA);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(124,58,237,0.25);
+}
+
+/* 채팅 옵션 버튼 개선 */
+.chat-opt {
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(124,58,237,0.35);
+  background: rgba(124,58,237,0.04);
+  font-size: 13px; font-weight: 600; color: var(--primary);
+  cursor: pointer; transition: all 0.15s;
+  white-space: nowrap;
+}
+.chat-opt:active {
+  background: var(--primary); color: #fff;
+  transform: scale(0.97);
+  box-shadow: 0 2px 8px rgba(124,58,237,0.3);
+}
+
+/* price-alert 개선 */
+.price-alert {
+  display: flex; align-items: center; gap: 12px;
+  margin: 0 16px 8px;
+  padding: 13px 14px;
+  background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+  border: 1px solid #FCD34D;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(245,158,11,0.12);
+  transition: transform 0.12s;
+}
+.price-alert:active { transform: scale(0.99); }
+.price-alert-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: #FEF3C7; display: flex;
+  align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.price-alert-info { flex: 1; min-width: 0; }
+.price-alert-name {
+  font-size: 13px; font-weight: 700; color: var(--text);
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+.price-alert-desc { font-size: 11px; color: #92400E; font-weight: 500; }
+.price-alert-action {
+  font-size: 11px; font-weight: 700; color: var(--primary);
+  white-space: nowrap;
+  display: flex; align-items: center; gap: 2px;
+}
+
+/* onboarding header sub-text */
+.onboard-sub {
+  font-size: 14px; color: var(--text-sub);
+  font-weight: 500; margin: 8px 0 12px;
+  letter-spacing: -0.2px;
+}
+.onboard-tags { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.onboard-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 5px 12px; border-radius: 100px;
+  background: rgba(124,58,237,0.08);
+  border: 1px solid rgba(124,58,237,0.15);
+  color: var(--primary);
+  font-size: 12px; font-weight: 600;
+}
+
+/* home-challenge-bar 개선 */
+.home-challenge-bar {
+  margin: 0 16px 10px;
+  padding: 12px 14px;
+  background: var(--card);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.home-challenge-label {
+  font-size: 12px; font-weight: 700; color: var(--text);
+  white-space: nowrap;
+}
+.home-challenge-track {
+  flex: 1; height: 6px; background: var(--border);
+  border-radius: 6px; overflow: hidden;
+}
+.home-challenge-fill {
+  height: 100%; border-radius: 6px;
+  background: linear-gradient(90deg, #7C3AED, #A855F7);
+  transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+.home-challenge-pct {
+  font-size: 12px; font-weight: 800; color: var(--primary);
+  white-space: nowrap;
+}
+
+/* 검색 홈 추천 태그 */
+.search-home-section {
+  padding: 16px 16px 8px; background: var(--card);
+  border-radius: var(--radius); margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.search-home-title {
+  font-size: 13px; font-weight: 700; color: var(--text);
+  margin-bottom: 10px;
+}
+
+/* 스크롤바 전역 숨김 */
+* { scrollbar-width: none; }
+*::-webkit-scrollbar { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  .price-alert {
+    background: linear-gradient(135deg, #2A1F00, #3D2A0E);
+    border-color: #78350F;
+  }
+  .price-alert-icon { background: #3D2A0E; }
+  .price-alert-desc { color: #FCD34D; }
+  .home-challenge-bar { background: #1C1C1E; border-color: #2C2C2E; }
+  .onboard-tag {
+    background: rgba(167,139,250,0.1);
+    border-color: rgba(167,139,250,0.2);
+    color: #A78BFA;
+  }
+  .chat-avatar { box-shadow: 0 2px 6px rgba(167,139,250,0.3); }
+  .search-home-section { background: #1C1C1E; }
+}
 </style>
 </head>
 <body>
@@ -4894,7 +5032,15 @@ function renderHotdeals(){
   if(alertProduct){
     var dropPct=alertProduct.discount;
     var prevPrice=alertProduct.originalPrice;
-    alertArea.innerHTML='<div class="price-alert" onclick="openDetail('+alertProduct.id+')"><span class="emoji">📉</span><div class="info"><div class="title">'+alertProduct.name+'</div><div class="desc">'+prevPrice.toLocaleString()+'원 → <b style="color:#e74c3c">'+alertProduct.currentPrice.toLocaleString()+'원</b> ('+dropPct+'%↓)</div></div><span class="action">보러가기 ›</span></div>';
+    alertArea.innerHTML=
+      '<div class="price-alert" onclick="openDetail('+alertProduct.id+')">'+
+        '<div class="price-alert-icon">📉</div>'+
+        '<div class="price-alert-info">'+
+          '<div class="price-alert-name">'+alertProduct.name+'</div>'+
+          '<div class="price-alert-desc">'+prevPrice.toLocaleString()+'원 → '+alertProduct.currentPrice.toLocaleString()+'원 ('+dropPct+'%↓)</div>'+
+        '</div>'+
+        '<div class="price-alert-action">보러가기 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>'+
+      '</div>';
   }
   renderHotExtra();
 }

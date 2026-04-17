@@ -546,10 +546,10 @@ html,body{margin:0;padding:0;height:100%;background:var(--bg);-webkit-font-smoot
 .streak-days{display:flex;gap:8px;margin-bottom:12px;justify-content:space-between}
 .streak-day-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px}
 .streak-day-label{font-size:10px;font-weight:600;color:var(--text-light)}
-.streak-dot{width:20px;height:20px;border-radius:6px;display:block;font-size:0;flex-shrink:0;align-self:center}
+.streak-dot{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;flex-shrink:0;align-self:center}
 .streak-dot.filled{background:var(--primary);color:#fff;box-shadow:0 2px 8px rgba(124,58,237,.3)}
 .streak-dot.today{background:#F59E0B;color:#fff;box-shadow:0 2px 8px rgba(245,158,11,.4)}
-.streak-dot.empty{background:var(--border);color:var(--text-light)}
+.streak-dot.empty{background:var(--bg);color:var(--text-light);border:2px solid var(--border)}
 .streak-tip{font-size:12px;font-weight:600;color:var(--text-sub);text-align:center;background:var(--bg);border-radius:8px;padding:8px 12px}
 .streak-tip .hl{color:var(--primary);font-weight:800}
 
@@ -860,7 +860,7 @@ html, body, #app-shell { background: var(--bg); }
 }
 .streak-top { margin-bottom: 10px; }
 .streak-days { gap: 8px; margin-bottom: 8px; }
-.streak-dot { width: 20px !important; height: 20px !important; display: block !important; align-self: center; }
+.streak-dot { width: 44px; height: 44px; border-radius: 50%; font-size: 15px; }
 .streak-day-label { font-size: 10px; }
 .streak-tip { padding: 7px 10px; font-size: 12px; border-radius: 8px; }
 
@@ -3178,7 +3178,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); }
 .report-cat .bar { border-radius: 4px; }
 
 /* ── 스트릭 날 도트 크기 조정 ── */
-.streak-dot { width: 20px !important; height: 20px !important; display: block !important; align-self: center; }
+.streak-dot { width: 44px; height: 44px; border-radius: 50%; font-size: 15px; }
 .streak-day-label { font-size: 10px; }
 
 /* ── 랭킹 나 표시 ── */
@@ -6058,7 +6058,8 @@ function renderMypage(){
   streakHtml+='<div class="streak-days">';
   for(var si=0;si<5;si++){
     var dc=si<cur?(si===cur-1?'today':'filled'):'empty';
-    streakHtml+='<div class="streak-day-item"><div class="streak-dot '+dc+'"></div><div class="streak-day-label">'+dayLabels[si]+'</div></div>';
+    var di=si<cur?'✓':(si+1)+'';
+    streakHtml+='<div class="streak-day-item"><div class="streak-day-label">'+dayLabels[si]+'</div><div class="streak-dot '+dc+'">'+di+'</div></div>';
   }
   streakHtml+='</div>';
   var tipMsg=cur>=5?'🎉 보너스 티켓 획득! 계속 도전하세요':'<span class="hl">'+(5-cur)+'일</span> 더 구매하면 보너스 티켓 🎫';

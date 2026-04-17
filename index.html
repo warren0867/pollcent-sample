@@ -3758,6 +3758,94 @@ html { scroll-behavior: smooth; }
   .reward-ex-btn.silver { background: #2C2C2E; color: #D1D5DB; }
   .reward-ex-btn.disabled { background: #2C2C2E; color: #58585E; }
 }
+
+/* ══════════════════════════════════════
+   Round 9 — 출석체크 streak badge,
+   detail AI box, 상품 상세 misc
+   ══════════════════════════════════════ */
+
+/* 출석 streak badge */
+.streak-badge {
+  display: flex; align-items: center; gap: 3px;
+  padding: 5px 10px; border-radius: 100px;
+  background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+  color: #92400E; font-size: 13px; font-weight: 800;
+  box-shadow: 0 2px 6px rgba(245,158,11,0.25);
+}
+.streak-flame { font-size: 14px; }
+
+/* attend-btn 체크 완료 상태 */
+.attend-btn.checked {
+  background: #ECFDF5 !important;
+  color: #059669 !important;
+  border: 1.5px solid #A7F3D0;
+  display: flex; align-items: center;
+  justify-content: center; gap: 6px;
+}
+
+/* Detail AI 후기 박스 개선 */
+.detail-ai-box {
+  margin: 0 16px 10px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #F5F3FF, #EDE9FE);
+  border-radius: 14px;
+  border-left: 3px solid #7C3AED;
+}
+.detail-ai-label {
+  font-size: 11px; font-weight: 700; color: #7C3AED;
+  margin-bottom: 6px; display: flex; align-items: center; gap: 4px;
+}
+.detail-ai-text {
+  font-size: 13px; color: var(--text);
+  line-height: 1.6; font-style: italic;
+}
+.detail-ai-text::before { content: '"'; }
+.detail-ai-text::after  { content: '"'; }
+
+/* Similar products */
+.similar-section {
+  padding: 14px 16px 6px; background: var(--card); margin-bottom: 8px;
+}
+.similar-title {
+  font-size: 14px; font-weight: 800; letter-spacing: -0.4px;
+  color: var(--text); margin-bottom: 12px;
+}
+.similar-card {
+  flex-shrink: 0; width: 130px;
+  border-radius: 14px; padding: 12px;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.12s;
+}
+.similar-card:active { transform: scale(0.97); border-color: var(--primary); }
+.similar-card-emoji { font-size: 28px; text-align: center; margin-bottom: 8px; }
+.similar-card-name {
+  font-size: 11px; font-weight: 600; color: var(--text);
+  overflow: hidden; display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  line-height: 1.4; margin-bottom: 6px;
+}
+.similar-card-price { font-size: 13px; font-weight: 800; color: var(--text); letter-spacing: -0.3px; }
+.similar-card-disc  { font-size: 11px; font-weight: 700; color: var(--red); }
+
+/* 상품 상세 하단 버튼 영역 */
+.detail-bottom {
+  display: flex; gap: 10px; align-items: center;
+  padding: 12px 16px calc(12px + var(--safe-bottom));
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .detail-ai-box {
+    background: linear-gradient(135deg, #1E1830, #241A3E);
+    border-left-color: #A78BFA;
+  }
+  .detail-ai-label { color: #A78BFA; }
+  .streak-badge { background: linear-gradient(135deg, #3D2A0E, #4A3210); color: #FCD34D; }
+}
 </style>
 </head>
 <body>
@@ -4538,7 +4626,15 @@ function renderAttendance(){
   var todayIdx=new Date().getDay();
   todayIdx=todayIdx===0?6:todayIdx-1;
   var html='<div class="attend-card" style="margin-top:10px">';
-  html+='<div class="attend-header"><h3>📅 출석체크</h3><span class="streak">연속 '+att.streak+'일</span></div>';
+  html+='<div class="attend-header">';
+  html+='<div>';
+  html+='<h3 style="font-size:14px;font-weight:800;letter-spacing:-0.4px;margin-bottom:2px">출석체크</h3>';
+  html+='<div class="attend-bonus">7일 연속 출석 시 보너스 티켓 2장!</div>';
+  html+='</div>';
+  if(att.streak>0){
+    html+='<div class="streak-badge"><span class="streak-flame">🔥</span>'+att.streak+'일</div>';
+  }
+  html+='</div>';
   html+='<div class="attend-days">';
   for(var i=0;i<7;i++){
     var isToday=i===todayIdx;
@@ -4549,14 +4645,13 @@ function renderAttendance(){
     if(isToday)cls+=' today';
     if(isBonus)cls+=' bonus';
     html+='<div class="'+cls+'"><div class="d">'+dayNames[i]+'</div>';
-    if(isBonus)html+='<div class="stamp">'+(isDone?'✓':'🎁')+'</div>';
-    else html+='<div class="stamp">'+(isDone?'✓':'')+'</div>';
+    if(isBonus)html+='<div class="stamp">'+(isDone?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':'🎁')+'</div>';
+    else html+='<div class="stamp">'+(isDone?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':'')+'</div>';
     html+='</div>';
   }
   html+='</div>';
-  html+='<div class="attend-bonus">7일 연속 출석 시 보너스 티켓 2장!</div>';
-  if(!checkedToday)html+='<button class="attend-btn" onclick="doAttendance();renderAttendance()">오늘 출석하기</button>';
-  else html+='<button class="attend-btn" disabled>출석 완료 ✓</button>';
+  if(!checkedToday)html+='<button class="attend-btn" onclick="doAttendance();renderAttendance()">오늘 출석하기 🎫</button>';
+  else html+='<button class="attend-btn checked" disabled><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 출석 완료</button>';
   html+='</div>';
   document.getElementById('attend-area').innerHTML=html;
 }
@@ -5980,17 +6075,16 @@ openDetail=function(id,fromWish){
   if(similar.length<3)similar=similar.concat(PRODUCTS.filter(function(x){return x.id!==p.id&&x.category!==p.category}).slice(0,3-similar.length));
   if(similar.length>0){
     html+='<div class="similar-section">';
-    html+='<div class="similar-header">👀 이 상품을 본 사람이 같이 본 상품</div>';
+    html+='<div class="similar-title">함께 본 상품</div>';
     html+='<div class="similar-scroll">';
     similar.slice(0,5).forEach(function(s){
-      var sSig=getTimingSignal(s);
       html+='<div class="similar-card" onclick="openDetail('+s.id+')">';
-      html+='<div class="emoji">'+s.emoji+'</div>';
-      html+='<div class="name">'+s.name+'</div>';
-      html+='<div class="discount">'+s.discount+'%</div>';
-      html+='<div class="price">'+s.currentPrice.toLocaleString()+'원</div>';
-      html+='<div class="timing"><span class="timing-badge '+sSig.signal+'" style="font-size:9px;padding:2px 6px">'+sSig.label+'</span></div>';
-      html+='</div>';
+      html+='<div class="similar-card-emoji">'+s.emoji+'</div>';
+      html+='<div class="similar-card-name">'+s.name+'</div>';
+      html+='<div style="display:flex;align-items:center;gap:4px;margin-top:2px">';
+      html+='<span class="similar-card-disc">-'+s.discount+'%</span>';
+      html+='<span class="similar-card-price">'+s.currentPrice.toLocaleString()+'원</span>';
+      html+='</div></div>';
     });
     html+='</div></div>';
   }

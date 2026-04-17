@@ -2548,14 +2548,14 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); }
 .pending-icon {
   width: 38px; height: 38px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #6366F1, #818CF8);
   display: flex; align-items: center; justify-content: center;
   font-size: 18px;
   flex-shrink: 0;
 }
-.pending-icon.sealed {
-  background: linear-gradient(135deg, #6366F1, #818CF8);
-}
+.pending-icon-sealed { background: linear-gradient(135deg, #6366F1, #818CF8); }
+.pending-icon-gold   { background: linear-gradient(135deg, #FCD34D, #F59E0B); }
+.pending-icon-silver { background: linear-gradient(135deg, #D1D5DB, #9CA3AF); }
+.pending-icon-bronze { background: linear-gradient(135deg, #FDBA74, #CD7F32); }
 .pending-info { flex: 1; min-width: 0; }
 .pending-product {
   font-size: 13px;
@@ -4244,6 +4244,43 @@ button:active, [onclick]:active {
   .ex-btn-disabled  { background: #2C2C2E; color: #48484A; }
   .ex-icon          { filter: brightness(0.85); }
 }
+
+/* 적립 대기 섹션 헤더 & 리스트 */
+.pending-section-header {
+  padding: 12px 18px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-sub);
+  letter-spacing: 0.3px;
+  border-top: 1px solid var(--border);
+}
+.pending-list {
+  padding: 0 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+/* pending-countdown 수직 정렬 */
+.pending-countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.pending-d {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: -0.3px;
+  line-height: 1;
+}
+.pending-date {
+  font-size: 10px;
+  color: var(--text-light);
+  font-weight: 500;
+  line-height: 1;
+}
 </style>
 </head>
 <body>
@@ -5803,25 +5840,28 @@ function renderBenefit(){
   var pendingTickets=tickets.history.filter(function(t){return t.status==='pending'});
   var pendingHtml='';
   if(pendingTickets.length>0){
-    pendingHtml='<div class="section-header" style="padding-top:8px">⏳ 적립 대기 중</div>';
-    pendingHtml+='<div style="padding:0 16px 12px">';
+    pendingHtml='<div class="pending-section-header">⏳ 적립 대기 중</div>';
+    pendingHtml+='<div class="pending-list">';
     pendingTickets.forEach(function(t){
       var availableAt=t.available_at?new Date(t.available_at):new Date(new Date(t.date).getTime()+(delayDays*86400000));
       var daysLeft=Math.max(0,Math.ceil((availableAt.getTime()-Date.now())/86400000));
+      var tierIconBg=t.sealed?'':'';
+      var tierClass=t.sealed?'sealed':(t.tier||'bronze');
+      var tierLabel=t.tier==='gold'?'🥇 골드':t.tier==='silver'?'🥈 실버':'🥉 브론즈';
       pendingHtml+='<div class="pending-ticket-card">';
+      pendingHtml+='<div class="pending-icon pending-icon-'+tierClass+'">'+(t.sealed?'🎁':'🎫')+'</div>';
+      pendingHtml+='<div class="pending-info">';
+      pendingHtml+='<div class="pending-product">'+t.product+'</div>';
       if(t.sealed){
-        pendingHtml+='<div class="pending-icon sealed">🎁</div>';
-        pendingHtml+='<div class="pending-info"><div class="pending-product">'+t.product+'</div>';
-        pendingHtml+='<div class="pending-status sealed-status">봉인됨 · 구매 확인 대기 중</div></div>';
+        pendingHtml+='<div class="pending-status sealed-status">봉인됨 · 구매 확인 대기 중</div>';
       } else {
-        var tierColor=t.tier==='gold'?'#F59E0B':t.tier==='silver'?'#9CA3AF':'#CD7F32';
-        var tierLabel=t.tier==='gold'?'🥇 골드':t.tier==='silver'?'🥈 실버':'🥉 브론즈';
-        pendingHtml+='<div class="pending-icon" style="background:'+tierColor+'">🎫</div>';
-        pendingHtml+='<div class="pending-info"><div class="pending-product">'+t.product+'</div>';
-        pendingHtml+='<div class="pending-status">'+tierLabel+' · 개봉 대기 중</div></div>';
+        pendingHtml+='<div class="pending-status">'+tierLabel+' · 개봉 대기 중</div>';
       }
-      pendingHtml+='<div class="pending-countdown"><div class="pending-d">D-'+daysLeft+'</div>';
-      pendingHtml+='<div class="pending-date">'+availableAt.toLocaleDateString('ko-KR')+'</div></div>';
+      pendingHtml+='</div>';
+      pendingHtml+='<div class="pending-countdown">';
+      pendingHtml+='<div class="pending-d">D-'+daysLeft+'</div>';
+      pendingHtml+='<div class="pending-date">'+availableAt.toLocaleDateString('ko-KR',{month:'numeric',day:'numeric'})+'</div>';
+      pendingHtml+='</div>';
       pendingHtml+='</div>';
     });
     pendingHtml+='</div>';

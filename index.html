@@ -3648,6 +3648,116 @@ html { scroll-behavior: smooth; }
   }
   .mypage-stat { background: rgba(255,255,255,0.06); }
 }
+
+/* ══════════════════════════════════════
+   Round 8 — 티켓 박스 hero 레이아웃,
+   진행바, 교환소 카드 개선
+   ══════════════════════════════════════ */
+
+/* 티켓 히어로 섹션 */
+.ticket-hero-row {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.ticket-hero-label {
+  font-size: 11px; font-weight: 600;
+  color: var(--text-sub); margin-bottom: 4px;
+}
+.ticket-hero-count {
+  font-size: 36px; font-weight: 900;
+  color: var(--text); letter-spacing: -1.5px;
+  line-height: 1;
+}
+.ticket-hero-unit {
+  font-size: 16px; font-weight: 700;
+  letter-spacing: 0; margin-left: 2px;
+}
+.ticket-hero-sub {
+  font-size: 11px; color: var(--primary);
+  font-weight: 600; margin-top: 4px;
+}
+.ticket-visual-stack {
+  position: relative; width: 60px; height: 60px;
+}
+.ticket-visual-item {
+  position: absolute; font-size: 26px;
+  transition: transform 0.3s;
+}
+.ticket-visual-item.t1 { top: 0; left: 50%; transform: translateX(-50%); }
+.ticket-visual-item.t2 { top: 12px; left: 50%; transform: translateX(-55%) rotate(-12deg); filter: brightness(0.8); font-size: 22px; }
+.ticket-visual-item.t3 { top: 14px; left: 50%; transform: translateX(-42%) rotate(10deg); filter: brightness(0.7); font-size: 20px; }
+
+/* 진행바 */
+.ticket-progress-wrap { margin-bottom: 14px; }
+.ticket-progress-top {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.ticket-progress-label {
+  font-size: 12px; font-weight: 600; color: var(--text);
+}
+.ticket-progress-count {
+  font-size: 12px; font-weight: 700; color: var(--primary);
+}
+.ticket-progress-bar {
+  height: 8px; border-radius: 8px;
+  background: var(--border); overflow: hidden;
+  margin-bottom: 4px;
+}
+.ticket-progress-fill {
+  height: 100%; border-radius: 8px;
+  background: linear-gradient(90deg, #7C3AED, #A855F7);
+  transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+.ticket-progress-steps {
+  display: flex; justify-content: space-between;
+  font-size: 9px; color: var(--text-light); font-weight: 600;
+}
+
+/* 교환소 아이템 개선 */
+.reward-ex-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.12s;
+}
+.reward-ex-item:last-child { border-bottom: none; }
+.reward-ex-item:active { background: var(--bg); }
+.reward-ex-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.reward-ex-info { flex: 1; min-width: 0; }
+.reward-ex-info h4 {
+  font-size: 13px; font-weight: 700; color: var(--text);
+  margin-bottom: 3px; letter-spacing: -0.3px;
+}
+.reward-ex-info p {
+  font-size: 11px; color: var(--text-sub);
+  display: flex; align-items: center; gap: 4px;
+}
+.reward-ex-btn {
+  padding: 8px 14px; border-radius: 10px;
+  font-size: 12px; font-weight: 700; border: none;
+  cursor: pointer; flex-shrink: 0;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.reward-ex-btn.bronze { background: #FEF3C7; color: #92400E; }
+.reward-ex-btn.silver { background: #F3F4F6; color: #374151; }
+.reward-ex-btn.gold   { background: linear-gradient(135deg,#FCD34D,#F59E0B); color: #78350F; box-shadow: 0 2px 8px rgba(245,158,11,0.35); }
+.reward-ex-btn.disabled { background: var(--bg); color: var(--text-light); }
+.reward-ex-btn.gold:active { transform: scale(0.95); }
+
+@media (prefers-color-scheme: dark) {
+  .ticket-progress-bar { background: #3A3A3C; }
+  .reward-ex-icon { background: #2C2C2E !important; }
+  .reward-ex-btn.bronze { background: #3D2A0E; color: #FCD34D; }
+  .reward-ex-btn.silver { background: #2C2C2E; color: #D1D5DB; }
+  .reward-ex-btn.disabled { background: #2C2C2E; color: #58585E; }
+}
 </style>
 </head>
 <body>
@@ -3780,15 +3890,33 @@ html { scroll-behavior: smooth; }
 
     <div id="benefit-ticket">
       <div class="mypage-group" style="margin-top:0">
-      <!-- 내 티켓 현황 (간결) -->
+      <!-- 내 티켓 현황 (개선) -->
       <div class="ticket-box">
-        <div class="ticket-box-title">
-          <h3>내 티켓</h3>
-          <span class="tip" id="ticket-pending">적립예정 0장</span>
+        <div class="ticket-hero-row">
+          <div class="ticket-hero-left">
+            <div class="ticket-hero-label">보유 티켓</div>
+            <div class="ticket-hero-count"><span id="ticket-available">0</span><span class="ticket-hero-unit">장</span></div>
+            <div class="ticket-hero-sub" id="ticket-pending">적립예정 0장</div>
+          </div>
+          <div class="ticket-hero-visual">
+            <div class="ticket-visual-stack">
+              <div class="ticket-visual-item t3">🎫</div>
+              <div class="ticket-visual-item t2">🎫</div>
+              <div class="ticket-visual-item t1">🎫</div>
+            </div>
+          </div>
         </div>
-        <div class="ticket-stats">
-          <div class="ticket-stat"><div class="label">사용 가능</div><div class="val"><span class="icon">🎫</span> <span id="ticket-available">0</span></div></div>
-          <div class="ticket-stat"><div class="label">커피까지</div><div class="val"><span class="icon">☕</span> <span id="ticket-remaining">8</span></div></div>
+        <div class="ticket-progress-wrap">
+          <div class="ticket-progress-top">
+            <span class="ticket-progress-label">커피 교환까지</span>
+            <span class="ticket-progress-count"><span id="ticket-remaining">8</span>장 남음</span>
+          </div>
+          <div class="ticket-progress-bar">
+            <div class="ticket-progress-fill" id="ticket-progress-fill" style="width:0%"></div>
+          </div>
+          <div class="ticket-progress-steps">
+            <span>0</span><span>2</span><span>4</span><span>6</span><span>8장 ☕</span>
+          </div>
         </div>
         <div id="ticket-delay-info" style="font-size:11px;color:var(--text-sub);text-align:center;padding:4px 0 8px"></div>
         <div class="ticket-actions">
@@ -5144,8 +5272,11 @@ function renderBenefit(){
   document.getElementById('ticket-pending').textContent='적립예정 '+tickets.pending+'장';
   document.getElementById('ticket-available').textContent=tickets.available;
   var remaining=Math.max(0,8-tickets.available);
-  document.getElementById('ticket-remaining').textContent=remaining>0?remaining+'장':'교환 가능!';
+  document.getElementById('ticket-remaining').textContent=remaining>0?remaining:'0';
   document.getElementById('raffle-tickets').textContent=tickets.available;
+  // 티켓 진행바
+  var fillEl=document.getElementById('ticket-progress-fill');
+  if(fillEl)fillEl.style.width=Math.min(100,Math.round(tickets.available/8*100))+'%';
   // 대기 기간 안내
   var delayEl=document.getElementById('ticket-delay-info');
   if(delayEl){
@@ -5193,7 +5324,8 @@ function renderBenefit(){
     var have=exCounts[item.tier]||0;
     var enough=have>=item.needed;
     exHtml+='<div class="reward-ex-item">';
-    exHtml+='<div class="reward-ex-icon" style="background:#FEF3C7">'+item.icon+'</div>';
+    var iconBg=item.tier==='gold'?'#FEF3C7':item.tier==='silver'?'#F3F4F6':'#FFF7ED';
+    exHtml+='<div class="reward-ex-icon" style="background:'+iconBg+'">'+item.icon+'</div>';
     exHtml+='<div class="reward-ex-info">';
     exHtml+='<h4>'+item.name+'</h4>';
     exHtml+='<p style="display:flex;gap:6px;align-items:center">'+item.label+' '+item.needed+'장 · 보유 <b style="color:'+(enough?'var(--primary)':'var(--red)')+'">'+have+'장</b></p>';

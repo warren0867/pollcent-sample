@@ -116,7 +116,7 @@ html,body{margin:0;padding:0;height:100%;background:var(--bg);-webkit-font-smoot
 .cat-item{display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;cursor:pointer}
 .cat-icon{width:44px;height:44px;border-radius:13px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:var(--shadow-xs);transition:all .2s}
 .cat-item:active .cat-icon{transform:scale(.92)}
-.cat-label{font-size:9px;font-weight:600;color:var(--text-sub);white-space:nowrap}
+.cat-label{font-size:11px;font-weight:600;color:var(--text-sub);white-space:nowrap}
 
 /* Track items */
 .track-card{display:flex;gap:10px;padding:11px 16px;background:var(--card);margin-bottom:1px;cursor:pointer;transition:background .15s}
@@ -243,8 +243,8 @@ html,body{margin:0;padding:0;height:100%;background:var(--bg);-webkit-font-smoot
 /* Stats row */
 .stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;padding:10px 0;margin:0 16px;border-top:1px solid var(--border)}
 .stat-box{text-align:center}
-.stat-box .val{font-size:15px;font-weight:900;color:var(--primary);letter-spacing:-0.3px}
-.stat-box .lbl{font-size:9px;font-weight:600;color:var(--text-sub);margin-top:2px}
+.stat-box .val{font-size:18px;font-weight:900;color:var(--primary);letter-spacing:-0.5px}
+.stat-box .lbl{font-size:11px;font-weight:600;color:var(--text-sub);margin-top:3px}
 
 /* Modal */
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,23,42,.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
@@ -448,7 +448,7 @@ html,body{margin:0;padding:0;height:100%;background:var(--bg);-webkit-font-smoot
 .attend-header .streak{font-size:12px;font-weight:600;color:var(--primary)}
 .attend-days{display:flex;justify-content:space-between;gap:4px}
 .attend-day{flex:1;text-align:center;padding:8px 0;border-radius:10px;background:var(--bg);position:relative}
-.attend-day .d{font-size:10px;color:var(--text-sub);margin-bottom:4px}
+.attend-day .d{font-size:11px;color:var(--text-sub);margin-bottom:4px}
 .attend-day .stamp{width:28px;height:28px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:14px;background:var(--border);color:var(--text-light)}
 .attend-day.done .stamp{background:var(--primary);color:#fff}
 .attend-day.today .stamp{background:#FEF3C7;color:#F59E0B;border:2px solid #F59E0B}
@@ -536,22 +536,22 @@ html,body{margin:0;padding:0;height:100%;background:var(--bg);-webkit-font-smoot
 
 /* Streak card */
 /* ── streak card compact ── */
-.streak-card{margin:0 16px 8px;background:linear-gradient(135deg,#7C3AED,#A855F7);border-radius:var(--radius-xl);padding:18px;color:#fff;box-shadow:0 4px 16px rgba(124,58,237,.3)}
+.streak-card{margin:0 16px 8px;background:var(--card);border-radius:var(--radius-xl);padding:16px 18px;color:var(--text);border:1px solid var(--border);box-shadow:var(--shadow-sm)}
 .streak-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .streak-main{display:flex;align-items:center;gap:8px}
-.streak-fire{font-size:22px;line-height:1}
-.streak-count{font-size:22px;font-weight:900;letter-spacing:-1px;line-height:1}
-.streak-count-label{font-size:11px;opacity:.75;font-weight:600;margin-left:2px}
-.streak-record-badge{background:rgba(255,255,255,.18);border-radius:100px;padding:4px 10px;font-size:11px;font-weight:700;white-space:nowrap}
-.streak-days{display:flex;gap:6px;margin-bottom:12px;justify-content:space-between}
-.streak-day-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
-.streak-day-label{font-size:10px;font-weight:600;opacity:.6}
-.streak-dot{width:100%;aspect-ratio:1;max-width:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;transition:transform .2s}
-.streak-dot.filled{background:#fff;color:#7C3AED;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.streak-fire{font-size:20px;line-height:1}
+.streak-count{font-size:32px;font-weight:900;letter-spacing:-1.5px;line-height:1;color:var(--primary)}
+.streak-count-label{font-size:13px;color:var(--text-sub);font-weight:600;margin-left:2px}
+.streak-record-badge{background:var(--primary-light);color:var(--primary);border-radius:100px;padding:4px 10px;font-size:11px;font-weight:700;white-space:nowrap}
+.streak-days{display:flex;gap:8px;margin-bottom:12px;justify-content:space-between}
+.streak-day-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px}
+.streak-day-label{font-size:10px;font-weight:600;color:var(--text-light)}
+.streak-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;transition:transform .2s;flex-shrink:0}
+.streak-dot.filled{background:var(--primary);color:#fff;box-shadow:0 2px 8px rgba(124,58,237,.3)}
 .streak-dot.today{background:#F59E0B;color:#fff;box-shadow:0 2px 8px rgba(245,158,11,.4)}
-.streak-dot.empty{background:rgba(255,255,255,.15);color:rgba(255,255,255,.45)}
-.streak-tip{font-size:11px;font-weight:600;opacity:.85;text-align:center;background:rgba(255,255,255,.12);border-radius:8px;padding:7px 12px}
-.streak-tip .hl{color:#FCD34D;font-weight:800}
+.streak-dot.empty{background:var(--border);color:var(--text-light)}
+.streak-tip{font-size:12px;font-weight:600;color:var(--text-sub);text-align:center;background:var(--bg);border-radius:8px;padding:8px 12px}
+.streak-tip .hl{color:var(--primary);font-weight:800}
 
 /* Ranking card */
 .ranking-card{margin:0 16px 8px;background:var(--card);border-radius:var(--radius-lg);padding:14px 16px;box-shadow:var(--shadow-sm)}
@@ -829,8 +829,8 @@ html, body, #app-shell { background: var(--bg); }
   background: #fff;
 }
 .stat-box { text-align: center; padding: 4px 0; }
-.stat-box .val { font-size: 16px; font-weight: 800; color: var(--primary); letter-spacing: -0.3px; }
-.stat-box .lbl { font-size: 9px; font-weight: 600; color: var(--text-sub); margin-top: 2px; }
+.stat-box .val { font-size: 18px; font-weight: 900; color: var(--primary); letter-spacing: -0.5px; }
+.stat-box .lbl { font-size: 11px; font-weight: 600; color: var(--text-sub); margin-top: 3px; }
 
 /* 13. mypage-row */
 .mypage-row { padding: 13px 18px; }
@@ -855,14 +855,14 @@ html, body, #app-shell { background: var(--bg); }
 .streak-card {
   margin: 0 0 0; border-radius: 0;
   box-shadow: none; padding: 14px 18px;
-  background: linear-gradient(135deg, #7C3AED, #9333EA);
+  background: var(--card);
+  color: var(--text);
 }
 .streak-top { margin-bottom: 10px; }
-.streak-days { gap: 6px; margin-bottom: 8px; }
-.streak-dot { border-radius: 8px; max-width: 36px; font-size: 12px; }
-.streak-dot.filled { background: rgba(255,255,255,0.95); }
-.streak-day-label { font-size: 9px; }
-.streak-tip { padding: 6px 10px; font-size: 11px; border-radius: 7px; }
+.streak-days { gap: 8px; margin-bottom: 8px; }
+.streak-dot { border-radius: 50%; font-size: 11px; }
+.streak-day-label { font-size: 10px; }
+.streak-tip { padding: 7px 10px; font-size: 12px; border-radius: 8px; }
 
 /* 16. 랭킹 카드 */
 .ranking-card {
@@ -2159,8 +2159,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); }
   padding: 14px 0 12px;
   background: #fff;
 }
-.stat-box .val { font-size: 17px; font-weight: 800; letter-spacing: -0.4px; }
-.stat-box .lbl { font-size: 9px; font-weight: 600; color: #AAAAAA; margin-top: 3px; }
+.stat-box .val { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
+.stat-box .lbl { font-size: 11px; font-weight: 600; color: #AAAAAA; margin-top: 3px; }
 
 /* ── savings card ── */
 .savings-card {
@@ -2176,17 +2176,19 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); }
 /* ── streak card ── */
 .streak-card {
   padding: 16px 18px;
-  background: linear-gradient(135deg, #7C3AED, #9333EA);
+  background: var(--card);
+  color: var(--text);
 }
-.streak-count { font-size: 24px; font-weight: 900; }
+.streak-count { font-size: 32px; font-weight: 900; color: var(--primary); }
 .streak-record-badge {
-  background: rgba(255,255,255,0.16);
+  background: var(--primary-light);
+  color: var(--primary);
   border-radius: 100px;
   padding: 4px 10px;
   font-size: 11px;
 }
-.streak-dot.filled { background: rgba(255,255,255,0.95); }
-.streak-tip { border-radius: 8px; font-size: 11px; background: rgba(255,255,255,0.12); }
+.streak-dot.filled { background: var(--primary); color: #fff; }
+.streak-tip { border-radius: 8px; font-size: 12px; background: var(--bg); }
 
 /* ── 챌린지 카드 ── */
 .challenge-bar {
@@ -2895,66 +2897,17 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); }
    ROUND 4 — 마이페이지 & 나머지 컴포넌트
    ==================================================== */
 
-/* ── 절약 히어로 카드 (마이페이지) ── */
-.my-savings-hero {
+/* ── 절약 스탯 행 (마이페이지) ── */
+.my-savings-stat {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 18px 18px;
-  background: linear-gradient(135deg, #7C3AED, #9333EA);
-  color: #fff;
-  position: relative;
-  overflow: hidden;
+  gap: 10px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
 }
-.my-savings-hero::before {
-  content: '';
-  position: absolute;
-  top: -30px; right: -30px;
-  width: 120px; height: 120px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.my-savings-hero::after {
-  content: '';
-  position: absolute;
-  bottom: -20px; left: 40px;
-  width: 80px; height: 80px;
-  background: rgba(255,255,255,0.07);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.my-savings-icon {
-  font-size: 32px;
-  flex-shrink: 0;
-  position: relative; z-index: 1;
-}
-.my-savings-info { flex: 1; min-width: 0; position: relative; z-index: 1; }
-.my-savings-label {
-  font-size: 11px;
-  font-weight: 500;
-  opacity: 0.82;
-  margin-bottom: 4px;
-  letter-spacing: 0.1px;
-}
-.my-savings-amount {
-  font-size: 28px;
-  font-weight: 900;
-  letter-spacing: -1px;
-  line-height: 1;
-  margin-bottom: 5px;
-}
-.my-savings-unit {
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  margin-left: 1px;
-}
-.my-savings-sub {
-  font-size: 11px;
-  opacity: 0.75;
-  font-weight: 500;
-}
+.my-savings-stat-icon { font-size: 16px; flex-shrink: 0; }
+.my-savings-stat-label { flex: 1; font-size: 13px; font-weight: 500; color: var(--text-sub); }
+.my-savings-stat-amount { font-size: 15px; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; }
 
 /* ── 초대코드 라벨 ── */
 .invite-code-label {
@@ -3103,7 +3056,6 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); }
 
 /* ── 다크모드 Round 4 ── */
 @media (prefers-color-scheme: dark) {
-  .my-savings-hero { background: linear-gradient(135deg, #5B21B6, #7C3AED); }
   .pending-ticket-card { background: #1C1C1E; border-color: #2C2C2E; }
   .home-challenge-bar { background: #1C1C1E; border-color: #2C2C2E; }
   .hot-section { background: #1C1C1E; }
@@ -3226,8 +3178,8 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); }
 .report-cat .bar { border-radius: 4px; }
 
 /* ── 스트릭 날 도트 크기 조정 ── */
-.streak-dot { max-width: 38px; font-size: 13px; }
-.streak-day-label { font-size: 9px; opacity: 0.65; }
+.streak-dot { width: 28px; height: 28px; border-radius: 50%; font-size: 11px; }
+.streak-day-label { font-size: 10px; }
 
 /* ── 랭킹 나 표시 ── */
 .ranking-item.me .ranking-name { font-weight: 700; color: var(--primary); }
@@ -3276,7 +3228,6 @@ html { scroll-behavior: smooth; }
   .detail-scroll { background: #111113; }
   .detail-product-header { border-bottom-color: #2C2C2E; }
   .similar-card { background: #1C1C1E; border-color: #2C2C2E; }
-  .my-savings-hero { background: linear-gradient(135deg, #4C1D95, #6D28D9); }
   .report-summary { background: #2C2C2E; }
   .onboard-header {
     background: linear-gradient(170deg, #1A1528 0%, #16131F 45%, #111113 100%);
@@ -3632,11 +3583,11 @@ html { scroll-behavior: smooth; }
   display: flex; flex-direction: column; align-items: center; gap: 2px;
 }
 .mypage-stat-value {
-  font-size: 16px; font-weight: 800;
-  color: var(--text); letter-spacing: -0.4px;
+  font-size: 18px; font-weight: 900;
+  color: var(--text); letter-spacing: -0.5px;
 }
 .mypage-stat-label {
-  font-size: 10px; font-weight: 600; color: var(--text-sub);
+  font-size: 11px; font-weight: 600; color: var(--text-sub);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -6018,13 +5969,10 @@ function renderMypage(){
     if(orig)totalSaved+=(orig-p.price);
   });
   document.getElementById('my-savings-section').innerHTML=
-    '<div class="my-savings-hero">'+
-      '<div class="my-savings-icon">💰</div>'+
-      '<div class="my-savings-info">'+
-        '<div class="my-savings-label">PricePick으로 아낀 금액</div>'+
-        '<div class="my-savings-amount">'+totalSaved.toLocaleString()+'<span class="my-savings-unit">원</span></div>'+
-        '<div class="my-savings-sub">스마트 쇼핑 리워드 함께 적립 중 🎫</div>'+
-      '</div>'+
+    '<div class="my-savings-stat">'+
+      '<span class="my-savings-stat-icon">💰</span>'+
+      '<span class="my-savings-stat-label">이번 달 절약 금액</span>'+
+      '<span class="my-savings-stat-amount">'+totalSaved.toLocaleString()+'원</span>'+
     '</div>';
   // 월간 소비 리포트
   var totalSpent=0;

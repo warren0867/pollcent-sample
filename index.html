@@ -3547,9 +3547,19 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
 /* goldbox-header h3 앞 이모지 숨김 (있다면) */
 .goldbox-header h3:before { content: none; }
 
-/* 공통 페이지 여백 통일 */
-.page { padding: 4px 0 20px; }
+/* ============================================================
+   ─── FIX: 하단 탭바에 콘텐츠 가려지지 않게 안전 패딩 보강
+   iOS Safari: dvh/vh 문제 + safe-area 누락 보완
+   ============================================================ */
+.content {
+  padding-bottom: calc(var(--tab-h) + var(--safe-bottom) + 20px) !important;
+}
+.page { padding: 0; }
 .page#page-start { padding: 0; }
+
+/* 페이지 최상단 요소에만 여백 부여 — 원본 구조 보존 */
+.page > *:first-child { margin-top: 10px; }
+.page#page-start > * { margin-top: 0; }
 
 /* 관심상품 빈 상태 강조 */
 #wish-list:empty::before {
@@ -3602,6 +3612,1271 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
 
 /* 탭 라벨 spacing */
 .tab { letter-spacing: -0.01em; }
+
+/* ============================================================
+   ─── 49. PRICEPICK HOME — Toss-grade premium home tab
+   ============================================================ */
+
+/* ─── 49-1. HERO CARD ─────────────────────────────────── */
+.pp-hero {
+  margin: 14px 16px 14px;
+  padding: 24px 22px 20px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 85% -10%, rgba(251,191,36,0.20), transparent 55%),
+    linear-gradient(135deg, #7C3AED 0%, #6D28D9 55%, #5B21B6 100%);
+  color: #fff;
+  box-shadow:
+    0 10px 30px rgba(124,58,237,0.32),
+    0 2px 6px rgba(124,58,237,0.22);
+  position: relative;
+  overflow: hidden;
+}
+.pp-hero::before {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -40px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.06), transparent 70%);
+  pointer-events: none;
+}
+.pp-hero-label {
+  font-size: 13px; font-weight: 500;
+  opacity: 0.85;
+  letter-spacing: -0.015em;
+  margin-bottom: 8px;
+  position: relative;
+}
+.pp-hero-amount {
+  font-size: 38px; font-weight: 800;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-bottom: 2px;
+  position: relative;
+}
+.pp-hero-amount span {
+  font-size: 22px; font-weight: 600;
+  opacity: 0.85;
+  margin-left: 3px;
+}
+.pp-hero-amount-empty {
+  font-size: 22px; font-weight: 700;
+  opacity: 0.9;
+  letter-spacing: -0.03em;
+}
+.pp-hero-sub {
+  font-size: 12.5px;
+  opacity: 0.72;
+  margin-top: 6px;
+  letter-spacing: -0.015em;
+  position: relative;
+}
+.pp-hero-stats {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  position: relative;
+}
+.pp-hero-stat {
+  display: flex; flex-direction: column;
+  gap: 2px;
+}
+.pp-hero-stat-label {
+  font-size: 11px;
+  opacity: 0.75;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.pp-hero-stat-val {
+  font-size: 17px; font-weight: 800;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.pp-hero-stat-val span {
+  font-size: 12px; font-weight: 500;
+  opacity: 0.8;
+  margin-left: 2px;
+}
+.pp-hero-stat-div {
+  width: 1px; height: 28px;
+  background: rgba(255,255,255,0.15);
+}
+.pp-hero-check {
+  margin-left: auto;
+  background: #fff;
+  color: var(--primary);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 13px; font-weight: 800;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  transition: transform 0.12s;
+}
+.pp-hero-check:active { transform: scale(0.96); }
+.pp-hero-done {
+  margin-left: auto;
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.18);
+  display: grid; place-items: center;
+  color: #fff;
+}
+.pp-hero-done svg { width: 20px; height: 20px; }
+
+/* ─── 49-2. PRICE DROP CARD ──────────────────────────── */
+.pp-drop-card {
+  margin: 0 16px 14px;
+  padding: 16px 18px;
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.pp-drop-card:active { transform: scale(0.985); }
+.pp-drop-head {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.pp-drop-badge {
+  display: inline-flex; align-items: center;
+  gap: 6px;
+  font-size: 12px; font-weight: 700;
+  color: var(--red);
+  letter-spacing: -0.02em;
+}
+.pp-drop-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 0 0 rgba(239,68,68,0.5);
+  animation: pp-pulse 1.8s infinite;
+}
+@keyframes pp-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(239,68,68,0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(239,68,68,0); }
+  100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+}
+.pp-drop-time {
+  font-size: 11px;
+  color: var(--text-light);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.pp-drop-body {
+  display: flex; gap: 14px;
+  align-items: center;
+}
+.pp-drop-thumb {
+  width: 58px; height: 58px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #F8F8FA, #ECECEE);
+  display: grid; place-items: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+.pp-drop-info { flex: 1; min-width: 0; }
+.pp-drop-name {
+  font-size: 13.5px; font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: 6px;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pp-drop-prices {
+  display: flex; align-items: baseline;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+.pp-drop-old {
+  font-size: 12px;
+  color: var(--text-light);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+.pp-drop-new {
+  font-size: 18px; font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+}
+.pp-drop-pct {
+  font-size: 12px; font-weight: 800;
+  color: #fff;
+  background: var(--red);
+  padding: 3px 7px;
+  border-radius: 5px;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.pp-drop-saved {
+  font-size: 11.5px; font-weight: 600;
+  color: var(--red);
+  letter-spacing: -0.015em;
+}
+
+/* ─── 49-3. SECTIONS ─────────────────────────────────── */
+.pp-section { margin-bottom: 18px; }
+.pp-section-head {
+  display: flex; align-items: baseline;
+  justify-content: space-between;
+  padding: 0 20px 12px;
+  gap: 10px;
+}
+.pp-section-head h2 {
+  font-size: 17px; font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--text);
+  flex-shrink: 0;
+}
+.pp-section-sub {
+  font-size: 12px;
+  color: var(--text-sub);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+.pp-more {
+  font-size: 13px;
+  color: var(--text-sub);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+}
+.pp-timer {
+  font-size: 12px; font-weight: 700;
+  color: var(--red);
+  background: var(--red-bg);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* ─── 49-4. LOWEST CARDS (hero product) ───────────────── */
+.pp-lowest-list {
+  padding: 0 16px;
+  display: flex; flex-direction: column;
+  gap: 10px;
+}
+.pp-lowest-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 18px;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  cursor: pointer;
+  transition: transform 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.pp-lowest-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(180deg, var(--red), #F59E0B);
+}
+.pp-lowest-card:active { transform: scale(0.985); }
+.pp-lowest-thumb {
+  width: 64px; height: 64px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #FFF7ED, #FED7AA);
+  display: grid; place-items: center;
+  font-size: 30px;
+  flex-shrink: 0;
+}
+.pp-lowest-body { flex: 1; min-width: 0; }
+.pp-lowest-badge {
+  display: inline-block;
+  font-size: 10.5px; font-weight: 800;
+  color: var(--red);
+  background: var(--red-bg);
+  padding: 3px 8px;
+  border-radius: 5px;
+  letter-spacing: -0.01em;
+  margin-bottom: 5px;
+}
+.pp-lowest-name {
+  font-size: 13px; font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: 6px;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pp-lowest-price-row {
+  display: flex; align-items: baseline;
+  gap: 8px;
+}
+.pp-lowest-price {
+  font-size: 19px; font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+}
+.pp-lowest-price span {
+  font-size: 14px; font-weight: 700;
+  margin-left: 1px;
+}
+.pp-lowest-save {
+  font-size: 11.5px; font-weight: 700;
+  color: var(--red);
+  letter-spacing: -0.015em;
+  font-variant-numeric: tabular-nums;
+}
+.pp-lowest-btn {
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 13px; font-weight: 800;
+  letter-spacing: -0.02em;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-brand-sm);
+  flex-shrink: 0;
+  transition: transform 0.12s;
+}
+.pp-lowest-btn:active { transform: scale(0.95); }
+
+/* ─── 49-5. HORIZONTAL SCROLL (popular, events) ──────── */
+.pp-hscroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 0 16px 6px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.pp-hscroll::-webkit-scrollbar { display: none; }
+.pp-hcard {
+  flex-shrink: 0;
+  width: 130px;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.04);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.pp-hcard:active { transform: scale(0.97); }
+.pp-hcard-thumb {
+  width: 100%;
+  aspect-ratio: 5 / 3;
+  background: linear-gradient(135deg, #F8F8FA, #EEEEF0);
+  display: grid; place-items: center;
+  font-size: 38px;
+}
+.pp-hcard-body { padding: 8px 10px 10px; }
+.pp-hcard-name {
+  font-size: 11.5px; font-weight: 500;
+  color: var(--text-2);
+  line-height: 1.35;
+  height: 30px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.pp-hcard-meta {
+  display: flex; align-items: baseline;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.pp-hcard-discount {
+  font-size: 12.5px; font-weight: 800;
+  color: var(--red);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.pp-hcard-price {
+  font-size: 12px; font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+}
+.pp-hcard .timing-badge {
+  font-size: 10px;
+  padding: 2px 6px;
+  margin-top: 2px;
+}
+
+/* ─── 49-6. GOLDBOX GRID (3 cols) ─────────────────────── */
+.pp-grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 0 16px;
+}
+.pp-gcard {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.04);
+  padding: 10px 8px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.15s;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.pp-gcard:active { transform: scale(0.96); }
+.pp-gcard-thumb {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #FEF3C7, #FED7AA);
+  margin: 0 auto 6px;
+  display: grid; place-items: center;
+  font-size: 24px;
+}
+.pp-gcard-name {
+  font-size: 10.5px; font-weight: 500;
+  color: var(--text-2);
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+.pp-gcard-discount {
+  font-size: 12px; font-weight: 800;
+  color: var(--red);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── 49-7. EVENT CARDS ──────────────────────────────── */
+.pp-event-card {
+  flex-shrink: 0;
+  width: 170px;
+  padding: 16px;
+  border-radius: 18px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+.pp-event-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: rgba(255,255,255,0.28);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 10.5px; font-weight: 800;
+  letter-spacing: -0.01em;
+  backdrop-filter: blur(8px);
+}
+.pp-event-emoji {
+  font-size: 34px;
+  margin: 8px 0 6px;
+}
+.pp-event-cat {
+  font-size: 15px; font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+}
+.pp-event-end {
+  font-size: 11px;
+  opacity: 0.82;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+/* ─── 49-8. CATEGORY CHIPS ───────────────────────────── */
+.pp-cat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 16px 12px;
+}
+.pp-cat-chip {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--border-strong);
+  color: var(--text-2);
+  font-size: 12.5px; font-weight: 600;
+  letter-spacing: -0.015em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+.pp-cat-chip:active { transform: scale(0.96); }
+.pp-cat-chip.active {
+  background: var(--text);
+  color: #fff;
+  border-color: var(--text);
+}
+
+/* ─── 49-9. 카테고리 상품 — 좌우 가로형 리스트 카드 ───── */
+.pp-grid2 {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 16px;
+}
+.pp-pcard {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.04);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: transform 0.15s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.pp-pcard:active { transform: scale(0.985); }
+.pp-pcard-thumb {
+  width: 60px; height: 60px;
+  aspect-ratio: auto;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #F8F8FA, #EEEEF0);
+  display: grid; place-items: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+.pp-pcard-name {
+  font-size: 13px; font-weight: 600;
+  color: var(--text);
+  padding: 0;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.pp-pcard-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.pp-pcard-price-row {
+  padding: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.pp-pcard-discount {
+  font-size: 13.5px; font-weight: 800;
+  color: var(--red);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.pp-pcard-price {
+  font-size: 14px; font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.pp-empty-inline {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--text-sub);
+  font-size: 13px;
+  letter-spacing: -0.02em;
+}
+
+/* ============================================================
+   ─── 50. WISHLIST TAB — 관심상품
+   ============================================================ */
+.pp-wish-summary {
+  margin: 12px 16px 12px;
+  padding: 18px 20px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.pp-wish-sum-item {
+  flex: 1;
+  text-align: center;
+}
+.pp-wish-sum-val {
+  font-size: 22px; font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.pp-wish-sum-val.pp-wish-sum-red { color: var(--red); }
+.pp-wish-sum-val.pp-wish-sum-amount {
+  color: var(--primary);
+  font-size: 17px;
+}
+.pp-wish-sum-label {
+  font-size: 11px; font-weight: 500;
+  color: var(--text-sub);
+  letter-spacing: -0.015em;
+}
+.pp-wish-sum-div {
+  width: 1px; height: 30px;
+  background: var(--border);
+}
+
+/* ─── 관심상품 카드 ─── */
+.pp-wcard {
+  margin: 0 16px 8px;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.12s;
+}
+.pp-wcard:active { transform: scale(0.99); }
+.pp-wcard-thumb {
+  width: 60px; height: 60px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #F8F8FA, #EEEEF0);
+  display: grid; place-items: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+.pp-wcard-body { flex: 1; min-width: 0; }
+.pp-wcard-name {
+  font-size: 13px; font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.025em;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pp-wcard-prices {
+  display: flex; align-items: baseline;
+  gap: 6px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+.pp-wcard-old {
+  font-size: 11px;
+  color: var(--text-light);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+.pp-wcard-current {
+  font-size: 16px; font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums;
+}
+.pp-wcard-change {
+  font-size: 11px; font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  padding: 2px 7px;
+  border-radius: 5px;
+}
+.pp-wcard-change.down {
+  color: var(--red);
+  background: var(--red-bg);
+}
+.pp-wcard-change.up {
+  color: var(--text-sub);
+  background: var(--bg);
+}
+.pp-wcard-actions {
+  display: flex; align-items: center;
+  gap: 6px;
+}
+.pp-wcard-gift {
+  padding: 4px 10px;
+  border-radius: 7px;
+  background: var(--bg);
+  color: var(--text-2);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: -0.015em;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.pp-wcard-gift:active {
+  background: var(--primary-50);
+  color: var(--primary);
+  border-color: var(--primary-100);
+}
+
+/* wish-toolbar 재정리 — 상단 분리 */
+.wish-toolbar {
+  background: transparent !important;
+  margin: 0 !important;
+  border: none !important;
+  padding: 14px 16px 0 !important;
+  box-shadow: none !important;
+}
+.wish-toolbar + #wish-list {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+}
+#wish-list {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+}
+.wish-filter-row .chip {
+  background: #fff;
+  border: 1px solid var(--border-strong);
+}
+.wish-filter-row .chip.active {
+  background: var(--text);
+  color: #fff;
+  border-color: var(--text);
+}
+.wish-sort-row {
+  padding: 12px 0 10px !important;
+}
+.wish-sort-label {
+  color: var(--text-sub) !important;
+}
+.wish-actions span {
+  font-size: 12.5px !important;
+}
+
+/* ============================================================
+   ─── 51. BENEFIT TAB — 혜택
+   ============================================================ */
+
+/* ─── 51-1. 티켓 히어로 카드 ─── */
+.pp-ticket-hero {
+  margin: 14px 16px 14px;
+  padding: 22px 22px 18px;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 85% -10%, rgba(251,191,36,0.22), transparent 55%),
+    linear-gradient(135deg, #7C3AED 0%, #6D28D9 55%, #5B21B6 100%);
+  color: #fff;
+  box-shadow:
+    0 10px 30px rgba(124,58,237,0.32),
+    0 2px 6px rgba(124,58,237,0.22);
+  position: relative;
+  overflow: hidden;
+}
+.pp-ticket-hero::before {
+  content: '';
+  position: absolute;
+  bottom: -70px; left: -40px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.07), transparent 70%);
+  pointer-events: none;
+}
+.pp-ticket-hero-top {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  position: relative;
+}
+.pp-ticket-hero-label {
+  font-size: 13px; font-weight: 500;
+  opacity: 0.85;
+  letter-spacing: -0.015em;
+}
+.pp-ticket-hero-pending {
+  font-size: 11px; font-weight: 700;
+  background: rgba(251,191,36,0.25);
+  color: #FCD34D;
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: -0.015em;
+  backdrop-filter: blur(6px);
+}
+.pp-ticket-hero-main {
+  display: flex; align-items: baseline;
+  gap: 4px;
+  margin-bottom: 16px;
+  position: relative;
+}
+.pp-ticket-hero-val {
+  font-size: 48px; font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.pp-ticket-hero-unit {
+  font-size: 22px; font-weight: 600;
+  opacity: 0.88;
+}
+.pp-ticket-hero-progress { position: relative; margin-bottom: 12px; }
+.pp-ticket-hero-progress-head {
+  display: flex; justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 12px;
+  letter-spacing: -0.015em;
+}
+.pp-ticket-hero-progress-label { opacity: 0.8; font-weight: 500; }
+.pp-ticket-hero-progress-remain b { font-weight: 800; color: #FCD34D; }
+.pp-ticket-hero-progress-bar {
+  height: 8px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.pp-ticket-hero-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FCD34D, #F59E0B);
+  border-radius: 999px;
+  width: 0;
+  transition: width 0.6s cubic-bezier(.4,0,.2,1);
+}
+.pp-ticket-hero-delay {
+  font-size: 11px;
+  opacity: 0.75;
+  text-align: center;
+  margin-bottom: 14px;
+  letter-spacing: -0.015em;
+  position: relative;
+}
+.pp-ticket-hero-delay b { opacity: 1; font-weight: 700; }
+.pp-ticket-hero-delay a {
+  color: #FCD34D;
+  text-decoration: underline;
+  font-weight: 700;
+}
+.pp-ticket-hero-actions {
+  display: flex; gap: 8px;
+  position: relative;
+}
+.pp-ticket-hero-actions button {
+  flex: 1;
+  padding: 11px;
+  border-radius: 12px;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+  backdrop-filter: blur(6px);
+  transition: transform 0.12s;
+}
+.pp-ticket-hero-actions button:active { transform: scale(0.97); }
+.pp-ticket-hero-actions button.primary {
+  background: #fff;
+  color: var(--primary);
+  border-color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+/* ─── 51-2. 적립 방법 3단계 박스 ─── */
+.pp-earn-steps {
+  margin: 0 16px 12px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  padding: 14px 16px 12px;
+}
+.pp-earn-steps-title {
+  font-size: 13px; font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.025em;
+  margin-bottom: 10px;
+}
+.pp-earn-steps .reward-steps {
+  margin: 0;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}
+.pp-earn-steps .reward-step { padding: 6px 4px; }
+
+/* ─── 51-3. 안내 details (접기) ─── */
+.pp-benefit-details {
+  margin: 0 16px 12px;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  overflow: hidden;
+}
+.pp-benefit-details-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px;
+  font-size: 13px; font-weight: 600;
+  color: var(--text-2);
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  list-style: none;
+}
+.pp-benefit-details-summary::-webkit-details-marker { display: none; }
+.pp-benefit-details-arrow {
+  font-size: 18px;
+  color: var(--text-light);
+  transition: transform 0.2s;
+  line-height: 1;
+}
+.pp-benefit-details[open] .pp-benefit-details-arrow {
+  transform: rotate(90deg);
+}
+.pp-benefit-details-body {
+  padding: 4px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pp-benefit-notice {
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.pp-benefit-notice-info {
+  background: var(--primary-50);
+}
+.pp-benefit-notice-warn {
+  background: #FFF7ED;
+}
+.pp-benefit-notice-title {
+  font-size: 12px; font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.pp-benefit-notice-info .pp-benefit-notice-title {
+  color: var(--primary);
+}
+.pp-benefit-notice-warn .pp-benefit-notice-title {
+  color: var(--amber-dark);
+}
+.pp-benefit-notice-body {
+  font-size: 11.5px;
+  color: var(--text-2);
+  line-height: 1.65;
+  letter-spacing: -0.015em;
+}
+.pp-benefit-notice-body b {
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* ─── 51-4. 혜택 섹션 공통 ─── */
+.pp-benefit-section {
+  margin-bottom: 14px;
+}
+.pp-benefit-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 6px 20px 10px;
+}
+.pp-benefit-section-head h2 {
+  font-size: 16px; font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.03em;
+}
+.pp-benefit-section-sub {
+  font-size: 12px;
+  color: var(--text-sub);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+/* 기존 reward-ex 카드 내부 오버라이드 */
+.pp-benefit-section .reward-ex {
+  margin: 0 16px;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  border: 1px solid rgba(0,0,0,0.04);
+}
+.pp-benefit-section .raffle-section {
+  margin: 0 16px 8px;
+}
+.pp-benefit-section .raffle-prizes {
+  margin: 0 16px;
+}
+
+/* ============================================================
+   ─── 52. MY TAB — 마이페이지
+   ============================================================ */
+
+/* ─── 52-1. 프로필 + Stats 히어로 ─── */
+.pp-my-hero {
+  margin: 14px 16px 14px;
+  border-radius: 22px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+.pp-my-profile {
+  padding: 18px 20px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.pp-my-avatar {
+  width: 52px; height: 52px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%);
+  color: #fff;
+  display: grid; place-items: center;
+  font-size: 22px; font-weight: 800;
+  letter-spacing: -0.025em;
+  box-shadow: 0 3px 10px rgba(124,58,237,0.28);
+  flex-shrink: 0;
+}
+.pp-my-profile-info { flex: 1; min-width: 0; }
+.pp-my-name-row {
+  display: flex; align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+.pp-my-name {
+  font-size: 17px; font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.035em;
+}
+.pp-my-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 10.5px; font-weight: 700;
+  background: var(--primary-50);
+  color: var(--primary);
+  letter-spacing: -0.015em;
+}
+.pp-my-email {
+  font-size: 12.5px;
+  color: var(--text-sub);
+  letter-spacing: -0.015em;
+}
+.pp-my-settings {
+  width: 40px; height: 40px;
+  border: none;
+  background: var(--bg);
+  border-radius: 12px;
+  display: grid; place-items: center;
+  color: var(--text-2);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.12s;
+}
+.pp-my-settings:active { background: var(--bg-2); }
+
+.pp-my-stats {
+  display: flex;
+  align-items: center;
+  padding: 14px 12px 16px;
+  border-top: 0.5px solid var(--border);
+  background: linear-gradient(180deg, #FAFAFB 0%, #fff 100%);
+}
+.pp-my-stat {
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: opacity 0.12s;
+}
+.pp-my-stat:active { opacity: 0.6; }
+.pp-my-stat-val {
+  font-size: 18px; font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.pp-my-stat-val.pp-my-stat-amber { color: var(--amber-dark); }
+.pp-my-stat-lbl {
+  font-size: 10.5px; font-weight: 500;
+  color: var(--text-sub);
+  letter-spacing: -0.015em;
+}
+.pp-my-stat-div {
+  width: 1px; height: 24px;
+  background: var(--border);
+}
+
+/* ─── 52-2. 리스트 그룹 ─── */
+.pp-my-list-group {
+  margin: 0 16px 14px;
+}
+.pp-my-list-title {
+  font-size: 11px; font-weight: 700;
+  color: var(--text-sub);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 4px 10px;
+}
+.pp-my-list-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.04);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+.pp-my-list-card .mypage-row {
+  padding: 14px 16px;
+}
+.pp-my-list-card .mypage-divider {
+  margin: 0 16px;
+}
+.pp-my-list-card .mypage-row .left {
+  font-size: 14px; font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  gap: 12px;
+}
+.pp-my-list-card .mypage-row .left .icon {
+  width: 32px; height: 32px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: var(--bg);
+  display: grid; place-items: center;
+  font-size: 0;
+  position: relative;
+}
+.pp-my-list-card .mypage-row .left .icon::before {
+  content: '';
+  width: 20px; height: 20px;
+  background-color: var(--text-2);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+/* 쿠팡 와우 */
+.pp-my-list-card .mypage-row[onclick*="toggleWow"] .left .icon { background: var(--primary-50); }
+.pp-my-list-card .mypage-row[onclick*="toggleWow"] .left .icon::before {
+  background-color: var(--primary);
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z'/><path d='M12 15L9 12a8 8 0 0 1 8-8 8 8 0 0 1 0 8l-3 3z'/><path d='M16 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z'/><path d='M12 15L9 12a8 8 0 0 1 8-8 8 8 0 0 1 0 8l-3 3z'/><path d='M16 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z'/></svg>");
+}
+
+/* 와우 혜택 보기 */
+.pp-my-list-card .mypage-row[onclick*="와우 혜택"] .left .icon::before,
+.pp-my-list-card .mypage-row[onclick*="wowBenefit"] .left .icon::before {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><polyline points='14 2 14 8 20 8'/><line x1='16' y1='13' x2='8' y2='13'/><line x1='16' y1='17' x2='8' y2='17'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><polyline points='14 2 14 8 20 8'/><line x1='16' y1='13' x2='8' y2='13'/><line x1='16' y1='17' x2='8' y2='17'/></svg>");
+}
+
+/* 이번 달 절약 */
+.pp-my-list-card .mypage-row[onclick*="이번 달"] .left .icon,
+.pp-my-list-card .mypage-row[onclick*="27,900"] .left .icon { background: var(--green-bg); }
+.pp-my-list-card .mypage-row[onclick*="이번 달"] .left .icon::before,
+.pp-my-list-card .mypage-row[onclick*="27,900"] .left .icon::before {
+  background-color: #059669;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><line x1='12' y1='1' x2='12' y2='23'/><path d='M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><line x1='12' y1='1' x2='12' y2='23'/><path d='M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'/></svg>");
+}
+
+/* 카카오 연동 */
+.pp-my-list-card #kakao-row .left .icon { background: #FEF9C3; }
+.pp-my-list-card #kakao-row .left .icon::before {
+  background-color: #F9D200;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><ellipse cx='12' cy='10' rx='9' ry='7'/><path d='M10 17c-2 0-5 2-5 4 0-1 1-2 2-3 2 0 3-1 3-1z'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><ellipse cx='12' cy='10' rx='9' ry='7'/><path d='M10 17c-2 0-5 2-5 4 0-1 1-2 2-3 2 0 3-1 3-1z'/></svg>");
+}
+
+/* 마케팅 수신 */
+.pp-my-list-card .mypage-row[onclick*="toggleMarketing"] .left .icon::before {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M3 11l18-8v18l-18-8zM11 11l0 6'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M3 11l18-8v18l-18-8zM11 11l0 6'/></svg>");
+}
+
+/* 가격 하락 알림 */
+.pp-my-list-card .mypage-row[onclick*="'price'"] .left .icon { background: var(--red-bg); }
+.pp-my-list-card .mypage-row[onclick*="'price'"] .left .icon::before {
+  background-color: var(--red);
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><polyline points='23 18 13.5 8.5 8.5 13.5 1 6'/><polyline points='17 18 23 18 23 12'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><polyline points='23 18 13.5 8.5 8.5 13.5 1 6'/><polyline points='17 18 23 18 23 12'/></svg>");
+}
+
+/* 재입고 */
+.pp-my-list-card .mypage-row[onclick*="'restock'"] .left .icon::before {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z'/><polyline points='3.27 6.96 12 12.01 20.73 6.96'/><line x1='12' y1='22.08' x2='12' y2='12'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z'/><polyline points='3.27 6.96 12 12.01 20.73 6.96'/><line x1='12' y1='22.08' x2='12' y2='12'/></svg>");
+}
+
+/* 이벤트 알림 */
+.pp-my-list-card .mypage-row[onclick*="'event'"] .left .icon { background: var(--amber-50); }
+.pp-my-list-card .mypage-row[onclick*="'event'"] .left .icon::before {
+  background-color: var(--amber);
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><polyline points='14.5 17.5 3 6 3 3 6 3 17.5 14.5'/><line x1='13' y1='19' x2='19' y2='13'/><line x1='16' y1='16' x2='20' y2='20'/><line x1='19' y1='21' x2='21' y2='19'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><polyline points='14.5 17.5 3 6 3 3 6 3 17.5 14.5'/><line x1='13' y1='19' x2='19' y2='13'/><line x1='16' y1='16' x2='20' y2='20'/><line x1='19' y1='21' x2='21' y2='19'/></svg>");
+}
+
+/* 공지사항 / 1:1 문의 / 약관 / 개인정보 / 보상정책 - 문서 아이콘 */
+.pp-my-list-card .mypage-row[onclick*="notice"] .left .icon::before,
+.pp-my-list-card .mypage-row[onclick*="terms"] .left .icon::before,
+.pp-my-list-card .mypage-row[onclick*="privacy"] .left .icon::before,
+.pp-my-list-card .mypage-row[onclick*="reward-policy"] .left .icon::before {
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><polyline points='14 2 14 8 20 8'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><polyline points='14 2 14 8 20 8'/></svg>");
+}
+
+/* 1:1 문의 */
+.pp-my-list-card .mypage-row[onclick*="openInquiry"] .left .icon { background: var(--primary-50); }
+.pp-my-list-card .mypage-row[onclick*="openInquiry"] .left .icon::before {
+  background-color: var(--primary);
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'/></svg>");
+}
+
+/* 로그아웃 */
+.pp-my-list-card .mypage-row[onclick*="doLogout"] .left .icon::before {
+  background-color: var(--text-sub);
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4'/><polyline points='16 17 21 12 16 7'/><line x1='21' y1='12' x2='9' y2='12'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4'/><polyline points='16 17 21 12 16 7'/><line x1='21' y1='12' x2='9' y2='12'/></svg>");
+}
+
+/* 계정탈퇴 */
+.pp-my-list-card .mypage-row[onclick*="doDeleteAccount"] .left .icon { background: var(--red-bg); }
+.pp-my-list-card .mypage-row[onclick*="doDeleteAccount"] .left .icon::before {
+  background-color: var(--red);
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>");
+}
+
+/* ─── savings, streak, challenge 카드 마이탭 섹션 위에 간격 부여 ─── */
+#my-activity-group .savings-card,
+#my-activity-group .streak-card,
+#my-activity-group .challenge-card,
+#my-activity-group .ranking-card {
+  margin: 0 16px 10px;
+  border-radius: 16px;
+}
 
 /* ─── 47. Dark mode ───────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
@@ -3722,97 +4997,114 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
 
   <!-- 혜택 -->
   <div class="page" id="page-benefit">
-    <!-- 핵심 메시지 -->
-    <div class="reward-simple" style="margin-top:10px">
-      <h3>앱 참여 활동으로 티켓 적립 ☕</h3>
-      <p>쿠팡 상품을 탐색하고 구매에 참여하세요</p>
-      <div class="sub">조건 충족 시 티켓 지급 · 1일 적립 한도 있음</div>
-    </div>
-
-    <!-- 3단계 안내 -->
-    <div class="reward-steps">
-      <div class="reward-step">
-        <div class="icon">🛒</div>
-        <div class="label">상품 탐색</div>
-        <div class="desc">쿠팡 상품 참여</div>
-      </div>
-      <div class="reward-step">
-        <div class="icon">🎫</div>
-        <div class="label">티켓 적립</div>
-        <div class="desc">조건 충족 시 지급</div>
-      </div>
-      <div class="reward-step">
-        <div class="icon">☕</div>
-        <div class="label">기프티콘 교환</div>
-        <div class="desc">약관 조건 참조</div>
-      </div>
-    </div>
-    <!-- 보상 조건 안내 -->
-    <div style="margin:0 16px 12px;padding:12px 14px;background:var(--primary-light);border-radius:12px;border-left:3px solid var(--primary)">
-      <div style="font-size:12px;font-weight:700;color:var(--primary);margin-bottom:4px">📋 적립 조건 안내</div>
-      <div style="font-size:11px;color:var(--text-sub);line-height:1.7">
-        · 구매하러 가기 버튼으로 이동 후 구매한 건에 한해 티켓 적립<br>
-        · 취소·반품 시 미지급 · 월 단위 적립 한도 있음<br>
-        · 미적립 시 구매일로부터 <b>14일 이내</b> 신청 가능<br>
-        · 부정행위 적발 시 사전 공지 없이 티켓 전액 회수
-      </div>
-    </div>
-    <!-- 적립 제외 상품 안내 -->
-    <div style="margin:0 16px 12px;padding:10px 14px;background:#FFF7ED;border-radius:12px;border-left:3px solid var(--orange)">
-      <div style="font-size:12px;font-weight:700;color:var(--orange);margin-bottom:4px">⚠️ 적립 제외 상품</div>
-      <div style="font-size:11px;color:var(--text-sub);line-height:1.7">
-        배송비, 쿠폰, 캐시, AS케어서비스, 여행상품, 기프트카드,<br>스마트폰, 태블릿/PC, 중고품 등은 티켓 적립 대상이 아닙니다.
-      </div>
-    </div>
-
+    <!-- 히어로: 내 티켓 현황을 상단 최우선으로 -->
     <div id="benefit-ticket">
-      <div class="mypage-group" style="margin-top:0">
-      <!-- 내 티켓 현황 (간결) -->
-      <div class="ticket-box">
-        <div class="ticket-box-title">
-          <h3>내 티켓</h3>
-          <span class="tip" id="ticket-pending">적립예정 0장</span>
+      <div class="pp-ticket-hero">
+        <div class="pp-ticket-hero-top">
+          <div class="pp-ticket-hero-label">내 티켓</div>
+          <span class="pp-ticket-hero-pending" id="ticket-pending">적립예정 0장</span>
         </div>
-        <div class="ticket-stats">
-          <div class="ticket-stat"><div class="label">사용 가능</div><div class="val"><span class="icon">🎫</span> <span id="ticket-available">0</span></div></div>
-          <div class="ticket-stat"><div class="label">커피까지</div><div class="val"><span class="icon">☕</span> <span id="ticket-remaining">8</span></div></div>
+        <div class="pp-ticket-hero-main">
+          <span class="pp-ticket-hero-val" id="ticket-available">0</span>
+          <span class="pp-ticket-hero-unit">장</span>
         </div>
-        <div id="ticket-delay-info" style="font-size:11px;color:var(--text-sub);text-align:center;padding:4px 0 8px"></div>
-        <div class="ticket-actions">
+        <div class="pp-ticket-hero-progress">
+          <div class="pp-ticket-hero-progress-head">
+            <span class="pp-ticket-hero-progress-label">커피 교환까지</span>
+            <span class="pp-ticket-hero-progress-remain"><b id="ticket-remaining">8</b>장 남음</span>
+          </div>
+          <div class="pp-ticket-hero-progress-bar"><div class="pp-ticket-hero-progress-fill" id="ticket-progress-fill"></div></div>
+        </div>
+        <div id="ticket-delay-info" class="pp-ticket-hero-delay"></div>
+        <div class="pp-ticket-hero-actions">
           <button onclick="switchTab('hot')">쇼핑하러 가기</button>
           <button class="primary" onclick="scrollToRaffle()">경품 응모</button>
         </div>
       </div>
 
+      <!-- 3단계 안내 (컴팩트) -->
+      <div class="pp-earn-steps">
+        <div class="pp-earn-steps-title">티켓 적립 방법</div>
+        <div class="reward-steps">
+          <div class="reward-step">
+            <div class="icon">🛒</div>
+            <div class="label">상품 탐색</div>
+            <div class="desc">쿠팡 참여</div>
+          </div>
+          <div class="reward-step">
+            <div class="icon">🎫</div>
+            <div class="label">티켓 적립</div>
+            <div class="desc">조건 충족 시</div>
+          </div>
+          <div class="reward-step">
+            <div class="icon">☕</div>
+            <div class="label">기프티콘 교환</div>
+            <div class="desc">교환소 이용</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 접을 수 있는 안내 -->
+      <details class="pp-benefit-details">
+        <summary class="pp-benefit-details-summary">
+          <span>적립 조건 · 제외 상품 안내</span>
+          <span class="pp-benefit-details-arrow">›</span>
+        </summary>
+        <div class="pp-benefit-details-body">
+          <div class="pp-benefit-notice pp-benefit-notice-info">
+            <div class="pp-benefit-notice-title">📋 적립 조건</div>
+            <div class="pp-benefit-notice-body">
+              · 구매하러 가기 버튼으로 이동 후 구매한 건에 한해 티켓 적립<br>
+              · 취소·반품 시 미지급 · 월 단위 적립 한도 있음<br>
+              · 미적립 시 구매일로부터 <b>14일 이내</b> 신청 가능<br>
+              · 부정행위 적발 시 사전 공지 없이 티켓 전액 회수
+            </div>
+          </div>
+          <div class="pp-benefit-notice pp-benefit-notice-warn">
+            <div class="pp-benefit-notice-title">⚠️ 적립 제외 상품</div>
+            <div class="pp-benefit-notice-body">
+              배송비, 쿠폰, 캐시, AS케어서비스, 여행상품, 기프트카드, 스마트폰, 태블릿/PC, 중고품 등은 티켓 적립 대상이 아닙니다.
+            </div>
+          </div>
+        </div>
+      </details>
+
       <!-- 적립 대기 중 -->
       <div id="pending-rewards-area"></div>
-      </div><!-- /ticket-group -->
 
       <!-- 교환소 -->
-      <div class="mypage-group" style="margin-top:0">
-      <div style="padding:12px 18px 4px;font-size:12px;font-weight:700;color:var(--text-sub)">🎁 티켓 교환소</div>
-      <div id="reward-exchange"></div>
+      <div class="pp-benefit-section">
+        <div class="pp-benefit-section-head">
+          <h2>티켓 교환소</h2>
+          <span class="pp-benefit-section-sub">기프티콘으로 교환하세요</span>
+        </div>
+        <div id="reward-exchange"></div>
       </div>
 
       <!-- 추첨 -->
-      <div class="mypage-group" id="raffle-anchor">
-      <div style="padding:12px 18px 4px;font-size:12px;font-weight:700;color:var(--text-sub)">🎁 경품 응모</div>
-      <div class="raffle-section">
-        <div class="raffle-ball" id="raffle-ball">?</div>
-        <div style="flex:1;min-width:0">
-          <h3>경품 응모</h3>
-          <div class="raffle-info">내 티켓: <b id="raffle-tickets">0</b>장 · 매일 1회</div>
-          <div style="font-size:10px;opacity:.6;margin-top:2px">1등 5%·2등 15%·3등 80%</div>
+      <div class="pp-benefit-section" id="raffle-anchor">
+        <div class="pp-benefit-section-head">
+          <h2>경품 응모</h2>
+          <span class="pp-benefit-section-sub">매일 1회</span>
         </div>
-        <button class="raffle-btn" onclick="doRaffle()">응모하기</button>
+        <div class="raffle-section">
+          <div class="raffle-ball" id="raffle-ball">?</div>
+          <div style="flex:1;min-width:0">
+            <h3>행운의 추첨</h3>
+            <div class="raffle-info">내 티켓: <b id="raffle-tickets">0</b>장</div>
+            <div style="font-size:10px;opacity:.6;margin-top:2px">1등 5% · 2등 15% · 3등 80%</div>
+          </div>
+          <button class="raffle-btn" onclick="doRaffle()">응모하기</button>
+        </div>
+        <div class="raffle-prizes" id="raffle-prizes"></div>
       </div>
-      <div class="raffle-prizes" id="raffle-prizes"></div>
-      </div><!-- /raffle-group -->
 
       <!-- 진행중 이벤트 -->
-      <div class="mypage-group">
-      <div style="padding:12px 18px 4px;font-size:12px;font-weight:700;color:var(--text-sub)">🎊 진행중 이벤트</div>
-      <div class="h-scroll" id="event-2x-scroll" style="padding:0 18px 12px"></div>
+      <div class="pp-benefit-section">
+        <div class="pp-benefit-section-head">
+          <h2>진행중 이벤트</h2>
+        </div>
+        <div class="h-scroll" id="event-2x-scroll" style="padding:0 16px 12px"></div>
       </div>
     </div>
 
@@ -3831,117 +5123,169 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
 
   <!-- 마이페이지 -->
   <div class="page" id="page-my">
-    <div class="mypage-profile">
-      <div class="mypage-avatar" id="my-avatar">P</div>
-      <div class="mypage-name" id="my-name">-</div>
-      <div class="mypage-email" id="my-email">-</div>
-      <div id="my-badge-area"></div>
-    </div>
-    <div class="mypage-group" style="margin-top:8px">
-      <div class="stats-grid">
-        <div class="stat-box" onclick="switchTab('benefit')" style="cursor:pointer"><div class="val" id="my-ticket-avail">0</div><div class="lbl">교환가능 🎫</div></div>
-        <div class="stat-box"><div class="val" id="my-ticket-pending">0</div><div class="lbl">대기중 ⏳</div></div>
-        <div class="stat-box"><div class="val" id="my-purchases">0</div><div class="lbl">구매</div></div>
-        <div class="stat-box"><div class="val" id="my-wishcnt">0</div><div class="lbl">관심상품</div></div>
-        <div class="stat-box"><div class="val" id="my-raffles">0</div><div class="lbl">추첨</div></div>
+    <!-- 프로필 + stats 통합 히어로 -->
+    <div class="pp-my-hero">
+      <div class="pp-my-profile">
+        <div class="pp-my-avatar" id="my-avatar">P</div>
+        <div class="pp-my-profile-info">
+          <div class="pp-my-name-row">
+            <span class="pp-my-name" id="my-name">-</span>
+            <span class="pp-my-badge" id="my-badge-area"></span>
+          </div>
+          <div class="pp-my-email" id="my-email">-</div>
+        </div>
+        <button class="pp-my-settings" onclick="openSettings()" aria-label="설정">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+      </div>
+      <div class="pp-my-stats">
+        <div class="pp-my-stat" onclick="switchTab('benefit')">
+          <div class="pp-my-stat-val" id="my-ticket-avail">0</div>
+          <div class="pp-my-stat-lbl">교환가능</div>
+        </div>
+        <div class="pp-my-stat-div"></div>
+        <div class="pp-my-stat">
+          <div class="pp-my-stat-val pp-my-stat-amber" id="my-ticket-pending">0</div>
+          <div class="pp-my-stat-lbl">대기중</div>
+        </div>
+        <div class="pp-my-stat-div"></div>
+        <div class="pp-my-stat">
+          <div class="pp-my-stat-val" id="my-purchases">0</div>
+          <div class="pp-my-stat-lbl">구매</div>
+        </div>
+        <div class="pp-my-stat-div"></div>
+        <div class="pp-my-stat" onclick="switchTab('wish')">
+          <div class="pp-my-stat-val" id="my-wishcnt">0</div>
+          <div class="pp-my-stat-lbl">관심상품</div>
+        </div>
+        <div class="pp-my-stat-div"></div>
+        <div class="pp-my-stat">
+          <div class="pp-my-stat-val" id="my-raffles">0</div>
+          <div class="pp-my-stat-lbl">추첨</div>
+        </div>
       </div>
     </div>
-    <div class="mypage-group" id="my-activity-group" style="margin-top:8px">
+
+    <div id="my-activity-group">
       <div id="my-savings-section"></div>
       <div id="my-streak-section"></div>
       <div id="my-challenge-section"></div>
       <div id="my-ranking-section"></div>
     </div>
-    <div class="mypage-group">
+    <div>
       <div id="my-report-section"></div>
     </div>
-    <div class="mypage-group">
+    <div>
       <div id="my-invite-section"></div>
     </div>
-    <div class="mypage-group" style="margin-top:8px" id="wow-section">
-      <div class="mypage-section-title">쿠팡 멤버십</div>
-      <div class="mypage-row" onclick="toggleWow()">
-        <div class="left"><span class="icon">🚀</span> 쿠팡 와우 멤버십</div>
-        <div class="right" id="wow-status"><span style="color:var(--primary);font-size:13px">가입하기</span> <span class="arrow">›</span></div>
-      </div>
-      <div class="mypage-divider"></div>
-      <div class="mypage-row" onclick="showModal('🚀','와우 혜택 안내','<b>쿠팡 와우 멤버십 혜택</b><br><br>✅ 로켓배송 무료배송<br>✅ 로켓프레시 무료배송<br>✅ 쿠팡플레이 무료 이용<br>✅ 와우 할인가 적용<br>✅ 쿠팡이츠 무료배달<br><br><span style=font-size:12px;color:var(--text-sub)>월 4,990원 / 연 58,000원</span>')">
-        <div class="left"><span class="icon">📋</span> 와우 혜택 보기</div>
-        <div class="right"><span class="arrow">›</span></div>
-      </div>
-      <div class="mypage-divider"></div>
-      <div class="mypage-row" onclick="showModal('📊','이번 달 와우 절약','<b>무료배송으로 아낀 배송비</b><br><br>🚀 로켓배송: <b>12,000원</b><br>🥬 로켓프레시: <b>8,000원</b><br>🎬 쿠팡플레이: <b>7,900원</b><br><br>총 절약: <b style=color:var(--primary)>27,900원</b>')">
-        <div class="left"><span class="icon">💰</span> 이번 달 절약 내역</div>
-        <div class="right"><span class="arrow">›</span></div>
-      </div>
-    </div>
-    <div class="mypage-group" style="margin-top:8px">
-      <div class="mypage-section-title">계정 연동</div>
-      <div class="mypage-row" id="kakao-row" onclick="linkKakao()">
-        <div class="left"><span class="icon">💬</span> 카카오 연동</div>
-        <div class="right" id="kakao-status"><span style="color:var(--primary);font-size:13px">연동하기</span> <span class="arrow">›</span></div>
-      </div>
-      <div class="mypage-divider"></div>
-      <div class="mypage-row" onclick="toggleMarketing()">
-        <div class="left"><span class="icon">📢</span> 마케팅 수신 동의</div>
-        <div class="right"><div class="toggle" id="toggle-marketing"></div></div>
+
+    <!-- 쿠팡 와우 -->
+    <div class="pp-my-list-group" id="wow-section">
+      <div class="pp-my-list-title">쿠팡 멤버십</div>
+      <div class="pp-my-list-card">
+        <div class="mypage-row" onclick="toggleWow()">
+          <div class="left"><span class="icon"></span> 쿠팡 와우 멤버십</div>
+          <div class="right" id="wow-status"><span style="color:var(--primary);font-size:13px;font-weight:700">가입하기</span> <span class="arrow">›</span></div>
+        </div>
+        <div class="mypage-divider"></div>
+        <div class="mypage-row" onclick="showModal('🚀','와우 혜택 안내','<b>쿠팡 와우 멤버십 혜택</b><br><br>✅ 로켓배송 무료배송<br>✅ 로켓프레시 무료배송<br>✅ 쿠팡플레이 무료 이용<br>✅ 와우 할인가 적용<br>✅ 쿠팡이츠 무료배달<br><br><span style=font-size:12px;color:var(--text-sub)>월 4,990원 / 연 58,000원</span>')">
+          <div class="left"><span class="icon"></span> 와우 혜택 보기</div>
+          <div class="right"><span class="arrow">›</span></div>
+        </div>
+        <div class="mypage-divider"></div>
+        <div class="mypage-row" onclick="showModal('📊','이번 달 와우 절약','<b>무료배송으로 아낀 배송비</b><br><br>🚀 로켓배송: <b>12,000원</b><br>🥬 로켓프레시: <b>8,000원</b><br>🎬 쿠팡플레이: <b>7,900원</b><br><br>총 절약: <b style=color:var(--primary)>27,900원</b>')">
+          <div class="left"><span class="icon"></span> 이번 달 절약 내역</div>
+          <div class="right"><span class="arrow">›</span></div>
+        </div>
       </div>
     </div>
-    <div class="mypage-group" style="margin-top:8px">
-      <div class="mypage-section-title">알림 설정</div>
-      <div class="mypage-row" onclick="toggleNoti('price')">
-        <div class="left"><span class="icon">📉</span> 가격 하락 알림</div>
-        <div class="right"><div class="toggle on" id="toggle-price"></div></div>
-      </div>
-      <div class="mypage-divider"></div>
-      <div class="mypage-row" onclick="toggleNoti('restock')">
-        <div class="left"><span class="icon">📦</span> 재입고 알림</div>
-        <div class="right"><div class="toggle" id="toggle-restock"></div></div>
-      </div>
-      <div class="mypage-divider"></div>
-      <div class="mypage-row" onclick="toggleNoti('event')">
-        <div class="left"><span class="icon">🎉</span> 이벤트 알림</div>
-        <div class="right"><div class="toggle on" id="toggle-event"></div></div>
-      </div>
-    </div>
-    <div class="mypage-group" style="margin-top:8px">
-      <div class="mypage-section-title">고객센터</div>
-      <div class="mypage-row" onclick="openSub('notice')">
-        <div class="left"><span class="icon">📋</span> 공지사항</div>
-        <div class="right"><span class="arrow">›</span></div>
-      </div>
-      <div class="mypage-divider"></div>
-      <div class="mypage-row" onclick="openInquiry()">
-        <div class="left"><span class="icon">🤖</span> 1:1 문의하기</div>
-        <div class="right"><span class="arrow">›</span></div>
+
+    <!-- 계정 연동 -->
+    <div class="pp-my-list-group">
+      <div class="pp-my-list-title">계정 연동</div>
+      <div class="pp-my-list-card">
+        <div class="mypage-row" id="kakao-row" onclick="linkKakao()">
+          <div class="left"><span class="icon"></span> 카카오 연동</div>
+          <div class="right" id="kakao-status"><span style="color:var(--primary);font-size:13px;font-weight:700">연동하기</span> <span class="arrow">›</span></div>
+        </div>
+        <div class="mypage-divider"></div>
+        <div class="mypage-row" onclick="toggleMarketing()">
+          <div class="left"><span class="icon"></span> 마케팅 수신 동의</div>
+          <div class="right"><div class="toggle" id="toggle-marketing"></div></div>
+        </div>
       </div>
     </div>
-    <div class="mypage-group" style="margin-top:8px">
-      <div class="mypage-section-title">약관 및 정책</div>
-      <div class="mypage-row" onclick="openSub('terms')">
-        <div class="left"><span class="icon">📄</span> 이용약관</div>
-        <div class="right"><span class="arrow">›</span></div>
-      </div>
-      <div class="mypage-divider"></div>
-      <div class="mypage-row" onclick="openSub('privacy')">
-        <div class="left"><span class="icon">🔒</span> 개인정보 처리방침</div>
-        <div class="right"><span class="arrow">›</span></div>
-      </div>
-      <div class="mypage-divider"></div>
-      <div class="mypage-row" onclick="openSub('reward-policy')">
-        <div class="left"><span class="icon">🎫</span> 보상 정책</div>
-        <div class="right"><span class="arrow">›</span></div>
+
+    <!-- 알림 설정 -->
+    <div class="pp-my-list-group">
+      <div class="pp-my-list-title">알림 설정</div>
+      <div class="pp-my-list-card">
+        <div class="mypage-row" onclick="toggleNoti('price')">
+          <div class="left"><span class="icon"></span> 가격 하락 알림</div>
+          <div class="right"><div class="toggle on" id="toggle-price"></div></div>
+        </div>
+        <div class="mypage-divider"></div>
+        <div class="mypage-row" onclick="toggleNoti('restock')">
+          <div class="left"><span class="icon"></span> 재입고 알림</div>
+          <div class="right"><div class="toggle" id="toggle-restock"></div></div>
+        </div>
+        <div class="mypage-divider"></div>
+        <div class="mypage-row" onclick="toggleNoti('event')">
+          <div class="left"><span class="icon"></span> 이벤트 알림</div>
+          <div class="right"><div class="toggle on" id="toggle-event"></div></div>
+        </div>
       </div>
     </div>
-    <div class="mypage-section" style="margin-bottom:20px">
-      <div class="mypage-row" onclick="doLogout()">
-        <div class="left" style="color:var(--text-sub)"><span class="icon">🚪</span> 로그아웃</div>
-        <div class="right"><span class="arrow">›</span></div>
+
+    <!-- 고객센터 -->
+    <div class="pp-my-list-group">
+      <div class="pp-my-list-title">고객센터</div>
+      <div class="pp-my-list-card">
+        <div class="mypage-row" onclick="openSub('notice')">
+          <div class="left"><span class="icon"></span> 공지사항</div>
+          <div class="right"><span class="arrow">›</span></div>
+        </div>
+        <div class="mypage-divider"></div>
+        <div class="mypage-row" onclick="openInquiry()">
+          <div class="left"><span class="icon"></span> 1:1 문의하기</div>
+          <div class="right"><span class="arrow">›</span></div>
+        </div>
       </div>
-      <div class="mypage-divider"></div>
-      <div class="mypage-row" onclick="doDeleteAccount()">
-        <div class="left" style="color:var(--red)"><span class="icon">⚠️</span> 계정탈퇴</div>
-        <div class="right"><span class="arrow">›</span></div>
+    </div>
+
+    <!-- 약관 -->
+    <div class="pp-my-list-group">
+      <div class="pp-my-list-title">약관 및 정책</div>
+      <div class="pp-my-list-card">
+        <div class="mypage-row" onclick="openSub('terms')">
+          <div class="left"><span class="icon"></span> 이용약관</div>
+          <div class="right"><span class="arrow">›</span></div>
+        </div>
+        <div class="mypage-divider"></div>
+        <div class="mypage-row" onclick="openSub('privacy')">
+          <div class="left"><span class="icon"></span> 개인정보 처리방침</div>
+          <div class="right"><span class="arrow">›</span></div>
+        </div>
+        <div class="mypage-divider"></div>
+        <div class="mypage-row" onclick="openSub('reward-policy')">
+          <div class="left"><span class="icon"></span> 보상 정책</div>
+          <div class="right"><span class="arrow">›</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 로그아웃 / 탈퇴 -->
+    <div class="pp-my-list-group">
+      <div class="pp-my-list-card">
+        <div class="mypage-row" onclick="doLogout()">
+          <div class="left" style="color:var(--text-sub)"><span class="icon"></span> 로그아웃</div>
+          <div class="right"><span class="arrow">›</span></div>
+        </div>
+        <div class="mypage-divider"></div>
+        <div class="mypage-row" onclick="doDeleteAccount()">
+          <div class="left" style="color:var(--red)"><span class="icon"></span> 계정탈퇴</div>
+          <div class="right"><span class="arrow">›</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -4555,33 +5899,76 @@ function renderWishlist(){
   var tracks=getTracks();
   document.getElementById('wish-count').textContent='전체 '+tracks.length;
   var html='';
+
   if(tracks.length===0){
     html='<div class="empty-state"><div class="empty-state-icon">👀</div><h3>관심상품 없음</h3><p>핫딜이나 검색에서 상품을 찾아<br>관심상품으로 추가할 수 있어요!</p></div>';
+    document.getElementById('wish-list').innerHTML=html;
+    document.getElementById('wish-list').style.cssText='margin:0 16px 8px';
+    return;
   }
+
+  // ═ Summary 카드 ═ (추적 중 N개, 할인중 N개, 절약 가능 금액)
+  var discountCount=0, savePotential=0;
   tracks.forEach(function(t){
-    var change=Math.round((Math.random()*6-3)*10)/10;
-    var changeClass=change<0?'down':'up';
-    var arrow=change<0?'▼':'▲';
     var prod=PRODUCTS.find(function(x){return x.id===t.productId});
-    var sig=prod?getTimingSignal(prod):{signal:'wait',label:'🟡 확인중'};
-    html+='<div class="track-card" onclick="openDetail('+t.productId+',true)">';
-    html+='<div class="track-thumb">'+t.emoji+'</div>';
-    html+='<div class="track-body"><div class="track-name">'+t.name+'</div>';
-    html+='<div class="track-price-row"><span class="track-current">'+t.currentPrice.toLocaleString()+'원</span>';
-    html+='<span class="track-change '+changeClass+'">'+arrow+' '+Math.abs(change)+'%</span></div>';
-    html+='<div style="display:flex;align-items:center;gap:6px;margin-top:4px">';
-    html+='<span class="timing-badge '+sig.signal+'">'+sig.label+'</span>';
-    html+='<button class="share-btn" onclick="event.stopPropagation();shareGiftRequest('+t.productId+')">🎁 선물요청</button>';
-    html+='</div></div></div>';
+    if(prod && prod.discount>0){
+      discountCount++;
+      savePotential+=(prod.originalPrice-prod.currentPrice);
+    }
   });
-  document.getElementById('wish-list').innerHTML=html;
+
+  var summaryHtml='<div class="pp-wish-summary">';
+  summaryHtml+='<div class="pp-wish-sum-item"><div class="pp-wish-sum-val">'+tracks.length+'</div><div class="pp-wish-sum-label">추적 중</div></div>';
+  summaryHtml+='<div class="pp-wish-sum-div"></div>';
+  summaryHtml+='<div class="pp-wish-sum-item"><div class="pp-wish-sum-val pp-wish-sum-red">'+discountCount+'</div><div class="pp-wish-sum-label">할인 중</div></div>';
+  summaryHtml+='<div class="pp-wish-sum-div"></div>';
+  summaryHtml+='<div class="pp-wish-sum-item"><div class="pp-wish-sum-val pp-wish-sum-amount">'+savePotential.toLocaleString()+'</div><div class="pp-wish-sum-label">절약 가능</div></div>';
+  summaryHtml+='</div>';
+
+  // ═ 리스트 ═
+  tracks.forEach(function(t){
+    var prod=PRODUCTS.find(function(x){return x.id===t.productId});
+    var change=prod && prod.discount ? -prod.discount : Math.round((Math.random()*6-3)*10)/10;
+    var changeClass=change<0?'down':'up';
+    var sig=prod?getTimingSignal(prod):{signal:'wait',label:'🟡 확인중'};
+    var originalPrice = prod ? prod.originalPrice : null;
+
+    html+='<div class="pp-wcard" onclick="openDetail('+t.productId+',true)">';
+    html+='<div class="pp-wcard-thumb">'+t.emoji+'</div>';
+    html+='<div class="pp-wcard-body">';
+    html+='<div class="pp-wcard-name">'+t.name+'</div>';
+    html+='<div class="pp-wcard-prices">';
+    if(originalPrice && originalPrice>t.currentPrice){
+      html+='<span class="pp-wcard-old">'+originalPrice.toLocaleString()+'원</span>';
+    }
+    html+='<span class="pp-wcard-current">'+t.currentPrice.toLocaleString()+'원</span>';
+    if(change<0){
+      html+='<span class="pp-wcard-change down">▼ '+Math.abs(change)+'%</span>';
+    }else if(change>0){
+      html+='<span class="pp-wcard-change up">▲ '+change+'%</span>';
+    }
+    html+='</div>';
+    html+='<div class="pp-wcard-actions">';
+    html+='<span class="timing-badge '+sig.signal+'">'+sig.label+'</span>';
+    html+='<button class="pp-wcard-gift" onclick="event.stopPropagation();shareGiftRequest('+t.productId+')">선물요청</button>';
+    html+='</div>';
+    html+='</div>';
+    html+='</div>';
+  });
+
+  document.getElementById('wish-list').innerHTML=summaryHtml+html;
+  document.getElementById('wish-list').style.cssText='margin:0';
 }
 
 // ===== HOTDEALS =====
 function renderHotdeals(){
-  // 출석체크
-  renderAttendance();
-  // 절약 금액 상단 배너
+  // 출석 데이터
+  var att=getAttendance();
+  var today=new Date().toISOString().slice(0,10);
+  var checkedToday=att.lastDate===today;
+  var streak=att.streak||0;
+
+  // 절약 금액
   var purchases=getPurchases();
   var totalSaved=0;
   purchases.forEach(function(p){
@@ -4589,27 +5976,64 @@ function renderHotdeals(){
     if(!orig){var prod=PRODUCTS.find(function(x){return x.name===p.name});if(prod)orig=prod.originalPrice}
     if(orig)totalSaved+=(orig-p.price);
   });
-  var savingsArea=document.getElementById('savings-top-area');
+
+  // 티켓 상태 — 객체 {pending,available,history} 또는 숫자
+  var ticketsData=S('tickets');
+  var tickets=0;
+  if(typeof ticketsData==='number') tickets=ticketsData;
+  else if(ticketsData && typeof ticketsData==='object') tickets=ticketsData.available||0;
+
+  // ═══ 1. HERO CARD ═══ (절약 금액 + 티켓 + 출석체크 통합)
+  var heroHtml='<div class="pp-hero">';
+  heroHtml+='<div class="pp-hero-label">이번 달 절약</div>';
   if(purchases.length>0){
-    savingsArea.innerHTML='<div class="savings-top" style="margin-top:10px"><div class="left"><span class="icon">💰</span><div class="info"><div class="label">PricePick으로 아낀 금액</div><div class="amount">'+totalSaved.toLocaleString()+'원</div></div></div><button class="btn" onclick="switchTab(\'my\')">내역 보기</button></div>';
+    heroHtml+='<div class="pp-hero-amount">'+totalSaved.toLocaleString()+'<span>원</span></div>';
   }else{
-    savingsArea.innerHTML='<div class="savings-top" style="margin-top:10px"><div class="left"><span class="icon">💰</span><div class="info"><div class="label">PricePick으로 절약 시작!</div><div class="amount">최저가에 사고 리워드까지</div></div></div></div>';
+    heroHtml+='<div class="pp-hero-amount pp-hero-amount-empty">아직 없어요</div>';
+    heroHtml+='<div class="pp-hero-sub">관심상품을 추가하고 최저가에 구매해보세요</div>';
   }
-  // 절약 챌린지 미니
-  var chalTarget=50000;
-  var chalPct=Math.min(100,Math.round(totalSaved/chalTarget*100));
-  if(purchases.length>0){
-    savingsArea.innerHTML+='<div style="margin:0 16px 4px;display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--text-sub)">🎯 이달 챌린지</span><div style="flex:1;height:6px;border-radius:3px;background:var(--border);overflow:hidden"><div style="height:100%;width:'+chalPct+'%;background:var(--primary);border-radius:3px"></div></div><span style="font-size:12px;font-weight:700;color:var(--primary)">'+chalPct+'%</span></div>';
+  // 티켓 + 출석 mini stats
+  heroHtml+='<div class="pp-hero-stats">';
+  heroHtml+='<div class="pp-hero-stat"><div class="pp-hero-stat-label">보유 티켓</div><div class="pp-hero-stat-val">'+tickets+'<span>장</span></div></div>';
+  heroHtml+='<div class="pp-hero-stat-div"></div>';
+  heroHtml+='<div class="pp-hero-stat"><div class="pp-hero-stat-label">연속 출석</div><div class="pp-hero-stat-val">'+streak+'<span>일</span></div></div>';
+  if(!checkedToday){
+    heroHtml+='<button class="pp-hero-check" onclick="doAttendance();renderHotdeals()">출석체크</button>';
+  }else{
+    heroHtml+='<div class="pp-hero-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>';
   }
-  // 가격 하락 알림
-  var alertArea=document.getElementById('price-alert-area');
+  heroHtml+='</div>';
+  heroHtml+='</div>';
+  document.getElementById('attend-area').innerHTML=heroHtml;
+  document.getElementById('savings-top-area').innerHTML='';
+
+  // ═══ 2. PRICE ALERT ═══ (가격 변동 카드)
   var tracks=getTracks();
   var alertProduct=tracks.length>0?PRODUCTS.find(function(x){return x.id===tracks[0].productId}):PRODUCTS[1];
+  var alertArea=document.getElementById('price-alert-area');
   if(alertProduct){
     var dropPct=alertProduct.discount;
     var prevPrice=alertProduct.originalPrice;
-    alertArea.innerHTML='<div class="price-alert" onclick="openDetail('+alertProduct.id+')"><span class="emoji">📉</span><div class="info"><div class="title">'+alertProduct.name+'</div><div class="desc">'+prevPrice.toLocaleString()+'원 → <b style="color:#e74c3c">'+alertProduct.currentPrice.toLocaleString()+'원</b> ('+dropPct+'%↓)</div></div><span class="action">보러가기 ›</span></div>';
+    var savedAmount=prevPrice-alertProduct.currentPrice;
+    var html='<div class="pp-drop-card" onclick="openDetail('+alertProduct.id+')">';
+    html+='<div class="pp-drop-head">';
+    html+='<div class="pp-drop-badge"><span class="pp-drop-dot"></span>방금 가격이 떨어졌어요</div>';
+    html+='<div class="pp-drop-time">2분 전</div>';
+    html+='</div>';
+    html+='<div class="pp-drop-body">';
+    html+='<div class="pp-drop-thumb">'+alertProduct.emoji+'</div>';
+    html+='<div class="pp-drop-info">';
+    html+='<div class="pp-drop-name">'+alertProduct.name+'</div>';
+    html+='<div class="pp-drop-prices"><span class="pp-drop-old">'+prevPrice.toLocaleString()+'원</span>';
+    html+='<span class="pp-drop-new">'+alertProduct.currentPrice.toLocaleString()+'원</span>';
+    html+='<span class="pp-drop-pct">−'+dropPct+'%</span></div>';
+    html+='<div class="pp-drop-saved">'+savedAmount.toLocaleString()+'원 싸졌어요</div>';
+    html+='</div></div></div>';
+    alertArea.innerHTML=html;
+  }else{
+    alertArea.innerHTML='';
   }
+
   renderHotExtra();
 }
 
@@ -4911,104 +6335,107 @@ function submitSearch(){
   doSearch();
 }
 
-// 핫딜탭 하단 섹션
+// 핫딜탭 하단 섹션 — 프리미엄 리디자인
 function renderHotExtra(){
   var html='';
-  // 이벤트 상품 배너
-  html+='<div style="padding:12px 16px">';
-  html+='<div style="font-size:14px;font-weight:700;margin-bottom:8px">🎉 이벤트 상품</div>';
-  html+='<div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch">';
-  EVENT_2X.forEach(function(ev){
-    html+='<div style="min-width:200px;border-radius:14px;padding:16px;color:#fff;background:'+ev.bg+';flex-shrink:0;cursor:pointer">';
-    html+='<div style="font-size:24px;margin-bottom:4px">'+ev.emoji+'</div>';
-    html+='<div style="font-size:14px;font-weight:700">'+ev.cat+' 2배 적립</div>';
-    html+='<div style="font-size:11px;opacity:.85;margin-top:4px">~'+ev.end+'까지</div>';
-    html+='</div>';
-  });
-  html+='</div></div>';
 
-  // 인기 상품 (discount 높은순)
-  var popular=PRODUCTS.slice().sort(function(a,b){return b.discount-a.discount});
-  html+='<div style="padding:0 16px 12px">';
-  html+='<div style="font-size:14px;font-weight:700;margin-bottom:8px">🔥 인기 상품</div>';
-  html+='<div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch">';
-  popular.forEach(function(p){
-    html+='<div style="min-width:150px;max-width:150px;background:var(--card);border-radius:12px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);flex-shrink:0">';
-    html+='<div onclick="openDetail('+p.id+')" style="cursor:pointer">';
-    html+='<div style="font-size:30px;text-align:center;margin-bottom:6px">'+p.emoji+'</div>';
-    html+='<div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+p.name+'</div>';
-    html+='<div style="display:flex;align-items:center;gap:4px;margin-top:4px">';
-    html+='<span style="font-size:13px;font-weight:700;color:var(--red)">'+p.discount+'%</span>';
-    html+='<span style="font-size:12px;font-weight:700">'+p.currentPrice.toLocaleString()+'원</span>';
-    html+='</div>';
-    var sig=getTimingSignal(p);
-    html+='<div class="timing-badge '+sig.signal+'">'+sig.label+'</div>';
-    html+='</div>';
-    html+='<button class="quick-buy" onclick="event.stopPropagation();quickBuy('+p.id+')">🛒 쿠팡에서 보기</button>';
-    html+='<div style="font-size:11px;color:var(--text-sub);font-weight:500;text-align:center;margin-top:4px">※ 쿠팡 파트너스 제휴 링크 · 구매 시 수수료 지급</div>';
-    html+='</div>';
-  });
-  html+='</div></div>';
-
-  // 골드박스 (3열 그리드 + 카운트다운)
-  html+='<div style="padding:0 16px 12px">';
-  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">';
-  html+='<span style="font-size:14px;font-weight:700">🏆 골드박스</span>';
-  html+='<span id="hot-goldbox-timer" style="font-size:12px;color:var(--red);font-weight:600"></span></div>';
-  html+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">';
-  PRODUCTS.slice(0,6).forEach(function(p){
-    html+='<div onclick="openDetail('+p.id+')" style="background:var(--card);border-radius:12px;padding:10px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.06);text-align:center">';
-    html+='<div style="font-size:26px;margin-bottom:4px">'+p.emoji+'</div>';
-    html+='<div style="font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+p.name.slice(0,8)+'</div>';
-    html+='<div style="font-size:12px;font-weight:700;color:var(--red);margin-top:2px">'+p.discount+'%↓</div>';
-    html+='</div>';
-  });
-  html+='</div></div>';
-
-  // 지금 최저가 (badge==='lowest')
+  // ═══ 1. 지금 최저가 (hero cards) ═══
   var lowest=PRODUCTS.filter(function(p){return p.badge==='lowest'});
   if(lowest.length>0){
-    html+='<div style="padding:0 16px 12px">';
-    html+='<div style="font-size:14px;font-weight:700;margin-bottom:8px">💰 지금 최저가</div>';
+    html+='<div class="pp-section">';
+    html+='<div class="pp-section-head"><h2>🔥 지금 역대 최저가</h2><span class="pp-section-sub">놓치면 후회해요</span></div>';
+    html+='<div class="pp-lowest-list">';
     lowest.forEach(function(p){
-      html+='<div onclick="openDetail('+p.id+')" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A);border-radius:14px;padding:14px;cursor:pointer;margin-bottom:8px;display:flex;align-items:center;gap:12px">';
-      html+='<div style="font-size:34px">'+p.emoji+'</div>';
-      html+='<div style="flex:1"><div style="font-size:13px;font-weight:700">'+p.name+'</div>';
-      html+='<div style="display:flex;align-items:center;gap:6px;margin-top:4px">';
-      html+='<span style="font-size:11px;color:var(--text-sub);text-decoration:line-through">'+p.originalPrice.toLocaleString()+'원</span>';
-      html+='<span style="font-size:14px;font-weight:700;color:var(--red)">'+p.currentPrice.toLocaleString()+'원</span>';
-      html+='</div></div>';
-      html+='<div style="display:flex;flex-direction:column;align-items:center;gap:4px">';
-      html+='<div style="background:var(--red);color:#fff;border-radius:8px;padding:4px 8px;font-size:12px;font-weight:700">최저가</div>';
-      html+='<button class="quick-buy" onclick="event.stopPropagation();quickBuy('+p.id+')" style="margin-top:0">보러가기</button>';
-      html+='<div style="font-size:11px;color:var(--text-sub);font-weight:500;text-align:center;margin-top:4px">※ 쿠팡 파트너스 제휴 링크</div>';
-      html+='</div></div>';
+      var saved=p.originalPrice-p.currentPrice;
+      html+='<div class="pp-lowest-card" onclick="openDetail('+p.id+')">';
+      html+='<div class="pp-lowest-thumb">'+p.emoji+'</div>';
+      html+='<div class="pp-lowest-body">';
+      html+='<div class="pp-lowest-badge">역대 최저가</div>';
+      html+='<div class="pp-lowest-name">'+p.name+'</div>';
+      html+='<div class="pp-lowest-price-row">';
+      html+='<span class="pp-lowest-price">'+p.currentPrice.toLocaleString()+'<span>원</span></span>';
+      html+='<span class="pp-lowest-save">'+saved.toLocaleString()+'원↓</span>';
+      html+='</div>';
+      html+='</div>';
+      html+='<button class="pp-lowest-btn" onclick="event.stopPropagation();quickBuy('+p.id+')">구매</button>';
+      html+='</div>';
     });
-    html+='</div>';
+    html+='</div></div>';
   }
 
-  // 카테고리별 상품
-  html+='<div style="padding:0 16px 16px">';
-  html+='<div style="font-size:14px;font-weight:700;margin-bottom:8px">📂 카테고리별 상품</div>';
-  html+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">';
+  // ═══ 2. 인기 상품 (horizontal scroll) ═══
+  var popular=PRODUCTS.slice().sort(function(a,b){return b.discount-a.discount}).slice(0,8);
+  html+='<div class="pp-section">';
+  html+='<div class="pp-section-head"><h2>인기 상품</h2><span class="pp-more" onclick="switchTab(\'search\')">더보기 ›</span></div>';
+  html+='<div class="pp-hscroll">';
+  popular.forEach(function(p){
+    var sig=getTimingSignal(p);
+    html+='<div class="pp-hcard" onclick="openDetail('+p.id+')">';
+    html+='<div class="pp-hcard-thumb">'+p.emoji+'</div>';
+    html+='<div class="pp-hcard-body">';
+    html+='<div class="pp-hcard-name">'+p.name+'</div>';
+    html+='<div class="pp-hcard-meta">';
+    html+='<span class="pp-hcard-discount">'+p.discount+'%</span>';
+    html+='<span class="pp-hcard-price">'+p.currentPrice.toLocaleString()+'원</span>';
+    html+='</div>';
+    html+='<div class="timing-badge '+sig.signal+'">'+sig.label+'</div>';
+    html+='</div>';
+    html+='</div>';
+  });
+  html+='</div></div>';
+
+  // ═══ 3. 골드박스 (3x2 그리드) ═══
+  html+='<div class="pp-section">';
+  html+='<div class="pp-section-head"><h2>🏆 골드박스</h2><span id="hot-goldbox-timer" class="pp-timer"></span></div>';
+  html+='<div class="pp-grid3">';
+  PRODUCTS.slice(0,6).forEach(function(p){
+    html+='<div class="pp-gcard" onclick="openDetail('+p.id+')">';
+    html+='<div class="pp-gcard-thumb">'+p.emoji+'</div>';
+    html+='<div class="pp-gcard-name">'+p.name+'</div>';
+    html+='<div class="pp-gcard-discount">'+p.discount+'% ↓</div>';
+    html+='</div>';
+  });
+  html+='</div></div>';
+
+  // ═══ 4. 이벤트 상품 ═══
+  html+='<div class="pp-section">';
+  html+='<div class="pp-section-head"><h2>이벤트 혜택</h2></div>';
+  html+='<div class="pp-hscroll">';
+  EVENT_2X.forEach(function(ev){
+    html+='<div class="pp-event-card" style="background:'+ev.bg+'">';
+    html+='<div class="pp-event-badge">2배 적립</div>';
+    html+='<div class="pp-event-emoji">'+ev.emoji+'</div>';
+    html+='<div class="pp-event-cat">'+ev.cat+'</div>';
+    html+='<div class="pp-event-end">~'+ev.end+'까지</div>';
+    html+='</div>';
+  });
+  html+='</div></div>';
+
+  // ═══ 5. 카테고리별 탐색 ═══
+  html+='<div class="pp-section">';
+  html+='<div class="pp-section-head"><h2>카테고리별 탐색</h2></div>';
+  html+='<div class="pp-cat-chips">';
   CATEGORIES.forEach(function(c){
     var active=c.name===selectedCategory;
-    html+='<span class="chip" style="'+(active?'background:var(--primary);color:#fff;border-color:var(--primary)':'')+'" onclick="selectedCategory=\''+c.name+'\';renderHotExtra()">'+c.emoji+' '+c.name+'</span>';
+    html+='<span class="pp-cat-chip '+(active?'active':'')+'" onclick="selectedCategory=\''+c.name+'\';renderHotExtra()">'+c.emoji+' '+c.name+'</span>';
   });
   html+='</div>';
   var catProducts=PRODUCTS.filter(function(p){return p.category===selectedCategory});
   if(catProducts.length===0){
-    html+='<div style="text-align:center;padding:20px;color:var(--text-sub);font-size:13px">해당 카테고리 상품이 없습니다</div>';
+    html+='<div class="pp-empty-inline">해당 카테고리 상품이 없습니다</div>';
   }else{
-    html+='<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">';
+    html+='<div class="pp-grid2">';
     catProducts.forEach(function(p){
-      html+='<div onclick="openDetail('+p.id+')" style="background:var(--card);border-radius:12px;padding:12px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.06)">';
-      html+='<div style="font-size:30px;text-align:center;margin-bottom:6px">'+p.emoji+'</div>';
-      html+='<div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+p.name+'</div>';
-      html+='<div style="display:flex;align-items:center;gap:4px;margin-top:4px">';
-      html+='<span style="font-size:13px;font-weight:700;color:var(--red)">'+p.discount+'%</span>';
-      html+='<span style="font-size:12px;font-weight:700">'+p.currentPrice.toLocaleString()+'원</span>';
-      html+='</div></div>';
+      html+='<div class="pp-pcard" onclick="openDetail('+p.id+')">';
+      html+='<div class="pp-pcard-thumb">'+p.emoji+'</div>';
+      html+='<div class="pp-pcard-body">';
+      html+='<div class="pp-pcard-name">'+p.name+'</div>';
+      html+='<div class="pp-pcard-price-row">';
+      html+='<span class="pp-pcard-discount">'+p.discount+'%</span>';
+      html+='<span class="pp-pcard-price">'+p.currentPrice.toLocaleString()+'원</span>';
+      html+='</div>';
+      html+='</div>';
+      html+='</div>';
     });
     html+='</div>';
   }
@@ -5072,7 +6499,19 @@ function renderBenefit(){
   document.getElementById('ticket-pending').textContent='적립예정 '+tickets.pending+'장';
   document.getElementById('ticket-available').textContent=tickets.available;
   var remaining=Math.max(0,8-tickets.available);
-  document.getElementById('ticket-remaining').textContent=remaining>0?remaining+'장':'교환 가능!';
+  var remainEl=document.getElementById('ticket-remaining');
+  var remainParent=remainEl?remainEl.parentElement:null;
+  if(remaining>0){
+    remainEl.innerHTML=remaining+'<span style="font-weight:500;opacity:.85">장 남음</span>';
+  } else if(remainParent){
+    remainParent.innerHTML='<span style="color:#FCD34D;font-weight:800">지금 교환 가능!</span>';
+  }
+  // progress bar fill
+  var progressFill=document.getElementById('ticket-progress-fill');
+  if(progressFill){
+    var pct=Math.min(100,Math.round(tickets.available/8*100));
+    progressFill.style.width=pct+'%';
+  }
   document.getElementById('raffle-tickets').textContent=tickets.available;
   // 대기 기간 안내
   var delayEl=document.getElementById('ticket-delay-info');

@@ -4878,6 +4878,513 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
   border-radius: 16px;
 }
 
+/* ============================================================
+   ─── 53. PRODUCT DETAIL — 상품 상세 페이지
+   ============================================================ */
+
+.detail-overlay { z-index: 1000; }
+.detail-top {
+  background: rgba(255,255,255,0.92) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 0.5px solid var(--border) !important;
+}
+.detail-top button {
+  width: 38px; height: 38px;
+  border-radius: 12px !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--text) !important;
+  font-size: 18px;
+  display: grid; place-items: center;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.detail-top button:active { background: var(--bg) !important; }
+
+#detail-scroll {
+  background: var(--bg) !important;
+}
+
+/* ─── 53-1. HERO ─── */
+.pp-detail-hero {
+  background: #fff;
+  margin: 0 0 12px;
+  padding: 24px 20px 22px;
+  text-align: center;
+  border-bottom: 0.5px solid var(--border);
+}
+.pp-detail-thumb {
+  width: 130px; height: 130px;
+  margin: 0 auto 16px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #F8F8FA, #ECECEE);
+  display: grid; place-items: center;
+  font-size: 64px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+.pp-detail-cat-row {
+  display: flex; align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.pp-detail-cat {
+  font-size: 11px; font-weight: 600;
+  color: var(--text-sub);
+  background: var(--bg);
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: -0.015em;
+}
+.pp-detail-badge {
+  font-size: 10.5px; font-weight: 800;
+  padding: 4px 9px;
+  border-radius: 6px;
+  letter-spacing: -0.01em;
+}
+.pp-detail-badge-lowest {
+  color: var(--red);
+  background: var(--red-bg);
+}
+.pp-detail-badge-hot {
+  color: #fff;
+  background: linear-gradient(135deg, #F59E0B, #EF4444);
+}
+.pp-detail-name {
+  font-size: 16px; font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  line-height: 1.4;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+.pp-detail-prices {
+  display: flex; flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.pp-detail-orig-row {
+  display: flex; align-items: center;
+  gap: 8px;
+}
+.pp-detail-discount {
+  font-size: 14px; font-weight: 800;
+  color: var(--red);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.pp-detail-orig {
+  font-size: 13px;
+  color: var(--text-light);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+.pp-detail-current {
+  font-size: 32px; font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.pp-detail-current span {
+  font-size: 18px; font-weight: 600;
+  margin-left: 2px;
+}
+.pp-detail-saved {
+  font-size: 12px; font-weight: 700;
+  color: var(--red);
+  letter-spacing: -0.015em;
+  font-variant-numeric: tabular-nums;
+  margin-top: 4px;
+}
+
+/* ─── 53-2. SIGNAL CARD ─── */
+.pp-detail-signal {
+  margin: 0 16px 12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid;
+}
+.pp-detail-signal-good {
+  background: var(--green-bg);
+  border-color: rgba(16,185,129,0.2);
+}
+.pp-detail-signal-wait {
+  background: var(--amber-50);
+  border-color: rgba(251,191,36,0.25);
+}
+.pp-detail-signal-ok {
+  background: var(--bg);
+  border-color: var(--border);
+}
+.pp-detail-signal-icon {
+  width: 36px; height: 36px;
+  border-radius: 12px;
+  display: grid; place-items: center;
+  font-size: 18px; font-weight: 800;
+  flex-shrink: 0;
+}
+.pp-detail-signal-good .pp-detail-signal-icon {
+  background: #10B981; color: #fff;
+}
+.pp-detail-signal-wait .pp-detail-signal-icon {
+  background: #F59E0B; color: #fff;
+}
+.pp-detail-signal-ok .pp-detail-signal-icon {
+  background: var(--text-sub); color: #fff;
+}
+.pp-detail-signal-body { flex: 1; min-width: 0; }
+.pp-detail-signal-title {
+  font-size: 14px; font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.025em;
+  margin-bottom: 2px;
+}
+.pp-detail-signal-desc {
+  font-size: 12px;
+  color: var(--text-2);
+  letter-spacing: -0.015em;
+  line-height: 1.4;
+}
+
+/* ─── 53-3. AI 구매 이유 ─── */
+.pp-detail-ai-reason {
+  margin: 0 16px 12px;
+  background: linear-gradient(135deg, #EDE9FE, #DDD6FE);
+  border-radius: 14px;
+  padding: 14px 16px;
+}
+.pp-detail-ai-reason-head {
+  display: flex; align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 12px; font-weight: 700;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+}
+.pp-detail-ai-badge {
+  font-size: 10px; font-weight: 800;
+  padding: 2px 7px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 5px;
+  letter-spacing: 0;
+}
+.pp-detail-ai-reason-body {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.55;
+  letter-spacing: -0.02em;
+  font-style: italic;
+}
+
+/* ─── 53-4. 섹션 공통 ─── */
+.pp-detail-section { margin-bottom: 14px; }
+.pp-detail-section-head {
+  display: flex; align-items: baseline;
+  justify-content: space-between;
+  padding: 6px 20px 10px;
+}
+.pp-detail-section-head h2 {
+  font-size: 15px; font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.03em;
+}
+.pp-detail-section-sub {
+  font-size: 11.5px;
+  color: var(--text-sub);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+/* ─── 53-5. 가격 차트 카드 ─── */
+.pp-detail-chart-card {
+  margin: 0 16px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  padding: 16px;
+}
+.pp-detail-chart-stats {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 0.5px solid var(--border);
+}
+.pp-detail-chart-stat {
+  flex: 1;
+  text-align: center;
+}
+.pp-detail-chart-stat-label {
+  font-size: 11px; font-weight: 500;
+  color: var(--text-sub);
+  letter-spacing: -0.015em;
+  margin-bottom: 4px;
+}
+.pp-detail-chart-stat-val {
+  font-size: 13.5px; font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.025em;
+  font-variant-numeric: tabular-nums;
+}
+.pp-detail-chart-stat-val.pp-text-green { color: #10B981; }
+.pp-detail-chart-stat-val.pp-text-red { color: var(--red); }
+.pp-detail-chart-stat-div {
+  width: 1px; height: 28px;
+  background: var(--border);
+}
+.pp-detail-chart-wrap {
+  position: relative;
+  height: 180px;
+  margin-bottom: 12px;
+}
+.pp-detail-chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  font-size: 11px; font-weight: 500;
+  color: var(--text-sub);
+  letter-spacing: -0.015em;
+}
+.pp-detail-chart-legend-item {
+  display: flex; align-items: center; gap: 5px;
+}
+.pp-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.pp-dot-purple { background: #7C3AED; }
+.pp-dot-green { background: #10B981; }
+.pp-dot-dash {
+  border-radius: 0;
+  width: 12px; height: 2px;
+  background: repeating-linear-gradient(90deg, #10B981 0 4px, transparent 4px 6px);
+}
+
+/* ─── 53-6. AI 가격 예측 카드 ─── */
+.pp-detail-predict-card {
+  margin: 0 16px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  padding: 18px 16px 14px;
+}
+.pp-detail-predict-main {
+  display: flex; align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.pp-detail-predict-circle {
+  width: 86px; height: 86px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+  border: 6px solid;
+  text-align: center;
+}
+.pp-detail-predict-down {
+  border-color: rgba(16,185,129,0.25);
+  background: var(--green-bg);
+  color: #059669;
+}
+.pp-detail-predict-up {
+  border-color: rgba(239,68,68,0.25);
+  background: var(--red-bg);
+  color: var(--red);
+}
+.pp-detail-predict-pct {
+  font-size: 22px; font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.pp-detail-predict-pct span {
+  font-size: 14px; font-weight: 700;
+}
+.pp-detail-predict-dir {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: -0.015em;
+  margin-top: 2px;
+}
+.pp-detail-predict-info { flex: 1; min-width: 0; }
+.pp-detail-predict-verdict {
+  font-size: 14px; font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.025em;
+  margin-bottom: 4px;
+  line-height: 1.35;
+}
+.pp-detail-predict-reason {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+}
+.pp-detail-predict-factors {
+  display: flex; flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 12px;
+  border-top: 0.5px solid var(--border);
+}
+.pp-detail-predict-factor {
+  display: inline-flex; align-items: center;
+  gap: 5px;
+  font-size: 11px; font-weight: 500;
+  color: var(--text-2);
+  background: var(--bg);
+  padding: 5px 10px;
+  border-radius: 999px;
+  letter-spacing: -0.015em;
+}
+
+/* ─── 53-7. 알림 카드 ─── */
+.pp-detail-alert-card {
+  margin: 0 16px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+.pp-detail-alert-empty {
+  padding: 12px 16px;
+  background: var(--primary-50);
+  font-size: 12px;
+  color: var(--primary);
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: -0.015em;
+}
+.pp-detail-alert-row {
+  padding: 14px 16px;
+  display: flex; align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 0.5px solid var(--border);
+}
+.pp-detail-alert-row:last-child { border-bottom: none; }
+.pp-detail-alert-label {
+  display: flex; align-items: center;
+  gap: 10px;
+  font-size: 13.5px; font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+.pp-detail-alert-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: var(--bg);
+  display: grid; place-items: center;
+  font-size: 14px;
+}
+.pp-detail-target-input {
+  width: 110px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-strong);
+  font-size: 14px; font-weight: 700;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--primary);
+  background: #fff;
+  outline: none;
+  transition: border-color 0.12s;
+}
+.pp-detail-target-input:focus {
+  border-color: var(--primary);
+}
+
+/* ─── 53-8. 파트너스 안내 ─── */
+.pp-detail-affiliate {
+  margin: 0 16px 20px;
+  padding: 12px 14px;
+  background: var(--bg);
+  border-radius: 10px;
+  display: flex; gap: 8px;
+  align-items: flex-start;
+}
+.pp-detail-affiliate-icon {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--text-light);
+  color: #fff;
+  display: grid; place-items: center;
+  font-size: 11px; font-weight: 800;
+  flex-shrink: 0;
+}
+.pp-detail-affiliate-text {
+  font-size: 11px;
+  color: var(--text-sub);
+  line-height: 1.55;
+  letter-spacing: -0.015em;
+}
+
+/* ─── 53-9. 하단 sticky CTA ─── */
+.detail-bottom {
+  background: rgba(255,255,255,0.96) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 0.5px solid var(--border) !important;
+  padding: 12px 16px !important;
+  padding-bottom: calc(12px + var(--safe-bottom)) !important;
+  gap: 8px !important;
+}
+.pp-detail-bottom-icon {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  display: grid; place-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.12s;
+}
+.pp-detail-bottom-icon svg {
+  width: 22px; height: 22px;
+}
+.pp-detail-bottom-icon:active {
+  transform: scale(0.94);
+  background: var(--bg-2);
+}
+.pp-detail-bottom-icon.active {
+  background: var(--red-bg);
+  border-color: rgba(239,68,68,0.2);
+  color: var(--red);
+}
+.pp-detail-bottom-buy {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+  color: #fff;
+  cursor: pointer;
+  display: flex; align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(124,58,237,0.35);
+  transition: transform 0.12s;
+}
+.pp-detail-bottom-buy:active { transform: scale(0.98); }
+.pp-detail-bottom-buy-label {
+  font-size: 13px; font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.pp-detail-bottom-buy-price {
+  font-size: 15px; font-weight: 800;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
 /* ─── 47. Dark mode ───────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -7125,106 +7632,213 @@ openDetail=function(id,fromWish){
   if(!p)return;
   var tracks=getTracks();
   var tracked=tracks.find(function(t){return t.productId===id});
-  var history=tracked?tracked.history:genHistory(p);
-  var prices=history.map(function(h){return h.price});
+  var priceHistory=tracked&&tracked.history&&tracked.history.length>0?tracked.history:genHistory(p);
+  var prices=priceHistory.map(function(h){return h.price});
   var maxP=Math.max.apply(null,prices),minP=Math.min.apply(null,prices),avgP=Math.round(prices.reduce(function(a,b){return a+b},0)/prices.length);
   var avgDiff=p.currentPrice-avgP;
+  var sig=getTimingSignal(p);
+  var savedFromOriginal=(p.originalPrice||p.currentPrice)-p.currentPrice;
+  var isAtLowest=p.currentPrice<=minP;
 
   var html='';
-  if(p.ai){
-    html+='<div style="margin:12px 16px;background:linear-gradient(135deg,#EFF6FF,#E0E7FF);border-radius:14px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.04)">';
-    html+='<div style="font-size:12px;font-weight:700;color:var(--primary);margin-bottom:4px">💬 최근 구매 이유</div>';
-    html+='<div style="font-size:13px;line-height:1.5;color:var(--text)">'+p.ai+'</div></div>';
-  }
-  html+='<div class="graph-card"><div class="graph-title">PricePick 가격 그래프 <span style="font-size:12px;color:var(--text-sub)">ⓘ</span></div>';
-  html+='<canvas id="detail-chart" height="180"></canvas>';
-  html+='<div class="price-stats">';
-  html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--red)"></span> 역대최고가</span><span class="value" style="color:var(--red)">'+maxP.toLocaleString()+'원</span></div>';
-  html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--text-sub)"></span> 평균가</span><span class="value">'+avgP.toLocaleString()+'원</span></div>';
-  html+='<div class="price-stat"><span class="label"><span class="dot" style="background:var(--green)"></span> 역대최저가</span><span class="value" style="color:var(--green)">'+minP.toLocaleString()+'원</span></div>';
-  html+='</div></div>';
 
-  // AI 가격 예측
-  var pred=getPricePrediction(p);
-  html+='<div class="predict-card">';
-  html+='<div class="predict-header"><span class="ai-badge">AI 예측</span><h4>가격 전망</h4></div>';
-  html+='<div class="predict-main">';
-  html+='<div class="predict-circle '+pred.direction+'">'+pred.pct+'%<div class="pct">'+(pred.direction==='down'?'하락':'상승')+'</div></div>';
-  html+='<div class="predict-info"><div class="verdict">'+pred.verdict+'</div>';
-  html+='<div class="reason">'+pred.reason+'</div></div></div>';
-  html+='<div class="predict-factors">';
-  pred.factors.forEach(function(f){
-    html+='<div class="predict-factor"><span class="dot" style="background:'+f.color+'"></span>'+f.label+'</div>';
-  });
-  html+='</div></div>';
-
-  if(!tracked){
-    html+='<div style="padding:12px 16px;font-size:13px;color:var(--text-sub);text-align:center;background:var(--card);margin:0 16px 12px;border-radius:12px">아직 구매한 적 없는 상품이에요. ⓘ</div>';
+  // ═══ 1. HERO — 상품 정보 ═══
+  html+='<div class="pp-detail-hero">';
+  html+='<div class="pp-detail-thumb">'+p.emoji+'</div>';
+  html+='<div class="pp-detail-cat-row">';
+  html+='<span class="pp-detail-cat">'+(p.category||'전자/디지털')+'</span>';
+  if(p.badge==='lowest'||isAtLowest){
+    html+='<span class="pp-detail-badge pp-detail-badge-lowest">역대 최저가</span>';
   }
-
-  html+='<div class="alert-card">';
-  html+='<div class="alert-header">추가 알림 설정 <span style="font-size:14px;cursor:pointer">∧</span></div>';
-  if(!tracked){
-    html+='<div class="alert-info">ⓘ 관심상품으로 추가해야 설정할 수 있어요.</div>';
+  if(p.discount>=20){
+    html+='<span class="pp-detail-badge pp-detail-badge-hot">HOT</span>';
   }
-  html+='<div class="alert-row"><div class="left">📊 원하는 가격 알림</div><div class="right">'+(tracked?'<span>'+tracked.targetPrice.toLocaleString()+'원</span>':'<span>설정 안됨</span>')+' ›</div></div>';
-  html+='<div class="alert-row"><div class="left">🔔 재입고 알림</div><div class="right"><div class="toggle" onclick="this.classList.toggle(\'on\')"></div></div></div>';
+  html+='</div>';
+  html+='<h1 class="pp-detail-name">'+p.name+'</h1>';
+  html+='<div class="pp-detail-prices">';
+  if(p.originalPrice&&p.originalPrice>p.currentPrice){
+    html+='<div class="pp-detail-orig-row">';
+    html+='<span class="pp-detail-discount">'+p.discount+'%</span>';
+    html+='<span class="pp-detail-orig">'+p.originalPrice.toLocaleString()+'원</span>';
+    html+='</div>';
+  }
+  html+='<div class="pp-detail-current">'+p.currentPrice.toLocaleString()+'<span>원</span></div>';
+  if(savedFromOriginal>0){
+    html+='<div class="pp-detail-saved">정가 대비 '+savedFromOriginal.toLocaleString()+'원 ↓</div>';
+  }
+  html+='</div>';
   html+='</div>';
 
-  html+='<div style="margin:0 16px 12px;background:var(--card);border-radius:14px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.04)">';
-  html+='<div style="font-size:14px;font-weight:700;margin-bottom:10px">원하는 가격 설정</div>';
-  html+='<div style="margin-bottom:8px"><span class="input-label">목표 가격 (원)</span>';
-  html+='<input type="number" class="input-field" id="detail-target" value="'+(tracked?tracked.targetPrice:Math.round(p.currentPrice*0.85))+'"></div></div>';
+  // ═══ 2. SIGNAL CARD — 지금 사세요 / 기다리세요 ═══
+  var signalClass=sig.signal==='now'?'good':(sig.signal==='wait'?'wait':'ok');
+  var signalIcon=sig.signal==='now'?'✓':(sig.signal==='wait'?'⏳':'•');
+  var signalTitle=sig.signal==='now'?'지금이 좋은 타이밍':(sig.signal==='wait'?'조금만 더 기다려보세요':'적정 가격대');
+  var signalDesc=sig.signal==='now'?'역대 최저가 근처입니다. 추가 할인 가능성 낮음.':(sig.signal==='wait'?'평균가보다 비싸요. 1~2주 후 가격 변동 예상.':'평균 가격대에서 거래 중이에요.');
+  html+='<div class="pp-detail-signal pp-detail-signal-'+signalClass+'">';
+  html+='<div class="pp-detail-signal-icon">'+signalIcon+'</div>';
+  html+='<div class="pp-detail-signal-body">';
+  html+='<div class="pp-detail-signal-title">'+signalTitle+'</div>';
+  html+='<div class="pp-detail-signal-desc">'+signalDesc+'</div>';
+  html+='</div>';
+  html+='</div>';
 
-  // 비슷한 상품 추천
+  // ═══ 3. AI 구매 이유 (있으면) ═══
+  if(p.ai){
+    html+='<div class="pp-detail-ai-reason">';
+    html+='<div class="pp-detail-ai-reason-head"><span class="pp-detail-ai-badge">AI</span><span>최근 구매 이유</span></div>';
+    html+='<div class="pp-detail-ai-reason-body">"'+p.ai+'"</div>';
+    html+='</div>';
+  }
+
+  // ═══ 4. 가격 그래프 카드 ═══
+  html+='<div class="pp-detail-section">';
+  html+='<div class="pp-detail-section-head"><h2>가격 추이</h2><span class="pp-detail-section-sub">최근 50일</span></div>';
+  html+='<div class="pp-detail-chart-card">';
+  html+='<div class="pp-detail-chart-stats">';
+  html+='<div class="pp-detail-chart-stat"><div class="pp-detail-chart-stat-label">역대 최저</div><div class="pp-detail-chart-stat-val pp-text-green">'+minP.toLocaleString()+'원</div></div>';
+  html+='<div class="pp-detail-chart-stat-div"></div>';
+  html+='<div class="pp-detail-chart-stat"><div class="pp-detail-chart-stat-label">평균</div><div class="pp-detail-chart-stat-val">'+avgP.toLocaleString()+'원</div></div>';
+  html+='<div class="pp-detail-chart-stat-div"></div>';
+  html+='<div class="pp-detail-chart-stat"><div class="pp-detail-chart-stat-label">역대 최고</div><div class="pp-detail-chart-stat-val pp-text-red">'+maxP.toLocaleString()+'원</div></div>';
+  html+='</div>';
+  html+='<div class="pp-detail-chart-wrap"><canvas id="detail-chart"></canvas></div>';
+  html+='<div class="pp-detail-chart-legend">';
+  html+='<div class="pp-detail-chart-legend-item"><span class="pp-dot pp-dot-purple"></span>실시간 가격</div>';
+  html+='<div class="pp-detail-chart-legend-item"><span class="pp-dot pp-dot-green pp-dot-dash"></span>역대 최저</div>';
+  html+='</div>';
+  html+='</div>';
+  html+='</div>';
+
+  // ═══ 5. AI 가격 예측 ═══
+  var pred=getPricePrediction(p);
+  html+='<div class="pp-detail-section">';
+  html+='<div class="pp-detail-section-head"><h2>AI 가격 전망</h2><span class="pp-detail-section-sub">향후 30일</span></div>';
+  html+='<div class="pp-detail-predict-card">';
+  html+='<div class="pp-detail-predict-main">';
+  html+='<div class="pp-detail-predict-circle pp-detail-predict-'+pred.direction+'">';
+  html+='<div class="pp-detail-predict-pct">'+pred.pct+'<span>%</span></div>';
+  html+='<div class="pp-detail-predict-dir">'+(pred.direction==='down'?'하락':'상승')+'</div>';
+  html+='</div>';
+  html+='<div class="pp-detail-predict-info">';
+  html+='<div class="pp-detail-predict-verdict">'+pred.verdict+'</div>';
+  html+='<div class="pp-detail-predict-reason">'+pred.reason+'</div>';
+  html+='</div>';
+  html+='</div>';
+  html+='<div class="pp-detail-predict-factors">';
+  pred.factors.forEach(function(f){
+    html+='<div class="pp-detail-predict-factor"><span class="pp-dot" style="background:'+f.color+'"></span>'+f.label+'</div>';
+  });
+  html+='</div>';
+  html+='</div>';
+  html+='</div>';
+
+  // ═══ 6. 알림 / 목표가 설정 ═══
+  html+='<div class="pp-detail-section">';
+  html+='<div class="pp-detail-section-head"><h2>가격 알림</h2></div>';
+  html+='<div class="pp-detail-alert-card">';
+  if(!tracked){
+    html+='<div class="pp-detail-alert-empty">관심상품으로 추가하면 가격 알림을 받을 수 있어요</div>';
+  }
+  html+='<div class="pp-detail-alert-row">';
+  html+='<div class="pp-detail-alert-label"><span class="pp-detail-alert-icon">🎯</span> 목표 가격</div>';
+  html+='<input type="number" class="pp-detail-target-input" id="detail-target" value="'+(tracked?tracked.targetPrice:Math.round(p.currentPrice*0.85))+'" placeholder="목표가">';
+  html+='</div>';
+  html+='<div class="pp-detail-alert-row">';
+  html+='<div class="pp-detail-alert-label"><span class="pp-detail-alert-icon">📦</span> 재입고 알림</div>';
+  html+='<div class="toggle" onclick="this.classList.toggle(\'on\')"></div>';
+  html+='</div>';
+  html+='<div class="pp-detail-alert-row">';
+  html+='<div class="pp-detail-alert-label"><span class="pp-detail-alert-icon">📉</span> 가격 하락 알림</div>';
+  html+='<div class="toggle on" onclick="this.classList.toggle(\'on\')"></div>';
+  html+='</div>';
+  html+='</div>';
+  html+='</div>';
+
+  // ═══ 7. 비슷한 상품 ═══
   var similar=PRODUCTS.filter(function(x){return x.category===p.category&&x.id!==p.id});
   if(similar.length<3)similar=similar.concat(PRODUCTS.filter(function(x){return x.id!==p.id&&x.category!==p.category}).slice(0,3-similar.length));
   if(similar.length>0){
-    html+='<div class="similar-section">';
-    html+='<div class="similar-header">👀 이 상품을 본 사람이 같이 본 상품</div>';
-    html+='<div class="similar-scroll">';
-    similar.slice(0,5).forEach(function(s){
+    html+='<div class="pp-detail-section">';
+    html+='<div class="pp-detail-section-head"><h2>이 상품을 본 사람이 같이 본 상품</h2></div>';
+    html+='<div class="pp-hscroll" style="padding-bottom:12px">';
+    similar.slice(0,6).forEach(function(s){
       var sSig=getTimingSignal(s);
-      html+='<div class="similar-card" onclick="openDetail('+s.id+')">';
-      html+='<div class="emoji">'+s.emoji+'</div>';
-      html+='<div class="name">'+s.name+'</div>';
-      html+='<div class="discount">'+s.discount+'%</div>';
-      html+='<div class="price">'+s.currentPrice.toLocaleString()+'원</div>';
-      html+='<div class="timing"><span class="timing-badge '+sSig.signal+'" style="font-size:9px;padding:2px 6px">'+sSig.label+'</span></div>';
+      html+='<div class="pp-hcard" onclick="openDetail('+s.id+')">';
+      html+='<div class="pp-hcard-thumb">'+s.emoji+'</div>';
+      html+='<div class="pp-hcard-body">';
+      html+='<div class="pp-hcard-name">'+s.name+'</div>';
+      html+='<div class="pp-hcard-meta">';
+      html+='<span class="pp-hcard-discount">'+s.discount+'%</span>';
+      html+='<span class="pp-hcard-price">'+s.currentPrice.toLocaleString()+'원</span>';
+      html+='</div>';
+      html+='<div class="timing-badge '+sSig.signal+'">'+sSig.label+'</div>';
+      html+='</div>';
       html+='</div>';
     });
-    html+='</div></div>';
+    html+='</div>';
+    html+='</div>';
   }
 
-  html+='<div class="deeplink-info">쿠팡 파트너스 딥링크 (예시)<code>https://link.coupang.com/re/AFFTDP?lptag=AF'+p.id+'&amp;subid=pricepick_'+Date.now()+'</code></div>';
+  // ═══ 8. 파트너스 안내 ═══
+  html+='<div class="pp-detail-affiliate">';
+  html+='<div class="pp-detail-affiliate-icon">ⓘ</div>';
+  html+='<div class="pp-detail-affiliate-text">쿠팡 파트너스 활동을 통해 일정액의 수수료를 제공받을 수 있습니다. 가격은 쿠팡 사이트의 실시간 가격과 다를 수 있습니다.</div>';
+  html+='</div>';
 
   document.getElementById('detail-scroll').innerHTML=html;
 
-  var bottomHtml='<button class="add-btn" onclick="addToCart('+p.id+')">🛒 담기</button>';
-  bottomHtml+='<button class="add-btn" onclick="addToWishFromDetail('+p.id+')">+ 관심</button>';
-  bottomHtml+='<button class="buy-btn" onclick="openBuyLink('+p.id+')">구매하러 가기</button>';
+  // 하단 sticky CTA
+  var bottomHtml='<button class="pp-detail-bottom-icon" onclick="addToCart('+p.id+')" aria-label="장바구니"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button>';
+  bottomHtml+='<button class="pp-detail-bottom-icon '+(tracked?'active':'')+'" onclick="addToWishFromDetail('+p.id+')" aria-label="관심상품"><svg viewBox="0 0 24 24" fill="'+(tracked?'currentColor':'none')+'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>';
+  bottomHtml+='<button class="pp-detail-bottom-buy" onclick="openBuyLink('+p.id+')">';
+  bottomHtml+='<span class="pp-detail-bottom-buy-label">쿠팡에서 구매하기</span>';
+  bottomHtml+='<span class="pp-detail-bottom-buy-price">'+p.currentPrice.toLocaleString()+'원</span>';
+  bottomHtml+='</button>';
   document.getElementById('detail-bottom').innerHTML=bottomHtml;
 
   document.getElementById('detail-overlay').classList.add('show');
-  history.pushState({overlay:true},'','');
+  if(window.history&&window.history.pushState){
+    try{window.history.pushState({overlay:true},'','');}catch(e){}
+  }
 
   setTimeout(function(){
     if(chartInstance)chartInstance.destroy();
     var ctx=document.getElementById('detail-chart');
-    if(!ctx)return;
+    if(!ctx||typeof Chart==='undefined')return;
     chartInstance=new Chart(ctx.getContext('2d'),{
       type:'line',
       data:{
-        labels:history.map(function(h){return h.date}),
+        labels:priceHistory.map(function(h){return h.date}),
         datasets:[
-          {label:'가격',data:prices,borderColor:'#7C3AED',backgroundColor:'rgba(124,58,237,.08)',fill:true,tension:.3,pointRadius:0,borderWidth:2},
-          {label:'역대최저가',data:prices.map(function(){return minP}),borderColor:'#10B981',borderDash:[4,4],pointRadius:0,fill:false,borderWidth:1},
+          {label:'가격',data:prices,borderColor:'#7C3AED',backgroundColor:'rgba(124,58,237,.10)',fill:true,tension:.35,pointRadius:0,borderWidth:2.5},
+          {label:'역대최저가',data:prices.map(function(){return minP}),borderColor:'#10B981',borderDash:[4,4],pointRadius:0,fill:false,borderWidth:1.2}
         ]
       },
       options:{
         responsive:true,
-        plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return c.parsed.y.toLocaleString()+'원'}}}},
-        scales:{x:{ticks:{font:{size:10},maxTicksLimit:6}},y:{ticks:{font:{size:10},callback:function(v){return(v/10000).toFixed(0)+'만'}}}}
+        maintainAspectRatio:false,
+        plugins:{
+          legend:{display:false},
+          tooltip:{
+            backgroundColor:'rgba(24,24,27,0.95)',
+            padding:10,
+            titleFont:{size:11,weight:'600'},
+            bodyFont:{size:13,weight:'700'},
+            callbacks:{label:function(c){return c.parsed.y.toLocaleString()+'원'}}
+          }
+        },
+        scales:{
+          x:{
+            ticks:{font:{size:10,family:'Pretendard Variable'},color:'#A1A1AA',maxTicksLimit:5},
+            grid:{display:false},
+            border:{display:false}
+          },
+          y:{
+            ticks:{font:{size:10,family:'Pretendard Variable'},color:'#A1A1AA',callback:function(v){return(v/10000).toFixed(0)+'만'}},
+            grid:{color:'rgba(0,0,0,0.04)',drawBorder:false},
+            border:{display:false}
+          }
+        }
       }
     });
   },100);

@@ -5919,7 +5919,7 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
   <div class="page" id="page-benefit">
 
     <!-- 내 티켓 카드 (클릭 → 상세) -->
-    <div class="v6-ticket-hero" style="margin-top:12px" onclick="openTicketDetail()">
+    <div class="v6-ticket-hero" style="margin-top:12px" onclick="openSwapOverlay()">
       <div class="v6-th-label">🎫 보유 티켓</div>
       <div class="v6-th-total" id="ticket-available">0<span class="u">장</span></div>
       <div class="v6-th-tiers" id="benefit-tiers">
@@ -5927,7 +5927,7 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
         <div class="v6-th-tier"><div class="v6-t-l">🥈 실버</div><div class="v6-t-v">-</div></div>
         <div class="v6-th-tier"><div class="v6-t-l">🥇 골드</div><div class="v6-t-v">-</div></div>
       </div>
-      <button class="v6-th-cta" onclick="event.stopPropagation();scrollToSwap()">티켓 등급 교환 ›</button>
+      <button class="v6-th-cta" onclick="event.stopPropagation();openSwapOverlay()">티켓 등급 교환 ›</button>
     </div>
     <div style="text-align:center;font-size:11px;color:rgba(255,255,255,0);height:0;overflow:hidden">
       <span id="ticket-pending"></span><span id="ticket-remaining" style="display:none">8</span>
@@ -5936,117 +5936,6 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
 
     <!-- hidden compat: event-2x-scroll (renderBenefit 참조용) -->
     <div style="display:none"><div id="event-2x-scroll"></div></div>
-
-    <!-- 티켓 등급 교환 -->
-    <div id="tier-swap-section" style="padding:16px 16px 8px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-        <div style="font-size:15px;font-weight:800;color:var(--text1)">🔄 티켓 등급 교환</div>
-        <div onclick="addDemoTickets()" style="font-size:11px;color:var(--text3);cursor:pointer;padding:4px 8px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">🎁 데모 티켓</div>
-      </div>
-      <!-- 보유 티켓 3단 카운트 -->
-      <div class="ben-tier-bar" id="benefit-tier-bar">
-        <div class="ben-tier-cell ben-t-bronze">
-          <div class="ben-tier-label">🥉 브론즈</div>
-          <div class="ben-tier-val" id="ben-bronze">0</div>
-          <div class="ben-tier-unit">장</div>
-        </div>
-        <div class="ben-tier-divider"></div>
-        <div class="ben-tier-cell ben-t-silver">
-          <div class="ben-tier-label">🥈 실버</div>
-          <div class="ben-tier-val" id="ben-silver">0</div>
-          <div class="ben-tier-unit">장</div>
-        </div>
-        <div class="ben-tier-divider"></div>
-        <div class="ben-tier-cell ben-t-gold">
-          <div class="ben-tier-label">🥇 골드</div>
-          <div class="ben-tier-val" id="ben-gold">0</div>
-          <div class="ben-tier-unit">장</div>
-        </div>
-      </div>
-      <!-- 교환 방향 선택 -->
-      <div class="swap-dir-grid">
-        <button class="swap-dir-btn active" id="swap-btn-bs" onclick="setSwapDir('bronze','silver',10,1)">
-          <div class="swap-dir-flow"><span>🥉</span><span class="swap-dir-arrow">→</span><span>🥈</span></div>
-          <div class="swap-dir-label">브론즈 → 실버</div>
-          <div class="swap-dir-ratio">10장 → 1장</div>
-        </button>
-        <button class="swap-dir-btn" id="swap-btn-sb" onclick="setSwapDir('silver','bronze',1,10)">
-          <div class="swap-dir-flow"><span>🥈</span><span class="swap-dir-arrow">→</span><span>🥉</span></div>
-          <div class="swap-dir-label">실버 → 브론즈</div>
-          <div class="swap-dir-ratio">1장 → 10장</div>
-        </button>
-        <button class="swap-dir-btn" id="swap-btn-sg" onclick="setSwapDir('silver','gold',2,1)">
-          <div class="swap-dir-flow"><span>🥈</span><span class="swap-dir-arrow">→</span><span>🥇</span></div>
-          <div class="swap-dir-label">실버 → 골드</div>
-          <div class="swap-dir-ratio">2장 → 1장</div>
-        </button>
-        <button class="swap-dir-btn" id="swap-btn-gs" onclick="setSwapDir('gold','silver',1,2)">
-          <div class="swap-dir-flow"><span>🥇</span><span class="swap-dir-arrow">→</span><span>🥈</span></div>
-          <div class="swap-dir-label">골드 → 실버</div>
-          <div class="swap-dir-ratio">1장 → 2장</div>
-        </button>
-      </div>
-      <!-- 소비/획득 입력 카드 -->
-      <div class="swap-input-card">
-        <div class="swap-side-box">
-          <div class="swap-side-label">소비</div>
-          <div class="swap-side-row">
-            <span class="swap-side-medal" id="swap-from-icon">🥉</span>
-            <span class="swap-side-grade" id="swap-from-grade">브론즈</span>
-            <input type="number" class="swap-side-input" id="swap-amount-input" value="10" min="0" oninput="onSwapAmountChange(this.value)">
-            <span class="swap-side-unit">장</span>
-          </div>
-          <div class="swap-side-meta">
-            <span>보유: <b id="swap-from-hold">0</b>장</span>
-            <span id="swap-from-warn" class="swap-side-warn" style="display:none">보유 부족</span>
-          </div>
-          <div class="swap-quick-row">
-            <button class="swap-quick-btn" onclick="swapSetMax()">최대</button>
-            <button class="swap-quick-btn" onclick="swapSetHalf()">절반</button>
-            <button class="swap-quick-btn" onclick="swapAdjust(-1)">-1단위</button>
-            <button class="swap-quick-btn" onclick="swapAdjust(1)">+1단위</button>
-          </div>
-        </div>
-        <div class="swap-divider">
-          <div class="swap-divider-line"></div>
-          <div class="swap-divider-arrow">↓</div>
-          <div class="swap-divider-line"></div>
-        </div>
-        <div class="swap-side-box receive-side">
-          <div class="swap-side-label">획득</div>
-          <div class="swap-side-row">
-            <span class="swap-side-medal" id="swap-to-icon">🥈</span>
-            <span class="swap-side-grade" id="swap-to-grade">실버</span>
-            <span class="swap-side-output" id="swap-to-amount">1</span>
-            <span class="swap-side-unit">장</span>
-          </div>
-        </div>
-      </div>
-      <!-- 교환 후 시뮬레이션 -->
-      <div class="swap-sim-card" id="swap-sim-card">
-        <div style="font-size:12px;font-weight:700;color:var(--text-sub);margin-bottom:6px">교환 후 보유</div>
-        <div class="swap-sim-row">
-          <span>🥉</span><span class="swap-sim-name">브론즈</span>
-          <span class="swap-sim-before" id="swap-sim-b-before">0장</span>
-          <span class="swap-sim-arrow">→</span>
-          <span class="swap-sim-after" id="swap-sim-b-after">0장</span>
-        </div>
-        <div class="swap-sim-row">
-          <span>🥈</span><span class="swap-sim-name">실버</span>
-          <span class="swap-sim-before" id="swap-sim-s-before">0장</span>
-          <span class="swap-sim-arrow">→</span>
-          <span class="swap-sim-after" id="swap-sim-s-after">0장</span>
-        </div>
-        <div class="swap-sim-row">
-          <span>🥇</span><span class="swap-sim-name">골드</span>
-          <span class="swap-sim-before" id="swap-sim-g-before">0장</span>
-          <span class="swap-sim-arrow">→</span>
-          <span class="swap-sim-after" id="swap-sim-g-after">0장</span>
-        </div>
-      </div>
-      <!-- 교환 실행 버튼 -->
-      <button class="swap-exec-btn" id="swap-exec-btn" onclick="execSwapTier()">브론즈 10장 → 실버 1장 교환하기</button>
-    </div>
 
     <!-- 기프티콘 교환 -->
     <div style="padding:0 16px 8px">
@@ -6362,6 +6251,127 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
   <div class="tab" data-tab="my" onclick="switchTab('my')">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21C4 17.13 7.58 14 12 14C16.42 14 20 17.13 20 21"/></svg>
     마이
+  </div>
+</div>
+
+<!-- 티켓 등급 교환 오버레이 -->
+<div class="sub-overlay" id="tier-swap-overlay" style="display:none;flex-direction:column">
+  <div class="sub-header">
+    <button onclick="closeTierSwap()">←</button>
+    <h2>티켓 등급 교환</h2>
+    <div onclick="addDemoTickets()" style="font-size:11px;color:var(--text-sub);cursor:pointer;padding:4px 8px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">🎁 데모</div>
+  </div>
+  <div style="flex:1;overflow-y:auto;padding:16px">
+    <!-- 보유 티켓 3단 카운트 -->
+    <div class="ben-tier-bar" style="margin-bottom:14px">
+      <div class="ben-tier-cell ben-t-bronze">
+        <div class="ben-tier-label">🥉 브론즈</div>
+        <div class="ben-tier-val" id="ben-bronze">0</div>
+        <div class="ben-tier-unit">장</div>
+      </div>
+      <div class="ben-tier-divider"></div>
+      <div class="ben-tier-cell ben-t-silver">
+        <div class="ben-tier-label">🥈 실버</div>
+        <div class="ben-tier-val" id="ben-silver">0</div>
+        <div class="ben-tier-unit">장</div>
+      </div>
+      <div class="ben-tier-divider"></div>
+      <div class="ben-tier-cell ben-t-gold">
+        <div class="ben-tier-label">🥇 골드</div>
+        <div class="ben-tier-val" id="ben-gold">0</div>
+        <div class="ben-tier-unit">장</div>
+      </div>
+    </div>
+    <!-- 교환 비율 안내 -->
+    <div style="background:linear-gradient(135deg,#F5F0FF,#FFF8E6);border-radius:12px;padding:14px;border:1px solid rgba(132,94,238,0.18);margin-bottom:14px">
+      <div style="font-size:13px;font-weight:700;color:var(--primary);margin-bottom:8px">📐 교환 비율</div>
+      <div style="font-size:13px;font-weight:600;color:var(--text1);margin-bottom:4px">브론즈 <b style="color:var(--primary)">10장</b> ⇄ 실버 <b style="color:var(--primary)">1장</b></div>
+      <div style="font-size:13px;font-weight:600;color:var(--text1)">실버 <b style="color:var(--primary)">2장</b> ⇄ 골드 <b style="color:var(--primary)">1장</b></div>
+      <div style="font-size:10.5px;color:var(--text-sub);margin-top:8px;line-height:1.5">어느 방향으로 바꿔도 보유 가치는 같아요.</div>
+    </div>
+    <!-- 교환 방향 선택 -->
+    <div class="swap-dir-grid">
+      <button class="swap-dir-btn active" id="swap-btn-bs" onclick="setSwapDir('bronze','silver',10,1)">
+        <div class="swap-dir-flow"><span>🥉</span><span class="swap-dir-arrow">→</span><span>🥈</span></div>
+        <div class="swap-dir-label">브론즈 → 실버</div>
+        <div class="swap-dir-ratio">10장 → 1장</div>
+      </button>
+      <button class="swap-dir-btn" id="swap-btn-sb" onclick="setSwapDir('silver','bronze',1,10)">
+        <div class="swap-dir-flow"><span>🥈</span><span class="swap-dir-arrow">→</span><span>🥉</span></div>
+        <div class="swap-dir-label">실버 → 브론즈</div>
+        <div class="swap-dir-ratio">1장 → 10장</div>
+      </button>
+      <button class="swap-dir-btn" id="swap-btn-sg" onclick="setSwapDir('silver','gold',2,1)">
+        <div class="swap-dir-flow"><span>🥈</span><span class="swap-dir-arrow">→</span><span>🥇</span></div>
+        <div class="swap-dir-label">실버 → 골드</div>
+        <div class="swap-dir-ratio">2장 → 1장</div>
+      </button>
+      <button class="swap-dir-btn" id="swap-btn-gs" onclick="setSwapDir('gold','silver',1,2)">
+        <div class="swap-dir-flow"><span>🥇</span><span class="swap-dir-arrow">→</span><span>🥈</span></div>
+        <div class="swap-dir-label">골드 → 실버</div>
+        <div class="swap-dir-ratio">1장 → 2장</div>
+      </button>
+    </div>
+    <!-- 소비/획득 입력 카드 -->
+    <div class="swap-input-card">
+      <div class="swap-side-box">
+        <div class="swap-side-label">소비</div>
+        <div class="swap-side-row">
+          <span class="swap-side-medal" id="swap-from-icon">🥉</span>
+          <span class="swap-side-grade" id="swap-from-grade">브론즈</span>
+          <input type="number" class="swap-side-input" id="swap-amount-input" value="10" min="0" oninput="onSwapAmountChange(this.value)">
+          <span class="swap-side-unit">장</span>
+        </div>
+        <div class="swap-side-meta">
+          <span>보유: <b id="swap-from-hold">0</b>장</span>
+          <span id="swap-from-warn" class="swap-side-warn" style="display:none">보유 부족</span>
+        </div>
+        <div class="swap-quick-row">
+          <button class="swap-quick-btn" onclick="swapSetMax()">최대</button>
+          <button class="swap-quick-btn" onclick="swapSetHalf()">절반</button>
+          <button class="swap-quick-btn" onclick="swapAdjust(-1)">-1단위</button>
+          <button class="swap-quick-btn" onclick="swapAdjust(1)">+1단위</button>
+        </div>
+      </div>
+      <div class="swap-divider">
+        <div class="swap-divider-line"></div>
+        <div class="swap-divider-arrow">↓</div>
+        <div class="swap-divider-line"></div>
+      </div>
+      <div class="swap-side-box receive-side">
+        <div class="swap-side-label">획득</div>
+        <div class="swap-side-row">
+          <span class="swap-side-medal" id="swap-to-icon">🥈</span>
+          <span class="swap-side-grade" id="swap-to-grade">실버</span>
+          <span class="swap-side-output" id="swap-to-amount">1</span>
+          <span class="swap-side-unit">장</span>
+        </div>
+      </div>
+    </div>
+    <!-- 교환 후 시뮬레이션 -->
+    <div class="swap-sim-card">
+      <div style="font-size:12px;font-weight:700;color:var(--text-sub);margin-bottom:6px">교환 후 보유</div>
+      <div class="swap-sim-row">
+        <span>🥉</span><span class="swap-sim-name">브론즈</span>
+        <span class="swap-sim-before" id="swap-sim-b-before">0장</span>
+        <span class="swap-sim-arrow">→</span>
+        <span class="swap-sim-after" id="swap-sim-b-after">0장</span>
+      </div>
+      <div class="swap-sim-row">
+        <span>🥈</span><span class="swap-sim-name">실버</span>
+        <span class="swap-sim-before" id="swap-sim-s-before">0장</span>
+        <span class="swap-sim-arrow">→</span>
+        <span class="swap-sim-after" id="swap-sim-s-after">0장</span>
+      </div>
+      <div class="swap-sim-row">
+        <span>🥇</span><span class="swap-sim-name">골드</span>
+        <span class="swap-sim-before" id="swap-sim-g-before">0장</span>
+        <span class="swap-sim-arrow">→</span>
+        <span class="swap-sim-after" id="swap-sim-g-after">0장</span>
+      </div>
+    </div>
+    <!-- 교환 실행 버튼 -->
+    <button class="swap-exec-btn" id="swap-exec-btn" onclick="execSwapTier()">브론즈 10장 → 실버 1장 교환하기</button>
   </div>
 </div>
 
@@ -8343,12 +8353,15 @@ function cartGoToCoupang(){
   openCart();
 }
 
-function scrollToSwap(){
-  var sec=document.getElementById('tier-swap-section');
-  var content=document.getElementById('content');
-  if(sec&&content){
-    content.scrollTo({top:sec.offsetTop-8,behavior:'smooth'});
-  }
+function openSwapOverlay(){
+  updateSwapUI();
+  var ov=document.getElementById('tier-swap-overlay');
+  if(ov){ov.style.display='flex';}
+  history.pushState({swap:true},'');
+}
+function closeTierSwap(){
+  var ov=document.getElementById('tier-swap-overlay');
+  if(ov){ov.style.display='none';}
 }
 
 // ===== 티켓 등급 교환 =====
@@ -8837,6 +8850,8 @@ window.addEventListener('popstate',function(){
   if(document.getElementById('detail-overlay').classList.contains('show')){closeDetail();return}
   var td=document.getElementById('ticket-detail-overlay');
   if(td&&td.style.display!=='none'){closeTicketDetail();return}
+  var ts=document.getElementById('tier-swap-overlay');
+  if(ts&&ts.style.display!=='none'){closeTierSwap();return}
   var sh=document.getElementById('store-hub-overlay');
   if(sh&&sh.style.display!=='none'){closeStoreHub();return}
 });

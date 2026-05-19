@@ -11,6 +11,7 @@
 <meta name="theme-color" content="#7C3AED">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -5417,6 +5418,241 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
   .ticket-actions button:not(.primary) { background: var(--bg-2); }
 }
 
+/* ─── V6 COLOR SYSTEM OVERRIDE ─── */
+:root {
+  --primary: #845EEE;
+  --main: #845EEE;
+  --main-dark: #6C4AB6;
+  --sub-1: #9B78FF;
+  --sub-4: #F1EEFF;
+  --text1: #1A1130;
+  --text2: #5A5370;
+  --text3: #9B93B0;
+  --text4: #C4BED0;
+  --text: #1A1130;
+  --text-sub: #5A5370;
+  --text-light: #9B93B0;
+  --border: #EEEAF3;
+  --border-strong: #E0D9ED;
+  --bg: #F5F4F8;
+  --card: #FFFFFF;
+  --r: 12px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+  --shadow-xs: 0 1px 2px rgba(26,17,48,.04);
+  --shadow-sm: 0 2px 8px rgba(26,17,48,.05);
+}
+
+/* ─── V6 HEADER ─── */
+.header {
+  background: #fff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+.header-logo { gap: 0 !important; }
+.header-logo-icon { display: none !important; }
+#header-title {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 19px !important;
+  font-weight: 300 !important;
+  color: var(--text1) !important;
+  letter-spacing: 0 !important;
+}
+#header-title span { font-weight: 700 !important; color: var(--main) !important; }
+
+/* ─── V6 TABBAR ─── */
+.tabbar {
+  height: calc(76px + var(--safe-bottom)) !important;
+  padding-top: 9px !important;
+  padding-bottom: calc(20px + var(--safe-bottom)) !important;
+  background: #fff !important;
+  border-top: 1px solid var(--border) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 -4px 16px rgba(26,17,48,.07) !important;
+  align-items: flex-start !important;
+}
+.tab {
+  gap: 4px !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  color: var(--text4) !important;
+  padding-top: 0 !important;
+  height: auto !important;
+  justify-content: flex-start !important;
+}
+.tab.active { color: var(--main) !important; }
+.tab.active::before { display: none !important; }
+.tab svg { width: 24px !important; height: 24px !important; stroke-width: 1.7 !important; }
+.tab.active svg { stroke-width: 2.1 !important; }
+
+/* ─── V6 TICKET HERO (HOME) ─── */
+.v6-ticket-hero {
+  margin: 12px 16px 0;
+  border-radius: var(--r-xl);
+  background: linear-gradient(135deg, #2A1E4D 0%, #3D2B6B 55%, #4A2F7E 100%);
+  padding: 20px 20px 18px;
+  position: relative; overflow: hidden;
+  box-shadow: 0 12px 28px rgba(42,30,77,.35);
+  cursor: pointer;
+}
+.v6-ticket-hero::after {
+  content: "🎫"; position: absolute;
+  right: 12px; bottom: -10px;
+  font-size: 78px; opacity: 0.16; line-height: 1;
+}
+.v6-th-label { font-size: 12px; color: rgba(255,255,255,.6); font-weight: 500; }
+.v6-th-total {
+  font-family: 'Poppins', sans-serif;
+  font-size: 34px; font-weight: 700; color: white;
+  line-height: 1.1; margin-top: 3px;
+  display: flex; align-items: baseline; gap: 4px;
+}
+.v6-th-total .u { font-size: 17px; font-weight: 600; font-family: inherit; }
+.v6-th-tiers { display: flex; gap: 7px; margin-top: 15px; position: relative; z-index: 1; }
+.v6-th-tier {
+  flex: 1;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--r);
+  padding: 9px 10px;
+}
+.v6-th-tier .v6-t-l { font-size: 10.5px; color: rgba(255,255,255,.6); display: flex; align-items: center; gap: 3px; }
+.v6-th-tier .v6-t-v { font-size: 16px; font-weight: 700; color: white; font-family: 'Poppins', sans-serif; margin-top: 2px; }
+.v6-th-cta {
+  margin-top: 13px;
+  width: 100%; height: 44px;
+  background: white; color: var(--main);
+  font-weight: 800; font-size: 14px;
+  border: none; border-radius: var(--r);
+  cursor: pointer; position: relative; z-index: 1;
+  font-family: inherit;
+}
+
+/* ─── V6 MISSION STRIP ─── */
+.v6-mission-strip { margin: 12px 16px 0; display: flex; gap: 8px; }
+.v6-mission-card {
+  flex: 1; background: white; border: 1px solid var(--border);
+  border-radius: var(--r); padding: 12px 8px;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  cursor: pointer; box-shadow: var(--shadow-xs);
+}
+.v6-m-ico { font-size: 22px; }
+.v6-m-t { font-size: 11.5px; font-weight: 700; color: var(--text1); }
+.v6-m-s { font-size: 10px; color: var(--main); font-weight: 700; }
+
+/* ─── V6 SECTION ─── */
+.v6-section { padding: 22px 0 0; }
+.v6-section-hd {
+  padding: 0 16px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 12px;
+}
+.v6-section-t { font-size: 16px; font-weight: 800; color: var(--text1); letter-spacing: -0.3px; }
+.v6-section-s { font-size: 11.5px; color: var(--text3); margin-top: 3px; }
+.v6-section-more { font-size: 12px; color: var(--text3); cursor: pointer; white-space: nowrap; }
+
+/* ─── V6 MALL CARD (LIST) ─── */
+.v6-mall-list { padding: 0 16px; display: flex; flex-direction: column; gap: 9px; }
+.v6-mall-card {
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 13px 14px;
+  display: flex; align-items: center; gap: 13px;
+  cursor: pointer; box-shadow: var(--shadow-xs);
+  transition: transform .1s;
+}
+.v6-mall-card:active { transform: scale(.98); }
+.v6-mall-logo {
+  width: 50px; height: 50px; border-radius: 13px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; color: white; font-size: 13px;
+  letter-spacing: -0.5px;
+  font-family: 'Poppins', sans-serif;
+}
+.v6-mall-info { flex: 1; min-width: 0; }
+.v6-mall-name { font-size: 14.5px; font-weight: 700; color: var(--text1); display: flex; align-items: center; gap: 6px; }
+.v6-mall-tag { font-size: 9.5px; font-weight: 800; padding: 1.5px 5px; border-radius: 4px; }
+.v6-mall-tag.hot { background: #FFEAEA; color: var(--red); }
+.v6-mall-tag.best { background: var(--sub-4); color: var(--main); }
+.v6-mall-rate { font-size: 12px; color: var(--text2); margin-top: 3px; display: flex; align-items: center; gap: 4px; }
+.v6-mall-rate b { color: var(--main); font-weight: 800; }
+.v6-mall-go {
+  flex-shrink: 0;
+  height: 36px; padding: 0 14px;
+  background: var(--sub-4); color: var(--main);
+  border: none; border-radius: 99px;
+  font-weight: 800; font-size: 12.5px;
+  display: flex; align-items: center; gap: 3px; cursor: pointer;
+  font-family: inherit;
+}
+.v6-mall-go.primary { background: var(--main); color: white; }
+
+/* ─── V6 DEAL CARD ─── */
+.v6-h-scroll {
+  display: flex; gap: 10px; padding: 0 16px 4px;
+  overflow-x: auto;
+}
+.v6-h-scroll::-webkit-scrollbar { display: none; }
+.v6-deal-card {
+  width: 134px; flex-shrink: 0;
+  background: white; border: 1px solid var(--border);
+  border-radius: var(--r); overflow: hidden;
+  box-shadow: var(--shadow-xs); cursor: pointer;
+  transition: transform .1s;
+}
+.v6-deal-card:active { transform: scale(.97); }
+.v6-deal-img {
+  height: 110px;
+  background: linear-gradient(135deg, #F3EFFA, #E8E2F5);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text4); font-size: 10px; text-align: center; padding: 8px;
+  position: relative;
+}
+.v6-deal-img-emoji { font-size: 44px; }
+.v6-deal-mall-badge {
+  position: absolute; top: 7px; left: 7px;
+  font-size: 9px; font-weight: 800; color: white;
+  padding: 2px 6px; border-radius: 5px;
+}
+.v6-deal-body { padding: 9px 10px 11px; }
+.v6-deal-name {
+  font-size: 11.5px; color: var(--text1); font-weight: 500;
+  line-height: 1.35;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; height: 32px;
+}
+.v6-deal-price { font-size: 14px; font-weight: 800; color: var(--text1); margin-top: 6px; font-family: 'Poppins', sans-serif; }
+.v6-deal-ticket {
+  margin-top: 5px;
+  font-size: 10.5px; font-weight: 700; color: var(--main);
+  background: var(--sub-4);
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2.5px 7px; border-radius: 99px;
+}
+
+/* ─── V6 MALL GRID (4열, 혜택탭) ─── */
+.v6-mall-grid-section { padding: 20px 16px 0; }
+.v6-grid-cat-title { font-size: 13.5px; font-weight: 800; color: var(--text1); margin-bottom: 12px; }
+.v6-mall-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 8px; margin-bottom: 20px; }
+.v6-mall-grid-item { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; }
+.v6-mg-logo { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: white; font-size: 12px; letter-spacing: -0.3px; font-family: 'Poppins', sans-serif; }
+.v6-mg-name { font-size: 11px; color: var(--text2); font-weight: 600; text-align: center; }
+.v6-cat-row {
+  background: white; padding: 10px 16px;
+  display: flex; gap: 7px; overflow-x: auto;
+  border-bottom: 1px solid var(--border);
+}
+.v6-cat-row::-webkit-scrollbar { display: none; }
+.v6-cat-chip {
+  flex-shrink: 0; font-size: 12px; font-weight: 700;
+  padding: 7px 13px; border-radius: 99px;
+  background: var(--bg); color: var(--text3); cursor: pointer;
+  white-space: nowrap;
+}
+.v6-cat-chip.on { background: var(--main); color: white; }
+
 /* ─── STORE HUB (혜택 탭 이커머스) ─── */
 .pp-store-hub-hero {
   margin: 0 16px 4px;
@@ -5514,24 +5750,19 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
 <div id="app-shell">
 
 <!-- Header -->
-<div class="header" id="main-header">
-  <div class="header-logo">
-    <div class="header-logo-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-    </div>
-    <h1 id="header-title">Price<span>Pick</span></h1>
+<div class="header" id="main-header" style="padding-left:18px;padding-right:8px">
+  <div class="header-logo" style="align-items:center;gap:8px">
+    <svg width="26" height="26" viewBox="0 0 360 363" fill="none"><path d="M178.702 82.69C125.372 82.69 82.137 125.94 82.137 179.29V277.43H115.611V252.41C132.535 267.04 154.589 275.87 178.702 275.87C232.032 275.87 275.267 232.62 275.267 179.28C275.267 125.93 232.032 82.68 178.702 82.68Z" fill="#634C9E"/><path d="M180 0C80.593 0 0 80.62 0 180.06V363H62.396V316.37C93.942 343.63 135.042 360.12 180 360.12C279.407 360.12 360 279.5 360 180.06C360 80.62 279.42 0 180 0ZM180 297.7C115.045 297.7 62.396 245.02 62.396 180.06C62.396 115.1 115.058 62.42 180 62.42C244.942 62.42 297.604 115.1 297.604 180.06C297.604 245.02 244.942 297.7 180 297.7Z" fill="#845EEE"/></svg>
+    <h1 id="header-title"><span>Price</span>Pick</h1>
   </div>
-  <div class="header-icons">
-    <div class="icon-btn header-bell" onclick="openNotiCenter()" style="position:relative" aria-label="알림" role="button" tabindex="0">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+  <div class="header-icons" style="gap:0">
+    <div class="icon-btn header-bell" onclick="openNotiCenter()" style="position:relative;width:40px;height:40px" aria-label="알림">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 6.44V9.77"/><path d="M12.02 2.75C8.76 2.75 6.11 5.4 6.11 8.66V10.76C6.11 11.57 5.79 12.74 5.37 13.43L4.1 15.56C3.58 16.43 3.96 17.4 4.9 17.71C9.5 19.24 14.56 19.24 19.16 17.71C20.04 17.42 20.45 16.36 19.95 15.56L18.68 13.43C18.26 12.74 17.94 11.56 17.94 10.76V8.66C17.93 5.42 15.27 2.75 12.02 2.75Z"/><path d="M15.33 19.06C15.33 20.88 13.83 22.38 12 22.38C11.09 22.38 10.25 22 9.65 21.4C9.05 20.8 8.67 19.96 8.67 19.06"/></svg>
       <span class="noti-badge" id="noti-badge" style="display:none" aria-live="polite">0</span>
     </div>
-    <div class="icon-btn" id="header-cart" onclick="openCart()" style="position:relative" aria-label="장바구니" role="button" tabindex="0">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    <div class="icon-btn" id="header-cart" onclick="openCart()" style="position:relative;width:40px;height:40px" aria-label="장바구니">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
       <span class="cart-badge" id="cart-badge" style="display:none" aria-live="polite">0</span>
-    </div>
-    <div class="icon-btn" id="header-setting" onclick="openSettings()" aria-label="설정" role="button" tabindex="0">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     </div>
   </div>
 </div>
@@ -5596,48 +5827,34 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
   <!-- 혜택 -->
   <div class="page" id="page-benefit">
 
-    <!-- 히어로: 티켓 미니 + 쇼핑 경유 안내 -->
-    <div class="pp-store-hub-hero" style="margin-top:12px">
-      <div class="pp-store-hub-hero-left">
-        <h2>쇼핑하고 혜택 받기</h2>
-        <p>경유 구매 시 티켓 자동 적립</p>
+    <!-- 내 티켓 카드 (클릭 → 상세) -->
+    <div class="v6-ticket-hero" style="margin-top:12px" onclick="openTicketDetail()">
+      <div class="v6-th-label">🎫 보유 티켓</div>
+      <div class="v6-th-total" id="ticket-available">0<span class="u">장</span></div>
+      <div class="v6-th-tiers" id="benefit-tiers">
+        <div class="v6-th-tier"><div class="v6-t-l">🥉 브론즈</div><div class="v6-t-v">-</div></div>
+        <div class="v6-th-tier"><div class="v6-t-l">🥈 실버</div><div class="v6-t-v">-</div></div>
+        <div class="v6-th-tier"><div class="v6-t-l">🥇 골드</div><div class="v6-t-v">-</div></div>
       </div>
-      <div class="pp-store-hub-hero-right" onclick="openTicketDetail()">
-        <div class="pp-store-hub-ticket-val" id="ticket-available">0</div>
-        <div class="pp-store-hub-ticket-lbl">보유 티켓 🎫</div>
-      </div>
+      <button class="v6-th-cta" onclick="event.stopPropagation();openTicketDetail()">티켓 교환소 · 경품 응모 ›</button>
+    </div>
+    <div style="text-align:center;font-size:11px;color:rgba(255,255,255,0);height:0;overflow:hidden">
+      <span id="ticket-pending"></span><span id="ticket-remaining" style="display:none">8</span>
+      <span id="ticket-mini-available" style="display:none">0</span>
     </div>
 
-    <!-- 스토어 그리드 -->
-    <div class="pp-store-section">
-      <div class="pp-store-section-head">
-        <h2>쇼핑몰</h2>
-        <span>터치해서 바로 쇼핑</span>
+    <!-- 이벤트 배너 -->
+    <div style="padding:16px 16px 4px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="font-size:15px;font-weight:800;color:var(--text1)">✨ 진행중 이벤트</div>
       </div>
-      <div id="store-grid" class="pp-store-grid"></div>
+      <div class="h-scroll" id="event-2x-scroll" style="padding:0 0 4px"></div>
     </div>
 
-    <!-- 내 혜택 요약 (미니) -->
-    <div class="pp-store-section">
-      <div class="pp-store-section-head">
-        <h2>내 혜택 현황</h2>
-      </div>
-      <div class="pp-benefit-mini-ticket" onclick="openTicketDetail()">
-        <div class="pp-benefit-mini-ticket-icon">🎫</div>
-        <div class="pp-benefit-mini-ticket-info">
-          <h3>티켓 교환소</h3>
-          <p id="ticket-pending">적립예정 0장 · 커피까지 <b id="ticket-remaining">8</b>장 남음</p>
-        </div>
-        <div class="pp-benefit-mini-ticket-val"><span id="ticket-mini-available">0</span><span>장</span></div>
-      </div>
-    </div>
-
-    <!-- 이벤트 섹션 -->
-    <div class="pp-store-section">
-      <div class="pp-store-section-head">
-        <h2>진행중 이벤트</h2>
-      </div>
-      <div class="h-scroll" id="event-2x-scroll" style="padding:0 0 12px"></div>
+    <!-- 전체 쇼핑몰 그리드 -->
+    <div class="v6-mall-grid-section" style="padding-bottom:16px">
+      <div style="font-size:15px;font-weight:800;color:var(--text1);margin-bottom:14px">전체 쇼핑몰</div>
+      <div id="store-grid"></div>
     </div>
 
     <!-- 숨겨진 호환 요소 -->
@@ -5920,24 +6137,24 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
 <!-- Tab bar -->
 <div class="tabbar" id="tabbar" style="display:none">
   <div class="tab" data-tab="hot" onclick="switchTab('hot')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.04 6.82L14.28 2.79C12.71 1.69 10.3 1.75 8.79 2.92L3.78 6.83C2.78 7.61 1.99 9.21 1.99 10.47V17.37C1.99 19.92 4.06 22 6.61 22H17.39C19.94 22 22.01 19.93 22.01 17.38V10.6C22.01 9.25 21.14 7.59 20.04 6.82Z"/><path d="M12 17.99V14.99" stroke-width="1.7"/></svg>
     홈
   </div>
   <div class="tab" data-tab="benefit" onclick="switchTab('benefit')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12.5C19.5 11.12 20.62 10 22 10V9C22 5 21 4 17 4H7C3 4 2 5 2 9V9.5C3.38 9.5 4.5 10.62 4.5 12C4.5 13.38 3.38 14.5 2 14.5V15C2 19 3 20 7 20H17C21 20 22 19 22 15C20.62 15 19.5 13.88 19.5 12.5Z"/><path d="M10 4L10 20" stroke-dasharray="4 4"/></svg>
     혜택
   </div>
   <div class="tab" data-tab="my" onclick="switchTab('my')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21C4 17.13 7.58 14 12 14C16.42 14 20 17.13 20 21"/></svg>
     마이
   </div>
   <!-- 추후 추가 예정 탭 (숨김) -->
   <div class="tab" data-tab="hotdeal" onclick="switchTab('hotdeal')" style="display:none">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
     핫딜
   </div>
   <div class="tab" data-tab="wish" onclick="switchTab('wish')" style="display:none">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
     관심상품
   </div>
 </div>
@@ -6588,77 +6805,46 @@ function renderWishlist(){
 
 // ===== HOTDEALS =====
 function renderHotdeals(){
-  // 출석 데이터
   var att=getAttendance();
   var today=new Date().toISOString().slice(0,10);
   var checkedToday=att.lastDate===today;
-  var streak=att.streak||0;
+  var ticketsData=getTickets();
+  var tickets=typeof ticketsData==='number'?ticketsData:(ticketsData&&ticketsData.available)||0;
+  var exCounts=getTicketsByTier();
 
-  // 절약 금액
-  var purchases=getPurchases();
-  var totalSaved=0;
-  purchases.forEach(function(p){
-    var orig=p.originalPrice;
-    if(!orig){var prod=PRODUCTS.find(function(x){return x.name===p.name});if(prod)orig=prod.originalPrice}
-    if(orig)totalSaved+=(orig-p.price);
-  });
-
-  // 티켓 상태 — 객체 {pending,available,history} 또는 숫자
-  var ticketsData=S('tickets');
-  var tickets=0;
-  if(typeof ticketsData==='number') tickets=ticketsData;
-  else if(ticketsData && typeof ticketsData==='object') tickets=ticketsData.available||0;
-
-  // ═══ 1. HERO CARD ═══ (절약 금액 + 티켓 + 출석체크 통합)
-  var heroHtml='<div class="pp-hero">';
-  heroHtml+='<div class="pp-hero-label">이번 달 절약</div>';
-  if(purchases.length>0){
-    heroHtml+='<div class="pp-hero-amount">'+totalSaved.toLocaleString()+'<span>원</span></div>';
-  }else{
-    heroHtml+='<div class="pp-hero-amount pp-hero-amount-empty">아직 없어요</div>';
-    heroHtml+='<div class="pp-hero-sub">관심상품을 추가하고 최저가에 구매해보세요</div>';
-  }
-  // 티켓 + 출석 mini stats
-  heroHtml+='<div class="pp-hero-stats">';
-  heroHtml+='<div class="pp-hero-stat"><div class="pp-hero-stat-label">보유 티켓</div><div class="pp-hero-stat-val">'+tickets+'<span>장</span></div></div>';
-  heroHtml+='<div class="pp-hero-stat-div"></div>';
-  heroHtml+='<div class="pp-hero-stat"><div class="pp-hero-stat-label">연속 출석</div><div class="pp-hero-stat-val">'+streak+'<span>일</span></div></div>';
-  if(!checkedToday){
-    heroHtml+='<button class="pp-hero-check" onclick="doAttendance();renderHotdeals()">출석체크</button>';
-  }else{
-    heroHtml+='<div class="pp-hero-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>';
-  }
+  // ═══ 1. 티켓 히어로 (v6) ═══
+  var heroHtml='<div class="v6-ticket-hero" onclick="openTicketDetail()">';
+  heroHtml+='<div class="v6-th-label">🎫 보유 티켓</div>';
+  heroHtml+='<div class="v6-th-total">'+tickets+'<span class="u">장</span></div>';
+  heroHtml+='<div class="v6-th-tiers">';
+  heroHtml+='<div class="v6-th-tier"><div class="v6-t-l">🥉 브론즈</div><div class="v6-t-v">'+(exCounts.bronze||0)+'</div></div>';
+  heroHtml+='<div class="v6-th-tier"><div class="v6-t-l">🥈 실버</div><div class="v6-t-v">'+(exCounts.silver||0)+'</div></div>';
+  heroHtml+='<div class="v6-th-tier"><div class="v6-t-l">🥇 골드</div><div class="v6-t-v">'+(exCounts.gold||0)+'</div></div>';
   heroHtml+='</div>';
+  heroHtml+='<button class="v6-th-cta" onclick="event.stopPropagation();openTicketDetail()">티켓으로 기프티콘 교환 ›</button>';
   heroHtml+='</div>';
   document.getElementById('attend-area').innerHTML=heroHtml;
-  document.getElementById('savings-top-area').innerHTML='';
 
-  // ═══ 2. PRICE ALERT ═══ (가격 변동 카드)
-  var tracks=getTracks();
-  var alertProduct=tracks.length>0?PRODUCTS.find(function(x){return x.id===tracks[0].productId}):PRODUCTS[1];
-  var alertArea=document.getElementById('price-alert-area');
-  if(alertProduct){
-    var dropPct=alertProduct.discount;
-    var prevPrice=alertProduct.originalPrice;
-    var savedAmount=prevPrice-alertProduct.currentPrice;
-    var html='<div class="pp-drop-card" onclick="openDetail('+alertProduct.id+')">';
-    html+='<div class="pp-drop-head">';
-    html+='<div class="pp-drop-badge"><span class="pp-drop-dot"></span>방금 가격이 떨어졌어요</div>';
-    html+='<div class="pp-drop-time">2분 전</div>';
-    html+='</div>';
-    html+='<div class="pp-drop-body">';
-    html+='<div class="pp-drop-thumb">'+alertProduct.emoji+'</div>';
-    html+='<div class="pp-drop-info">';
-    html+='<div class="pp-drop-name">'+alertProduct.name+'</div>';
-    html+='<div class="pp-drop-prices"><span class="pp-drop-old">'+prevPrice.toLocaleString()+'원</span>';
-    html+='<span class="pp-drop-new">'+alertProduct.currentPrice.toLocaleString()+'원</span>';
-    html+='<span class="pp-drop-pct">−'+dropPct+'%</span></div>';
-    html+='<div class="pp-drop-saved">'+savedAmount.toLocaleString()+'원 싸졌어요</div>';
-    html+='</div></div></div>';
-    alertArea.innerHTML=html;
-  }else{
-    alertArea.innerHTML='';
-  }
+  // ═══ 2. 데일리 미션 (v6) ═══
+  var missionHtml='<div class="v6-mission-strip">';
+  missionHtml+='<div class="v6-mission-card" onclick="doAttendance();renderHotdeals()">';
+  missionHtml+='<div class="v6-m-ico">'+(checkedToday?'✅':'📅')+'</div>';
+  missionHtml+='<div class="v6-m-t">출석체크</div>';
+  missionHtml+='<div class="v6-m-s">'+(checkedToday?'완료':'티켓 1장')+'</div>';
+  missionHtml+='</div>';
+  missionHtml+='<div class="v6-mission-card" onclick="openTicketDetail()">';
+  missionHtml+='<div class="v6-m-ico">🎰</div>';
+  missionHtml+='<div class="v6-m-t">행운 룰렛</div>';
+  missionHtml+='<div class="v6-m-s">하루 1회</div>';
+  missionHtml+='</div>';
+  missionHtml+='<div class="v6-mission-card">';
+  missionHtml+='<div class="v6-m-ico">🎁</div>';
+  missionHtml+='<div class="v6-m-t">친구 초대</div>';
+  missionHtml+='<div class="v6-m-s">티켓 5장</div>';
+  missionHtml+='</div>';
+  missionHtml+='</div>';
+  document.getElementById('savings-top-area').innerHTML=missionHtml;
+  document.getElementById('price-alert-area').innerHTML='';
 
   renderHotExtra();
 }
@@ -6962,70 +7148,69 @@ function submitSearch(){
 }
 
 // 핫딜탭 하단 섹션 — 프리미엄 리디자인
+// 쇼핑몰 로고 색상 맵
+var MALL_COLORS={
+  '쿠팡':'#E84A5F','알리익스프레스':'#FF512F','테무':'#FB7701','11번가':'#FF3366',
+  'G마켓':'#06A54A','SSG닷컴':'#C02127','롯데온':'#EE1C25','무신사':'#1A1A1A',
+  '마켓컬리':'#5F0080','오늘의집':'#00C896','올리브영':'#6FA82E','다이소몰':'#EE1C25',
+  '이마트몰':'#FFB800','옥션':'#D72A2A','위메프':'#CC0066','티몬':'#FF4500'
+};
+
 function renderHotExtra(){
   var html='';
 
-  // ═══ 1. 지금 최저가 (hero cards) ═══
-  var lowest=PRODUCTS.filter(function(p){return p.badge==='lowest'});
-  if(lowest.length>0){
-    html+='<div class="pp-section">';
-    html+='<div class="pp-section-head"><h2>🔥 지금 역대 최저가</h2><span class="pp-section-sub">놓치면 후회해요</span></div>';
-    html+='<div class="pp-lowest-list">';
-    lowest.forEach(function(p){
-      var saved=p.originalPrice-p.currentPrice;
-      html+='<div class="pp-lowest-card" onclick="openDetail('+p.id+')">';
-      html+='<div class="pp-lowest-thumb">'+p.emoji+'</div>';
-      html+='<div class="pp-lowest-body">';
-      html+='<div class="pp-lowest-badge">역대 최저가</div>';
-      html+='<div class="pp-lowest-name">'+p.name+'</div>';
-      html+='<div class="pp-lowest-price-row">';
-      html+='<span class="pp-lowest-price">'+p.currentPrice.toLocaleString()+'<span>원</span></span>';
-      html+='<span class="pp-lowest-save">'+saved.toLocaleString()+'원↓</span>';
-      html+='</div>';
-      html+='</div>';
-      html+='<button class="pp-lowest-btn" onclick="event.stopPropagation();quickBuy('+p.id+')">구매</button>';
-      html+='</div>';
-    });
+  // ═══ 1. 경유 쇼핑몰 리스트 (v6) ═══
+  var mainMalls=[
+    {name:'쿠팡',desc:'로켓배송 · 즉시적립',tag:'best'},
+    {name:'알리익스프레스',desc:'해외직구 · 초저가',tag:'hot'},
+    {name:'테무',desc:'첫구매 추가 적립',tag:'hot'},
+    {name:'11번가',desc:'십일절 특가 · 티켓 적립',tag:''},
+    {name:'G마켓',desc:'빅스마일데이 · 적립',tag:''}
+  ];
+  html+='<div class="v6-section">';
+  html+='<div class="v6-section-hd"><div><div class="v6-section-t">🛍️ 경유하고 티켓 받기</div><div class="v6-section-s">바로가기로 구매하면 티켓 자동 적립</div></div><div class="v6-section-more" onclick="switchTab(\'benefit\')">전체 ›</div></div>';
+  html+='<div class="v6-mall-list">';
+  mainMalls.forEach(function(m,i){
+    var color=MALL_COLORS[m.name]||'#845EEE';
+    var shortName=m.name.length>4?m.name.slice(0,4):m.name;
+    var tagHtml=m.tag?'<span class="v6-mall-tag '+m.tag+'">'+m.tag.toUpperCase()+'</span>':'';
+    var isPrimary=i===0;
+    html+='<div class="v6-mall-card" onclick="goToStoreByName(\''+m.name+'\')">';
+    html+='<div class="v6-mall-logo" style="background:'+color+'">'+shortName+'</div>';
+    html+='<div class="v6-mall-info">';
+    html+='<div class="v6-mall-name">'+m.name+' '+tagHtml+'</div>';
+    html+='<div class="v6-mall-rate">구매 시 <b>티켓 적립</b> · '+m.desc+'</div>';
+    html+='</div>';
+    html+='<button class="v6-mall-go'+(isPrimary?' primary':'')+'" onclick="event.stopPropagation();goToStoreByName(\''+m.name+'\')">바로가기 ›</button>';
+    html+='</div>';
+  });
+  html+='</div></div>';
+
+  // ═══ 2. 오늘의 핫딜 (v6 horizontal scroll) ═══
+  var mallNames=['쿠팡','알리익스프레스','테무'];
+  var popular=PRODUCTS.slice().sort(function(a,b){return b.discount-a.discount}).slice(0,6);
+  html+='<div class="v6-section">';
+  html+='<div class="v6-section-hd"><div><div class="v6-section-t">🔥 오늘의 핫딜</div><div class="v6-section-s">사면 티켓까지 — 일석이조</div></div><div class="v6-section-more">더보기 ›</div></div>';
+  html+='<div class="v6-h-scroll">';
+  popular.forEach(function(p,i){
+    var mname=mallNames[i%mallNames.length];
+    var mcolor=MALL_COLORS[mname]||'#845EEE';
+    html+='<div class="v6-deal-card" onclick="openDetail('+p.id+')">';
+    html+='<div class="v6-deal-img">';
+    html+='<span class="v6-deal-mall-badge" style="background:'+mcolor+'">'+mname.slice(0,2)+'</span>';
+    html+='<div class="v6-deal-img-emoji">'+p.emoji+'</div>';
+    html+='</div>';
+    html+='<div class="v6-deal-body">';
+    html+='<div class="v6-deal-name">'+p.name+'</div>';
+    html+='<div class="v6-deal-price">'+p.currentPrice.toLocaleString()+'원</div>';
+    html+='<span class="v6-deal-ticket">🎫 브론즈 티켓</span>';
     html+='</div></div>';
-  }
-
-  // ═══ 2. 인기 상품 (horizontal scroll) ═══
-  var popular=PRODUCTS.slice().sort(function(a,b){return b.discount-a.discount}).slice(0,8);
-  html+='<div class="pp-section">';
-  html+='<div class="pp-section-head"><h2>인기 상품</h2><span class="pp-more" onclick="switchTab(\'search\')">더보기 ›</span></div>';
-  html+='<div class="pp-hscroll">';
-  popular.forEach(function(p){
-    var sig=getTimingSignal(p);
-    html+='<div class="pp-hcard" onclick="openDetail('+p.id+')">';
-    html+='<div class="pp-hcard-thumb">'+p.emoji+'</div>';
-    html+='<div class="pp-hcard-body">';
-    html+='<div class="pp-hcard-name">'+p.name+'</div>';
-    html+='<div class="pp-hcard-meta">';
-    html+='<span class="pp-hcard-discount">'+p.discount+'%</span>';
-    html+='<span class="pp-hcard-price">'+p.currentPrice.toLocaleString()+'원</span>';
-    html+='</div>';
-    html+='<div class="timing-badge '+sig.signal+'">'+sig.label+'</div>';
-    html+='</div>';
-    html+='</div>';
   });
   html+='</div></div>';
 
-  // ═══ 3. 골드박스 (3x2 그리드) ═══
-  html+='<div class="pp-section">';
-  html+='<div class="pp-section-head"><h2>🏆 골드박스</h2><span id="hot-goldbox-timer" class="pp-timer"></span></div>';
-  html+='<div class="pp-grid3">';
-  PRODUCTS.slice(0,6).forEach(function(p){
-    html+='<div class="pp-gcard" onclick="openDetail('+p.id+')">';
-    html+='<div class="pp-gcard-thumb">'+p.emoji+'</div>';
-    html+='<div class="pp-gcard-name">'+p.name+'</div>';
-    html+='<div class="pp-gcard-discount">'+p.discount+'% ↓</div>';
-    html+='</div>';
-  });
-  html+='</div></div>';
-
-  // ═══ 4. 이벤트 상품 ═══
-  html+='<div class="pp-section">';
-  html+='<div class="pp-section-head"><h2>이벤트 혜택</h2></div>';
+  // ═══ 3. 이벤트 (기존 유지) ═══
+  html+='<div class="v6-section">';
+  html+='<div class="v6-section-hd"><div class="v6-section-t">✨ 이벤트 혜택</div></div>';
   html+='<div class="pp-hscroll">';
   EVENT_2X.forEach(function(ev){
     html+='<div class="pp-event-card" style="background:'+ev.bg+'">';
@@ -7037,52 +7222,16 @@ function renderHotExtra(){
   });
   html+='</div></div>';
 
-  // ═══ 5. 카테고리별 탐색 ═══
-  html+='<div class="pp-section">';
-  html+='<div class="pp-section-head"><h2>카테고리별 탐색</h2></div>';
-  html+='<div class="pp-cat-chips">';
-  CATEGORIES.forEach(function(c){
-    var active=c.name===selectedCategory;
-    html+='<span class="pp-cat-chip '+(active?'active':'')+'" onclick="selectedCategory=\''+c.name+'\';renderHotExtra()">'+c.emoji+' '+c.name+'</span>';
-  });
-  html+='</div>';
-  var catProducts=PRODUCTS.filter(function(p){return p.category===selectedCategory});
-  if(catProducts.length===0){
-    html+='<div class="pp-empty-inline">해당 카테고리 상품이 없습니다</div>';
-  }else{
-    html+='<div class="pp-grid2">';
-    catProducts.forEach(function(p){
-      html+='<div class="pp-pcard" onclick="openDetail('+p.id+')">';
-      html+='<div class="pp-pcard-thumb">'+p.emoji+'</div>';
-      html+='<div class="pp-pcard-body">';
-      html+='<div class="pp-pcard-name">'+p.name+'</div>';
-      html+='<div class="pp-pcard-price-row">';
-      html+='<span class="pp-pcard-discount">'+p.discount+'%</span>';
-      html+='<span class="pp-pcard-price">'+p.currentPrice.toLocaleString()+'원</span>';
-      html+='</div>';
-      html+='</div>';
-      html+='</div>';
-    });
-    html+='</div>';
-  }
-  html+='</div>';
+  // 하단 여백
+  html+='<div style="height:24px"></div>';
 
   document.getElementById('hot-extra').innerHTML=html;
-  updateHotGoldboxTimer();
 }
 
-function updateHotGoldboxTimer(){
-  var el=document.getElementById('hot-goldbox-timer');
-  if(!el)return;
-  var now=new Date();
-  var end=new Date(now);
-  end.setHours(23,59,59,999);
-  var diff=end-now;
-  var h=Math.floor(diff/3600000);
-  var m=Math.floor((diff%3600000)/60000);
-  var s=Math.floor((diff%60000)/1000);
-  el.textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+' 남음';
-  setTimeout(updateHotGoldboxTimer,1000);
+function goToStoreByName(name){
+  var store=ECOMMERCE_STORES.find(function(s){return s.name===name});
+  if(store){goToStore(store.id);}
+  else{showModal('🛒',name+' 쇼핑',name+'으로 이동합니다.<br><br><span style="font-size:12px;color:var(--text-sub)">현재 연동 준비 중 · 곧 오픈</span>');}
 }
 
 function renderSearch(){
@@ -7133,13 +7282,43 @@ var ECOMMERCE_STORES=[
 ];
 
 function renderStoreGrid(){
+  // 혜택탭: 카테고리별 4열 그리드 (v6 스타일)
+  var categories=[
+    {label:'🛒 종합 쇼핑몰', stores:[
+      {name:'쿠팡',short:'쿠팡',color:'#E84A5F'},
+      {name:'11번가',short:'11',color:'#FF3366'},
+      {name:'G마켓',short:'G',color:'#06A54A'},
+      {name:'옥션',short:'옥션',color:'#D72A2A'}
+    ]},
+    {label:'✈️ 해외직구', stores:[
+      {name:'알리익스프레스',short:'Ali',color:'#FF512F'},
+      {name:'테무',short:'Temu',color:'#FB7701'},
+      {name:'이마트몰',short:'iHerb',color:'#3CA55C'},
+      {name:'롯데온',short:'Q10',color:'#1A1A1A'}
+    ]},
+    {label:'👗 패션·뷰티', stores:[
+      {name:'무신사',short:'무신사',color:'#1A1A1A'},
+      {name:'올리브영',short:'올영',color:'#6FA82E'},
+      {name:'마켓컬리',short:'컬리',color:'#5F0080'},
+      {name:'SSG닷컴',short:'SSG',color:'#C02127'}
+    ]},
+    {label:'🏠 생활·식품', stores:[
+      {name:'오늘의집',short:'오집',color:'#00C896'},
+      {name:'다이소몰',short:'다이소',color:'#EE1C25'},
+      {name:'위메프',short:'위메프',color:'#CC0066'},
+      {name:'티몬',short:'티몬',color:'#FF4500'}
+    ]}
+  ];
   var html='';
-  ECOMMERCE_STORES.forEach(function(store){
-    html+='<div class="pp-store-card" onclick="goToStore('+store.id+')">';
-    html+='<div class="pp-store-card-icon">'+store.emoji+'</div>';
-    html+='<div class="pp-store-card-name">'+store.name+'</div>';
-    html+='<div class="pp-store-card-desc">'+store.desc+'</div>';
-    if(store.badge)html+='<div class="pp-store-card-badge">'+store.badge+'</div>';
+  categories.forEach(function(cat){
+    html+='<div class="v6-grid-cat-title">'+cat.label+'</div>';
+    html+='<div class="v6-mall-grid">';
+    cat.stores.forEach(function(s){
+      html+='<div class="v6-mall-grid-item" onclick="goToStoreByName(\''+s.name+'\')">';
+      html+='<div class="v6-mg-logo" style="background:'+s.color+'">'+s.short+'</div>';
+      html+='<div class="v6-mg-name">'+s.name+'</div>';
+      html+='</div>';
+    });
     html+='</div>';
   });
   var el=document.getElementById('store-grid');

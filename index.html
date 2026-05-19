@@ -5498,6 +5498,26 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
 .swap-exec-btn { width:100%; padding:14px; background:var(--primary); color:#fff; border:none; border-radius:12px; font-size:14px; font-weight:700; cursor:pointer; margin-bottom:12px; letter-spacing:-0.2px; }
 .swap-exec-btn:disabled { background:var(--text-light); cursor:not-allowed; opacity:.6; }
 
+/* ─── 내 티켓 카드 (등급별 3분할) ─── */
+.my-ticket-card { margin:12px 16px 0; background:white; border-radius:18px; padding:18px; border:1px solid var(--border); box-shadow:0 2px 12px rgba(26,17,48,.06); }
+.mtc-label { font-size:12px; font-weight:600; color:var(--text2); margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; }
+.mtc-label-link { background:none; border:none; padding:0; font-size:11.5px; font-weight:700; color:var(--main); cursor:pointer; font-family:inherit; }
+.mtc-grades { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+.mtc-grade-item { background:white; border-radius:12px; padding:12px 8px 10px; text-align:center; border:1px solid var(--border); position:relative; overflow:hidden; transition:transform .1s; cursor:pointer; }
+.mtc-grade-item::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.mtc-grade-item[data-grade="bronze"]::before { background:linear-gradient(90deg,#C68250,#8B5A2B); }
+.mtc-grade-item[data-grade="silver"]::before { background:linear-gradient(90deg,#D8D8D8,#999); }
+.mtc-grade-item[data-grade="gold"]::before { background:linear-gradient(90deg,#FFD93B,#E6A800); }
+.mtc-grade-item:active { transform:scale(.97); }
+.mtc-grade-medal { font-size:22px; line-height:1; margin-bottom:4px; }
+.mtc-grade-name { font-size:10.5px; font-weight:700; color:var(--text2); margin-bottom:6px; letter-spacing:-0.2px; }
+.mtc-grade-count { display:flex; align-items:baseline; justify-content:center; gap:2px; }
+.mtc-grade-num { font-size:24px; font-weight:800; letter-spacing:-1px; line-height:1; color:var(--text1); font-family:'Poppins',sans-serif; }
+.mtc-grade-unit { font-size:11px; font-weight:600; color:var(--text2); }
+/* 딜 카드 할인 배지 */
+.v6-deal-disc-badge { position:absolute; top:6px; right:6px; background:#E54848; color:#fff; font-size:9.5px; font-weight:800; padding:2px 5px; border-radius:4px; }
+.v6-deal-orig { font-size:9.5px; color:var(--text3); text-decoration:line-through; margin-top:1px; }
+
 /* ─── 핫딜탭 섹션 ─── */
 .hd-section { padding:14px 0 0; }
 .hd-section-hd { display:flex; align-items:flex-end; justify-content:space-between; padding:0 16px; margin-bottom:8px; }
@@ -5932,6 +5952,31 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
     <div style="text-align:center;font-size:11px;color:rgba(255,255,255,0);height:0;overflow:hidden">
       <span id="ticket-pending"></span><span id="ticket-remaining" style="display:none">8</span>
       <span id="ticket-mini-available" style="display:none">0</span>
+    </div>
+
+    <!-- 등급별 티켓 카드 -->
+    <div class="my-ticket-card">
+      <div class="mtc-label">
+        <span>🎫 등급별 티켓 현황</span>
+        <button class="mtc-label-link" onclick="openSwapOverlay()">등급 교환 →</button>
+      </div>
+      <div class="mtc-grades">
+        <div class="mtc-grade-item" data-grade="bronze" onclick="openSwapOverlay()">
+          <div class="mtc-grade-medal">🥉</div>
+          <div class="mtc-grade-name">브론즈</div>
+          <div class="mtc-grade-count"><span class="mtc-grade-num" id="mtc-bronze">0</span><span class="mtc-grade-unit">장</span></div>
+        </div>
+        <div class="mtc-grade-item" data-grade="silver" onclick="openSwapOverlay()">
+          <div class="mtc-grade-medal">🥈</div>
+          <div class="mtc-grade-name">실버</div>
+          <div class="mtc-grade-count"><span class="mtc-grade-num" id="mtc-silver">0</span><span class="mtc-grade-unit">장</span></div>
+        </div>
+        <div class="mtc-grade-item" data-grade="gold" onclick="openSwapOverlay()">
+          <div class="mtc-grade-medal">🥇</div>
+          <div class="mtc-grade-name">골드</div>
+          <div class="mtc-grade-count"><span class="mtc-grade-num" id="mtc-gold">0</span><span class="mtc-grade-unit">장</span></div>
+        </div>
+      </div>
     </div>
 
     <!-- hidden compat: event-2x-scroll (renderBenefit 참조용) -->
@@ -7400,6 +7445,15 @@ var MALL_COLORS={
   '마켓컬리':'#5F0080','오늘의집':'#00C896','올리브영':'#6FA82E','다이소몰':'#EE1C25',
   '이마트몰':'#FFB800','옥션':'#D72A2A','위메프':'#CC0066','티몬':'#FF4500'
 };
+var _CAT_GRAD={
+  '전자/디지털':'linear-gradient(135deg,#EDE9FE,#C4B5FD)',
+  '생활/주방':'linear-gradient(135deg,#D1FAE5,#A7F3D0)',
+  '패션/의류':'linear-gradient(135deg,#FCE7F3,#FBCFE8)',
+  '식품/음료':'linear-gradient(135deg,#FEF3C7,#FDE68A)',
+  '뷰티':'linear-gradient(135deg,#FDF2F8,#F9A8D4)',
+  '스포츠':'linear-gradient(135deg,#E0F2FE,#BAE6FD)'
+};
+function getCatGrad(cat){return _CAT_GRAD[cat]||'linear-gradient(135deg,#F3EFFA,#E8E2F5)';}
 
 function renderHotExtra(){
   var html='';
@@ -7441,13 +7495,15 @@ function renderHotExtra(){
     var mname=mallNames[i%mallNames.length];
     var mcolor=MALL_COLORS[mname]||'#845EEE';
     html+='<div class="v6-deal-card" onclick="openDetail('+p.id+')">';
-    html+='<div class="v6-deal-img">';
+    html+='<div class="v6-deal-img" style="background:'+getCatGrad(p.category)+'">';
     html+='<span class="v6-deal-mall-badge" style="background:'+mcolor+'">'+mname.slice(0,2)+'</span>';
+    html+='<span class="v6-deal-disc-badge">-'+p.discount+'%</span>';
     html+='<div class="v6-deal-img-emoji">'+p.emoji+'</div>';
     html+='</div>';
     html+='<div class="v6-deal-body">';
     html+='<div class="v6-deal-name">'+p.name+'</div>';
     html+='<div class="v6-deal-price">'+p.currentPrice.toLocaleString()+'원</div>';
+    html+='<div class="v6-deal-orig">'+p.originalPrice.toLocaleString()+'원</div>';
     html+='<span class="v6-deal-ticket">🎫 브론즈 티켓</span>';
     html+='</div></div>';
   });
@@ -7591,6 +7647,10 @@ function renderBenefit(){
     if(cells[1])cells[1].textContent=exCounts.silver||0;
     if(cells[2])cells[2].textContent=exCounts.gold||0;
   }
+  // 등급별 티켓 카드 (my-ticket-card)
+  var mtcB=document.getElementById('mtc-bronze');if(mtcB)mtcB.textContent=exCounts.bronze||0;
+  var mtcS=document.getElementById('mtc-silver');if(mtcS)mtcS.textContent=exCounts.silver||0;
+  var mtcG=document.getElementById('mtc-gold');if(mtcG)mtcG.textContent=exCounts.gold||0;
   // 기프티콘 교환 리스트
   var gcItems=[
     {tier:'bronze',icon:'☕',name:'아이스 아메리카노',brand:'스타벅스',needed:8,label:'🥉 브론즈'},
@@ -7780,10 +7840,12 @@ function renderHotdeal(){
     fresh.concat(PRODUCTS.slice(0,3)).forEach(function(p){
       var mcolor='#0EA5E9';
       html+='<div class="v6-deal-card" onclick="openDetail('+p.id+')">';
-      html+='<div class="v6-deal-img"><span class="v6-deal-mall-badge" style="background:'+mcolor+'">신선</span>';
+      html+='<div class="v6-deal-img" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)"><span class="v6-deal-mall-badge" style="background:'+mcolor+'">신선</span>';
+      html+='<span class="v6-deal-disc-badge">-'+p.discount+'%</span>';
       html+='<div class="v6-deal-img-emoji">'+p.emoji+'</div></div>';
       html+='<div class="v6-deal-body"><div class="v6-deal-name">'+p.name+'</div>';
       html+='<div class="v6-deal-price">'+p.currentPrice.toLocaleString()+'원</div>';
+      html+='<div class="v6-deal-orig">'+p.originalPrice.toLocaleString()+'원</div>';
       html+='<span class="v6-deal-ticket" style="background:#E0F2FE;color:#0369A1">🥬 신선배송</span>';
       html+='</div></div>';
     });
@@ -7798,7 +7860,7 @@ function renderHotdeal(){
   byDiscount.slice(0,4).forEach(function(p){
     var saved=p.originalPrice-p.currentPrice;
     html+='<div class="hd-card" onclick="openDetail('+p.id+')">';
-    html+='<div class="hd-card-img"><span class="hd-card-badge">-'+p.discount+'%</span>'+p.emoji+'</div>';
+    html+='<div class="hd-card-img" style="background:'+getCatGrad(p.category)+'"><span class="hd-card-badge">-'+p.discount+'%</span>'+p.emoji+'</div>';
     html+='<div class="hd-card-body"><div class="hd-card-name">'+p.name+'</div>';
     html+='<div class="hd-card-price">'+p.currentPrice.toLocaleString()+'원</div>';
     html+='<div class="hd-card-save">'+saved.toLocaleString()+'원 절약</div></div></div>';
@@ -7813,11 +7875,12 @@ function renderHotdeal(){
     var rankColors=['#F59E0B','#9CA3AF','#CD7F32'];
     var rcolor=rankColors[i]||'#E5E7EB';
     html+='<div class="v6-deal-card" onclick="openDetail('+p.id+')">';
-    html+='<div class="v6-deal-img">';
+    html+='<div class="v6-deal-img" style="background:'+getCatGrad(p.category)+'">';
     html+='<span class="v6-deal-mall-badge" style="background:'+rcolor+';font-family:Poppins;font-size:11px;font-weight:800">'+(i+1)+'</span>';
     html+='<div class="v6-deal-img-emoji">'+p.emoji+'</div></div>';
     html+='<div class="v6-deal-body"><div class="v6-deal-name">'+p.name+'</div>';
     html+='<div class="v6-deal-price">'+p.currentPrice.toLocaleString()+'원</div>';
+    html+='<div class="v6-deal-orig">'+p.originalPrice.toLocaleString()+'원</div>';
     html+='<span class="v6-deal-ticket">🎫 티켓 적립</span></div></div>';
   });
   html+='</div></div>';
@@ -7830,11 +7893,12 @@ function renderHotdeal(){
   html+='<div style="margin-left:auto;font-size:12px;font-weight:700;color:#78350F">보러가기 ›</div></div>';
   html+='<div class="hd-grid2" style="margin-top:8px">';
   goldbox.forEach(function(p){
+    var saved=(p.originalPrice-p.currentPrice).toLocaleString();
     html+='<div class="hd-card" onclick="openDetail('+p.id+')">';
     html+='<div class="hd-card-img" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)"><span class="hd-card-badge" style="background:#F59E0B">GOLD</span>'+p.emoji+'</div>';
     html+='<div class="hd-card-body"><div class="hd-card-name">'+p.name+'</div>';
     html+='<div class="hd-card-price">'+p.currentPrice.toLocaleString()+'원</div>';
-    html+='<div class="hd-card-save">-'+p.discount+'% 할인</div></div></div>';
+    html+='<div class="hd-card-save">'+saved+'원 절약 (-'+p.discount+'%)</div></div></div>';
   });
   html+='</div></div>';
 
@@ -7845,7 +7909,7 @@ function renderHotdeal(){
   lowest.forEach(function(p){
     var pct=Math.round((1-(p.currentPrice/p.originalPrice))*100);
     html+='<div class="hd-list-card" onclick="openDetail('+p.id+')">';
-    html+='<div class="hd-list-thumb">'+p.emoji+'</div>';
+    html+='<div class="hd-list-thumb" style="background:'+getCatGrad(p.category)+'">'+p.emoji+'</div>';
     html+='<div class="hd-list-body"><div class="hd-list-name">'+p.name+'</div>';
     html+='<div class="hd-list-price">'+p.currentPrice.toLocaleString()+'원</div>';
     html+='<div class="hd-list-save">'+(p.originalPrice-p.currentPrice).toLocaleString()+'원 절약</div></div>';
@@ -7884,7 +7948,7 @@ function hdRenderCat(){
   var html='';
   list.forEach(function(p){
     html+='<div class="hd-card" onclick="openDetail('+p.id+')">';
-    html+='<div class="hd-card-img"><span class="hd-card-badge">-'+p.discount+'%</span>'+p.emoji+'</div>';
+    html+='<div class="hd-card-img" style="background:'+getCatGrad(p.category)+'"><span class="hd-card-badge">-'+p.discount+'%</span>'+p.emoji+'</div>';
     html+='<div class="hd-card-body"><div class="hd-card-name">'+p.name+'</div>';
     html+='<div class="hd-card-price">'+p.currentPrice.toLocaleString()+'원</div>';
     html+='<div class="hd-card-save" style="color:var(--text3)">'+p.category+'</div></div></div>';

@@ -5955,17 +5955,13 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
           <div style="font-size:14px;font-weight:700;color:var(--text1)">행운의 추첨</div>
           <div style="font-size:12px;color:var(--text-sub);margin-top:2px">내 티켓: <b id="benefit-raffle-tickets">0</b>장 · 1등 5% · 2등 15% · 3등 80%</div>
         </div>
-        <button class="ben-raffle-btn">응모하기</button>
+        <button class="ben-raffle-btn" onclick="event.stopPropagation();doRaffle()">응모하기</button>
       </div>
       <div id="benefit-raffle-prizes" style="margin-top:10px"></div>
     </div>
 
     <!-- 숨겨진 호환 요소 -->
     <div style="display:none">
-      <div id="ticket-progress-fill"></div>
-      <div id="ticket-delay-info"></div>
-      <div id="pending-rewards-area"></div>
-      <div id="reward-exchange"></div>
       <div class="raffle-ball" id="raffle-ball">?</div>
       <div id="store-grid"></div>
     </div>
@@ -6396,8 +6392,8 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
 <div class="detail-overlay" id="detail-overlay">
   <div class="detail-top">
     <button onclick="closeDetail()">←</button>
-    <button>🔗</button>
-    <button class="share">📤</button>
+    <button onclick="copyDetailLink()" title="링크 복사">🔗</button>
+    <button class="share" onclick="shareDetail()" title="공유">📤</button>
   </div>
   <div class="detail-scroll" id="detail-scroll"></div>
   <div class="detail-bottom" id="detail-bottom"></div>
@@ -7048,7 +7044,7 @@ function renderHotdeals(){
   var exCounts=getTicketsByTier();
 
   // ═══ 1. 티켓 히어로 (v6) ═══
-  var heroHtml='<div class="v6-ticket-hero" onclick="openTicketDetail()">';
+  var heroHtml='<div class="v6-ticket-hero" onclick="openSwapOverlay()">';
   heroHtml+='<div class="v6-th-label">🎫 보유 티켓</div>';
   heroHtml+='<div class="v6-th-total">'+tickets+'<span class="u">장</span></div>';
   heroHtml+='<div class="v6-th-tiers">';
@@ -7056,7 +7052,7 @@ function renderHotdeals(){
   heroHtml+='<div class="v6-th-tier"><div class="v6-t-l">🥈 실버</div><div class="v6-t-v">'+(exCounts.silver||0)+'</div></div>';
   heroHtml+='<div class="v6-th-tier"><div class="v6-t-l">🥇 골드</div><div class="v6-t-v">'+(exCounts.gold||0)+'</div></div>';
   heroHtml+='</div>';
-  heroHtml+='<button class="v6-th-cta" onclick="event.stopPropagation();openTicketDetail()">티켓으로 기프티콘 교환 ›</button>';
+  heroHtml+='<button class="v6-th-cta" onclick="event.stopPropagation();openSwapOverlay()">티켓 등급 교환 ›</button>';
   heroHtml+='</div>';
   document.getElementById('attend-area').innerHTML=heroHtml;
 
@@ -7067,7 +7063,7 @@ function renderHotdeals(){
   missionHtml+='<div class="v6-m-t">출석체크</div>';
   missionHtml+='<div class="v6-m-s">'+(checkedToday?'완료':'티켓 1장')+'</div>';
   missionHtml+='</div>';
-  missionHtml+='<div class="v6-mission-card" onclick="openTicketDetail()">';
+  missionHtml+='<div class="v6-mission-card" onclick="openSwapOverlay()">';
   missionHtml+='<div class="v6-m-ico">🎰</div>';
   missionHtml+='<div class="v6-m-t">행운 룰렛</div>';
   missionHtml+='<div class="v6-m-s">하루 1회</div>';
@@ -7089,6 +7085,20 @@ function renderHotdeals(){
 var currentDetailId=null;
 var chartInstance=null;
 function closeDetail(){document.getElementById('detail-overlay').classList.remove('show');currentDetailId=null}
+function copyDetailLink(){
+  var p=currentDetailId&&PRODUCTS.find(function(x){return x.id===currentDetailId});
+  var text=p?'[PricePick] '+p.name+'\n현재가: '+p.currentPrice.toLocaleString()+'원\nhttps://warren0867.github.io/pollcent-sample/':'https://warren0867.github.io/pollcent-sample/';
+  if(navigator.clipboard){navigator.clipboard.writeText(text).then(function(){showModal('🔗','링크 복사 완료','클립보드에 복사됐어요!')});}
+  else{showModal('🔗','링크',''+text);}
+}
+function shareDetail(){
+  var p=currentDetailId&&PRODUCTS.find(function(x){return x.id===currentDetailId});
+  var title=p?p.name:'PricePick';
+  var text=p?'[PricePick] '+p.name+' — 현재 '+p.currentPrice.toLocaleString()+'원':'PricePick 가격 추적 앱';
+  var url='https://warren0867.github.io/pollcent-sample/';
+  if(navigator.share){navigator.share({title:title,text:text,url:url}).catch(function(){});}
+  else{copyDetailLink();}
+}
 
 function genHistory(p){
   var h=[];
@@ -7568,11 +7578,19 @@ function renderBenefit(){
   if(pendingEl)pendingEl.innerHTML='적립예정 '+tickets.pending+'장 · 커피까지 <b>'+remaining+'</b>장 남음';
   var remainEl=document.getElementById('ticket-remaining');
   if(remainEl)remainEl.textContent=remaining;
-  // 티켓 tier bar (혜택탭)
+  // 티켓 tier bar (오버레이 내)
   var bronzeEl=document.getElementById('ben-bronze');if(bronzeEl)bronzeEl.textContent=exCounts.bronze||0;
   var silverEl=document.getElementById('ben-silver');if(silverEl)silverEl.textContent=exCounts.silver||0;
   var goldEl=document.getElementById('ben-gold');if(goldEl)goldEl.textContent=exCounts.gold||0;
   var raffleTicketEl=document.getElementById('benefit-raffle-tickets');if(raffleTicketEl)raffleTicketEl.textContent=tickets.available;
+  // 혜택탭 히어로 카드 내 등급별 수치 업데이트
+  var tiersEl=document.getElementById('benefit-tiers');
+  if(tiersEl){
+    var cells=tiersEl.querySelectorAll('.v6-t-v');
+    if(cells[0])cells[0].textContent=exCounts.bronze||0;
+    if(cells[1])cells[1].textContent=exCounts.silver||0;
+    if(cells[2])cells[2].textContent=exCounts.gold||0;
+  }
   // 기프티콘 교환 리스트
   var gcItems=[
     {tier:'bronze',icon:'☕',name:'아이스 아메리카노',brand:'스타벅스',needed:8,label:'🥉 브론즈'},
@@ -8832,12 +8850,6 @@ openDetail=function(id,fromWish){
       }
     });
   },100);
-};
-
-// ===== UPDATE BENEFIT RENDER =====
-var _origRenderBenefit=renderBenefit;
-renderBenefit=function(){
-  _origRenderBenefit();
 };
 
 // ===== UPDATE BACK BUTTON FOR NEW OVERLAYS =====

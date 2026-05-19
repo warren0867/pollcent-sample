@@ -5927,23 +5927,18 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
         <div class="v6-th-tier"><div class="v6-t-l">🥈 실버</div><div class="v6-t-v">-</div></div>
         <div class="v6-th-tier"><div class="v6-t-l">🥇 골드</div><div class="v6-t-v">-</div></div>
       </div>
-      <button class="v6-th-cta" onclick="event.stopPropagation();openTicketDetail()">티켓 교환소 · 경품 응모 ›</button>
+      <button class="v6-th-cta" onclick="event.stopPropagation();scrollToSwap()">티켓 등급 교환 ›</button>
     </div>
     <div style="text-align:center;font-size:11px;color:rgba(255,255,255,0);height:0;overflow:hidden">
       <span id="ticket-pending"></span><span id="ticket-remaining" style="display:none">8</span>
       <span id="ticket-mini-available" style="display:none">0</span>
     </div>
 
-    <!-- 이벤트 배너 -->
-    <div style="padding:14px 16px 4px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-        <div style="font-size:15px;font-weight:800;color:var(--text1)">✨ 진행중 이벤트</div>
-      </div>
-      <div class="h-scroll" id="event-2x-scroll" style="padding:0 0 4px"></div>
-    </div>
+    <!-- hidden compat: event-2x-scroll (renderBenefit 참조용) -->
+    <div style="display:none"><div id="event-2x-scroll"></div></div>
 
     <!-- 티켓 등급 교환 -->
-    <div style="padding:16px 16px 8px">
+    <div id="tier-swap-section" style="padding:16px 16px 8px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
         <div style="font-size:15px;font-weight:800;color:var(--text1)">🔄 티켓 등급 교환</div>
         <div onclick="addDemoTickets()" style="font-size:11px;color:var(--text3);cursor:pointer;padding:4px 8px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">🎁 데모 티켓</div>
@@ -8346,6 +8341,14 @@ function cartGoToCoupang(){
     showModal('✅','쿠팡으로 이동!','상품 페이지로 이동했어요.<br>구매 후 리워드를 받으세요!');
   }
   openCart();
+}
+
+function scrollToSwap(){
+  var sec=document.getElementById('tier-swap-section');
+  var content=document.getElementById('content');
+  if(sec&&content){
+    content.scrollTo({top:sec.offsetTop-8,behavior:'smooth'});
+  }
 }
 
 // ===== 티켓 등급 교환 =====

@@ -5906,7 +5906,7 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
     <div style="padding:16px 16px 8px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
         <div style="font-size:15px;font-weight:800;color:var(--text1)">☕ 티켓 교환소</div>
-        <div style="font-size:12px;color:var(--text3)">티켓으로 기프티콘 교환</div>
+        <div onclick="addDemoTickets()" style="font-size:11px;color:var(--text3);cursor:pointer;padding:4px 8px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">🎁 데모 티켓</div>
       </div>
       <!-- 보유 티켓 3단 카운트 -->
       <div class="ben-tier-bar" id="benefit-tier-bar">
@@ -5957,79 +5957,6 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
       <div id="reward-exchange"></div>
       <div class="raffle-ball" id="raffle-ball">?</div>
       <div id="store-grid"></div>
-    </div>
-
-    <!-- 티켓 상세 오버레이 -->
-    <div class="sub-overlay" id="ticket-detail-overlay" style="display:none;flex-direction:column">
-      <div class="sub-header">
-        <button onclick="closeTicketDetail()">←</button>
-        <h2>티켓 &amp; 혜택</h2>
-      </div>
-      <div style="flex:1;overflow-y:auto">
-        <div class="pp-ticket-hero" style="margin:12px 16px 0">
-          <div class="pp-ticket-hero-top">
-            <div class="pp-ticket-hero-label">내 티켓</div>
-            <span class="pp-ticket-hero-pending" id="ticket-detail-pending">적립예정 0장</span>
-          </div>
-          <div class="pp-ticket-hero-main">
-            <span class="pp-ticket-hero-val" id="ticket-detail-available">0</span>
-            <span class="pp-ticket-hero-unit">장</span>
-          </div>
-          <div class="pp-ticket-hero-progress">
-            <div class="pp-ticket-hero-progress-head">
-              <span class="pp-ticket-hero-progress-label">커피 교환까지</span>
-              <span class="pp-ticket-hero-progress-remain"><b id="ticket-detail-remaining">8</b>장 남음</span>
-            </div>
-            <div class="pp-ticket-hero-progress-bar"><div class="pp-ticket-hero-progress-fill" id="ticket-detail-progress-fill"></div></div>
-          </div>
-          <div id="ticket-detail-delay-info" class="pp-ticket-hero-delay"></div>
-          <div class="pp-ticket-hero-actions">
-            <button onclick="closeTicketDetail();switchTab('hot')">쇼핑하러 가기</button>
-            <button class="primary" onclick="closeTicketDetail();scrollToRaffle()">경품 응모</button>
-          </div>
-        </div>
-        <div id="ticket-detail-pending-area" style="padding:0 16px"></div>
-        <div class="pp-benefit-section" style="padding:14px 16px 4px">
-          <div class="pp-benefit-section-head" style="margin-bottom:10px"><h2 style="font-size:15px;font-weight:800">티켓 교환소</h2></div>
-          <div id="ticket-detail-exchange"></div>
-        </div>
-        <div class="pp-benefit-section" id="raffle-anchor" style="padding:14px 16px">
-          <div class="pp-benefit-section-head" style="margin-bottom:10px"><h2 style="font-size:15px;font-weight:800">경품 응모</h2><span class="pp-benefit-section-sub">매일 1회</span></div>
-          <div class="raffle-section">
-            <div class="raffle-ball" id="raffle-ball-detail">?</div>
-            <div style="flex:1;min-width:0">
-              <h3>행운의 추첨</h3>
-              <div class="raffle-info">내 티켓: <b id="raffle-tickets">0</b>장</div>
-              <div style="font-size:10px;opacity:.6;margin-top:2px">1등 5% · 2등 15% · 3등 80%</div>
-            </div>
-            <button class="raffle-btn" onclick="doRaffle()">응모하기</button>
-          </div>
-          <div class="raffle-prizes" id="raffle-prizes"></div>
-        </div>
-        <details class="pp-benefit-details" style="margin:0 16px 16px">
-          <summary class="pp-benefit-details-summary">
-            <span>적립 조건 · 제외 상품 안내</span>
-            <span class="pp-benefit-details-arrow">›</span>
-          </summary>
-          <div class="pp-benefit-details-body">
-            <div class="pp-benefit-notice pp-benefit-notice-info">
-              <div class="pp-benefit-notice-title">📋 적립 조건</div>
-              <div class="pp-benefit-notice-body">
-                · 구매하러 가기 버튼으로 이동 후 구매한 건에 한해 티켓 적립<br>
-                · 취소·반품 시 미지급 · 월 단위 적립 한도 있음<br>
-                · 미적립 시 구매일로부터 <b>14일 이내</b> 신청 가능<br>
-                · 부정행위 적발 시 사전 공지 없이 티켓 전액 회수
-              </div>
-            </div>
-            <div class="pp-benefit-notice pp-benefit-notice-warn">
-              <div class="pp-benefit-notice-title">⚠️ 적립 제외 상품</div>
-              <div class="pp-benefit-notice-body">
-                배송비, 쿠폰, 캐시, AS케어서비스, 여행상품, 기프트카드, 스마트폰, 태블릿/PC, 중고품 등은 티켓 적립 대상이 아닙니다.
-              </div>
-            </div>
-          </div>
-        </details>
-      </div>
     </div>
 
   </div>
@@ -6224,6 +6151,71 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- 티켓 교환소 오버레이 (app-shell 레벨 — 어느 탭에서든 열림) -->
+<div class="sub-overlay" id="ticket-detail-overlay" style="display:none;flex-direction:column">
+  <div class="sub-header">
+    <button onclick="closeTicketDetail()">←</button>
+    <h2>티켓 교환소</h2>
+  </div>
+  <div style="flex:1;overflow-y:auto">
+    <!-- 보유 티켓 요약 -->
+    <div class="pp-ticket-hero" style="margin:12px 16px 0">
+      <div class="pp-ticket-hero-top">
+        <div class="pp-ticket-hero-label">내 티켓</div>
+        <span class="pp-ticket-hero-pending" id="ticket-detail-pending">적립예정 0장</span>
+      </div>
+      <div class="pp-ticket-hero-main">
+        <span class="pp-ticket-hero-val" id="ticket-detail-available">0</span>
+        <span class="pp-ticket-hero-unit">장</span>
+      </div>
+      <div class="pp-ticket-hero-progress">
+        <div class="pp-ticket-hero-progress-head">
+          <span class="pp-ticket-hero-progress-label">커피 교환까지</span>
+          <span class="pp-ticket-hero-progress-remain"><b id="ticket-detail-remaining">8</b>장 남음</span>
+        </div>
+        <div class="pp-ticket-hero-progress-bar"><div class="pp-ticket-hero-progress-fill" id="ticket-detail-progress-fill"></div></div>
+      </div>
+      <div id="ticket-detail-delay-info" class="pp-ticket-hero-delay"></div>
+      <div class="pp-ticket-hero-actions">
+        <button onclick="closeTicketDetail();switchTab('hot')">쇼핑하러 가기</button>
+        <button class="primary" onclick="closeTicketDetail();switchTab('benefit')">혜택 보기</button>
+      </div>
+    </div>
+    <!-- 적립 대기 -->
+    <div id="ticket-detail-pending-area" style="padding:0 16px"></div>
+    <!-- 교환소 -->
+    <div class="pp-benefit-section" style="padding:14px 16px 4px">
+      <div class="pp-benefit-section-head" style="margin-bottom:10px">
+        <h2 style="font-size:15px;font-weight:800">☕ 티켓 교환소</h2>
+      </div>
+      <div id="ticket-detail-exchange"></div>
+    </div>
+    <!-- 적립 안내 -->
+    <details class="pp-benefit-details" style="margin:8px 16px 16px">
+      <summary class="pp-benefit-details-summary">
+        <span>적립 조건 · 제외 상품 안내</span>
+        <span class="pp-benefit-details-arrow">›</span>
+      </summary>
+      <div class="pp-benefit-details-body">
+        <div class="pp-benefit-notice pp-benefit-notice-info">
+          <div class="pp-benefit-notice-title">📋 적립 조건</div>
+          <div class="pp-benefit-notice-body">
+            · 구매하러 가기 버튼으로 이동 후 구매한 건에 한해 티켓 적립<br>
+            · 취소·반품 시 미지급 · 월 단위 적립 한도 있음<br>
+            · 미적립 시 구매일로부터 <b>14일 이내</b> 신청 가능
+          </div>
+        </div>
+        <div class="pp-benefit-notice pp-benefit-notice-warn">
+          <div class="pp-benefit-notice-title">⚠️ 적립 제외 상품</div>
+          <div class="pp-benefit-notice-body">
+            배송비, 쿠폰, 캐시, AS케어서비스, 여행상품, 기프트카드, 스마트폰, 태블릿/PC, 중고품 등
+          </div>
+        </div>
+      </div>
+    </details>
   </div>
 </div>
 
@@ -7576,7 +7568,6 @@ function renderTicketDetail(){
   if(el)el.style.width=Math.min(100,Math.round(tickets.available/8*100))+'%';
   el=document.getElementById('ticket-detail-delay-info');
   if(el)el.innerHTML=s.kakao?'✅ 카카오 연동 완료 · 구매 후 <b>7일</b> 대기':'구매 후 <b>30일</b> 대기 · <a href="#" onclick="linkKakao();return false;" style="color:var(--primary)">카카오 연동 시 7일로 단축</a>';
-  el=document.getElementById('raffle-tickets');if(el)el.textContent=tickets.available;
   // 적립 대기
   var pendingTickets=tickets.history.filter(function(t){return t.status==='pending'});
   var pendingHtml='';
@@ -7610,17 +7601,10 @@ function renderTicketDetail(){
     exHtml+='<div class="reward-ex-item"><div class="reward-ex-icon" style="background:#FEF3C7">'+item.icon+'</div>';
     exHtml+='<div class="reward-ex-info"><h4>'+item.name+'</h4>';
     exHtml+='<p>'+item.label+' '+item.needed+'장 · 보유 <b style="color:'+(enough?'var(--primary)':'var(--red)')+'">'+have+'장</b></p></div>';
-    exHtml+='<button class="reward-ex-btn '+(enough?item.tier:'disabled')+'" onclick="'+(enough?'exchangeReward(\''+item.tier+'\')':'void(0)')+'" style="'+(enough?'':'opacity:.4;cursor:not-allowed')+'">교환</button></div>';
+    exHtml+='<button class="reward-ex-btn '+(enough?item.tier:'disabled')+'" onclick="exchangeReward(\''+item.tier+'\')" style="'+(enough?'':'opacity:.45')+'">교환</button></div>';
   });
   exHtml+='</div>';
   el=document.getElementById('ticket-detail-exchange');if(el)el.innerHTML=exHtml;
-  // 경품
-  var prizeHtml='';
-  RAFFLE_PRIZES.forEach(function(r){
-    prizeHtml+='<div class="raffle-prize-card"><div class="raffle-medal r'+r.rank+'">'+r.rank+'</div>';
-    prizeHtml+='<div class="raffle-prize-info"><h4>'+r.icon+' '+r.prize+'</h4><p>'+r.desc+'</p></div></div>';
-  });
-  el=document.getElementById('raffle-prizes');if(el)el.innerHTML=prizeHtml;
 }
 
 // ===== HOTDEAL TAB =====
@@ -7782,31 +7766,54 @@ function doHotdealSearch(){
 function submitHotdealSearch(){doHotdealSearch();}
 
 function scrollToRaffle(){
-  setTimeout(function(){
-    var el=document.getElementById('raffle-anchor');
-    if(el)el.scrollIntoView({behavior:'smooth'});
-  },100);
+  closeTicketDetail();
+  switchTab('benefit');
+}
+
+function addDemoTickets(){
+  var tickets=getTickets();
+  var demoItems=[
+    {tier:'bronze',count:8},{tier:'silver',count:4},{tier:'gold',count:1}
+  ];
+  demoItems.forEach(function(d){
+    for(var i=0;i<d.count;i++){
+      tickets.history.push({
+        id:Date.now()+Math.random(),
+        tier:d.tier,
+        status:'available',
+        product:'데모 구매',
+        date:new Date().toISOString().slice(0,10),
+        available_at:new Date().toISOString()
+      });
+      tickets.available++;
+    }
+  });
+  setTickets(tickets);
+  renderBenefit();
+  showModal('🎫','데모 티켓 지급!','브론즈 8장 · 실버 4장 · 골드 1장<br>지급 완료!<br><br>아래 교환 버튼으로 기프티콘을 교환해보세요 ☕');
 }
 
 function doRaffle(){
   var tickets=getTickets();
-  if(tickets.available<1)return showModal('😅','티켓이 없어요','상품을 구매하면 이벤트 티켓을 받을 수 있어요!');
+  if(tickets.available<1)return showModal('😅','티켓이 없어요','🎁 데모 티켓 버튼으로 테스트 티켓을 받아보세요!');
   tickets.available--;
   for(var i=0;i<tickets.history.length;i++){
     if(tickets.history[i].status==='available'){tickets.history[i].status='used';break}
   }
   setTickets(tickets);
   setRaffleCount(getRaffleCount()+1);
-  var ball=document.getElementById('raffle-ball');
-  ball.classList.add('spinning');ball.textContent='?';
+  var ball=document.getElementById('benefit-raffle-ball')||document.getElementById('raffle-ball');
+  if(ball){ball.textContent='?';}
+  var icons=['🍕','🍔','☕','🎁','🎉','✨'];
   var count=0;
   var iv=setInterval(function(){
-    ball.textContent=['🍕','🍔','☕','🎁','🎉','✨'][count%6];count++;
+    if(ball){ball.textContent=icons[count%icons.length];}
+    count++;
     if(count>20){
-      clearInterval(iv);ball.classList.remove('spinning');
+      clearInterval(iv);
       var r=Math.random();
       var result=r<0.05?RAFFLE_PRIZES[0]:r<0.2?RAFFLE_PRIZES[1]:RAFFLE_PRIZES[2];
-      ball.textContent=result.icon;
+      if(ball){ball.textContent=result.icon;}
       showModal(result.icon,result.rank+'등 당첨!','<b>'+result.prize+'</b><br><span style="font-size:12px;color:var(--text-sub)">'+result.desc+'</span>');
       renderBenefit();
     }
@@ -8291,6 +8298,8 @@ function exchangeReward(tier){
   S('exchanges',exchanges);
   showModal(r.icon,'교환 완료!','<b>'+r.name+'</b> 기프티콘이<br>발급되었습니다!<br><br><span style="font-size:12px;color:var(--text-sub)">'+labels[tier]+' 티켓 '+needed[tier]+'장 사용</span>');
   renderBenefit();
+  var overlay=document.getElementById('ticket-detail-overlay');
+  if(overlay&&overlay.style.display!=='none')renderTicketDetail();
 }
 
 function updateExchangeButtons(){

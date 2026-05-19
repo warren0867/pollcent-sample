@@ -5457,6 +5457,46 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
 .ben-raffle-row { display:flex; align-items:center; gap:12px; background:var(--card); border-radius:14px; padding:13px 14px; cursor:pointer; border:1px solid var(--border); }
 .ben-raffle-ball { width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,#845EEE,#A855F7); display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:900; color:#fff; flex-shrink:0; }
 .ben-raffle-btn { padding:7px 12px; background:var(--primary); color:#fff; border:none; border-radius:10px; font-size:12px; font-weight:700; cursor:pointer; white-space:nowrap; }
+/* 티켓 등급 교환 swap UI */
+.swap-dir-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px; }
+.swap-dir-btn { background:var(--card); border:1.5px solid var(--border); border-radius:12px; padding:11px 8px; cursor:pointer; transition:all .15s; text-align:center; }
+.swap-dir-btn.active { border-color:var(--primary); background:rgba(132,94,238,0.05); box-shadow:0 0 0 1px var(--primary); }
+.swap-dir-flow { display:flex; align-items:center; justify-content:center; gap:6px; margin-bottom:4px; font-size:20px; }
+.swap-dir-arrow { color:var(--text-sub); font-weight:700; font-size:13px; }
+.swap-dir-btn.active .swap-dir-arrow { color:var(--primary); }
+.swap-dir-label { font-size:11px; font-weight:700; color:var(--text1); }
+.swap-dir-ratio { font-size:10px; color:var(--text-sub); margin-top:2px; }
+.swap-input-card { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:10px; }
+.swap-side-box { padding:14px 14px 10px; }
+.swap-side-box.receive-side { background:rgba(132,94,238,0.04); }
+.swap-side-label { font-size:10px; font-weight:700; color:var(--text-sub); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px; }
+.swap-side-row { display:flex; align-items:center; gap:8px; }
+.swap-side-medal { font-size:28px; flex-shrink:0; }
+.swap-side-grade { font-size:13px; font-weight:700; color:var(--text1); white-space:nowrap; }
+.swap-side-input { flex:1; min-width:0; border:1px solid var(--border); border-radius:8px; padding:8px 10px; font-size:18px; font-weight:800; color:var(--text1); text-align:right; -moz-appearance:textfield; background:#fff; font-family:'Poppins',sans-serif; }
+.swap-side-input::-webkit-outer-spin-button,.swap-side-input::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+.swap-side-input:focus { outline:none; border-color:var(--primary); }
+.swap-side-output { flex:1; font-size:22px; font-weight:800; color:var(--primary); text-align:right; letter-spacing:-0.5px; font-family:'Poppins',sans-serif; }
+.swap-side-unit { font-size:13px; font-weight:600; color:var(--text-sub); }
+.swap-side-meta { display:flex; justify-content:space-between; font-size:11px; color:var(--text-sub); margin-top:8px; }
+.swap-side-meta b { color:var(--text1); font-weight:700; }
+.swap-side-warn { color:#E54848; font-weight:700; }
+.swap-quick-row { display:flex; gap:5px; margin-top:10px; }
+.swap-quick-btn { flex:1; padding:7px 4px; background:var(--bg); border:1px solid var(--border); border-radius:7px; font-size:11px; font-weight:700; color:var(--text-sub); cursor:pointer; white-space:nowrap; }
+.swap-quick-btn:active { background:rgba(132,94,238,0.08); color:var(--primary); }
+.swap-divider { display:flex; align-items:center; padding:0 14px; }
+.swap-divider-line { flex:1; height:1px; background:var(--border); }
+.swap-divider-arrow { width:28px; height:28px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; margin:0 8px; flex-shrink:0; }
+.swap-sim-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-bottom:10px; }
+.swap-sim-row { display:grid; grid-template-columns:22px auto 1fr auto 1fr; align-items:center; gap:8px; padding:7px 0; border-bottom:1px solid var(--border); font-size:12px; }
+.swap-sim-row:last-child { border-bottom:none; }
+.swap-sim-name { font-weight:700; color:var(--text1); }
+.swap-sim-before { color:var(--text-sub); text-align:right; }
+.swap-sim-arrow { color:var(--text-sub); font-size:11px; text-align:center; }
+.swap-sim-after { font-size:14px; font-weight:800; color:var(--text1); text-align:right; }
+.swap-sim-after.changed { color:var(--primary); }
+.swap-exec-btn { width:100%; padding:14px; background:var(--primary); color:#fff; border:none; border-radius:12px; font-size:14px; font-weight:700; cursor:pointer; margin-bottom:12px; letter-spacing:-0.2px; }
+.swap-exec-btn:disabled { background:var(--text-light); cursor:not-allowed; opacity:.6; }
 
 /* ─── 핫딜탭 섹션 ─── */
 .hd-section { padding:14px 0 0; }
@@ -5902,10 +5942,10 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
       <div class="h-scroll" id="event-2x-scroll" style="padding:0 0 4px"></div>
     </div>
 
-    <!-- 티켓 교환소 -->
+    <!-- 티켓 등급 교환 -->
     <div style="padding:16px 16px 8px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-        <div style="font-size:15px;font-weight:800;color:var(--text1)">☕ 티켓 교환소</div>
+        <div style="font-size:15px;font-weight:800;color:var(--text1)">🔄 티켓 등급 교환</div>
         <div onclick="addDemoTickets()" style="font-size:11px;color:var(--text3);cursor:pointer;padding:4px 8px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">🎁 데모 티켓</div>
       </div>
       <!-- 보유 티켓 3단 카운트 -->
@@ -5928,8 +5968,95 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
           <div class="ben-tier-unit">장</div>
         </div>
       </div>
-      <!-- 교환 아이템 -->
-      <div id="benefit-exchange-list"></div>
+      <!-- 교환 방향 선택 -->
+      <div class="swap-dir-grid">
+        <button class="swap-dir-btn active" id="swap-btn-bs" onclick="setSwapDir('bronze','silver',10,1)">
+          <div class="swap-dir-flow"><span>🥉</span><span class="swap-dir-arrow">→</span><span>🥈</span></div>
+          <div class="swap-dir-label">브론즈 → 실버</div>
+          <div class="swap-dir-ratio">10장 → 1장</div>
+        </button>
+        <button class="swap-dir-btn" id="swap-btn-sb" onclick="setSwapDir('silver','bronze',1,10)">
+          <div class="swap-dir-flow"><span>🥈</span><span class="swap-dir-arrow">→</span><span>🥉</span></div>
+          <div class="swap-dir-label">실버 → 브론즈</div>
+          <div class="swap-dir-ratio">1장 → 10장</div>
+        </button>
+        <button class="swap-dir-btn" id="swap-btn-sg" onclick="setSwapDir('silver','gold',2,1)">
+          <div class="swap-dir-flow"><span>🥈</span><span class="swap-dir-arrow">→</span><span>🥇</span></div>
+          <div class="swap-dir-label">실버 → 골드</div>
+          <div class="swap-dir-ratio">2장 → 1장</div>
+        </button>
+        <button class="swap-dir-btn" id="swap-btn-gs" onclick="setSwapDir('gold','silver',1,2)">
+          <div class="swap-dir-flow"><span>🥇</span><span class="swap-dir-arrow">→</span><span>🥈</span></div>
+          <div class="swap-dir-label">골드 → 실버</div>
+          <div class="swap-dir-ratio">1장 → 2장</div>
+        </button>
+      </div>
+      <!-- 소비/획득 입력 카드 -->
+      <div class="swap-input-card">
+        <div class="swap-side-box">
+          <div class="swap-side-label">소비</div>
+          <div class="swap-side-row">
+            <span class="swap-side-medal" id="swap-from-icon">🥉</span>
+            <span class="swap-side-grade" id="swap-from-grade">브론즈</span>
+            <input type="number" class="swap-side-input" id="swap-amount-input" value="10" min="0" oninput="onSwapAmountChange(this.value)">
+            <span class="swap-side-unit">장</span>
+          </div>
+          <div class="swap-side-meta">
+            <span>보유: <b id="swap-from-hold">0</b>장</span>
+            <span id="swap-from-warn" class="swap-side-warn" style="display:none">보유 부족</span>
+          </div>
+          <div class="swap-quick-row">
+            <button class="swap-quick-btn" onclick="swapSetMax()">최대</button>
+            <button class="swap-quick-btn" onclick="swapSetHalf()">절반</button>
+            <button class="swap-quick-btn" onclick="swapAdjust(-1)">-1단위</button>
+            <button class="swap-quick-btn" onclick="swapAdjust(1)">+1단위</button>
+          </div>
+        </div>
+        <div class="swap-divider">
+          <div class="swap-divider-line"></div>
+          <div class="swap-divider-arrow">↓</div>
+          <div class="swap-divider-line"></div>
+        </div>
+        <div class="swap-side-box receive-side">
+          <div class="swap-side-label">획득</div>
+          <div class="swap-side-row">
+            <span class="swap-side-medal" id="swap-to-icon">🥈</span>
+            <span class="swap-side-grade" id="swap-to-grade">실버</span>
+            <span class="swap-side-output" id="swap-to-amount">1</span>
+            <span class="swap-side-unit">장</span>
+          </div>
+        </div>
+      </div>
+      <!-- 교환 후 시뮬레이션 -->
+      <div class="swap-sim-card" id="swap-sim-card">
+        <div style="font-size:12px;font-weight:700;color:var(--text-sub);margin-bottom:6px">교환 후 보유</div>
+        <div class="swap-sim-row">
+          <span>🥉</span><span class="swap-sim-name">브론즈</span>
+          <span class="swap-sim-before" id="swap-sim-b-before">0장</span>
+          <span class="swap-sim-arrow">→</span>
+          <span class="swap-sim-after" id="swap-sim-b-after">0장</span>
+        </div>
+        <div class="swap-sim-row">
+          <span>🥈</span><span class="swap-sim-name">실버</span>
+          <span class="swap-sim-before" id="swap-sim-s-before">0장</span>
+          <span class="swap-sim-arrow">→</span>
+          <span class="swap-sim-after" id="swap-sim-s-after">0장</span>
+        </div>
+        <div class="swap-sim-row">
+          <span>🥇</span><span class="swap-sim-name">골드</span>
+          <span class="swap-sim-before" id="swap-sim-g-before">0장</span>
+          <span class="swap-sim-arrow">→</span>
+          <span class="swap-sim-after" id="swap-sim-g-after">0장</span>
+        </div>
+      </div>
+      <!-- 교환 실행 버튼 -->
+      <button class="swap-exec-btn" id="swap-exec-btn" onclick="execSwapTier()">브론즈 10장 → 실버 1장 교환하기</button>
+    </div>
+
+    <!-- 기프티콘 교환 -->
+    <div style="padding:0 16px 8px">
+      <div style="font-size:15px;font-weight:800;color:var(--text1);margin-bottom:10px">☕ 기프티콘 교환</div>
+      <div id="benefit-giftcard-list"></div>
     </div>
 
     <!-- 경품 응모 -->
@@ -7441,26 +7568,28 @@ function renderBenefit(){
   var silverEl=document.getElementById('ben-silver');if(silverEl)silverEl.textContent=exCounts.silver||0;
   var goldEl=document.getElementById('ben-gold');if(goldEl)goldEl.textContent=exCounts.gold||0;
   var raffleTicketEl=document.getElementById('benefit-raffle-tickets');if(raffleTicketEl)raffleTicketEl.textContent=tickets.available;
-  // 교환소 리스트
-  var exItems=[
-    {tier:'bronze',icon:'☕',name:'아이스 아메리카노',brand:'스타벅스',needed:8,color:'#CD7F32',label:'🥉 브론즈'},
-    {tier:'silver',icon:'🍔',name:'빅맥 세트',brand:'맥도날드',needed:4,color:'#9CA3AF',label:'🥈 실버'},
-    {tier:'gold',icon:'🍕',name:'도미노피자 세트',brand:'도미노피자',needed:1,color:'#F59E0B',label:'🥇 골드'}
+  // 기프티콘 교환 리스트
+  var gcItems=[
+    {tier:'bronze',icon:'☕',name:'아이스 아메리카노',brand:'스타벅스',needed:8,label:'🥉 브론즈'},
+    {tier:'silver',icon:'🍔',name:'빅맥 세트',brand:'맥도날드',needed:4,label:'🥈 실버'},
+    {tier:'gold',icon:'🍕',name:'도미노피자 세트',brand:'도미노피자',needed:1,label:'🥇 골드'}
   ];
-  var exHtml='<div class="reward-ex">';
-  exItems.forEach(function(item){
+  var gcHtml='<div class="reward-ex">';
+  gcItems.forEach(function(item){
     var have=exCounts[item.tier]||0;var enough=have>=item.needed;
-    exHtml+='<div class="reward-ex-item">';
-    exHtml+='<div class="reward-ex-icon" style="background:#FEF3C7">'+item.icon+'</div>';
-    exHtml+='<div class="reward-ex-info">';
-    exHtml+='<h4>'+item.name+'</h4>';
-    exHtml+='<p>'+item.label+' '+item.needed+'장 · 보유 <b style="color:'+(enough?'var(--primary)':'var(--red)')+'">'+have+'장</b></p>';
-    exHtml+='</div>';
-    exHtml+='<button class="reward-ex-btn '+(enough?item.tier:'disabled')+'" onclick="exchangeReward(\''+item.tier+'\')" style="'+(enough?'':'opacity:.45')+'">교환</button>';
-    exHtml+='</div>';
+    gcHtml+='<div class="reward-ex-item">';
+    gcHtml+='<div class="reward-ex-icon" style="background:#FEF3C7">'+item.icon+'</div>';
+    gcHtml+='<div class="reward-ex-info">';
+    gcHtml+='<h4>'+item.name+'</h4>';
+    gcHtml+='<p>'+item.label+' '+item.needed+'장 · 보유 <b style="color:'+(enough?'var(--primary)':'var(--red)')+'">'+have+'장</b></p>';
+    gcHtml+='</div>';
+    gcHtml+='<button class="reward-ex-btn '+(enough?item.tier:'disabled')+'" onclick="exchangeReward(\''+item.tier+'\')" style="'+(enough?'':'opacity:.45')+'">교환</button>';
+    gcHtml+='</div>';
   });
-  exHtml+='</div>';
-  var exEl=document.getElementById('benefit-exchange-list');if(exEl)exEl.innerHTML=exHtml;
+  gcHtml+='</div>';
+  var gcEl=document.getElementById('benefit-giftcard-list');if(gcEl)gcEl.innerHTML=gcHtml;
+  // 스왑 UI 업데이트
+  updateSwapUI();
   // 경품 prizes
   var prizeHtml='';
   RAFFLE_PRIZES.forEach(function(r){
@@ -8217,6 +8346,160 @@ function cartGoToCoupang(){
     showModal('✅','쿠팡으로 이동!','상품 페이지로 이동했어요.<br>구매 후 리워드를 받으세요!');
   }
   openCart();
+}
+
+// ===== 티켓 등급 교환 =====
+var _swapState={from:'bronze',to:'silver',ratioFrom:10,ratioTo:1,amount:10};
+var _swapDirMap={
+  'bronze-silver':{id:'swap-btn-bs',ratioFrom:10,ratioTo:1},
+  'silver-bronze':{id:'swap-btn-sb',ratioFrom:1,ratioTo:10},
+  'silver-gold':{id:'swap-btn-sg',ratioFrom:2,ratioTo:1},
+  'gold-silver':{id:'swap-btn-gs',ratioFrom:1,ratioTo:2}
+};
+var _swapTierLabel={bronze:'브론즈',silver:'실버',gold:'골드'};
+var _swapTierIcon={bronze:'🥉',silver:'🥈',gold:'🥇'};
+
+function setSwapDir(from,to,ratioFrom,ratioTo){
+  _swapState.from=from;_swapState.to=to;
+  _swapState.ratioFrom=ratioFrom;_swapState.ratioTo=ratioTo;
+  _swapState.amount=ratioFrom;
+  // 방향 버튼 active 표시
+  var keys=Object.keys(_swapDirMap);
+  keys.forEach(function(k){
+    var btn=document.getElementById(_swapDirMap[k].id);
+    if(btn)btn.classList.toggle('active',k===(from+'-'+to));
+  });
+  // input 초기값
+  var inp=document.getElementById('swap-amount-input');
+  if(inp){inp.value=ratioFrom;}
+  updateSwapUI();
+}
+
+function updateSwapUI(){
+  var s=_swapState;
+  var counts=getTicketsByTier();
+  var hold=counts[s.from]||0;
+  var amount=parseInt(document.getElementById('swap-amount-input').value)||0;
+  // 유효 단위로 보정
+  var validAmount=Math.floor(amount/s.ratioFrom)*s.ratioFrom;
+  var received=validAmount>0?(validAmount/s.ratioFrom)*s.ratioTo:0;
+  var insufficient=amount>hold;
+  // 아이콘/라벨
+  var fromIcon=document.getElementById('swap-from-icon');if(fromIcon)fromIcon.textContent=_swapTierIcon[s.from];
+  var fromGrade=document.getElementById('swap-from-grade');if(fromGrade)fromGrade.textContent=_swapTierLabel[s.from];
+  var toIcon=document.getElementById('swap-to-icon');if(toIcon)toIcon.textContent=_swapTierIcon[s.to];
+  var toGrade=document.getElementById('swap-to-grade');if(toGrade)toGrade.textContent=_swapTierLabel[s.to];
+  // 보유/경고
+  var holdEl=document.getElementById('swap-from-hold');if(holdEl)holdEl.textContent=hold;
+  var warnEl=document.getElementById('swap-from-warn');if(warnEl)warnEl.style.display=insufficient?'inline':'none';
+  // 획득 수량
+  var toAmountEl=document.getElementById('swap-to-amount');if(toAmountEl)toAmountEl.textContent=received||0;
+  // 시뮬레이션
+  var simB=counts.bronze||0,simS=counts.silver||0,simG=counts.gold||0;
+  var afterB=simB,afterS=simS,afterG=simG;
+  if(validAmount>0&&!insufficient){
+    if(s.from==='bronze')afterB-=validAmount;
+    else if(s.from==='silver')afterS-=validAmount;
+    else if(s.from==='gold')afterG-=validAmount;
+    if(s.to==='bronze')afterB+=received;
+    else if(s.to==='silver')afterS+=received;
+    else if(s.to==='gold')afterG+=received;
+  }
+  function setSim(id,val,changed){
+    var el=document.getElementById(id);
+    if(!el)return;
+    el.textContent=val+'장';
+    el.className='swap-sim-after'+(changed?' changed':'');
+  }
+  var bb=document.getElementById('swap-sim-b-before');if(bb)bb.textContent=simB+'장';
+  var sb=document.getElementById('swap-sim-s-before');if(sb)sb.textContent=simS+'장';
+  var gb=document.getElementById('swap-sim-g-before');if(gb)gb.textContent=simG+'장';
+  setSim('swap-sim-b-after',afterB,afterB!==simB);
+  setSim('swap-sim-s-after',afterS,afterS!==simS);
+  setSim('swap-sim-g-after',afterG,afterG!==simG);
+  // CTA 버튼
+  var ctaEl=document.getElementById('swap-exec-btn');
+  if(ctaEl){
+    var canExec=validAmount>0&&!insufficient&&validAmount<=hold;
+    ctaEl.disabled=!canExec;
+    ctaEl.textContent=_swapTierLabel[s.from]+' '+validAmount+'장 → '+_swapTierLabel[s.to]+' '+received+'장 교환하기';
+  }
+}
+
+function onSwapAmountChange(val){
+  _swapState.amount=parseInt(val)||0;
+  updateSwapUI();
+}
+
+function swapSetMax(){
+  var counts=getTicketsByTier();
+  var hold=counts[_swapState.from]||0;
+  var s=_swapState;
+  var maxValid=Math.floor(hold/s.ratioFrom)*s.ratioFrom;
+  var inp=document.getElementById('swap-amount-input');
+  if(inp){inp.value=maxValid||0;}
+  updateSwapUI();
+}
+
+function swapSetHalf(){
+  var counts=getTicketsByTier();
+  var hold=counts[_swapState.from]||0;
+  var s=_swapState;
+  var half=Math.floor(hold/2/s.ratioFrom)*s.ratioFrom;
+  var inp=document.getElementById('swap-amount-input');
+  if(inp){inp.value=half||0;}
+  updateSwapUI();
+}
+
+function swapAdjust(dir){
+  var inp=document.getElementById('swap-amount-input');
+  if(!inp)return;
+  var cur=parseInt(inp.value)||0;
+  var next=Math.max(0,cur+dir*_swapState.ratioFrom);
+  inp.value=next;
+  updateSwapUI();
+}
+
+function execSwapTier(){
+  var s=_swapState;
+  var inp=document.getElementById('swap-amount-input');
+  var amount=parseInt(inp?inp.value:0)||0;
+  var validAmount=Math.floor(amount/s.ratioFrom)*s.ratioFrom;
+  var received=validAmount>0?(validAmount/s.ratioFrom)*s.ratioTo:0;
+  if(validAmount<=0||received<=0){
+    return showModal('😅','교환 수량 확인','교환할 수량을 입력해 주세요.');
+  }
+  var counts=getTicketsByTier();
+  var hold=counts[s.from]||0;
+  if(validAmount>hold){
+    return showModal('😅','티켓 부족',_swapTierIcon[s.from]+' '+_swapTierLabel[s.from]+' 티켓이 '+validAmount+'장 필요해요.<br>현재 보유: '+hold+'장');
+  }
+  var tickets=getTickets();
+  // 소비
+  var used=0;
+  for(var i=0;i<tickets.history.length&&used<validAmount;i++){
+    if(tickets.history[i].status==='available'&&tickets.history[i].tier===s.from){
+      tickets.history[i].status='swapped';
+      tickets.available=Math.max(0,tickets.available-1);
+      used++;
+    }
+  }
+  // 획득
+  for(var j=0;j<received;j++){
+    tickets.history.push({
+      tier:s.to,
+      status:'available',
+      source:'tier_swap',
+      date:new Date().toISOString().slice(0,10),
+      id:'swap_'+Date.now()+'_'+j
+    });
+    tickets.available++;
+  }
+  setTickets(tickets);
+  showModal('✅','교환 완료!',_swapTierIcon[s.from]+' '+_swapTierLabel[s.from]+' <b>'+validAmount+'장</b> →<br>'+_swapTierIcon[s.to]+' '+_swapTierLabel[s.to]+' <b>'+received+'장</b> 획득!');
+  // 입력 초기화
+  if(inp)inp.value=s.ratioFrom;
+  renderBenefit();
 }
 
 // ===== SETTINGS =====

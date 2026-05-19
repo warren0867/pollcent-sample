@@ -5443,6 +5443,57 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
   --shadow-sm: 0 2px 8px rgba(26,17,48,.05);
 }
 
+/* ─── 혜택탭 티켓교환소 ─── */
+.ben-tier-bar { display:grid; grid-template-columns:1fr 12px 1fr 12px 1fr; background:var(--card); border-radius:14px; overflow:hidden; border:1px solid var(--border); margin-bottom:14px; }
+.ben-tier-cell { padding:12px 0 10px; text-align:center; position:relative; }
+.ben-tier-cell::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; }
+.ben-t-bronze::before { background:linear-gradient(90deg,#C68250,#8B5A2B); }
+.ben-t-silver::before { background:linear-gradient(90deg,#D0D0D0,#999); }
+.ben-t-gold::before { background:linear-gradient(90deg,#FFD93B,#E6A800); }
+.ben-tier-divider { background:var(--border); }
+.ben-tier-label { font-size:10px; font-weight:700; color:var(--text-sub); margin-bottom:4px; }
+.ben-tier-val { font-size:24px; font-weight:800; color:var(--text1); letter-spacing:-1px; line-height:1; font-family:'Poppins',sans-serif; }
+.ben-tier-unit { font-size:10px; color:var(--text3); font-weight:600; margin-top:2px; }
+.ben-raffle-row { display:flex; align-items:center; gap:12px; background:var(--card); border-radius:14px; padding:14px 16px; cursor:pointer; border:1px solid var(--border); }
+.ben-raffle-ball { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,#845EEE,#A855F7); display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:900; color:#fff; flex-shrink:0; }
+.ben-raffle-btn { padding:8px 14px; background:var(--primary); color:#fff; border:none; border-radius:10px; font-size:12px; font-weight:700; cursor:pointer; white-space:nowrap; }
+
+/* ─── 핫딜탭 섹션 ─── */
+.hd-section { padding:18px 0 0; }
+.hd-section-hd { display:flex; align-items:flex-end; justify-content:space-between; padding:0 16px; margin-bottom:10px; }
+.hd-section-t { font-size:15px; font-weight:800; color:var(--text1); letter-spacing:-0.3px; }
+.hd-section-s { font-size:11px; color:var(--text3); margin-top:2px; }
+.hd-section-more { font-size:12px; color:var(--text3); }
+.hd-rocket-banner { margin:0 16px 6px; background:linear-gradient(135deg,#0EA5E9,#38BDF8); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:12px; cursor:pointer; }
+.hd-rocket-left { flex:1; }
+.hd-rocket-title { font-size:14px; font-weight:800; color:#fff; }
+.hd-rocket-sub { font-size:11.5px; color:rgba(255,255,255,.8); margin-top:2px; }
+.hd-rocket-badge { background:rgba(255,255,255,.22); border-radius:8px; padding:4px 10px; font-size:11px; font-weight:700; color:#fff; white-space:nowrap; }
+.hd-gold-banner { margin:0 16px 6px; background:linear-gradient(135deg,#F59E0B,#FCD34D); border-radius:16px; padding:14px 16px; display:flex; align-items:center; gap:12px; cursor:pointer; }
+.hd-gold-title { font-size:14px; font-weight:800; color:#78350F; }
+.hd-gold-sub { font-size:11.5px; color:rgba(120,53,15,.75); margin-top:2px; }
+.hd-grid2 { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; padding:0 16px; }
+.hd-card { background:var(--card); border-radius:14px; overflow:hidden; cursor:pointer; box-shadow:0 1px 4px rgba(0,0,0,.04); }
+.hd-card:active { transform:scale(.97); }
+.hd-card-img { width:100%; aspect-ratio:1; background:var(--bg); display:flex; align-items:center; justify-content:center; font-size:44px; position:relative; }
+.hd-card-badge { position:absolute; top:7px; left:7px; background:var(--red); color:#fff; font-size:10px; font-weight:700; padding:2px 7px; border-radius:6px; }
+.hd-card-body { padding:10px 12px 12px; }
+.hd-card-name { font-size:12px; line-height:1.4; height:34px; overflow:hidden; color:var(--text-sub); margin-bottom:6px; }
+.hd-card-price { font-size:15px; font-weight:800; color:var(--text1); font-family:'Poppins',sans-serif; }
+.hd-card-save { font-size:11px; color:var(--red); font-weight:600; margin-top:1px; }
+.hd-cat-row { display:flex; gap:7px; padding:0 16px 2px; overflow-x:auto; -ms-overflow-style:none; scrollbar-width:none; }
+.hd-cat-row::-webkit-scrollbar { display:none; }
+.hd-cat-chip { flex-shrink:0; padding:6px 14px; border-radius:20px; font-size:12px; font-weight:600; border:1.5px solid var(--border); color:var(--text-sub); background:var(--card); cursor:pointer; transition:all .15s; }
+.hd-cat-chip.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+.hd-list { padding:0 16px; display:flex; flex-direction:column; gap:8px; }
+.hd-list-card { background:var(--card); border-radius:12px; padding:12px 14px; display:flex; align-items:center; gap:12px; cursor:pointer; border:1px solid var(--border); }
+.hd-list-thumb { font-size:32px; width:52px; height:52px; background:var(--bg); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.hd-list-body { flex:1; min-width:0; }
+.hd-list-name { font-size:13px; font-weight:600; color:var(--text1); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.hd-list-price { font-size:14px; font-weight:800; color:var(--primary); font-family:'Poppins',sans-serif; margin-top:3px; }
+.hd-list-save { font-size:11px; color:var(--red); font-weight:600; }
+.hd-list-pct { background:var(--red); color:#fff; font-size:11px; font-weight:700; padding:2px 7px; border-radius:6px; flex-shrink:0; }
+
 /* ─── V6 HEADER ─── */
 .header {
   background: #fff !important;
@@ -5844,17 +5895,58 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
     </div>
 
     <!-- 이벤트 배너 -->
-    <div style="padding:16px 16px 4px">
+    <div style="padding:14px 16px 4px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
         <div style="font-size:15px;font-weight:800;color:var(--text1)">✨ 진행중 이벤트</div>
       </div>
       <div class="h-scroll" id="event-2x-scroll" style="padding:0 0 4px"></div>
     </div>
 
-    <!-- 전체 쇼핑몰 그리드 -->
-    <div class="v6-mall-grid-section" style="padding-bottom:16px">
-      <div style="font-size:15px;font-weight:800;color:var(--text1);margin-bottom:14px">전체 쇼핑몰</div>
-      <div id="store-grid"></div>
+    <!-- 티켓 교환소 -->
+    <div style="padding:16px 16px 8px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="font-size:15px;font-weight:800;color:var(--text1)">☕ 티켓 교환소</div>
+        <div style="font-size:12px;color:var(--text3)">티켓으로 기프티콘 교환</div>
+      </div>
+      <!-- 보유 티켓 3단 카운트 -->
+      <div class="ben-tier-bar" id="benefit-tier-bar">
+        <div class="ben-tier-cell ben-t-bronze">
+          <div class="ben-tier-label">🥉 브론즈</div>
+          <div class="ben-tier-val" id="ben-bronze">0</div>
+          <div class="ben-tier-unit">장</div>
+        </div>
+        <div class="ben-tier-divider"></div>
+        <div class="ben-tier-cell ben-t-silver">
+          <div class="ben-tier-label">🥈 실버</div>
+          <div class="ben-tier-val" id="ben-silver">0</div>
+          <div class="ben-tier-unit">장</div>
+        </div>
+        <div class="ben-tier-divider"></div>
+        <div class="ben-tier-cell ben-t-gold">
+          <div class="ben-tier-label">🥇 골드</div>
+          <div class="ben-tier-val" id="ben-gold">0</div>
+          <div class="ben-tier-unit">장</div>
+        </div>
+      </div>
+      <!-- 교환 아이템 -->
+      <div id="benefit-exchange-list"></div>
+    </div>
+
+    <!-- 경품 응모 -->
+    <div style="padding:4px 16px 16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div style="font-size:15px;font-weight:800;color:var(--text1)">🎁 경품 응모</div>
+        <div style="font-size:12px;color:var(--text3)">매일 1회</div>
+      </div>
+      <div class="ben-raffle-row" onclick="doRaffle()">
+        <div class="ben-raffle-ball" id="benefit-raffle-ball">?</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:14px;font-weight:700;color:var(--text1)">행운의 추첨</div>
+          <div style="font-size:12px;color:var(--text-sub);margin-top:2px">내 티켓: <b id="benefit-raffle-tickets">0</b>장 · 1등 5% · 2등 15% · 3등 80%</div>
+        </div>
+        <button class="ben-raffle-btn">응모하기</button>
+      </div>
+      <div id="benefit-raffle-prizes" style="margin-top:10px"></div>
     </div>
 
     <!-- 숨겨진 호환 요소 -->
@@ -5864,6 +5956,7 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
       <div id="pending-rewards-area"></div>
       <div id="reward-exchange"></div>
       <div class="raffle-ball" id="raffle-ball">?</div>
+      <div id="store-grid"></div>
     </div>
 
     <!-- 티켓 상세 오버레이 -->
@@ -6140,6 +6233,14 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.04 6.82L14.28 2.79C12.71 1.69 10.3 1.75 8.79 2.92L3.78 6.83C2.78 7.61 1.99 9.21 1.99 10.47V17.37C1.99 19.92 4.06 22 6.61 22H17.39C19.94 22 22.01 19.93 22.01 17.38V10.6C22.01 9.25 21.14 7.59 20.04 6.82Z"/><path d="M12 17.99V14.99" stroke-width="1.7"/></svg>
     홈
   </div>
+  <div class="tab" data-tab="wish" onclick="switchTab('wish')">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+    관심상품
+  </div>
+  <div class="tab" data-tab="hotdeal" onclick="switchTab('hotdeal')">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
+    핫딜
+  </div>
   <div class="tab" data-tab="benefit" onclick="switchTab('benefit')">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12.5C19.5 11.12 20.62 10 22 10V9C22 5 21 4 17 4H7C3 4 2 5 2 9V9.5C3.38 9.5 4.5 10.62 4.5 12C4.5 13.38 3.38 14.5 2 14.5V15C2 19 3 20 7 20H17C21 20 22 19 22 15C20.62 15 19.5 13.88 19.5 12.5Z"/><path d="M10 4L10 20" stroke-dasharray="4 4"/></svg>
     혜택
@@ -6148,14 +6249,22 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21C4 17.13 7.58 14 12 14C16.42 14 20 17.13 20 21"/></svg>
     마이
   </div>
-  <!-- 추후 추가 예정 탭 (숨김) -->
-  <div class="tab" data-tab="hotdeal" onclick="switchTab('hotdeal')" style="display:none">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-    핫딜
+</div>
+
+<!-- 전체 쇼핑몰 오버레이 -->
+<div class="sub-overlay" id="store-hub-overlay" style="display:none;flex-direction:column">
+  <div class="sub-header">
+    <button onclick="closeStoreHub()">←</button>
+    <h2>전체 쇼핑몰</h2>
   </div>
-  <div class="tab" data-tab="wish" onclick="switchTab('wish')" style="display:none">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-    관심상품
+  <div style="flex:1;overflow-y:auto">
+    <!-- 상단 안내 배너 -->
+    <div style="margin:14px 16px 0;background:linear-gradient(135deg,#845EEE,#A855F7);border-radius:16px;padding:16px;color:#fff">
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px">🛍️ 경유 쇼핑으로 티켓 적립</div>
+      <div style="font-size:11.5px;opacity:.85">아래 쇼핑몰 버튼으로 이동 후 구매하면<br>티켓이 자동으로 적립돼요!</div>
+    </div>
+    <!-- 쇼핑몰 그리드 -->
+    <div class="v6-mall-grid-section" id="store-hub-grid" style="padding-bottom:24px"></div>
   </div>
 </div>
 
@@ -6701,7 +6810,7 @@ function getTimingSignal(p){
 }
 
 // ===== TABS =====
-var TITLES={wish:'관심상품',hot:'홈',search:'검색',benefit:'혜택',my:'마이페이지',hotdeal:'핫딜'};
+var TITLES={wish:'관심상품',hot:'홈',search:'검색',benefit:'혜택',my:'마이페이지',hotdeal:'핫딜',stores:'전체 쇼핑몰'};
 function switchTab(name){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
@@ -6709,7 +6818,9 @@ function switchTab(name){
   if(pg)pg.classList.add('active');
   var tb=document.querySelector('.tab[data-tab="'+name+'"]');
   if(tb)tb.classList.add('active');
-  document.getElementById('header-title').textContent=TITLES[name]||'';
+  var titleEl=document.getElementById('header-title');
+  if(name==='hot'){titleEl.innerHTML='<span>Price</span>Pick';}
+  else{titleEl.textContent=TITLES[name]||'';}
   if(name==='wish')renderWishlist();
   if(name==='hot')renderHotdeals();
   if(name==='search')renderSearch();
@@ -7168,7 +7279,7 @@ function renderHotExtra(){
     {name:'G마켓',desc:'빅스마일데이 · 적립',tag:''}
   ];
   html+='<div class="v6-section">';
-  html+='<div class="v6-section-hd"><div><div class="v6-section-t">🛍️ 경유하고 티켓 받기</div><div class="v6-section-s">바로가기로 구매하면 티켓 자동 적립</div></div><div class="v6-section-more" onclick="switchTab(\'benefit\')">전체 ›</div></div>';
+  html+='<div class="v6-section-hd"><div><div class="v6-section-t">🛍️ 경유하고 티켓 받기</div><div class="v6-section-s">바로가기로 구매하면 티켓 자동 적립</div></div><div class="v6-section-more" onclick="openStoreHub()">전체 ›</div></div>';
   html+='<div class="v6-mall-list">';
   mainMalls.forEach(function(m,i){
     var color=MALL_COLORS[m.name]||'#845EEE';
@@ -7335,6 +7446,7 @@ function goToStore(id){
 function renderBenefit(){
   processTickets();
   var tickets=getTickets();
+  var exCounts=getTicketsByTier();
   // 히어로 티켓 수
   var availEl=document.getElementById('ticket-available');
   if(availEl)availEl.textContent=tickets.available;
@@ -7346,8 +7458,40 @@ function renderBenefit(){
   if(pendingEl)pendingEl.innerHTML='적립예정 '+tickets.pending+'장 · 커피까지 <b>'+remaining+'</b>장 남음';
   var remainEl=document.getElementById('ticket-remaining');
   if(remainEl)remainEl.textContent=remaining;
-  // 스토어 그리드
-  renderStoreGrid();
+  // 티켓 tier bar (혜택탭)
+  var bronzeEl=document.getElementById('ben-bronze');if(bronzeEl)bronzeEl.textContent=exCounts.bronze||0;
+  var silverEl=document.getElementById('ben-silver');if(silverEl)silverEl.textContent=exCounts.silver||0;
+  var goldEl=document.getElementById('ben-gold');if(goldEl)goldEl.textContent=exCounts.gold||0;
+  var raffleTicketEl=document.getElementById('benefit-raffle-tickets');if(raffleTicketEl)raffleTicketEl.textContent=tickets.available;
+  // 교환소 리스트
+  var exItems=[
+    {tier:'bronze',icon:'☕',name:'아이스 아메리카노',brand:'스타벅스',needed:8,color:'#CD7F32',label:'🥉 브론즈'},
+    {tier:'silver',icon:'🍔',name:'빅맥 세트',brand:'맥도날드',needed:4,color:'#9CA3AF',label:'🥈 실버'},
+    {tier:'gold',icon:'🍕',name:'도미노피자 세트',brand:'도미노피자',needed:1,color:'#F59E0B',label:'🥇 골드'}
+  ];
+  var exHtml='<div class="reward-ex">';
+  exItems.forEach(function(item){
+    var have=exCounts[item.tier]||0;var enough=have>=item.needed;
+    exHtml+='<div class="reward-ex-item">';
+    exHtml+='<div class="reward-ex-icon" style="background:#FEF3C7">'+item.icon+'</div>';
+    exHtml+='<div class="reward-ex-info">';
+    exHtml+='<h4>'+item.name+'</h4>';
+    exHtml+='<p>'+item.label+' '+item.needed+'장 · 보유 <b style="color:'+(enough?'var(--primary)':'var(--red)')+'">'+have+'장</b></p>';
+    exHtml+='</div>';
+    exHtml+='<button class="reward-ex-btn '+(enough?item.tier:'disabled')+'" onclick="'+(enough?'exchangeReward(\''+item.tier+'\')':'void(0)')+'" style="'+(enough?'':'opacity:.4;cursor:not-allowed')+'">교환</button>';
+    exHtml+='</div>';
+  });
+  exHtml+='</div>';
+  var exEl=document.getElementById('benefit-exchange-list');if(exEl)exEl.innerHTML=exHtml;
+  // 경품 prizes
+  var prizeHtml='';
+  RAFFLE_PRIZES.forEach(function(r){
+    prizeHtml+='<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--border)">';
+    prizeHtml+='<div style="width:28px;height:28px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:14px;">'+r.icon+'</div>';
+    prizeHtml+='<div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--text1)">'+r.rank+'등 · '+r.prize+'</div><div style="font-size:11px;color:var(--text-sub)">'+r.desc+'</div></div>';
+    prizeHtml+='</div>';
+  });
+  var prizesEl=document.getElementById('benefit-raffle-prizes');if(prizesEl)prizesEl.innerHTML=prizeHtml;
   // 이벤트
   var ehtml='';
   EVENT_2X.forEach(function(ev){
@@ -7361,6 +7505,8 @@ function renderBenefit(){
   });
   var eventEl=document.getElementById('event-2x-scroll');
   if(eventEl)eventEl.innerHTML=ehtml;
+  // 스토어 그리드 (hidden compat용)
+  renderStoreGrid();
 }
 
 // ===== TICKET DETAIL OVERLAY =====
@@ -7372,6 +7518,58 @@ function openTicketDetail(){
 }
 function closeTicketDetail(){
   var overlay=document.getElementById('ticket-detail-overlay');
+  if(overlay)overlay.style.display='none';
+}
+
+// ===== STORE HUB OVERLAY =====
+function openStoreHub(){
+  var overlay=document.getElementById('store-hub-overlay');
+  if(!overlay)return;
+  overlay.style.display='flex';
+  // 쇼핑몰 그리드 렌더링
+  var categories=[
+    {label:'🛒 종합 쇼핑몰',stores:[
+      {name:'쿠팡',short:'쿠팡',color:'#E84A5F'},
+      {name:'11번가',short:'11',color:'#FF3366'},
+      {name:'G마켓',short:'G',color:'#06A54A'},
+      {name:'옥션',short:'옥션',color:'#D72A2A'}
+    ]},
+    {label:'✈️ 해외직구',stores:[
+      {name:'알리익스프레스',short:'Ali',color:'#FF512F'},
+      {name:'테무',short:'Temu',color:'#FB7701'},
+      {name:'이마트몰',short:'이마트',color:'#FFB800'},
+      {name:'롯데온',short:'롯데온',color:'#EE1C25'}
+    ]},
+    {label:'👗 패션·뷰티',stores:[
+      {name:'무신사',short:'무신사',color:'#1A1A1A'},
+      {name:'올리브영',short:'올영',color:'#6FA82E'},
+      {name:'마켓컬리',short:'컬리',color:'#5F0080'},
+      {name:'SSG닷컴',short:'SSG',color:'#C02127'}
+    ]},
+    {label:'🏠 생활·식품',stores:[
+      {name:'오늘의집',short:'오집',color:'#00C896'},
+      {name:'다이소몰',short:'다이소',color:'#EE1C25'},
+      {name:'위메프',short:'위메프',color:'#CC0066'},
+      {name:'티몬',short:'티몬',color:'#FF4500'}
+    ]}
+  ];
+  var html='';
+  categories.forEach(function(cat){
+    html+='<div style="font-size:13px;font-weight:700;color:var(--text2);margin:18px 0 10px">'+cat.label+'</div>';
+    html+='<div class="v6-mall-grid">';
+    cat.stores.forEach(function(s){
+      html+='<div class="v6-mall-grid-item" onclick="goToStoreByName(\''+s.name+'\')">';
+      html+='<div class="v6-mg-logo" style="background:'+s.color+'">'+s.short+'</div>';
+      html+='<div class="v6-mg-name">'+s.name+'</div>';
+      html+='</div>';
+    });
+    html+='</div>';
+  });
+  var el=document.getElementById('store-hub-grid');
+  if(el)el.innerHTML=html;
+}
+function closeStoreHub(){
+  var overlay=document.getElementById('store-hub-overlay');
   if(overlay)overlay.style.display='none';
 }
 function renderTicketDetail(){
@@ -7440,30 +7638,137 @@ function renderTicketDetail(){
 }
 
 // ===== HOTDEAL TAB =====
+var hdCurrentCat='전체';
 function renderHotdeal(){
   var html='';
-  // 핫딜 탭: 현재 홈 상품들을 가져오는 형태로 구성 (추후 백엔드 연동)
-  var products=PRODUCTS.slice().sort(function(a,b){return b.discount-a.discount});
-  html+='<div class="pp-section">';
-  html+='<div class="pp-section-head"><h2>🔥 오늘의 핫딜</h2><span class="pp-section-sub">실시간 최저가 모음</span></div>';
-  html+='<div class="pp-lowest-list">';
-  products.forEach(function(p){
-    var saved=p.originalPrice-p.currentPrice;
-    html+='<div class="pp-lowest-card" onclick="openDetail('+p.id+')">';
-    html+='<div class="pp-lowest-thumb">'+p.emoji+'</div>';
-    html+='<div class="pp-lowest-body">';
-    html+='<div class="pp-lowest-badge">-'+p.discount+'%</div>';
-    html+='<div class="pp-lowest-name">'+p.name+'</div>';
-    html+='<div class="pp-lowest-price-row">';
-    html+='<span class="pp-lowest-price">'+p.currentPrice.toLocaleString()+'<span>원</span></span>';
-    html+='<span class="pp-lowest-save">'+saved.toLocaleString()+'원↓</span>';
-    html+='</div></div>';
-    html+='<button class="pp-lowest-btn" onclick="event.stopPropagation();quickBuy('+p.id+')">구매</button>';
+  var byDiscount=PRODUCTS.slice().sort(function(a,b){return b.discount-a.discount});
+  var fresh=PRODUCTS.filter(function(p){return p.category==='식품/음료'});
+  var popular=PRODUCTS.slice().sort(function(a,b){return a.id-b.id});
+  var goldbox=PRODUCTS.slice().sort(function(a,b){return b.currentPrice-a.currentPrice}).slice(0,4);
+  var lowest=PRODUCTS.slice().sort(function(a,b){return (a.currentPrice/a.originalPrice)-(b.currentPrice/b.originalPrice)});
+
+  // ═══ 1. 로켓프레시특가 ═══
+  html+='<div class="hd-section" style="padding-top:14px">';
+  html+='<div class="hd-rocket-banner" onclick="goToStoreByName(\'쿠팡\')">';
+  html+='<div class="hd-rocket-left"><div class="hd-rocket-title">🥬 로켓프레시 특가</div><div class="hd-rocket-sub">오늘 새벽배송 · 신선식품 최대 40% 할인</div></div>';
+  html+='<div class="hd-rocket-badge">지금 바로가기 ›</div>';
+  html+='</div>';
+  if(fresh.length>0){
+    html+='<div class="v6-h-scroll" style="padding:8px 16px 4px">';
+    fresh.concat(PRODUCTS.slice(0,3)).forEach(function(p){
+      var mcolor='#0EA5E9';
+      html+='<div class="v6-deal-card" onclick="openDetail('+p.id+')">';
+      html+='<div class="v6-deal-img"><span class="v6-deal-mall-badge" style="background:'+mcolor+'">신선</span>';
+      html+='<div class="v6-deal-img-emoji">'+p.emoji+'</div></div>';
+      html+='<div class="v6-deal-body"><div class="v6-deal-name">'+p.name+'</div>';
+      html+='<div class="v6-deal-price">'+p.currentPrice.toLocaleString()+'원</div>';
+      html+='<span class="v6-deal-ticket" style="background:#E0F2FE;color:#0369A1">🥬 신선배송</span>';
+      html+='</div></div>';
+    });
     html+='</div>';
+  }
+  html+='</div>';
+
+  // ═══ 2. 오늘의 핫딜 ═══
+  html+='<div class="hd-section">';
+  html+='<div class="hd-section-hd"><div><div class="hd-section-t">🔥 오늘의 핫딜</div><div class="hd-section-s">할인율 순 · 구매 시 티켓 적립</div></div><div class="hd-section-more">더보기 ›</div></div>';
+  html+='<div class="hd-grid2">';
+  byDiscount.slice(0,4).forEach(function(p){
+    var saved=p.originalPrice-p.currentPrice;
+    html+='<div class="hd-card" onclick="openDetail('+p.id+')">';
+    html+='<div class="hd-card-img"><span class="hd-card-badge">-'+p.discount+'%</span>'+p.emoji+'</div>';
+    html+='<div class="hd-card-body"><div class="hd-card-name">'+p.name+'</div>';
+    html+='<div class="hd-card-price">'+p.currentPrice.toLocaleString()+'원</div>';
+    html+='<div class="hd-card-save">'+saved.toLocaleString()+'원 절약</div></div></div>';
   });
   html+='</div></div>';
+
+  // ═══ 3. 실시간 인기상품 ═══
+  html+='<div class="hd-section">';
+  html+='<div class="hd-section-hd"><div><div class="hd-section-t">📈 실시간 인기상품</div><div class="hd-section-s">지금 가장 많이 보는 상품</div></div></div>';
+  html+='<div class="v6-h-scroll" style="padding:0 16px 4px">';
+  popular.forEach(function(p,i){
+    var rankColors=['#F59E0B','#9CA3AF','#CD7F32'];
+    var rcolor=rankColors[i]||'#E5E7EB';
+    html+='<div class="v6-deal-card" onclick="openDetail('+p.id+')">';
+    html+='<div class="v6-deal-img">';
+    html+='<span class="v6-deal-mall-badge" style="background:'+rcolor+';font-family:Poppins;font-size:11px;font-weight:800">'+(i+1)+'</span>';
+    html+='<div class="v6-deal-img-emoji">'+p.emoji+'</div></div>';
+    html+='<div class="v6-deal-body"><div class="v6-deal-name">'+p.name+'</div>';
+    html+='<div class="v6-deal-price">'+p.currentPrice.toLocaleString()+'원</div>';
+    html+='<span class="v6-deal-ticket">🎫 티켓 적립</span></div></div>';
+  });
+  html+='</div></div>';
+
+  // ═══ 4. 골드박스 ═══
+  html+='<div class="hd-section">';
+  html+='<div class="hd-gold-banner" onclick="goToStoreByName(\'쿠팡\')">';
+  html+='<div style="font-size:32px">🎁</div>';
+  html+='<div><div class="hd-gold-title">골드박스 · 특가</div><div class="hd-gold-sub">매일 오전 8시 · 수량 한정 초특가</div></div>';
+  html+='<div style="margin-left:auto;font-size:12px;font-weight:700;color:#78350F">보러가기 ›</div></div>';
+  html+='<div class="hd-grid2" style="margin-top:8px">';
+  goldbox.forEach(function(p){
+    html+='<div class="hd-card" onclick="openDetail('+p.id+')">';
+    html+='<div class="hd-card-img" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)"><span class="hd-card-badge" style="background:#F59E0B">GOLD</span>'+p.emoji+'</div>';
+    html+='<div class="hd-card-body"><div class="hd-card-name">'+p.name+'</div>';
+    html+='<div class="hd-card-price">'+p.currentPrice.toLocaleString()+'원</div>';
+    html+='<div class="hd-card-save">-'+p.discount+'% 할인</div></div></div>';
+  });
+  html+='</div></div>';
+
+  // ═══ 5. 지금최저가 ═══
+  html+='<div class="hd-section">';
+  html+='<div class="hd-section-hd"><div><div class="hd-section-t">💰 지금 최저가</div><div class="hd-section-s">역대 최저가 도달 상품</div></div></div>';
+  html+='<div class="hd-list">';
+  lowest.forEach(function(p){
+    var pct=Math.round((1-(p.currentPrice/p.originalPrice))*100);
+    html+='<div class="hd-list-card" onclick="openDetail('+p.id+')">';
+    html+='<div class="hd-list-thumb">'+p.emoji+'</div>';
+    html+='<div class="hd-list-body"><div class="hd-list-name">'+p.name+'</div>';
+    html+='<div class="hd-list-price">'+p.currentPrice.toLocaleString()+'원</div>';
+    html+='<div class="hd-list-save">'+(p.originalPrice-p.currentPrice).toLocaleString()+'원 절약</div></div>';
+    html+='<div class="hd-list-pct">-'+pct+'%</div></div>';
+  });
+  html+='</div></div>';
+
+  // ═══ 6. 카테고리별 상품 ═══
+  var cats=['전체','전자/디지털','생활/주방','패션/의류','식품/음료'];
+  html+='<div class="hd-section">';
+  html+='<div class="hd-section-hd"><div class="hd-section-t">🗂️ 카테고리별 상품</div></div>';
+  html+='<div class="hd-cat-row" id="hd-cat-row" style="margin-bottom:12px">';
+  cats.forEach(function(c){
+    html+='<div class="hd-cat-chip'+(hdCurrentCat===c?' active':'')+'" onclick="hdSetCat(\''+c+'\')">'+c+'</div>';
+  });
+  html+='</div>';
+  html+='<div class="hd-grid2" id="hd-cat-grid"></div>';
+  html+='</div>';
+
+  html+='<div style="height:24px"></div>';
   var el=document.getElementById('hotdeal-content');
-  if(el)el.innerHTML=html;
+  if(el){el.innerHTML=html;hdRenderCat();}
+}
+
+function hdSetCat(cat){
+  hdCurrentCat=cat;
+  var chips=document.querySelectorAll('.hd-cat-chip');
+  chips.forEach(function(c){c.classList.toggle('active',c.textContent===cat);});
+  hdRenderCat();
+}
+
+function hdRenderCat(){
+  var grid=document.getElementById('hd-cat-grid');
+  if(!grid)return;
+  var list=hdCurrentCat==='전체'?PRODUCTS:PRODUCTS.filter(function(p){return p.category===hdCurrentCat;});
+  var html='';
+  list.forEach(function(p){
+    html+='<div class="hd-card" onclick="openDetail('+p.id+')">';
+    html+='<div class="hd-card-img"><span class="hd-card-badge">-'+p.discount+'%</span>'+p.emoji+'</div>';
+    html+='<div class="hd-card-body"><div class="hd-card-name">'+p.name+'</div>';
+    html+='<div class="hd-card-price">'+p.currentPrice.toLocaleString()+'원</div>';
+    html+='<div class="hd-card-save" style="color:var(--text3)">'+p.category+'</div></div></div>';
+  });
+  if(!html)html='<div style="grid-column:span 2;padding:24px;text-align:center;color:var(--text-sub)">상품 준비 중이에요</div>';
+  grid.innerHTML=html;
 }
 
 function doHotdealSearch(){
@@ -8251,6 +8556,8 @@ window.addEventListener('popstate',function(){
   if(document.getElementById('detail-overlay').classList.contains('show')){closeDetail();return}
   var td=document.getElementById('ticket-detail-overlay');
   if(td&&td.style.display!=='none'){closeTicketDetail();return}
+  var sh=document.getElementById('store-hub-overlay');
+  if(sh&&sh.style.display!=='none'){closeStoreHub();return}
 });
 
 // ===== iOS STANDALONE SAFE-AREA FIX =====

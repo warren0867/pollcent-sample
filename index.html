@@ -5417,6 +5417,97 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
   .ticket-actions button:not(.primary) { background: var(--bg-2); }
 }
 
+/* ─── STORE HUB (혜택 탭 이커머스) ─── */
+.pp-store-hub-hero {
+  margin: 0 16px 4px;
+  padding: 16px;
+  background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%);
+  border-radius: 16px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pp-store-hub-hero-left h2 { font-size: 16px; font-weight: 800; margin-bottom: 2px; letter-spacing: -0.4px; }
+.pp-store-hub-hero-left p { font-size: 12px; opacity: 0.85; }
+.pp-store-hub-hero-right { text-align: center; background: rgba(255,255,255,.18); border-radius: 12px; padding: 8px 14px; }
+.pp-store-hub-ticket-val { font-size: 22px; font-weight: 900; line-height: 1; }
+.pp-store-hub-ticket-lbl { font-size: 10px; opacity: 0.85; font-weight: 600; margin-top: 2px; }
+
+.pp-store-section { padding: 14px 16px 4px; }
+.pp-store-section-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.pp-store-section-head h2 { font-size: 15px; font-weight: 800; letter-spacing: -0.3px; }
+.pp-store-section-head span { font-size: 12px; color: var(--text-sub); }
+
+.pp-store-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.pp-store-card {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 14px 8px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  transition: transform .12s, box-shadow .12s;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+.pp-store-card:active { transform: scale(.96); box-shadow: 0 0 0 rgba(0,0,0,0); }
+.pp-store-card-icon { font-size: 30px; line-height: 1; }
+.pp-store-card-name { font-size: 12px; font-weight: 700; color: var(--text); letter-spacing: -0.2px; }
+.pp-store-card-desc { font-size: 10px; color: var(--text-sub); line-height: 1.3; }
+.pp-store-card-badge {
+  font-size: 9px; font-weight: 700;
+  background: #F3EEFF; color: var(--primary);
+  border-radius: 6px; padding: 2px 6px;
+  margin-top: 2px;
+}
+
+.pp-benefit-mini-ticket {
+  margin: 12px 16px 4px;
+  background: var(--card);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  cursor: pointer;
+}
+.pp-benefit-mini-ticket-icon { font-size: 28px; }
+.pp-benefit-mini-ticket-info { flex: 1; }
+.pp-benefit-mini-ticket-info h3 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+.pp-benefit-mini-ticket-info p { font-size: 12px; color: var(--text-sub); }
+.pp-benefit-mini-ticket-val { font-size: 22px; font-weight: 900; color: var(--primary); }
+.pp-benefit-mini-ticket-val span { font-size: 13px; font-weight: 600; }
+
+/* ─── HOTDEAL 탭 (추후 활성화) ─── */
+.pp-hotdeal-search-bar {
+  padding: 10px 16px 8px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 10;
+}
+.pp-hotdeal-search-wrap {
+  display: flex; gap: 8px; align-items: center;
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+}
+.pp-hotdeal-search-wrap input {
+  flex: 1; border: none; background: transparent;
+  font-size: 14px; color: var(--text); outline: none;
+  font-family: inherit;
+}
+.pp-hotdeal-search-wrap svg { flex-shrink: 0; color: var(--text-light); }
+
 </style>
 </head>
 <body>
@@ -5504,120 +5595,136 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
 
   <!-- 혜택 -->
   <div class="page" id="page-benefit">
-    <!-- 히어로: 내 티켓 현황을 상단 최우선으로 -->
-    <div id="benefit-ticket">
-      <div class="pp-ticket-hero">
-        <div class="pp-ticket-hero-top">
-          <div class="pp-ticket-hero-label">내 티켓</div>
-          <span class="pp-ticket-hero-pending" id="ticket-pending">적립예정 0장</span>
-        </div>
-        <div class="pp-ticket-hero-main">
-          <span class="pp-ticket-hero-val" id="ticket-available">0</span>
-          <span class="pp-ticket-hero-unit">장</span>
-        </div>
-        <div class="pp-ticket-hero-progress">
-          <div class="pp-ticket-hero-progress-head">
-            <span class="pp-ticket-hero-progress-label">커피 교환까지</span>
-            <span class="pp-ticket-hero-progress-remain"><b id="ticket-remaining">8</b>장 남음</span>
-          </div>
-          <div class="pp-ticket-hero-progress-bar"><div class="pp-ticket-hero-progress-fill" id="ticket-progress-fill"></div></div>
-        </div>
-        <div id="ticket-delay-info" class="pp-ticket-hero-delay"></div>
-        <div class="pp-ticket-hero-actions">
-          <button onclick="switchTab('hot')">쇼핑하러 가기</button>
-          <button class="primary" onclick="scrollToRaffle()">경품 응모</button>
-        </div>
+
+    <!-- 히어로: 티켓 미니 + 쇼핑 경유 안내 -->
+    <div class="pp-store-hub-hero" style="margin-top:12px">
+      <div class="pp-store-hub-hero-left">
+        <h2>쇼핑하고 혜택 받기</h2>
+        <p>경유 구매 시 티켓 자동 적립</p>
       </div>
-
-      <!-- 3단계 안내 (컴팩트) -->
-      <div class="pp-earn-steps">
-        <div class="pp-earn-steps-title">티켓 적립 방법</div>
-        <div class="reward-steps">
-          <div class="reward-step">
-            <div class="icon">🛒</div>
-            <div class="label">상품 탐색</div>
-            <div class="desc">쿠팡 참여</div>
-          </div>
-          <div class="reward-step">
-            <div class="icon">🎫</div>
-            <div class="label">티켓 적립</div>
-            <div class="desc">조건 충족 시</div>
-          </div>
-          <div class="reward-step">
-            <div class="icon">☕</div>
-            <div class="label">기프티콘 교환</div>
-            <div class="desc">교환소 이용</div>
-          </div>
-        </div>
+      <div class="pp-store-hub-hero-right" onclick="openTicketDetail()">
+        <div class="pp-store-hub-ticket-val" id="ticket-available">0</div>
+        <div class="pp-store-hub-ticket-lbl">보유 티켓 🎫</div>
       </div>
+    </div>
 
-      <!-- 접을 수 있는 안내 -->
-      <details class="pp-benefit-details">
-        <summary class="pp-benefit-details-summary">
-          <span>적립 조건 · 제외 상품 안내</span>
-          <span class="pp-benefit-details-arrow">›</span>
-        </summary>
-        <div class="pp-benefit-details-body">
-          <div class="pp-benefit-notice pp-benefit-notice-info">
-            <div class="pp-benefit-notice-title">📋 적립 조건</div>
-            <div class="pp-benefit-notice-body">
-              · 구매하러 가기 버튼으로 이동 후 구매한 건에 한해 티켓 적립<br>
-              · 취소·반품 시 미지급 · 월 단위 적립 한도 있음<br>
-              · 미적립 시 구매일로부터 <b>14일 이내</b> 신청 가능<br>
-              · 부정행위 적발 시 사전 공지 없이 티켓 전액 회수
-            </div>
-          </div>
-          <div class="pp-benefit-notice pp-benefit-notice-warn">
-            <div class="pp-benefit-notice-title">⚠️ 적립 제외 상품</div>
-            <div class="pp-benefit-notice-body">
-              배송비, 쿠폰, 캐시, AS케어서비스, 여행상품, 기프트카드, 스마트폰, 태블릿/PC, 중고품 등은 티켓 적립 대상이 아닙니다.
-            </div>
-          </div>
+    <!-- 스토어 그리드 -->
+    <div class="pp-store-section">
+      <div class="pp-store-section-head">
+        <h2>쇼핑몰</h2>
+        <span>터치해서 바로 쇼핑</span>
+      </div>
+      <div id="store-grid" class="pp-store-grid"></div>
+    </div>
+
+    <!-- 내 혜택 요약 (미니) -->
+    <div class="pp-store-section">
+      <div class="pp-store-section-head">
+        <h2>내 혜택 현황</h2>
+      </div>
+      <div class="pp-benefit-mini-ticket" onclick="openTicketDetail()">
+        <div class="pp-benefit-mini-ticket-icon">🎫</div>
+        <div class="pp-benefit-mini-ticket-info">
+          <h3>티켓 교환소</h3>
+          <p id="ticket-pending">적립예정 0장 · 커피까지 <b id="ticket-remaining">8</b>장 남음</p>
         </div>
-      </details>
+        <div class="pp-benefit-mini-ticket-val"><span id="ticket-mini-available">0</span><span>장</span></div>
+      </div>
+    </div>
 
-      <!-- 적립 대기 중 -->
+    <!-- 이벤트 섹션 -->
+    <div class="pp-store-section">
+      <div class="pp-store-section-head">
+        <h2>진행중 이벤트</h2>
+      </div>
+      <div class="h-scroll" id="event-2x-scroll" style="padding:0 0 12px"></div>
+    </div>
+
+    <!-- 숨겨진 호환 요소 -->
+    <div style="display:none">
+      <div id="ticket-progress-fill"></div>
+      <div id="ticket-delay-info"></div>
       <div id="pending-rewards-area"></div>
+      <div id="reward-exchange"></div>
+      <div class="raffle-ball" id="raffle-ball">?</div>
+    </div>
 
-      <!-- 교환소 -->
-      <div class="pp-benefit-section">
-        <div class="pp-benefit-section-head">
-          <h2>티켓 교환소</h2>
-          <span class="pp-benefit-section-sub">기프티콘으로 교환하세요</span>
-        </div>
-        <div id="reward-exchange"></div>
+    <!-- 티켓 상세 오버레이 -->
+    <div class="sub-overlay" id="ticket-detail-overlay" style="display:none;flex-direction:column">
+      <div class="sub-header">
+        <button onclick="closeTicketDetail()">←</button>
+        <h2>티켓 &amp; 혜택</h2>
       </div>
-
-      <!-- 추첨 -->
-      <div class="pp-benefit-section" id="raffle-anchor">
-        <div class="pp-benefit-section-head">
-          <h2>경품 응모</h2>
-          <span class="pp-benefit-section-sub">매일 1회</span>
-        </div>
-        <div class="raffle-section">
-          <div class="raffle-ball" id="raffle-ball">?</div>
-          <div style="flex:1;min-width:0">
-            <h3>행운의 추첨</h3>
-            <div class="raffle-info">내 티켓: <b id="raffle-tickets">0</b>장</div>
-            <div style="font-size:10px;opacity:.6;margin-top:2px">1등 5% · 2등 15% · 3등 80%</div>
+      <div style="flex:1;overflow-y:auto">
+        <div class="pp-ticket-hero" style="margin:12px 16px 0">
+          <div class="pp-ticket-hero-top">
+            <div class="pp-ticket-hero-label">내 티켓</div>
+            <span class="pp-ticket-hero-pending" id="ticket-detail-pending">적립예정 0장</span>
           </div>
-          <button class="raffle-btn" onclick="doRaffle()">응모하기</button>
+          <div class="pp-ticket-hero-main">
+            <span class="pp-ticket-hero-val" id="ticket-detail-available">0</span>
+            <span class="pp-ticket-hero-unit">장</span>
+          </div>
+          <div class="pp-ticket-hero-progress">
+            <div class="pp-ticket-hero-progress-head">
+              <span class="pp-ticket-hero-progress-label">커피 교환까지</span>
+              <span class="pp-ticket-hero-progress-remain"><b id="ticket-detail-remaining">8</b>장 남음</span>
+            </div>
+            <div class="pp-ticket-hero-progress-bar"><div class="pp-ticket-hero-progress-fill" id="ticket-detail-progress-fill"></div></div>
+          </div>
+          <div id="ticket-detail-delay-info" class="pp-ticket-hero-delay"></div>
+          <div class="pp-ticket-hero-actions">
+            <button onclick="closeTicketDetail();switchTab('hot')">쇼핑하러 가기</button>
+            <button class="primary" onclick="closeTicketDetail();scrollToRaffle()">경품 응모</button>
+          </div>
         </div>
-        <div class="raffle-prizes" id="raffle-prizes"></div>
-      </div>
-
-      <!-- 진행중 이벤트 -->
-      <div class="pp-benefit-section">
-        <div class="pp-benefit-section-head">
-          <h2>진행중 이벤트</h2>
+        <div id="ticket-detail-pending-area" style="padding:0 16px"></div>
+        <div class="pp-benefit-section" style="padding:14px 16px 4px">
+          <div class="pp-benefit-section-head" style="margin-bottom:10px"><h2 style="font-size:15px;font-weight:800">티켓 교환소</h2></div>
+          <div id="ticket-detail-exchange"></div>
         </div>
-        <div class="h-scroll" id="event-2x-scroll" style="padding:0 16px 12px"></div>
+        <div class="pp-benefit-section" id="raffle-anchor" style="padding:14px 16px">
+          <div class="pp-benefit-section-head" style="margin-bottom:10px"><h2 style="font-size:15px;font-weight:800">경품 응모</h2><span class="pp-benefit-section-sub">매일 1회</span></div>
+          <div class="raffle-section">
+            <div class="raffle-ball" id="raffle-ball-detail">?</div>
+            <div style="flex:1;min-width:0">
+              <h3>행운의 추첨</h3>
+              <div class="raffle-info">내 티켓: <b id="raffle-tickets">0</b>장</div>
+              <div style="font-size:10px;opacity:.6;margin-top:2px">1등 5% · 2등 15% · 3등 80%</div>
+            </div>
+            <button class="raffle-btn" onclick="doRaffle()">응모하기</button>
+          </div>
+          <div class="raffle-prizes" id="raffle-prizes"></div>
+        </div>
+        <details class="pp-benefit-details" style="margin:0 16px 16px">
+          <summary class="pp-benefit-details-summary">
+            <span>적립 조건 · 제외 상품 안내</span>
+            <span class="pp-benefit-details-arrow">›</span>
+          </summary>
+          <div class="pp-benefit-details-body">
+            <div class="pp-benefit-notice pp-benefit-notice-info">
+              <div class="pp-benefit-notice-title">📋 적립 조건</div>
+              <div class="pp-benefit-notice-body">
+                · 구매하러 가기 버튼으로 이동 후 구매한 건에 한해 티켓 적립<br>
+                · 취소·반품 시 미지급 · 월 단위 적립 한도 있음<br>
+                · 미적립 시 구매일로부터 <b>14일 이내</b> 신청 가능<br>
+                · 부정행위 적발 시 사전 공지 없이 티켓 전액 회수
+              </div>
+            </div>
+            <div class="pp-benefit-notice pp-benefit-notice-warn">
+              <div class="pp-benefit-notice-title">⚠️ 적립 제외 상품</div>
+              <div class="pp-benefit-notice-body">
+                배송비, 쿠폰, 캐시, AS케어서비스, 여행상품, 기프트카드, 스마트폰, 태블릿/PC, 중고품 등은 티켓 적립 대상이 아닙니다.
+              </div>
+            </div>
+          </div>
+        </details>
       </div>
     </div>
 
   </div>
 
-  <!-- 검색 -->
+  <!-- 검색 (탭바에서 숨겨짐, 내부에서만 접근) -->
   <div class="page" id="page-search">
     <div style="padding:12px 16px">
       <div style="display:flex;gap:8px;align-items:center">
@@ -5626,6 +5733,18 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
     </div>
     <div id="search-home"></div>
     <div id="search-results" style="padding:0 16px"></div>
+  </div>
+
+  <!-- 핫딜 탭 (추후 탭바 활성화 예정) -->
+  <div class="page" id="page-hotdeal">
+    <!-- 상단 고정 검색바 -->
+    <div class="pp-hotdeal-search-bar">
+      <div class="pp-hotdeal-search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="hotdeal-search-input" placeholder="핫딜 상품 검색..." oninput="doHotdealSearch()" onkeydown="if(event.key==='Enter')submitHotdealSearch()">
+      </div>
+    </div>
+    <div id="hotdeal-content"></div>
   </div>
 
   <!-- 마이페이지 -->
@@ -5804,23 +5923,22 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
     홈
   </div>
-  <div class="tab" data-tab="wish" onclick="switchTab('wish')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-    관심상품
-  </div>
-  <div class="tab tab-center" data-tab="search" onclick="switchTab('search')">
-    <button class="tab-center-btn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" width="22" height="22"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    </button>
-    <span class="tab-center-label">검색</span>
-  </div>
   <div class="tab" data-tab="benefit" onclick="switchTab('benefit')">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M12 6v14"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
     혜택
   </div>
   <div class="tab" data-tab="my" onclick="switchTab('my')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     마이
+  </div>
+  <!-- 추후 추가 예정 탭 (숨김) -->
+  <div class="tab" data-tab="hotdeal" onclick="switchTab('hotdeal')" style="display:none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+    핫딜
+  </div>
+  <div class="tab" data-tab="wish" onclick="switchTab('wish')" style="display:none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+    관심상품
   </div>
 </div>
 
@@ -6366,7 +6484,7 @@ function getTimingSignal(p){
 }
 
 // ===== TABS =====
-var TITLES={wish:'관심상품',hot:'홈',search:'검색',benefit:'혜택',my:'마이페이지'};
+var TITLES={wish:'관심상품',hot:'홈',search:'검색',benefit:'혜택',my:'마이페이지',hotdeal:'핫딜'};
 function switchTab(name){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
@@ -6380,6 +6498,7 @@ function switchTab(name){
   if(name==='search')renderSearch();
   if(name==='benefit')renderBenefit();
   if(name==='my')renderMypage();
+  if(name==='hotdeal')renderHotdeal();
   document.getElementById('content').scrollTop=0;
 }
 
@@ -6997,87 +7116,60 @@ function doSearch(){
   document.getElementById('search-results').innerHTML=html;
 }
 
+// ===== ECOMMERCE STORES =====
+var ECOMMERCE_STORES=[
+  {id:1,emoji:'🛒',name:'쿠팡',desc:'로켓배송 · 최저가',badge:'인기',url:'https://www.coupang.com'},
+  {id:2,emoji:'🟢',name:'네이버쇼핑',desc:'가격비교 · 포인트',badge:'',url:'https://shopping.naver.com'},
+  {id:3,emoji:'🔴',name:'11번가',desc:'십일절 특가',badge:'',url:'https://www.11st.co.kr'},
+  {id:4,emoji:'🛍️',name:'G마켓',desc:'빅스마일데이',badge:'',url:'https://www.gmarket.co.kr'},
+  {id:5,emoji:'🏪',name:'SSG닷컴',desc:'신세계 쇼핑',badge:'',url:'https://www.ssg.com'},
+  {id:6,emoji:'🏬',name:'롯데온',desc:'롯데 브랜드',badge:'',url:'https://www.lotteon.com'},
+  {id:7,emoji:'👕',name:'무신사',desc:'패션 전문관',badge:'',url:'https://www.musinsa.com'},
+  {id:8,emoji:'🥕',name:'마켓컬리',desc:'새벽 신선배송',badge:'',url:'https://www.kurly.com'},
+  {id:9,emoji:'🏠',name:'오늘의집',desc:'인테리어 쇼핑',badge:'',url:'https://ohou.se'},
+  {id:10,emoji:'💄',name:'올리브영',desc:'뷰티 · 헬스',badge:'',url:'https://www.oliveyoung.co.kr'},
+  {id:11,emoji:'🏷️',name:'다이소몰',desc:'균일가 쇼핑',badge:'',url:'https://www.daiso.co.kr'},
+  {id:12,emoji:'📦',name:'이마트몰',desc:'신선 · 생필품',badge:'',url:'https://emart.ssg.com'}
+];
+
+function renderStoreGrid(){
+  var html='';
+  ECOMMERCE_STORES.forEach(function(store){
+    html+='<div class="pp-store-card" onclick="goToStore('+store.id+')">';
+    html+='<div class="pp-store-card-icon">'+store.emoji+'</div>';
+    html+='<div class="pp-store-card-name">'+store.name+'</div>';
+    html+='<div class="pp-store-card-desc">'+store.desc+'</div>';
+    if(store.badge)html+='<div class="pp-store-card-badge">'+store.badge+'</div>';
+    html+='</div>';
+  });
+  var el=document.getElementById('store-grid');
+  if(el)el.innerHTML=html;
+}
+
+function goToStore(id){
+  var store=ECOMMERCE_STORES.find(function(s){return s.id===id});
+  if(!store)return;
+  showModal('🛒',''+store.name+' 쇼핑',''+store.name+'으로 이동합니다.<br><br>구매 후 앱으로 돌아오면 혜택이 자동 적립됩니다! 🎫<br><br><span style="font-size:12px;color:var(--text-sub)">현재 연동 준비 중 · 곧 오픈</span>');
+}
+
 // ===== BENEFIT =====
 function renderBenefit(){
   processTickets();
   var tickets=getTickets();
-  var s=getSettings();
-  var delayDays=s.kakao?7:30;
-  document.getElementById('ticket-pending').textContent='적립예정 '+tickets.pending+'장';
-  document.getElementById('ticket-available').textContent=tickets.available;
+  // 히어로 티켓 수
+  var availEl=document.getElementById('ticket-available');
+  if(availEl)availEl.textContent=tickets.available;
+  var miniEl=document.getElementById('ticket-mini-available');
+  if(miniEl)miniEl.textContent=tickets.available;
+  // 미니 현황
   var remaining=Math.max(0,8-tickets.available);
+  var pendingEl=document.getElementById('ticket-pending');
+  if(pendingEl)pendingEl.innerHTML='적립예정 '+tickets.pending+'장 · 커피까지 <b>'+remaining+'</b>장 남음';
   var remainEl=document.getElementById('ticket-remaining');
-  var remainParent=remainEl?remainEl.parentElement:null;
-  if(remaining>0){
-    remainEl.innerHTML=remaining+'<span style="font-weight:500;opacity:.85">장 남음</span>';
-  } else if(remainParent){
-    remainParent.innerHTML='<span style="color:#FCD34D;font-weight:800">지금 교환 가능!</span>';
-  }
-  // progress bar fill
-  var progressFill=document.getElementById('ticket-progress-fill');
-  if(progressFill){
-    var pct=Math.min(100,Math.round(tickets.available/8*100));
-    progressFill.style.width=pct+'%';
-  }
-  document.getElementById('raffle-tickets').textContent=tickets.available;
-  // 대기 기간 안내
-  var delayEl=document.getElementById('ticket-delay-info');
-  if(delayEl){
-    delayEl.innerHTML=s.kakao
-      ?'✅ 카카오 연동 완료 · 구매 후 <b>7일</b> 대기'
-      :'구매 후 <b>30일</b> 대기 · <a href="#" onclick="linkKakao();return false;" style="color:var(--primary)">카카오 연동 시 7일로 단축</a>';
-  }
-  // 적립 대기 목록
-  var pendingTickets=tickets.history.filter(function(t){return t.status==='pending'});
-  var pendingHtml='';
-  if(pendingTickets.length>0){
-    pendingHtml='<div class="section-header" style="padding-top:8px">⏳ 적립 대기 중</div>';
-    pendingHtml+='<div style="padding:0 16px 12px">';
-    pendingTickets.forEach(function(t){
-      var availableAt=t.available_at?new Date(t.available_at):new Date(new Date(t.date).getTime()+(delayDays*86400000));
-      var daysLeft=Math.max(0,Math.ceil((availableAt.getTime()-Date.now())/86400000));
-      pendingHtml+='<div style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--card);border-radius:12px;margin-bottom:6px;box-shadow:0 1px 4px rgba(0,0,0,.04)">';
-      if(t.sealed){
-        pendingHtml+='<div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#A855F7,#A78BFA);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🎁</div>';
-        pendingHtml+='<div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+t.product+'</div>';
-        pendingHtml+='<div style="font-size:11px;color:#A78BFA;font-weight:600">봉인됨 · 구매 확인 대기 중</div></div>';
-      } else {
-        var tierColor=t.tier==='gold'?'#F59E0B':t.tier==='silver'?'#9CA3AF':'#CD7F32';
-        var tierLabel=t.tier==='gold'?'🥇 골드':t.tier==='silver'?'🥈 실버':'🥉 브론즈';
-        pendingHtml+='<div style="width:36px;height:36px;border-radius:50%;background:'+tierColor+';display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">🎫</div>';
-        pendingHtml+='<div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+t.product+'</div>';
-        pendingHtml+='<div style="font-size:11px;color:var(--text-sub)">'+tierLabel+' · 개봉 대기 중</div></div>';
-      }
-      pendingHtml+='<div style="text-align:right;flex-shrink:0"><div style="font-size:13px;font-weight:700;color:var(--primary)">D-'+daysLeft+'</div>';
-      pendingHtml+='<div style="font-size:10px;color:var(--text-light)">'+availableAt.toLocaleDateString('ko-KR')+'</div></div>';
-      pendingHtml+='</div>';
-    });
-    pendingHtml+='</div>';
-  }
-  document.getElementById('pending-rewards-area').innerHTML=pendingHtml;
-  // 교환소 렌더링
-  var exCounts=getTicketsByTier();
-  var exItems=[
-    {tier:'bronze',icon:'☕',name:'아이스 아메리카노',needed:8,color:'#CD7F32',label:'🥉 브론즈'},
-    {tier:'silver',icon:'🍔',name:'맥도날드 해피밀 세트',needed:4,color:'#9CA3AF',label:'🥈 실버'},
-    {tier:'gold',icon:'🍕',name:'도미노피자 세트',needed:1,color:'#F59E0B',label:'🥇 골드'}
-  ];
-  var exHtml='<div class="reward-ex">';
-  exItems.forEach(function(item){
-    var have=exCounts[item.tier]||0;
-    var enough=have>=item.needed;
-    exHtml+='<div class="reward-ex-item">';
-    exHtml+='<div class="reward-ex-icon" style="background:#FEF3C7">'+item.icon+'</div>';
-    exHtml+='<div class="reward-ex-info">';
-    exHtml+='<h4>'+item.name+'</h4>';
-    exHtml+='<p style="display:flex;gap:6px;align-items:center">'+item.label+' '+item.needed+'장 · 보유 <b style="color:'+(enough?'var(--primary)':'var(--red)')+'">'+have+'장</b></p>';
-    exHtml+='</div>';
-    exHtml+='<button class="reward-ex-btn '+(enough?item.tier:'disabled')+'" onclick="'+(enough?'exchangeReward(\''+item.tier+'\')':'void(0)')+'" style="'+(enough?'':'opacity:.4;cursor:not-allowed')+'">교환</button>';
-    exHtml+='</div>';
-  });
-  exHtml+='</div>';
-  document.getElementById('reward-exchange').innerHTML=exHtml;
-  // 2x event scroll
+  if(remainEl)remainEl.textContent=remaining;
+  // 스토어 그리드
+  renderStoreGrid();
+  // 이벤트
   var ehtml='';
   EVENT_2X.forEach(function(ev){
     ehtml+='<div class="event-2x-card" style="background:'+ev.bg+'">';
@@ -7088,16 +7180,136 @@ function renderBenefit(){
     ehtml+='<div style="font-size:10px;background:rgba(255,255,255,.2);display:inline-block;padding:2px 8px;border-radius:10px">~'+ev.end+'</div>';
     ehtml+='</div>';
   });
-  document.getElementById('event-2x-scroll').innerHTML=ehtml;
-  // Raffle prizes
-  var html='';
-  RAFFLE_PRIZES.forEach(function(r){
-    html+='<div class="raffle-prize-card">';
-    html+='<div class="raffle-medal r'+r.rank+'">'+r.rank+'</div>';
-    html+='<div class="raffle-prize-info"><h4>'+r.icon+' '+r.prize+'</h4><p>'+r.desc+'</p></div></div>';
-  });
-  document.getElementById('raffle-prizes').innerHTML=html;
+  var eventEl=document.getElementById('event-2x-scroll');
+  if(eventEl)eventEl.innerHTML=ehtml;
 }
+
+// ===== TICKET DETAIL OVERLAY =====
+function openTicketDetail(){
+  var overlay=document.getElementById('ticket-detail-overlay');
+  if(!overlay)return;
+  overlay.style.display='flex';
+  renderTicketDetail();
+}
+function closeTicketDetail(){
+  var overlay=document.getElementById('ticket-detail-overlay');
+  if(overlay)overlay.style.display='none';
+}
+function renderTicketDetail(){
+  processTickets();
+  var tickets=getTickets();
+  var s=getSettings();
+  var delayDays=s.kakao?7:30;
+  var el;
+  el=document.getElementById('ticket-detail-available');if(el)el.textContent=tickets.available;
+  el=document.getElementById('ticket-detail-pending');if(el)el.textContent='적립예정 '+tickets.pending+'장';
+  var remaining=Math.max(0,8-tickets.available);
+  var remainEl=document.getElementById('ticket-detail-remaining');
+  if(remainEl){
+    if(remaining>0){remainEl.innerHTML=remaining+'<span style="font-weight:500;opacity:.85">장 남음</span>';}
+    else if(remainEl.parentElement){remainEl.parentElement.innerHTML='<span style="color:#FCD34D;font-weight:800">지금 교환 가능!</span>';}
+  }
+  el=document.getElementById('ticket-detail-progress-fill');
+  if(el)el.style.width=Math.min(100,Math.round(tickets.available/8*100))+'%';
+  el=document.getElementById('ticket-detail-delay-info');
+  if(el)el.innerHTML=s.kakao?'✅ 카카오 연동 완료 · 구매 후 <b>7일</b> 대기':'구매 후 <b>30일</b> 대기 · <a href="#" onclick="linkKakao();return false;" style="color:var(--primary)">카카오 연동 시 7일로 단축</a>';
+  el=document.getElementById('raffle-tickets');if(el)el.textContent=tickets.available;
+  // 적립 대기
+  var pendingTickets=tickets.history.filter(function(t){return t.status==='pending'});
+  var pendingHtml='';
+  if(pendingTickets.length>0){
+    pendingHtml='<div style="font-size:13px;font-weight:700;margin:12px 0 8px">⏳ 적립 대기 중</div>';
+    pendingTickets.forEach(function(t){
+      var availableAt=t.available_at?new Date(t.available_at):new Date(new Date(t.date).getTime()+(delayDays*86400000));
+      var daysLeft=Math.max(0,Math.ceil((availableAt.getTime()-Date.now())/86400000));
+      pendingHtml+='<div style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--card);border-radius:12px;margin-bottom:6px;box-shadow:0 1px 4px rgba(0,0,0,.04)">';
+      var tierColor=t.tier==='gold'?'#F59E0B':t.tier==='silver'?'#9CA3AF':'#CD7F32';
+      var tierLabel=t.tier==='gold'?'🥇 골드':t.tier==='silver'?'🥈 실버':'🥉 브론즈';
+      pendingHtml+='<div style="width:36px;height:36px;border-radius:50%;background:'+(t.sealed?'linear-gradient(135deg,#A855F7,#A78BFA)':tierColor)+';display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">'+(t.sealed?'🎁':'🎫')+'</div>';
+      pendingHtml+='<div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+t.product+'</div>';
+      pendingHtml+='<div style="font-size:11px;color:var(--text-sub)">'+(t.sealed?'봉인됨':tierLabel)+' · 대기 중</div></div>';
+      pendingHtml+='<div style="text-align:right"><div style="font-size:13px;font-weight:700;color:var(--primary)">D-'+daysLeft+'</div>';
+      pendingHtml+='<div style="font-size:10px;color:var(--text-light)">'+availableAt.toLocaleDateString('ko-KR')+'</div></div>';
+      pendingHtml+='</div>';
+    });
+  }
+  el=document.getElementById('ticket-detail-pending-area');if(el)el.innerHTML=pendingHtml;
+  // 교환소
+  var exCounts=getTicketsByTier();
+  var exItems=[
+    {tier:'bronze',icon:'☕',name:'아이스 아메리카노',needed:8,color:'#CD7F32',label:'🥉 브론즈'},
+    {tier:'silver',icon:'🍔',name:'맥도날드 해피밀',needed:4,color:'#9CA3AF',label:'🥈 실버'},
+    {tier:'gold',icon:'🍕',name:'도미노피자 세트',needed:1,color:'#F59E0B',label:'🥇 골드'}
+  ];
+  var exHtml='<div class="reward-ex">';
+  exItems.forEach(function(item){
+    var have=exCounts[item.tier]||0;var enough=have>=item.needed;
+    exHtml+='<div class="reward-ex-item"><div class="reward-ex-icon" style="background:#FEF3C7">'+item.icon+'</div>';
+    exHtml+='<div class="reward-ex-info"><h4>'+item.name+'</h4>';
+    exHtml+='<p>'+item.label+' '+item.needed+'장 · 보유 <b style="color:'+(enough?'var(--primary)':'var(--red)')+'">'+have+'장</b></p></div>';
+    exHtml+='<button class="reward-ex-btn '+(enough?item.tier:'disabled')+'" onclick="'+(enough?'exchangeReward(\''+item.tier+'\')':'void(0)')+'" style="'+(enough?'':'opacity:.4;cursor:not-allowed')+'">교환</button></div>';
+  });
+  exHtml+='</div>';
+  el=document.getElementById('ticket-detail-exchange');if(el)el.innerHTML=exHtml;
+  // 경품
+  var prizeHtml='';
+  RAFFLE_PRIZES.forEach(function(r){
+    prizeHtml+='<div class="raffle-prize-card"><div class="raffle-medal r'+r.rank+'">'+r.rank+'</div>';
+    prizeHtml+='<div class="raffle-prize-info"><h4>'+r.icon+' '+r.prize+'</h4><p>'+r.desc+'</p></div></div>';
+  });
+  el=document.getElementById('raffle-prizes');if(el)el.innerHTML=prizeHtml;
+}
+
+// ===== HOTDEAL TAB =====
+function renderHotdeal(){
+  var html='';
+  // 핫딜 탭: 현재 홈 상품들을 가져오는 형태로 구성 (추후 백엔드 연동)
+  var products=PRODUCTS.slice().sort(function(a,b){return b.discount-a.discount});
+  html+='<div class="pp-section">';
+  html+='<div class="pp-section-head"><h2>🔥 오늘의 핫딜</h2><span class="pp-section-sub">실시간 최저가 모음</span></div>';
+  html+='<div class="pp-lowest-list">';
+  products.forEach(function(p){
+    var saved=p.originalPrice-p.currentPrice;
+    html+='<div class="pp-lowest-card" onclick="openDetail('+p.id+')">';
+    html+='<div class="pp-lowest-thumb">'+p.emoji+'</div>';
+    html+='<div class="pp-lowest-body">';
+    html+='<div class="pp-lowest-badge">-'+p.discount+'%</div>';
+    html+='<div class="pp-lowest-name">'+p.name+'</div>';
+    html+='<div class="pp-lowest-price-row">';
+    html+='<span class="pp-lowest-price">'+p.currentPrice.toLocaleString()+'<span>원</span></span>';
+    html+='<span class="pp-lowest-save">'+saved.toLocaleString()+'원↓</span>';
+    html+='</div></div>';
+    html+='<button class="pp-lowest-btn" onclick="event.stopPropagation();quickBuy('+p.id+')">구매</button>';
+    html+='</div>';
+  });
+  html+='</div></div>';
+  var el=document.getElementById('hotdeal-content');
+  if(el)el.innerHTML=html;
+}
+
+function doHotdealSearch(){
+  var q=document.getElementById('hotdeal-search-input').value.trim().toLowerCase();
+  var el=document.getElementById('hotdeal-content');
+  if(!el)return;
+  if(!q){renderHotdeal();return;}
+  var results=PRODUCTS.filter(function(p){return p.name.toLowerCase().indexOf(q)>=0});
+  var html='<div style="padding:12px 16px">';
+  if(results.length===0){
+    html+='<div class="empty-state"><div class="empty-state-icon">😢</div><h3>검색 결과 없음</h3><p>다른 키워드로 검색해보세요</p></div>';
+  }else{
+    results.forEach(function(p){
+      html+='<div class="track-card" onclick="openDetail('+p.id+')" style="margin-bottom:1px">';
+      html+='<div class="track-thumb">'+p.emoji+'</div>';
+      html+='<div class="track-body"><div class="track-name">'+p.name+'</div>';
+      html+='<div class="track-price-row"><span class="track-current">'+p.currentPrice.toLocaleString()+'원</span>';
+      html+='<span class="product-change down" style="font-size:11px">▼'+p.discount+'%</span></div></div></div>';
+    });
+  }
+  html+='</div>';
+  el.innerHTML=html;
+}
+
+function submitHotdealSearch(){doHotdealSearch();}
 
 function scrollToRaffle(){
   setTimeout(function(){
@@ -7848,7 +8060,6 @@ openDetail=function(id,fromWish){
 var _origRenderBenefit=renderBenefit;
 renderBenefit=function(){
   _origRenderBenefit();
-  updateExchangeButtons();
 };
 
 // ===== UPDATE BACK BUTTON FOR NEW OVERLAYS =====
@@ -7859,6 +8070,8 @@ window.addEventListener('popstate',function(){
   if(document.getElementById('settings-overlay').classList.contains('show')){closeSettings();return}
   if(document.getElementById('sub-overlay').classList.contains('show')){closeSub();return}
   if(document.getElementById('detail-overlay').classList.contains('show')){closeDetail();return}
+  var td=document.getElementById('ticket-detail-overlay');
+  if(td&&td.style.display!=='none'){closeTicketDetail();return}
 });
 
 // ===== iOS STANDALONE SAFE-AREA FIX =====

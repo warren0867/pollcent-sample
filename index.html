@@ -5514,6 +5514,14 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
 .mtc-grade-count { display:flex; align-items:baseline; justify-content:center; gap:2px; }
 .mtc-grade-num { font-size:24px; font-weight:800; letter-spacing:-1px; line-height:1; color:var(--text1); font-family:'Poppins',sans-serif; }
 .mtc-grade-unit { font-size:11px; font-weight:600; color:var(--text2); }
+.mtc-random-row { background:linear-gradient(135deg,#fff4f2,#ffece9); border:1.5px solid #ffb8ac; border-radius:12px; padding:12px 14px; display:flex; align-items:center; gap:12px; margin-top:12px; }
+.mtc-rnd-icon { width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,#FF6B55,#E63520); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+.mtc-rnd-body { flex:1; }
+.mtc-rnd-name { font-size:11px; font-weight:700; color:#C0291A; margin-bottom:2px; }
+.mtc-rnd-count { display:flex; align-items:baseline; gap:2px; }
+.mtc-rnd-num { font-size:22px; font-weight:800; color:var(--text1); letter-spacing:-1px; line-height:1; font-family:'Poppins',sans-serif; }
+.mtc-rnd-unit { font-size:11px; font-weight:600; color:var(--text2); }
+.mtc-rnd-sub { font-size:10px; color:#C0291A; opacity:.85; margin-top:2px; }
 /* 딜 카드 할인 배지 */
 .v6-deal-disc-badge { position:absolute; top:6px; right:6px; background:#E54848; color:#fff; font-size:9.5px; font-weight:800; padding:2px 5px; border-radius:4px; }
 .v6-deal-orig { font-size:9.5px; color:var(--text3); text-decoration:line-through; margin-top:1px; }
@@ -5976,6 +5984,15 @@ div[style*="border-left:3px solid var(--orange)"] > div:first-child {
           <div class="mtc-grade-name">골드</div>
           <div class="mtc-grade-count"><span class="mtc-grade-num" id="mtc-gold">0</span><span class="mtc-grade-unit">장</span></div>
         </div>
+      </div>
+      <div class="mtc-random-row" id="mtc-random-row" style="display:none">
+        <div class="mtc-rnd-icon">🎲</div>
+        <div class="mtc-rnd-body">
+          <div class="mtc-rnd-name">랜덤 티켓</div>
+          <div class="mtc-rnd-count"><span class="mtc-rnd-num" id="mtc-random">0</span><span class="mtc-rnd-unit">장</span></div>
+          <div class="mtc-rnd-sub">출석 · 이벤트로 즉시 지급된 티켓</div>
+        </div>
+        <button class="mtc-label-link" onclick="openSwapOverlay()" style="flex-shrink:0;font-size:11px">교환 →</button>
       </div>
     </div>
 
@@ -6814,16 +6831,14 @@ function doAttendance(){
   if(att.days.length>30)att.days=att.days.slice(-30);
   att.streak=(att.lastDate===yesterday)?att.streak+1:1;
   att.lastDate=today;
-  // 7일 보너스
+  // 7일 보너스 — 랜덤 티켓 2장 즉시 지급
   if(att.streak>=7){
-    var tickets=getTickets();
-    tickets.available+=2;
-    tickets.history.push({id:Date.now()+77,tier:'silver',amount:0,date:new Date().toISOString(),status:'available',product:'7일 출석 보너스'});
-    setTickets(tickets);
+    issueRandomTicket('7일 출석 보너스');
+    issueRandomTicket('7일 출석 보너스');
     att.streak=0;
     setAttendance(att);
-    addNotification('attend','📅 7일 연속 출석 달성!','보너스 티켓 2장이 지급되었어요');
-    showModal('📅','7일 연속 출석!','축하해요! 보너스 티켓 2장이 지급되었습니다 🎫🎫');
+    addNotification('attend','📅 7일 연속 출석 달성!','🎲 랜덤 티켓 2장 즉시 지급!');
+    showModal('📅','7일 연속 출석!','🎲 랜덤 티켓 2장 즉시 지급!<br><br><small style="color:var(--text-sub)">티켓 등급은 랜덤으로 결정됩니다</small>');
     return;
   }
   setAttendance(att);
@@ -7262,7 +7277,7 @@ function simulatePurchase(id){
   msg+='<div style="font-size:11px;color:var(--text-sub);margin-top:8px">구매 확인 후 브론즈·실버·골드 티켓으로 개봉됩니다</div>';
   msg+='</div>';
   if(is2x)msg+='<br><span style="font-size:12px;color:var(--orange);font-weight:700">🎊 2배 적립 이벤트 적용!</span>';
-  if(streakResult.bonusTicket)msg+='<br><span style="font-size:12px;color:var(--orange);font-weight:700">🔥 5일 연속 구매 보너스 티켓!</span>';
+  if(streakResult.bonusTicket)msg+='<br><span style="font-size:12px;color:var(--orange);font-weight:700">🎲 5일 연속 구매! 랜덤 티켓 즉시 지급!</span>';
   else if(streakResult.streak>1)msg+='<br><span style="font-size:12px;color:var(--text-sub)">🔥 연속 구매 '+streakResult.streak+'일째!</span>';
   showModal('🎁','봉인 티켓 지급',msg);
 }
@@ -7278,11 +7293,7 @@ function updatePurchaseStreak(){
   else{newStreak=1}
   var bonusTicket=false;
   if(newStreak>=5){
-    var tickets=getTickets();
-    var tier=Math.random()<0.5?'lottery':'roulette';
-    tickets.available++;
-    tickets.history.push({id:Date.now()+99,tier:'silver',amount:0,date:new Date().toISOString(),status:'available',product:'5일 연속 보너스'});
-    setTickets(tickets);
+    issueRandomTicket('5일 연속 구매 보너스');
     bonusTicket=true;
     newStreak=0;
   }
@@ -7651,6 +7662,9 @@ function renderBenefit(){
   var mtcB=document.getElementById('mtc-bronze');if(mtcB)mtcB.textContent=exCounts.bronze||0;
   var mtcS=document.getElementById('mtc-silver');if(mtcS)mtcS.textContent=exCounts.silver||0;
   var mtcG=document.getElementById('mtc-gold');if(mtcG)mtcG.textContent=exCounts.gold||0;
+  var rndCnt=exCounts.random||0;
+  var mtcRnd=document.getElementById('mtc-random');if(mtcRnd)mtcRnd.textContent=rndCnt;
+  var mtcRndRow=document.getElementById('mtc-random-row');if(mtcRndRow)mtcRndRow.style.display=rndCnt>0?'flex':'none';
   // 기프티콘 교환 리스트
   var gcItems=[
     {tier:'bronze',icon:'☕',name:'아이스 아메리카노',brand:'스타벅스',needed:8,label:'🥉 브론즈'},
@@ -8642,11 +8656,28 @@ function exportData(){
 }
 
 // ===== REWARD EXCHANGE =====
+function issueRandomTicket(product){
+  var r=Math.random();
+  var tier=r<0.6?'bronze':r<0.9?'silver':'gold';
+  var tickets=getTickets();
+  tickets.available++;
+  tickets.history.push({
+    id:Date.now()+Math.round(Math.random()*100),
+    tier:tier,source:'random',amount:0,
+    date:new Date().toISOString(),status:'available',product:product
+  });
+  setTickets(tickets);
+  return tier;
+}
+
 function getTicketsByTier(){
   var tickets=getTickets();
-  var counts={bronze:0,silver:0,gold:0};
+  var counts={bronze:0,silver:0,gold:0,random:0};
   tickets.history.forEach(function(t){
-    if(t.status==='available'&&t.tier)counts[t.tier]=(counts[t.tier]||0)+1;
+    if(t.status==='available'&&t.tier){
+      counts[t.tier]=(counts[t.tier]||0)+1;
+      if(t.source==='random')counts.random=(counts.random||0)+1;
+    }
   });
   return counts;
 }
